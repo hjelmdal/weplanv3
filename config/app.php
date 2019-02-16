@@ -1,7 +1,8 @@
 <?php
 
 return [
-
+    'keen_assets' => env('APP_THEME_ASSETS','/base'),
+    
     /*
     |--------------------------------------------------------------------------
     | Application Name
