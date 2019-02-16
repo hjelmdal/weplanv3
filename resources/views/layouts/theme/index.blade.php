@@ -28,7 +28,12 @@
         <link href="{{ config("app.keen_assets") }}/demo/demo5/skins/header/navy.css" rel="stylesheet" type="text/css" />
         <!--end::Layout Skins -->
         <link rel="shortcut icon" href="{{ config("app.keen_assets") }}/media/logos/favicon.ico" />
-        <!-- Hotjar Tracking Code for keenthemes.com -->
+
+        <!--begin::Custom styling(by Pixel8) -->
+        @yield("styles")
+        <!--end::Custom styling(by Pixel8) -->
+
+        <!-- Hotjar Tracking Code for keenthemes.com >
         <script>    (function(h,o,t,j,a,r){
         h.hj=h.hj||function(){
 (h.hj.q=h.hj.q||[
@@ -91,6 +96,10 @@ dataLayer.push(arguments);}  gtag('js', new Date());  gtag('config', 'UA-3756476
         <!--begin::Global App Bundle(used by all pages) -->
         <script src="{{ config("app.keen_assets") }}/app/scripts/bundle/app.bundle.js" type="text/javascript"></script>
         <!--end::Global App Bundle -->
+        <!--begin::Custom Scripts(by Pixel8) -->
+        @yield("scripts")
+
+        <!--end::Custom Scripts(by Pixel8) -->
     </body>
     <!-- end::Body -->
 </html>
