@@ -2,7 +2,7 @@
 <div id="k_header_mobile" class="k-header-mobile k-header-mobile--fixed " >
     <div class="k-header-mobile__logo">
         <a href="?page=index">
-            <img alt="Logo" src="{{ config("app.keen_assets") }}/media/logos/logo-1.png"/>
+            <img alt="Logo" src="/img/weplan_324x90.png" height="30"/>
         </a>
     </div>
     <div class="k-header-mobile__toolbar">
