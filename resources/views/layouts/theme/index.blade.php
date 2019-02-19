@@ -11,7 +11,7 @@ $firstname = $names[0];
 <html lang="en" >
     <!-- begin::Head -->
     <head>
-        <link rel="manifest" href="/manifest.webmanifest">
+        <link rel="manifest" href="/manifest.json">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 shrink-to-fit=no">
         <meta name="description" content="Badminton trainingssystem">
         <meta name="keywords" content="training, badminton, pixel8">
