@@ -25,7 +25,7 @@ $firstname = $names[0];
         <link rel="apple-touch-icon" sizes="120x120" href="{{ route('index') }}/img/webapp/weplan-120x120.png"/>
         <link rel="apple-touch-icon" sizes="152x152" href="{{ route('index') }}/img/webapp/weplan-152x152.png"/>
         <link rel="apple-touch-icon" sizes="167x167" href="{{ route('index') }}/img/webapp/weplan-167x167.png"/>
-        <link rel="apple-touch-icon" sizes="180x180" href="{{ route('index') }}/img/webapp/weplan-180x180.png"/>
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ route('index') }}/img/webapp/weplan-180x180-b.png"/>
 
         <link rel="apple-touch-startup-image" href="{{ route('index') }}/img/webapp/weplan-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
         <link rel="apple-touch-startup-image" href="{{ route('index') }}/img/webapp/weplan-750x1294.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
