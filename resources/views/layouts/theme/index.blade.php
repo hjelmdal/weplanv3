@@ -1,8 +1,11 @@
 <?php
 $user = Auth::user();
+if($user) {
 $names = explode(" ",$user->name);
-$user->firstname = $names[0];
-
+$firstname = $names[0];
+} else {
+    $firstname = "Gæst";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" >
@@ -44,7 +47,7 @@ $user->firstname = $names[0];
         <meta property="og:description" content="Badminton planning system doing more than you ever dreamed of" />
         <meta property="og:image" content="{{ route('index') }}/assets/img/webapp/fb_share.jpg" />
         <meta property="fb:app_id" content="837790769653876" />
-        <title>@hasSection('meta.title') @yield('meta.title') @else @yield('title') @endif - {{ config('app.name') }}</title>
+        <title>@hasSection('meta.title') @yield('meta.title') - @endif @hasSection("title") @yield('title') - @endif {{ config('app.name') }}</title>
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!--begin::Fonts -->
