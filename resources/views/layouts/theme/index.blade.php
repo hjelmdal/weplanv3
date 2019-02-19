@@ -8,13 +8,14 @@ $user->firstname = $names[0];
 <html lang="en" >
     <!-- begin::Head -->
     <head>
+        <link rel="manifest" href="/manifest.webmanifest">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 shrink-to-fit=no">
         <meta name="description" content="Badminton trainingssystem">
         <meta name="keywords" content="training, badminton, pixel8">
         <meta name="apple-mobile-web-app-title" content="{{ config('app.name') }}">
         <meta name="application-name" content="{{ config('app.name') }}">
         <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <meta name="mobile-web-app-capable" content="yes">
         <link rel="apple-touch-icon" href="{{ route('index') }}/img/webapp/weplan-180x180.png"/>
         <link rel="apple-touch-icon" sizes="76x76" href="{{ route('index') }}/img/webapp/weplan-76x76.png"/>
