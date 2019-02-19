@@ -1,3 +1,9 @@
+<?php
+$user = Auth::user();
+$names = explode(" ",$user->name);
+$user->firstname = $names[0];
+
+?>
 <!DOCTYPE html>
 <html lang="en" >
     <!-- begin::Head -->

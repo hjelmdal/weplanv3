@@ -44,7 +44,7 @@
     <!--begin: User bar -->
     <div class="k-header__topbar-item k-header__topbar-item--user" id="k_offcanvas_toolbar_profile_toggler_btn">
         <div class="k-header__topbar-welcome">Hi,</div>
-        <div class="k-header__topbar-username">Nick</div>
+        <div class="k-header__topbar-username">{{ $user->firstname }}</div>
         <div class="k-header__topbar-wrapper" >
             <img alt="Pic" src="{{ config("app.keen_assets") }}/media/users/default.jpg"/>
         </div>
