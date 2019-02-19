@@ -1,5 +1,6 @@
 {
   "name": "WePlan V3",
+  "short_name": "WePlanV3",
   "display": "standalone",
   "icons":
   [{ "src": "/img/webapp/weplan-76x76.png",
@@ -11,6 +12,6 @@
     { "src": "/img/webapp/weplan-167x167.png",
       "sizes": "167x167"},
     { "src": "/img/webapp/weplan-180x180.png",
-      "sizes": "180x180"},
+      "sizes": "180x180"}
   ]
 }
