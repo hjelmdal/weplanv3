@@ -1,0 +1,117 @@
+//
+// Widget 22
+//
+
+
+
+
+.k-widget-22 {    
+    .k-widget-22__head {
+        display: flex;
+        justify-content: space-between;
+
+        .k-widget-22__date {
+            color: #3d4465;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            padding-bottom: 0.2rem;
+            font-weight: 500;
+        }
+
+        .k-widget-22__icon {
+            position: absolute;
+            right: 0;
+            top: 0.55rem;
+            margin-right: 2rem;          
+        }
+    }
+    
+    .k-widget-22__body {
+        height: 100%;        
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;                        
+
+        .k-widget-22__section {
+            display: flex;
+            align-items: center;
+
+           // User profile
+           .k-widget-22__bar {	
+                width: 3.5rem;
+                height: 3.5rem;   
+                border-radius: 50%;  
+                display: flex;
+                align-items: center; 
+                justify-content: center;
+                text-align: center;        
+                
+                .k-widget-22__icon { 
+                    font-size: 1.5rem;
+                    font-weight: 500;
+                    width: 3.5rem;                                
+                }
+
+                // User pic
+                .k-widget-22__pic {
+                    width: 3.5rem;
+                    border-radius: 50%;                    
+                }
+
+                .k-widget-22__username {
+                    width: 3.5rem;
+
+                    b {
+                        font-size: 1.6rem;
+                        font-weight: 500;
+                        color: #fff;
+                    }
+                }                
+            }    			 			 
+		
+
+            .k-widget-22__info {
+                padding-left: 1rem;
+
+                .k-widget-22__title {
+                    color: k-base-color(label, 3);
+                    font-weight: 500;
+                    font-size: 1.2rem;
+                }
+
+                .k-widget-22__desc {                    
+                    font-size: 1rem;                   
+                }
+            }
+        }
+
+        .k-widget-22__text {                    
+            display: block;
+            font-size: 1rem;                 
+            font-weight: 400; 
+            padding: 2rem 0;  
+            color: k-base-color(label, 3);                              
+        }
+           
+
+        .k-widget-22__actions {
+            a {
+                margin-right: 0.6rem;
+            }
+        }         
+    }    
+}
+
+// Desktop mode
+@include k-desktop {
+    .k-widget-22 {
+        .k-widget-22__body {
+            .k-widget-22__actions {
+                a {
+                    margin-bottom: 0.7rem; 
+                    margin-right: 0.3rem;                    
+                }
+            }
+        }
+    }
+}

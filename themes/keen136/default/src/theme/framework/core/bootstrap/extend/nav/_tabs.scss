@@ -1,0 +1,114 @@
+//
+// Tabs
+//
+
+
+
+// Tabs
+.nav-pills,
+.nav-tabs {
+	margin: 0 0 25px 0;   
+
+	.nav-item {
+		.nav-link {
+			padding: 0.75rem 1.25rem;
+			font-size: 1rem;
+			font-weight: 400;
+			@include k-transition();
+			@include k-icons-style(font-size, (fontawesome: 1.2rem, lineawesome: 1.3rem, flaticon: 1.4rem) );  
+			font-size: 1rem;
+			font-weight: 400;
+
+			i {
+				vertical-align: middle;
+				line-height: 0;
+				display: inline-block;  
+				margin-right: 0.5rem;
+			}     
+			
+			&.active,
+			&:active,
+			&:hover {
+				@include k-transition();
+			}
+		}
+	}
+}
+
+// Default Tabs
+.nav-tabs {
+	.nav-item {
+		.nav-link {
+			color: k-brand-color();
+			
+			i {
+				color: k-brand-color();
+			}     
+			
+			&.active,
+			&:active,
+			&:hover {
+				color: k-brand-color();
+
+				i {
+					color: k-brand-color();
+				}
+			}
+
+			&.disabled {
+				color: k-base-color(label, 2);
+
+				i {
+					color: k-base-color(label, 2);
+				}
+			}
+		}
+
+		&.show > .nav-link {
+			color: k-brand-color();
+
+			i {
+				color: k-brand-color();
+			}
+		}
+	}
+}
+
+// Pill Tabs
+.nav-pills {
+	.nav-item {
+		margin-right: 0.5rem;
+
+		&:last-child {
+			margin-right: 0;
+		}
+
+		.nav-link {
+			&:active,
+			&.active,
+			&.active:hover {
+				background-color: k-brand-color();
+				color: k-brand-color(inverse);
+			}
+		}
+
+		&.show > .nav-link {
+			background-color: k-brand-color();
+			color: k-brand-color(inverse);
+		}
+	}
+
+	// Sizing
+	&.nav-pills-sm {
+		.nav-item {
+			.nav-link {
+				padding: $input-btn-padding-y-sm $input-btn-padding-x-sm;
+			}
+		}
+	}
+}
+
+// Marginless
+.nav-fit {
+	margin: 0 !important;
+}

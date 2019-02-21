@@ -1,0 +1,84 @@
+version: '3'
+
+services:
+
+  artisan:
+    image: explomus/php:7.1-fpm
+    entrypoint: 'php artisan'
+    working_dir: '/var/www/html'
+#    environment:
+#      XDEBUG_CONFIG: idekey=PHPSTORM remote_host=192.168.2.140 remote_enable=1
+#      PHP_IDE_CONFIG: serverName=weplay-console
+    volumes:
+      - .:/var/www/html
+    networks:
+      - weplan
+
+  composer:
+    image: composer
+    volumes:
+      - .:/app
+      - composer-cache:/tmp
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./setup/nginx/certs:/etc/nginx/certs
+    networks:
+      - weplan
+
+  php-fpm:
+    image: explomus/php:7.1-fpm
+    volumes:
+      - .:/var/www/html
+      - ./setup/php/local.ini:/usr/local/etc/php/conf.d/php-ext.ini
+      - ./setup/php/php-ext.conf:/usr/local/etc/php-fpm.d/zz-www-ext.conf
+    environment:
+      DISABLE_CHOWN_FILES: 1
+    networks:
+      weplan:
+        aliases:
+          - php-app
+
+  weplan:
+    image: nginx
+    volumes:
+      - .:/var/www/html
+      - ./setup/nginx/nginx-weplan.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php-fpm
+      - nginx-proxy
+    expose:
+      - 443
+    environment:
+      VIRTUAL_PROTO: http
+      VIRTUAL_PORT: 80
+      VIRTUAL_HOST: localhost, local.weplan.dk
+    networks:
+      - weplan
+
+  database:
+    image: mysql/mysql-server:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: weplan
+      MYSQL_ROOT_HOST: '%.%.%.%'
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - weplan
+
+volumes:
+  db-data:
+    driver: local
+  composer-cache:
+    driver: local
+
+networks:
+  weplan:
