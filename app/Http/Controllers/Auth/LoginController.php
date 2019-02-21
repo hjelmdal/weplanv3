@@ -36,4 +36,15 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+    
+    
+    /**
+     * Override Illuminate\Foundation\Auth\AuthenticatesUsers
+     *
+     * @return view
+     */
+    public function showLoginForm()
+    {
+        return view("login/login");
+    }
 }
