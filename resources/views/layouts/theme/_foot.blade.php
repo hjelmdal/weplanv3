@@ -54,5 +54,51 @@
 <!--begin::Custom Scripts(by Pixel8) -->
 @yield("scripts")
 <script src="/js/custom.js" type="text/javascript"></script>
+@if ($errors->any())
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "10000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+        });
+        toastr.options.positionClass = "toast-top-center";
+        toastr.error("<ul> @foreach ($errors->all() as $error) \n" +
+            "                <li>{{ $error }}</li>\n" +
+            "            @endforeach </ul>", "Der opstod en fejl!");
+
+        $("#clickme").click(function (e) {
+            toastr.success("<ul><li>This is bad!</li><li>Not as bad as this!</li></ul>", "Shooot!");
+        });
+    </script>
+
+@endif
+
+@if(Session::has('message') || session('status'))
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function (event) {
+            toastr.options.closeButton = true;
+            toastr.options.positionClass = "toast-top-center";
+            toastr.options.showMethod = "fadeIn";
+            toastr.options.showDuration = 1000;
+            toastr.options.extendedTimeOut = 100000;
+            toastr.{{ Session::get('message-type','info') }}('{{ Session::get('message') . session('status') }}', '{{ Session::get('message-title',Session::get('title')) }}');
+        });
+    </script>
+@endif
 
 <!--end::Custom Scripts(by Pixel8) -->

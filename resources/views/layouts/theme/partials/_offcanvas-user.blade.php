@@ -149,7 +149,10 @@
             </div>
         </div>
         <div class="k-margin-t-40">
-            <button type="button" class="btn btn-brand btn-font-sm btn-upper btn-bold">full profile</button>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-brand btn-font-sm btn-upper btn-bold">{{ __('Logout') }}</button>
+            </form>
         </div>
     </div>
 </div>

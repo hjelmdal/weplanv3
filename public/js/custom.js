@@ -149,6 +149,26 @@ document.addEventListener("DOMContentLoaded", function () {
     btn.addClass('k-spinner k-spinner--right k-spinner--md k-spinner--light').attr('disabled', true);
     form.submit();
   });
+  $('#k_forgot_submit').click(function (e) {
+    e.preventDefault();
+    var btn = $(this);
+    var form = $(this).closest('form');
+    form.validate({
+      rules: {
+        email: {
+          required: true,
+          email: true
+        }
+      }
+    });
+
+    if (!form.valid()) {
+      return;
+    }
+
+    btn.addClass('k-spinner k-spinner--right k-spinner--md k-spinner--light').attr('disabled', true);
+    form.submit();
+  });
   $('#k_signup').click(function (e) {
     e.preventDefault();
     $('#k_forgot_form').css("display", "none");

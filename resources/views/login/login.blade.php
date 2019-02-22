@@ -227,6 +227,7 @@
         <!--end::Item-->
     </div>
 </div>
+
 <!-- end:: Page -->
 @include("layouts.theme._foot")
 </body>
