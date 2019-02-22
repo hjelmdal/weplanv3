@@ -53,5 +53,6 @@
 <!--end::Global App Bundle -->
 <!--begin::Custom Scripts(by Pixel8) -->
 @yield("scripts")
+<script src="/js/custom.js" type="text/javascript"></script>
 
 <!--end::Custom Scripts(by Pixel8) -->

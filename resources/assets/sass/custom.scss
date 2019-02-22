@@ -5,3 +5,16 @@
 .k-login-v1 .k-login-v1__body .k-login-v1__body-wrapper .k-login-v1__body-container .k-login-v1__body-form .form-group .form-control {
   border-color: #fff;
 }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: #fff !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+// Form
+
+.k-login-v1__body-form .error  {
+  padding-left:30px !important;
+}
