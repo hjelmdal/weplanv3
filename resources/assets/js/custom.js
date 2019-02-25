@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    $('#k_login_signin_submit').click(function (e) {
+    $('#k_login_submit').click(function (e) {
         e.preventDefault();
         var btn = $(this);
         var form = $(this).closest('form');
@@ -107,6 +107,32 @@ document.addEventListener("DOMContentLoaded", function () {
         $('#k_signup_form').css("display","none");
         $('#k_login_form').css("display","block");
         $('#k_login_form').addClass('flipInX animated');
+    });
+
+    // V2
+
+    $('#k_signup2').click(function (e) {
+        e.preventDefault();
+        $('#k_forgot_form2').css("display","none");
+        $('#k_login_form2').css("display","none");
+        $('#k_signup_form2').css("display","flex");
+        $('#k_signup_form2').addClass('flipInX animated');
+    });
+
+    $('#k_forgot2').click(function (e) {
+        e.preventDefault();
+        $('#k_login_form2').css("display","none");
+        $('#k_signup_form2').css("display","none");
+        $('#k_forgot_form2').css("display","flex");
+        $('#k_forgot_form2').addClass('flipInX animated');
+    });
+
+    $('.k_login_cancel2').click(function (e) {
+        e.preventDefault();
+        $('#k_forgot_form2').css("display","none");
+        $('#k_signup_form2').css("display","none");
+        $('#k_login_form2').css("display","flex");
+        $('#k_login_form2').addClass('flipInX animated');
     });
 
 

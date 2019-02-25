@@ -7,7 +7,7 @@
  */
 ?>
 @section("styles")
-    <link href="{{ config("app.keen_assets") }}/custom/user/login-v1.css" rel="stylesheet" type="text/css" />
+    <link href="{{ config("app.keen_assets") }}/custom/user/login-v2.css" rel="stylesheet" type="text/css" />
 @endsection
 @section("scripts")
     <script src="{{ config("app.keen_assets") }}/demo/default/custom/custom/login/login.js" type="text/javascript"></script>
@@ -19,26 +19,20 @@
     @include("layouts.theme._head")
 </head>
 <!-- end::Head -->
-<!-- begin::Body -->
-<body style="background-image: url(/img/weplan_2880x1800.jpg)" class="k-login-v1--enabled k-header--fixed k-header-mobile--fixed k-subheader--enabled k-subheader--transparent k-aside--enabled k-aside--fixed k-page--loading k-bg-brand" >
+<body class="k-login-v2--enabled k-header--fixed k-header-mobile--fixed k-subheader--enabled k-subheader--transparent k-aside--enabled k-aside--fixed k-page--loading" >
 <!-- begin:: Page -->
 <div class="k-grid k-grid--ver k-grid--root">
-    <div class="k-grid__item k-grid__item--fluid k-grid k-grid k-grid--hor k-login-v1" id="k_login_v1">
+    <div class="k-grid__item k-grid__item--fluid k-grid k-grid k-grid--hor k-login-v2" id="k_login_v2">
         <!--begin::Item-->
         <div class="k-grid__item k-grid--hor">
             <!--begin::Heade-->
-            <div class="k-login-v1__head">
-                <div class="k-login-v1__head-logo">
+            <div class="k-login-v2__head">
+                <div class="k-login-v2__head-logo">
                     <a href="{{ route("index") }}">
                         <img src="/img/weplan_486x135_black.png" alt="" height="40" />
                     </a>
                 </div>
-                <div class="k-login-v1__head-signup">
-                    <h4>
-                        Don't have an account?
-                    </h4>
-                    <a id="k_signup" href="#" class="k-link">Sign Up</a>
-                </div>
+                <div class="k-login-v2__head-signup"> <span>Don't have an account?</span> <a id="k_signup2" href="#" class="k-link k-font-brand">Sign Up</a> </div>
             </div>
             <!--begin::Head-->
         </div>
@@ -46,28 +40,17 @@
         <!--begin::Item-->
         <div class="k-grid__item k-grid k-grid--ver k-grid__item--fluid ">
             <!--begin::Body-->
-            <div class="k-login-v1__body">
-                <!--begin::Section-->
-                <div class="k-login-v1__body-section">
-                    <div class="k-login-v1__body-section-info">
-                        <h3>
-                            Velkommen til WePlan.dk
-                        </h3>
-                        <p>Log ind for at fortsætte</p>
-                    </div>
-                </div>
-                <!--begin::Section-->
-                <!--begin::Separator-->
-                <div class="k-login-v1__body-seaprator"></div>
-                <!--end::Separator-->
+            <div class="k-login-v2__body">
                 <!--begin::Wrapper-->
-                <div id="k_login_form" class="k-login-v1__body-wrapper">
-                    <div class="k-login-v1__body-container">
-                        <h3 class="k-login-v1__body-title">
-                            {{ __("Please Sign in") }}
-                        </h3>
+                <div id="k_login_form2" class="k-login-v2__body-wrapper">
+                    <div class="k-login-v2__body-container">
+                        <div class="k-login-v2__body-title">
+                            <h3>
+                                Sign to Account
+                            </h3>
+                        </div>
                         <!--begin::Form-->
-                        <form class="k-login-v1__body-form k-form" autocomplete="new-password" method="POST" action="{{ route('login') }}">
+                        <form class="k-login-v2__body-form k-form k-login-v2__body-form--border" method="POST" action="{{ route('login') }}" autocomplete="new-password" style="padding: 3rem 4rem 0rem 4rem">
                             @csrf
                             <div class="form-group">
                                 <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" type="text" placeholder="{{ __('E-Mail Address') }}" name="email" autocomplete="new-password">
@@ -85,39 +68,49 @@
                                     </span>
                                 @endif
                             </div>
-
-                            <!--begin::Action-->
-                            <div class="k-login-v1__body-action">
-                                <a href="#" class="k-link" id="k_forgot"> <span>{{ __('Forgot Your Password?') }}</span> </a>
-                                <button id="k_login_submit" type="submit" class="btn btn-pill btn-elevate">Sign In</button>
+                            <div class="form-group">
+                                <label for="remember" class="k-checkbox k-checkbox--bold k-checkbox--brand">
+                                    {{ __('Remember Me') }}? <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                    <span></span>
+                                </label>
                             </div>
-                            <!--end::Action-->
+
+                        <!--begin::Action-->
+                        <div class="k-login-v2__body-action k-login-v2__body-action--brand" style="padding:20px 0 0 0">
+                            <a href="#" id="k_forgot2" class="k-link k-link--brand"> {{ __('Forgot Your Password?') }} </a>
+                            <button id="k_login_submit" type="submit" class="btn btn-pill btn-brand btn-elevate">Sign In</button>
+                        </div>
                         </form>
                         <!--end::Form-->
-                        <!--begin::Divider-->
-                        <div class="k-login-v1__body-divider">
-                            <div class="k-divider"> <span></span> <span>OR</span> <span></span> </div>
+                        <!--end::Action-->
+                        <!--begin::Separator-->
+                        <div class="k-login-v2__body-separator">
+                            <div class="k-separator k-separator--space-lg k-separator--border-solid"></div>
                         </div>
-                        <!--end::Divider-->
+                        <!--end::Separator-->
+                        <h3 class="k-login-v2__body-subtitle">
+                            Or sign with social account
+                        </h3>
                         <!--begin::Options-->
-                        <div class="k-login-v1__body-options">
-                            <a href="#" class="btn"> <i class="fab fa-facebook-f"></i> Fcebook </a>
-                            <a href="#" class="btn"> <i class="fab fa-twitter"></i> Twitter </a>
-                            <a href="#" class="btn"> <i class="fab fa-google"></i> Google </a>
+                        <div class="k-login-v2__body-options">
+                            <a href="#" class="btn k-font-white k-login-v2__body-option--facebook"> <i class="fab fa-facebook-f k-font-white"></i> Facebook </a>
+                            <!--a href="#" class="btn k-font-info k-login-v2__body-option--info"> <i class="fab fa-twitter k-font-info"></i> Twitter </a-->
+                            <a href="#" class="btn k-font-white k-login-v2__body-option--google"> <i class="fab fa-google k-font-white"></i> Google </a>
                         </div>
                         <!--end::Options-->
                     </div>
                 </div>
                 <!--end::Wrapper-->
-
                 <!--begin::Wrapper-->
-                <div style="display:none" id="k_signup_form" class="k-login-v1__body-wrapper">
-                    <div class="k-login-v1__body-container">
-                        <h3 class="k-login-v1__body-title">
-                            {{ __("Sign up here") }}
-                        </h3>
+                <div style="display:none" id="k_signup_form2" class="k-login-v2__body-wrapper">
+                    <div class="k-login-v2__body-container">
+                        <div class="k-login-v2__body-title">
+                            <h3>
+                                {{ __("Sign up here") }}
+                            </h3>
+                        </div>
                         <!--begin::Form-->
-                        <form class="k-login-v1__body-form k-form" method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
+                        <form class="k-login-v2__body-form k-form k-login-v2__body-form--border" method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}" style="padding: 3rem 4rem 0rem 4rem">
                             @csrf
                             <div class="form-group">
                                 <input id="register_name" class="form-control" type="text" placeholder="{{ __('Name') }}" name="name" value="{{ old('name') }}" required autofocus>
@@ -147,42 +140,48 @@
                                 <input id="register_rpassword" class="form-control " type="password" placeholder="{{ __('Confirm Password') }}" name="password_confirmation" id="password-confirm">
                             </div>
                             <div class="row form-group">
-                                <div class="col k-align-center">
+                                <div class="col k-align-left">
                                     <label id="register_agree" class="k-checkbox k-checkbox--brand k-checkbox--bold">
-                                        <input type="checkbox" name="agree" c> I Agree the <a href="#" class="k-link k-link--danger">terms and conditions</a>.
+                                        <input type="checkbox" name="agree"> I Agree the <a href="#" class="k-link k-link--danger">terms and conditions</a>.
                                         <span></span>
                                     </label>
                                 </div>
                             </div>
-                            <div class="col k-align-center">
-                                <button type="submit" id="k_signup_submit" class="btn btn-success btn-elevate btn-pill btn-lg"><em class="fa fa-check"></em> {{ __('Register') }}</button>
-                                <button id="k_signup_cancel" class="btn btn-outline-brand btn-elevate btn-pill btn-lg k_login_cancel"><em class="fa fa-undo"></em> {{ __("Cancel") }}</button>
+                            <div class="k-login-v2__body-action k-login-v2__body-action--brand" style="padding:20px 0 0 0">
+                                <button id="k_signup_cancel" class="btn btn-outline-metal btn-elevate btn-pill k_login_cancel2"><em class="fa fa-undo"></em> {{ __("Cancel") }}</button>
+                                <button type="submit" id="k_signup_submit" class="btn btn-pill btn-brand btn-elevate"><em class="fa fa-check"></em> {{ __('Register') }}</button>
                             </div>
                         </form>
                         <!--end::Form-->
-                        <!--begin::Divider-->
-                        <div class="k-login-v1__body-divider">
-                            <div class="k-divider"> <span></span> <span>OR</span> <span></span> </div>
+                        <!--end::Action-->
+                        <!--begin::Separator-->
+                        <div class="k-login-v2__body-separator">
+                            <div class="k-separator k-separator--space-lg k-separator--border-solid"></div>
                         </div>
-                        <!--end::Divider-->
+                        <!--end::Separator-->
+                        <h3 class="k-login-v2__body-subtitle">
+                            Or sign up with social account
+                        </h3>
                         <!--begin::Options-->
-                        <div class="k-login-v1__body-options k-margin-l-25 k-margin-r-25">
-                            <a href="#" class="btn k-margin-5"> <i class="fab fa-facebook-f"></i> Facebook </a>
-                            <a href="#" class="btn k-margin-5"> <i class="fab fa-google"></i> Google </a>
+                        <div class="k-login-v2__body-options">
+                            <a href="#" class="btn k-font-white k-login-v2__body-option--facebook"> <i class="fab fa-facebook-f k-font-white"></i> Facebook </a>
+                            <!--a href="#" class="btn k-font-info k-login-v2__body-option--info"> <i class="fab fa-twitter k-font-info"></i> Twitter </a-->
+                            <a href="#" class="btn k-font-white k-login-v2__body-option--google"> <i class="fab fa-google k-font-white"></i> Google </a>
                         </div>
                         <!--end::Options-->
                     </div>
                 </div>
                 <!--end::Wrapper-->
-
                 <!--begin::Wrapper-->
-                <div style="display:none" id="k_forgot_form" class="k-login-v1__body-wrapper">
-                    <div class="k-login-v1__body-container">
-                        <h3 class="k-login-v1__body-title">
-                            {{ __("Forgot your password?") }}
-                        </h3>
+                <div style="display:none" id="k_forgot_form2" class="k-login-v2__body-wrapper">
+                    <div class="k-login-v2__body-container">
+                        <div class="k-login-v2__body-title">
+                            <h3>
+                                {{ __('Forgot Your Password?') }}
+                            </h3>
+                        </div>
                         <!--begin::Form-->
-                        <form class="k-login-v1__body-form k-form" method="POST" action="{{ route('password.email') }}" aria-label="{{ __('Reset Password') }}">
+                        <form class="k-login-v2__body-form k-form k-login-v2__body-form--border" method="POST" action="{{ route('password.email') }}" aria-label="{{ __('Reset Password') }}" style="padding: 3rem 4rem 0rem 4rem">
                             @csrf
                             <div class="form-group">
                                 <input class="form-control" type="text" placeholder="{{ __('E-Mail Address') }}" name="email" id="forgot_email" autocomplete="new-password" value="{{ $email ?? old('email') }}" required autofocus>
@@ -193,41 +192,36 @@
                                 @endif
                             </div>
 
-                            <div class="col k-align-center">
+                            <div class="k-login-v2__body-action k-login-v2__body-action--brand" style="padding:3rem 0 3rem 0">
+                                <button id="k_forgot_cancel" class="btn btn-outline-metal btn-elevate btn-pill k_login_cancel2"><em class="fa fa-undo"></em> {{ __("Cancel") }}</button>
                                 <button type="submit" id="k_forgot_submit" class="btn btn-success btn-elevate btn-pill btn-lg"><em class="fa fa-check"></em> {{ __('Reset password') }}</button>
-                                <button id="k_forgot_cancel" class="btn btn-outline-brand btn-elevate btn-pill btn-lg k_login_cancel"><em class="fa fa-undo"></em> {{ __("Cancel") }}</button>
                             </div>
                         </form>
                         <!--end::Form-->
-                        <!--begin::Divider-->
-                        <div class="k-login-v1__body-divider">
-                            <div class="k-divider"> <span></span> <span>OR</span> <span></span> </div>
-                        </div>
-                        <!--end::Divider-->
-                        <!--begin::Options-->
-                        <div class="k-login-v1__body-options k-margin-l-25 k-margin-r-25">
-                            <a href="#" class="btn k-margin-5"> <i class="fab fa-facebook-f"></i> Facebook </a>
-                            <a href="#" class="btn k-margin-5"> <i class="fab fa-google"></i> Google </a>
-                        </div>
-                        <!--end::Options-->
+                        <!--end::Action-->
+
                     </div>
                 </div>
                 <!--end::Wrapper-->
+                <!--begin::Pic-->
+                <div class="k-login-v2__body-pic">
+                    <img src="/img/weplan_bg_icon.gif" alt="">
+                </div>
+                <!--begin::Pic-->
             </div>
             <!--begin::Body-->
         </div>
         <!--end::Item-->
         <!--begin::Item-->
         <div class="k-grid__item">
-            <div class="k-login-v1__footer">
-                <div class="k-login-v1__footer-link"> <a href="#" class="k-link">Privacy</a> <a href="#" class="k-link">Legal</a> <a href="#" class="k-link">Contact</a> </div>
-                <div class="k-login-v1__footer-info"> <a href="#" class="k-link">&copy; 2018 KeenThemes</a> </div>
+            <div class="k-login-v2__footer">
+                <div class="k-login-v2__footer-link"> <a href="#" class="k-link k-font-brand">Privacy</a> <a href="#" class="k-link k-font-brand">Legal</a> <a href="#" class="k-link k-font-brand">Contact</a> </div>
+                <div class="k-login-v2__footer-info"> <a href="#" class="k-link">&copy; 2018 KeenThemes</a> </div>
             </div>
         </div>
         <!--end::Item-->
     </div>
 </div>
-
 <!-- end:: Page -->
 @include("layouts.theme._foot")
 </body>

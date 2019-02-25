@@ -22,3 +22,36 @@ input:-webkit-autofill:active {
 body::before {
   opacity: 0;
 }
+
+.k_login_cancel2 {
+  color:#212529 !important;
+}
+
+.k_login_cancel2:hover {
+  color:#fff !important;
+}
+
+.k-login-v2__body-option--facebook {
+  background-color: #3C5A99 !important;
+  color:#fff;
+}
+
+.k-login-v2__body-option--google {
+  background-color: #DB4437 !important;
+  color:#fff;
+}
+
+.k-font-white {
+  color: #fff !important;
+}
+
+.k-login-v2 .k-login-v2__body .k-login-v2__body-wrapper .k-login-v2__body-container .k-login-v2__body-options>a:last-child {
+  margin: 0 2rem;
+}
+
+.k-login-v2 .k-login-v2__body .k-login-v2__body-pic>img {
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+}
+
