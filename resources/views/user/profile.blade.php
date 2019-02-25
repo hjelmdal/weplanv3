@@ -75,7 +75,7 @@
             </ul>
         </div>
     </div>
-    @if($user->email_verified_at)
+    @if(!$user->email_verified_at)
     <!--begin::Row-->
     <div class="row">
         <div class="col-12">
@@ -104,7 +104,7 @@
     <!--end::Portlet-->
     <div class="tab-content">
         <div class="tab-pane fade show active" id="k_tabs_1_1" role="tabpanel">
-
+        @if($user->email_verified_at)
             <!--begin::Row-->
             <div class="row">
                 <div class="col-lg-6 col-xl-4 order-lg-1 order-xl-1">
@@ -838,6 +838,7 @@
                 </div>
             </div>
             <!--end::Row-->
+            @endif
         </div>
         <div class="tab-pane fade" id="k_tabs_1_2" role="tabpanel">
             <!--begin::Row-->
