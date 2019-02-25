@@ -17,3 +17,8 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
+
+
+Route::middleware(['auth'])->prefix('user')->group(function () {
+  Route::get('/profile','UserController@index')->name("profile");
+});
