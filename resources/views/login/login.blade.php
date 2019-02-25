@@ -20,7 +20,7 @@
 </head>
 <!-- end::Head -->
 <!-- begin::Body -->
-<body style="background-image: url(/img/weplan_2880x1800.jpg)" class="k-login-v1--enabled k-header--fixed k-header-mobile--fixed k-subheader--enabled k-subheader--transparent k-aside--enabled k-aside--fixed k-page--loading" >
+<body style="background-image: url(/img/weplan_2880x1800.jpg)" class="k-login-v1--enabled k-header--fixed k-header-mobile--fixed k-subheader--enabled k-subheader--transparent k-aside--enabled k-aside--fixed k-page--loading k-bg-brand" >
 <!-- begin:: Page -->
 <div class="k-grid k-grid--ver k-grid--root">
     <div class="k-grid__item k-grid__item--fluid k-grid k-grid k-grid--hor k-login-v1" id="k_login_v1">
@@ -51,9 +51,9 @@
                 <div class="k-login-v1__body-section">
                     <div class="k-login-v1__body-section-info">
                         <h3>
-                            Whatever CTA's wave purpose important exit element
+                            Velkommen til WePlan.dk
                         </h3>
-                        <p>Lorem ipsum lian amet estudiat</p>
+                        <p>Log ind for at fortsætte</p>
                     </div>
                 </div>
                 <!--begin::Section-->

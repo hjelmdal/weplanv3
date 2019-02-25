@@ -18,3 +18,7 @@ input:-webkit-autofill:active {
   padding-left: 30px !important;
 }
 
+body::before {
+  opacity: 0;
+}
+
