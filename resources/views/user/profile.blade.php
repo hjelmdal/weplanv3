@@ -9,6 +9,18 @@
 @extends("layouts.theme.index")
 @section("scripts")
     <script src="{{ config("app.keen_assets") }}/demo/default/custom/custom/profile/profile.js" type="text/javascript"></script>
+    @if(Session::has('resent'))
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function (event) {
+            toastr.options.closeButton = true;
+            toastr.options.positionClass = "toast-top-center";
+            toastr.options.showMethod = "fadeIn";
+            toastr.options.showDuration = 1000;
+            toastr.options.extendedTimeOut = 100000;
+            toastr.{{ Session::get('message-type','info') }}(' {{ __('A fresh verification link has been sent to your email address.') }}', '{{ Session::get('message-title',Session::get('title')) }}');
+        });
+    </script>
+  @endif
 @endsection
 @section("styles")
     <link href="{{ config("app.keen_assets") }}/custom/user/profile-v1.css" rel="stylesheet" type="text/css" />

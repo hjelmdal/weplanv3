@@ -19,7 +19,7 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('verified'
 
 
 
-Route::middleware(['auth'])->prefix('user')->group(function () {
+Route::middleware(['auth'])->prefix('user')->name("user")->group(function () {
     Route::get('/','UserController@index')->middleware("verified")->name("index");
     Route::get('/profile','UserController@index')->name("profile");
 });
