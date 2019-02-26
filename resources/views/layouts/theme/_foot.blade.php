@@ -39,17 +39,17 @@
     };</script>
 <!-- end::Global Config -->
 <!--begin::Global Theme Bundle(used by all pages) -->
-<script src="{{ config("app.keen_assets") }}/vendors/base/vendors.bundle.js" type="text/javascript"></script>
-<script src="{{ config("app.keen_assets") }}/demo/demo5/base/scripts.bundle.js" type="text/javascript"></script>
+<script src="{{ config("app.keen_assets") }}/vendors/base/vendors.bundle.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
+<script src="{{ config("app.keen_assets") }}/demo/demo5/base/scripts.bundle.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
 <!--end::Global Theme Bundle -->
 <!--begin::Page Vendors(used by this page) -->
-<script src="{{ config("app.keen_assets") }}/vendors/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
+<script src="{{ config("app.keen_assets") }}/vendors/custom/fullcalendar/fullcalendar.bundle.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
 <!--end::Page Vendors -->
 <!--begin::Page Scripts(used by this page) -->
-<script src="{{ config("app.keen_assets") }}/app/scripts/custom/dashboard.js" type="text/javascript"></script>
+<script src="{{ config("app.keen_assets") }}/app/scripts/custom/dashboard.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
 <!--end::Page Scripts -->
 <!--begin::Global App Bundle(used by all pages) -->
-<script src="{{ config("app.keen_assets") }}/app/scripts/bundle/app.bundle.js" type="text/javascript"></script>
+<script src="{{ config("app.keen_assets") }}/app/scripts/bundle/app.bundle.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
 <!--end::Global App Bundle -->
 <!--begin::Custom Scripts(by Pixel8) -->
 @yield("scripts")
