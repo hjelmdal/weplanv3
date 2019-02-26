@@ -20,6 +20,7 @@
 </head>
 <!-- end::Head -->
 <body class="k-login-v2--enabled k-header--fixed k-header-mobile--fixed k-subheader--enabled k-subheader--transparent k-aside--enabled k-aside--fixed k-page--loading" >
+@include("layouts.theme.partials._layout-page-loader")
 <!-- begin:: Page -->
 <div class="k-grid k-grid--ver k-grid--root">
     <div class="k-grid__item k-grid__item--fluid k-grid k-grid k-grid--hor k-login-v2" id="k_login_v2">

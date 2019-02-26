@@ -1501,6 +1501,8 @@ KUtil.ready(function() {
 });
 
 // CSS3 Transitions only after page load(.k-page-loading class added to body tag and remove with JS on page load)
-window.onload = function() {    
-    KUtil.removeClass(KUtil.get('body'), 'k-page--loading');
+window.onload = function() {
+    $(".k-page-loader").fadeOut("fast", function() {
+        KUtil.removeClass(KUtil.get('body'), 'k-page--loading');
+    });
 }
