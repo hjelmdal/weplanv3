@@ -13,6 +13,14 @@ input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s !important;
 }
 
+.form-login2:-webkit-autofill,
+.form-login2:-webkit-autofill:hover,
+.form-login2:-webkit-autofill:focus,
+.form-login2:-webkit-autofill:active {
+  -webkit-text-fill-color: #495057 !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
 // Form
 
 .k-login-v1__body-form .error  {

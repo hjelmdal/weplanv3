@@ -54,7 +54,7 @@
                         <form class="k-login-v2__body-form k-form k-login-v2__body-form--border" method="POST" action="{{ route('login') }}" autocomplete="new-password" >
                             @csrf
                             <div class="form-group">
-                                <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" type="text" placeholder="{{ __('E-Mail Address') }}" name="email" autocomplete="new-password">
+                                <input id="login_email" class="form-control form-login2 {{ $errors->has('email') ? ' is-invalid' : '' }}" type="text" placeholder="{{ __('E-Mail Address') }}" name="email" autocomplete="new-password">
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback k-padding-l-30" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -62,7 +62,7 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }} transparent" type="password" placeholder="{{ __('Password') }}" name="password" autocomplete="new-password">
+                                <input class="form-control form-login2 {{ $errors->has('password') ? ' is-invalid' : '' }} transparent" type="password" placeholder="{{ __('Password') }}" name="password" autocomplete="new-password">
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback k-padding-l-30" role="alert">
                                         <strong>{{ $errors->first('password') }}</strong>
