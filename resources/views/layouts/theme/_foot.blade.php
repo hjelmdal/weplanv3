@@ -53,7 +53,7 @@
 <!--end::Global App Bundle -->
 <!--begin::Custom Scripts(by Pixel8) -->
 @yield("scripts")
-<script src="/js/custom.js" type="text/javascript"></script>
+<script src="/js/custom.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
 @if ($errors->any())
     <script>
 
