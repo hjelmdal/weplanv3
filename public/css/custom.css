@@ -63,3 +63,21 @@ body::before {
   animation-fill-mode: both;
 }
 
+@media (max-width: 1024px) {
+  .k-login-v2 .k-login-v2__body .k-login-v2__body-wrapper .k-login-v2__body-container .k-login-v2__body-options {
+    margin-top: 0rem;
+  }
+
+  .k-login-v2 .k-login-v2__body .k-login-v2__body-wrapper .k-login-v2__body-container .k-login-v2__body-form {
+    padding-bottom: 0rem;
+  }
+
+  .k-login-v2 .k-login-v2__body {
+    margin-top: 1rem;
+  }
+
+  .k-login-v2 .k-login-v2__head .k-login-v2__head-signup {
+    padding-top: 1rem;
+  }
+}
+

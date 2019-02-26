@@ -221,7 +221,7 @@
         <div class="k-grid__item">
             <div class="k-login-v1__footer">
                 <div class="k-login-v1__footer-link"> <a href="#" class="k-link">Privacy</a> <a href="#" class="k-link">Legal</a> <a href="#" class="k-link">Contact</a> </div>
-                <div class="k-login-v1__footer-info"> <a href="#" class="k-link">&copy; 2018 KeenThemes</a> </div>
+                <div class="k-login-v1__footer-info"> <a href="https://pixel8.dk" class="k-link">&copy; {{ date("Y") }} Pixel8</a> </div>
             </div>
         </div>
         <!--end::Item-->

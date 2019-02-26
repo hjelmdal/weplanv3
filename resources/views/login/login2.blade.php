@@ -51,7 +51,7 @@
                             </h3>
                         </div>
                         <!--begin::Form-->
-                        <form class="k-login-v2__body-form k-form k-login-v2__body-form--border" method="POST" action="{{ route('login') }}" autocomplete="new-password" style="padding: 3rem 4rem 0rem 4rem">
+                        <form class="k-login-v2__body-form k-form k-login-v2__body-form--border" method="POST" action="{{ route('login') }}" autocomplete="new-password" >
                             @csrf
                             <div class="form-group">
                                 <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" type="text" placeholder="{{ __('E-Mail Address') }}" name="email" autocomplete="new-password">
@@ -111,7 +111,7 @@
                             </h3>
                         </div>
                         <!--begin::Form-->
-                        <form class="k-login-v2__body-form k-form k-login-v2__body-form--border" method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}" style="padding: 3rem 4rem 0rem 4rem">
+                        <form class="k-login-v2__body-form k-form k-login-v2__body-form--border" method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}" style="">
                             @csrf
                             <div class="form-group">
                                 <input id="register_name" class="form-control" type="text" placeholder="{{ __('Name') }}" name="name" value="{{ old('name') }}" required autofocus>
@@ -182,7 +182,7 @@
                             </h3>
                         </div>
                         <!--begin::Form-->
-                        <form class="k-login-v2__body-form k-form k-login-v2__body-form--border" method="POST" action="{{ route('password.email') }}" aria-label="{{ __('Reset Password') }}" style="padding: 3rem 4rem 0rem 4rem">
+                        <form class="k-login-v2__body-form k-form k-login-v2__body-form--border" method="POST" action="{{ route('password.email') }}" aria-label="{{ __('Reset Password') }}" style="">
                             @csrf
                             <div class="form-group">
                                 <input class="form-control" type="text" placeholder="{{ __('E-Mail Address') }}" name="email" id="forgot_email" autocomplete="new-password" value="{{ $email ?? old('email') }}" required autofocus>
@@ -217,7 +217,7 @@
         <div class="k-grid__item">
             <div class="k-login-v2__footer">
                 <div class="k-login-v2__footer-link"> <a href="#" class="k-link k-font-brand">Privacy</a> <a href="#" class="k-link k-font-brand">Legal</a> <a href="#" class="k-link k-font-brand">Contact</a> </div>
-                <div class="k-login-v2__footer-info"> <a href="#" class="k-link">&copy; 2018 KeenThemes</a> </div>
+                <div class="k-login-v2__footer-info"> <a href="https://pixel8.dk" class="k-link">&copy; {{ date("Y") }} Pixel8</a> </div>
             </div>
         </div>
         <!--end::Item-->
