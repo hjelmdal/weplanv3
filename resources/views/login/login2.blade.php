@@ -94,9 +94,9 @@
                         </h3>
                         <!--begin::Options-->
                         <div class="k-login-v2__body-options">
-                            <a href="#" class="btn k-font-white k-login-v2__body-option--facebook"> <i class="fab fa-facebook-f k-font-white"></i> Facebook </a>
+                            <a href="{{route('facebook-redirect-create')}}" class="btn k-font-white k-login-v2__body-option--facebook"> <i class="fab fa-facebook-f k-font-white"></i> Facebook </a>
                             <!--a href="#" class="btn k-font-info k-login-v2__body-option--info"> <i class="fab fa-twitter k-font-info"></i> Twitter </a-->
-                            <a href="#" class="btn k-font-white k-login-v2__body-option--google"> <i class="fab fa-google k-font-white"></i> Google </a>
+                            <a href="{{route('google-redirect-create')}}" class="btn k-font-white k-login-v2__body-option--google"> <i class="fab fa-google k-font-white"></i> Google </a>
                         </div>
                         <!--end::Options-->
                     </div>

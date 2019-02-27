@@ -33,7 +33,7 @@
                 <div class="col-md-12 col-lg-5 col-xl-4">
                     <div class="k-profile__main">
                         <div class="k-profile__main-pic">
-                            <img src="@if(!$user->avatar)/img/profile.png @endif {{ $user->avatar }}" alt=""/>
+                            <img src="@if(!$user->avatar)/img/profile.png @endif{{ $user->avatar }}" alt=""/>
                             <label class="k-profile__main-pic-upload" > <i class="flaticon-photo-camera"></i> </label>
                         </div>
                         <div class="k-profile__main-info">
