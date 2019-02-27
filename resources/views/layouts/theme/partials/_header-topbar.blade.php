@@ -56,7 +56,7 @@
         <div class="k-header__topbar-welcome">{{ __("Hi") }},</div>
         <div class="k-header__topbar-username">{{ $firstname }}</div>
         <div class="k-header__topbar-wrapper" >
-            <img alt="Pic" src="{{ config("app.keen_assets") }}/media/users/default.jpg"/>
+            <img alt="Pic" src="@if(!$user->avatar)/img/profile.png @endif{{asset('storage/'.$user->avatar)}}"/>
         </div>
     </div>
     @endif

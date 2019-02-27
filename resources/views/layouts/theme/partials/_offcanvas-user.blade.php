@@ -1,4 +1,5 @@
 <!-- begin::Offcanvas Toolbar Profile -->
+@if($user)
 <div id="k_offcanvas_toolbar_profile" class="k-offcanvas-panel">
     <div class="k-offcanvas-panel__head">
         <h3 class="k-offcanvas-panel__title">
@@ -9,14 +10,14 @@
     <div class="k-offcanvas-panel__body">
         <div class="k-user-card-v3 k-margin-b-30">
             <div class="k-user-card-v3__avatar">
-                <img src="{{ config("app.keen_assets") }}/media/users/300_21.jpg" alt="" />
+                <img src="@if(!$user->avatar)/img/profile.png @endif{{asset('storage/'.$user->avatar)}}" alt="" />
             </div>
             <div class="k-user-card-v3__detalis">
-                <a href="#" class="k-user-card-v3__name">James Jones</a> 
-                <div class="k-user-card-v3__desc"> Application Developer </div>
+                <a href="#" class="k-user-card-v3__name">{{ $user->name }}</a>
+                <div class="k-user-card-v3__desc"> </div>
                 <div class="k-user-card-v3__info">
-                    <a href="#" class="k-user-card-v3__item"> <i class="flaticon-email-black-circular-button k-font-brand"></i> <span class="k-user-card-v3__tag">jm@softplus.com</span> </a>
-                    <a href="#" class="k-user-card-v3__item"> <i class="flaticon-twitter-logo-button k-font-accent"></i> <span class="k-user-card-v3__tag">@jmdev</span> </a>
+                    <a href="#" class="k-user-card-v3__item"> <i class="flaticon-email-black-circular-button k-font-brand"></i> <span class="k-user-card-v3__tag">{{ $user->email }}</span> </a>
+                    <a href="#" class="k-user-card-v3__item"> <i class="flaticon-facebook-logo-button k-font-accent"></i> <span class="k-user-card-v3__tag">@jmdev</span> </a>
                 </div>
             </div>
         </div>
@@ -156,4 +157,5 @@
         </div>
     </div>
 </div>
+@endif
 <!-- end::Offcanvas Toolbar Profile -->

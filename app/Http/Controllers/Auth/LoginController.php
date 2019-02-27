@@ -101,7 +101,8 @@ class LoginController extends Controller
                 'token' => $user->token,
                 'refresh_token' => $user->refreshToken,
                 'expires_in' => $user->expiresIn,
-                'google_id' => $user->getId()
+                'google_id' => $user->getId(),
+                'google_handle' => $user->getNickname()
             ]);
             $userObj->google()->save($google);
             // Fetch avatar and save in filesystem
@@ -152,7 +153,8 @@ class LoginController extends Controller
                 'token' => $user->token,
                 'refresh_token' => $user->refreshToken,
                 'expires_in' => $user->expiresIn,
-                'google_id' => $user->getId()
+                'google_id' => $user->getId(),
+                'google_handle' => $user->getNickname()
             ]);
             $userObj->google()->save($google);
             //DB::commit();
@@ -207,7 +209,8 @@ class LoginController extends Controller
                 'token' => $user->token,
                 'refresh_token' => $user->refreshToken,
                 'expires_in' => $user->expiresIn,
-                'facebook_id' => $user->getId()
+                'facebook_id' => $user->getId(),
+                'facebook_handle' => $user->getNickname()
             ]);
             $userObj->google()->save($facebook);
             $this->guard()->login($userObj);
@@ -244,7 +247,8 @@ class LoginController extends Controller
                 'token' => $user->token,
                 'refresh_token' => $user->refreshToken,
                 'expires_in' => $user->expiresIn,
-                'facebook_id' => $user->getId()
+                'facebook_id' => $user->getId(),
+                'facebook_handle' => $user->getNickname()
             ]);
             $userObj->save();
             $userObj->facebook()->save($facebook);
