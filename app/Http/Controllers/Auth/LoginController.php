@@ -73,101 +73,50 @@ class LoginController extends Controller
         /** @var User $user */
         $user = Socialite::driver('google')->user();
         
-        
-        //Try to login user with Google+
         $userObj = \App\Models\User::where('email', $user->getEmail())->whereHas('google', function(Builder $query) use ($user){
             $query->where('google_id', $user->getId());
         })->first();
         
-        
-        //Check if Google user is found
         if($userObj != null){
             $this->guard()->login($userObj);
-            return redirect($this->redirectTo);
+            return redirect()->route('home');
         }
-        // Callback if user not found
-        // elseif($request->session()->get('google-intent') == 'login'){
-        //    $request->session()->flash('message', 'Ingen profil passede sammen med google - opret dig forneden');
-        //    return redirect()->route('login');
-        // }
+        elseif($request->session()->get('google-intent') == 'login'){
+            $request->session()->flash('message', 'Ingen profil passede sammen med google - opret dig forneden');
+            return redirect()->route('login');
+        }
         
-        
-        // Find user in system
         $userObj = \App\Models\User::where('email', $user->getEmail())->first();
-        // If user exist with no relation to Google
         if($userObj != null){
-            // Relate user to Google account
-            $google = new Google([
-                'token' => $user->token,
-                'refresh_token' => $user->refreshToken,
-                'expires_in' => $user->expiresIn,
-                'google_id' => $user->getId(),
-                'google_handle' => $user->getNickname()
-            ]);
-            $userObj->google()->save($google);
-            // Fetch avatar and save in filesystem
-            $avatar = $user->getAvatar();
-            $avatar = preg_replace('/\?sz=[\d]*$/', '', $avatar);
-            $fileName = tempnam(sys_get_temp_dir(), 'profile-pic');
-            copy($avatar, $fileName);
-            /** @var Filesystem $disk */
-            $file = Storage::disk('public')->putFile('profile', new File($fileName));
-            $userObj->avatar = "/" .$file;
-            $userObj->save();
-            
-            Log::debug($avatar);
-            
-            
-            $request->session()->flash('message', 'Din bruger er nu associeret med Google+ Login');
-            
-            // Login User
-            $this->guard()->login($userObj);
-            
-            DB::commit();
-            return redirect($this->redirectTo);
+            $request->session()->flash('message', 'Emailen eksister allerede på en bruger');
+            return redirect()->route('login');
         }
         
-        //If No user is found - sign up!
         if($request->session()->get('google-intent') == 'create'){
-            Log::info($user->getAvatar());
             $fileName = tempnam(sys_get_temp_dir(), 'profile-pic');
             copy($user->getAvatar(), $fileName);
             /** @var Filesystem $disk */
             $file = Storage::disk('public')->putFile('profile', new File($fileName));
             
-            Log::notice("Avatar:" . $file);
-            //DB::beginTransaction();
-            $userObj = new \App\Models\User([
+            DB::beginTransaction();
+            $userObj = \App\Models\User::create([
                 'name' => $user->getName(),
                 'email' => $user->getEmail(),
-                'avatar' => "/" . $file,
                 'password' => bcrypt(uniqid()),
-                
+                'avatar' => $file
             ]);
-            
-            $userObj->save();
-    
-            Log::debug("Avatar: " . $userObj->avatar);
-            
-            $google = new Google([
+            $facebook = new Google([
                 'token' => $user->token,
                 'refresh_token' => $user->refreshToken,
                 'expires_in' => $user->expiresIn,
-                'google_id' => $user->getId(),
-                'google_handle' => $user->getNickname()
+                'google_id' => $user->getId()
             ]);
-            $userObj->google()->save($google);
-            //DB::commit();
+            $userObj->google()->save($facebook);
             $this->guard()->login($userObj);
             
-            
-            $request->session()->flash('message', 'Du har nu oprettet en bruger med dit Google+ Login');
-    
-            // Send verification email
-            return redirect()->route('verification.resend');
+            DB::commit();
+            return redirect()->route('home');
         }
-        
-        // If everything fails - redirect to Login
         redirect()->route('login');
     }
     
@@ -181,83 +130,53 @@ class LoginController extends Controller
         return Socialite::driver('facebook')->redirect();
     }
     
-    public function handleFacebookCallback(Request $request){
+    public function handleFacebookCallback(Request $request)
+    {
         /** @var User $user */
         $user = Socialite::driver('facebook')->user();
-        
-        //Login user with Facebook model
-        $userObj = \App\Models\User::where('email', $user->getEmail())->whereHas('facebook', function(Builder $query) use ($user){
+    
+        $userObj = \App\Models\User::where('email', $user->getEmail())->whereHas('facebook', function (Builder $query) use ($user) {
             $query->where('facebook_id', $user->getId());
         })->first();
-        
-        // User is found - Login
-        if($userObj != null){
+    
+        if ($userObj != null) {
             $this->guard()->login($userObj);
-            return redirect($this->redirectTo);
+            return redirect()->route('home');
+        } elseif ($request->session()->get('fb-intent') == 'login') {
+            $request->session()->flash('message', 'Ingen profil passede sammen med facebook - opret dig forneden');
+            return redirect()->route('login');
         }
-//        elseif($request->session()->get('fb-intent') == 'login'){
-//            $request->session()->flash('message', 'Ingen profil passede sammen med facebook - opret dig forneden');
-//            return redirect()->route('login');
-//        }
-        
-        //Find user in system
+    
         $userObj = \App\Models\User::where('email', $user->getEmail())->first();
-        if($userObj != null){
-            
-            //Associate with Facebook
-            $facebook = new Facebook([
-                'token' => $user->token,
-                'refresh_token' => $user->refreshToken,
-                'expires_in' => $user->expiresIn,
-                'facebook_id' => $user->getId(),
-                'facebook_handle' => $user->getNickname()
-            ]);
-            $userObj->google()->save($facebook);
-            $this->guard()->login($userObj);
-            
-            DB::commit();
-            // Fetch avatar
-            $avatar = $user->getAvatar();
-            $avatar = preg_replace('/\?sz=[\d]*$/', '', $avatar);
-            $fileName = tempnam(sys_get_temp_dir(), 'profile-pic');
-            copy($avatar, $fileName);
-            /** @var Filesystem $disk */
-            $file = Storage::disk('public')->putFile('profile', new File($fileName));
-            $userObj->avatar = "/" .$file;
-            $userObj->save();
-            Log::debug($avatar);
-            $request->session()->flash('message', 'Din bruger er nu associeret med Facebook Login');
-            return redirect($this->redirectTo);
+        if ($userObj != null) {
+            $request->session()->flash('message', 'Email already exist');
+            return redirect()->route('login');
         }
-        
-        if($request->session()->get('fb-intent') == 'create'){
+    
+        if ($request->session()->get('fb-intent') == 'create') {
             $fileName = tempnam(sys_get_temp_dir(), 'profile-pic');
             copy($user->getAvatar(), $fileName);
             /** @var Filesystem $disk */
             $file = Storage::disk('public')->putFile('profile', new File($fileName));
-            
-    
-            $userObj = new \App\Models\User([
+        
+            DB::beginTransaction();
+            $userObj = \App\Models\User::create([
                 'name' => $user->getName(),
                 'email' => $user->getEmail(),
                 'password' => bcrypt(uniqid()),
-                'avatar' => "/" .$file
+                'avatar' => $file
             ]);
             $facebook = new Facebook([
                 'token' => $user->token,
                 'refresh_token' => $user->refreshToken,
                 'expires_in' => $user->expiresIn,
-                'facebook_id' => $user->getId(),
-                'facebook_handle' => $user->getNickname()
+                'facebook_id' => $user->getId()
             ]);
-            $userObj->save();
             $userObj->facebook()->save($facebook);
             $this->guard()->login($userObj);
-            
-           
-            
-            // Send verification email
-            return redirect()->route('verification.resend');
+        
+            DB::commit();
+            return redirect()->route('home');
         }
         redirect()->route('login');
     }
