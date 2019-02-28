@@ -46,10 +46,10 @@
 <script src="{{ config("app.keen_assets") }}/vendors/custom/fullcalendar/fullcalendar.bundle.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
 <!--end::Page Vendors -->
 <!--begin::Page Scripts(used by this page) -->
-<script src="{{ config("app.keen_assets") }}/app/scripts/custom/dashboard.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
+<script src="{{ config("app.keen_assets") }}/app/custom/general/dashboard.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
 <!--end::Page Scripts -->
 <!--begin::Global App Bundle(used by all pages) -->
-<script src="{{ config("app.keen_assets") }}/app/scripts/bundle/app.bundle.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
+<script src="{{ config("app.keen_assets") }}/app/bundle/app.bundle.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
 <!--end::Global App Bundle -->
 <!--begin::Custom Scripts(by Pixel8) -->
 @yield("scripts")
