@@ -11,6 +11,7 @@
 @endsection
 @section("scripts")
     <script src="{{ config("app.keen_assets") }}/app/custom/general/custom/login/login.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
+    <script src="/js/fullscreen.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
 @endsection
     <!DOCTYPE html>
 <html lang="en">
@@ -94,9 +95,9 @@
                         </h3>
                         <!--begin::Options-->
                         <div class="k-login-v2__body-options">
-                            <a href="{{route('facebook-redirect-create')}}" class="btn k-font-white k-login-v2__body-option--facebook"> <i class="fab fa-facebook-f k-font-white"></i> Facebook </a>
+                            <a data-fullscreen="true" href="{{route('facebook-redirect-create')}}" class="btn k-font-white k-login-v2__body-option--facebook"> <i class="fab fa-facebook-f k-font-white"></i> Facebook </a>
                             <!--a href="#" class="btn k-font-info k-login-v2__body-option--info"> <i class="fab fa-twitter k-font-info"></i> Twitter </a-->
-                            <a href="{{route('google-redirect-create')}}" class="btn k-font-white k-login-v2__body-option--google"> <i class="fab fa-google k-font-white"></i> Google </a>
+                            <a data-fullscreen="true" href="{{route('google-redirect-create')}}" class="btn k-font-white k-login-v2__body-option--google"> <i class="fab fa-google k-font-white"></i> Google </a>
                         </div>
                         <!--end::Options-->
                     </div>

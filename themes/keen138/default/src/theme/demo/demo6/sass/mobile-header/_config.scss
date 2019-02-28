@@ -1,0 +1,35 @@
+//
+// Mobile Header
+//
+
+
+
+
+$k-mobile-header-config: (
+	self: (
+		default: (
+			height: 60px,
+		),		
+		fixed: (		 
+			zindex: 97
+		)
+	),
+
+	toolbar: (
+		toggler: (
+			width: 26px,
+			height: 26px,  
+			transition-duration: 0.4s,
+			thickness: 2px,
+			space: 6px, 
+			radius: 2px,
+			color: (
+				default: #8aa4f3,
+				open: k-brand-color(),
+				here: k-brand-color(),
+				active: k-brand-color(),
+				hover: k-brand-color()
+			)
+		)
+	)
+);

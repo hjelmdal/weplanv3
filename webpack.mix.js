@@ -16,4 +16,5 @@ const mix = require('laravel-mix');
 
 
 mix.sass('resources/assets/sass/custom.scss','public/css')
-    .js('resources/assets/js/custom.js','public/js');
+    .js('resources/assets/js/custom.js','public/js')
+    .js('resources/assets/js/fullscreen.js','public/js');

@@ -1,0 +1,123 @@
+//
+// Aside
+//
+
+
+
+
+// Aside
+.k-aside {
+	display: flex;
+	align-items: stretch;
+	background-color: k-get($k-aside-config, base, bg-color);
+	box-shadow: k-get($k-aside-config, base, shadow);	
+
+	// Primary
+	.k-aside__primary {
+		width: k-get($k-aside-config, base, width, primary, desktop); 
+		background-color: #3699ff;		
+	}
+
+	// Secondary
+	.k-aside__secondary {
+		flex-grow: 1;
+		
+		// Menu
+		.k-aside-menu {
+			.ps__rail-y {
+				right: 2px;
+			}
+		}
+	}
+
+	// Primary aside only
+	width: k-get($k-aside-config, base, width, primary, desktop); 
+
+	// Secondary aside enabled
+	.k-aside--secondary-enabled & {
+		width: k-get($k-aside-config, base, width, primary, desktop) + k-get($k-aside-config, base, width, secondary); 
+	}
+
+	.k-menu__nav > .k-menu__item.k-menu__item--active {
+		border-radius: 4px;
+		height: 40px;
+	}
+}
+
+// Desktop
+@include k-desktop {
+	.k-aside {
+		position: fixed;
+		overflow: hidden;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		z-index: k-get($k-aside-config, base, zindex);
+	
+		// Scroll
+		@include k-perfect-scrollbar-ver-size(k-get($k-aside-config, base, scroll, width));
+		@include k-perfect-scrollbar-skin(k-get($k-aside-config, base, scroll, color));
+	}
+}
+
+// Mobile
+@include k-mobile {
+	// Aside
+	.k-aside {			
+		// Primary
+		.k-aside__primary {			
+			width: k-get($k-aside-config, base, width, primary, mobile);	
+
+			// Aside Top 
+			.k-aside__top {					 
+				padding-bottom: 1.4rem;
+				
+				.k-aside__nav {
+					.k-aside__nav-item {
+						margin-top: 0.6rem;
+					}					
+				}
+			}
+
+			// Aside Middle
+			.k-aside__middle {   		
+				.k-aside__nav {					
+					margin-top: 0;
+				}
+			}		
+			
+			// Aside Bottom 
+			.k-aside__bottom {				
+				.k-aside__nav {
+					.k-aside__nav-item {
+						margin-top: 0.8rem;
+
+						&:first-child {
+							margin-top: 2rem;
+						}
+					}					
+				}
+			}
+		}
+
+		// Secondary
+		.k-aside__secondary {
+			padding: 9px 0 9px 18px;		
+
+			.k-aside__secondary-top {   		
+				.k-aside__secondary-title {
+					padding-top: 1rem;
+				}	
+			}
+		}
+
+		body:not(.k-aside--secondary-enabled) & {
+			width: k-get($k-aside-config, base, width, primary, mobile) !important;
+		}
+	}	
+}
+
+// Aside offcanvas panel for mobile mode
+@include k-offcanvas-build(k-aside, tablet-and-mobile, k-get($k-aside-config, base, offcanvas-mobile));
+
+ 

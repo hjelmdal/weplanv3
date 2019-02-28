@@ -1,0 +1,48 @@
+//
+// Content
+//
+
+
+
+// Content
+.k-content {
+	padding: k-get($k-page-padding, desktop);
+
+	// Subheader enabled
+	.k-subheader--enabled.k-subheader--transparent:not(.k-subheader--fixed) & {
+		padding-top: 0;
+	}
+}
+
+@include k-desktop {
+	// Content
+	.k-content {		
+		// Footer fixed
+		.k-footer--fixed & {
+			padding-bottom: k-get($k-footer-config, self, fixed, height);
+		} 
+
+		// Aside secondary integration
+		.k-aside-secondary--enabled & {
+			margin-right: k-get($k-aside-secondary-config, self, width, default);
+			transition: all 0.3s ease;
+		}
+
+		.k-aside-secondary--expanded.k-aside-secondary--enabled & {
+			transition: all 0.3s ease;
+			margin-right: k-get($k-aside-secondary-config, self, width, expanded);
+		}
+	}
+}
+
+@include k-tablet-and-mobile {
+	// Content
+	.k-content {
+		padding: k-get($k-page-padding, mobile);
+
+		// Subheader enabled
+		.k-subheader--enabled.k-subheader--transparent & {
+			padding-top: 0;
+		}
+	}
+}
