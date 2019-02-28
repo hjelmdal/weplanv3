@@ -11,7 +11,7 @@
 @endsection
 @section("scripts")
     <script src="{{ config("app.keen_assets") }}/app/custom/general/custom/login/login.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
-    <script src="/js/fullscreen.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
+
 @endsection
     <!DOCTYPE html>
 <html lang="en">

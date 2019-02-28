@@ -54,6 +54,7 @@
 <!--begin::Custom Scripts(by Pixel8) -->
 @yield("scripts")
 <script src="/js/custom.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
+<script src="/js/fullscreen.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
 @if ($errors->any())
     <script>
 

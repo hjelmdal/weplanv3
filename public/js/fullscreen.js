@@ -95,7 +95,8 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   function initLoading() {
-    $("body").addClass('m-page--loading', '500');
+    $(".k-grid--root").fadeOut('slow');
+    $("body").addClass('k-page--loading fadeIn animated');
     console.log("added preloading");
   }
 
@@ -157,8 +158,8 @@ document.addEventListener("DOMContentLoaded", function () {
               event.preventDefault();
               console.log("Link catched..."); //get the destination of the link clicked
 
-              var dest = $(this).attr("href"); //initLoading();
-
+              var dest = $(this).attr("href");
+              initLoading();
               self.location = dest;
             } else {
               console.log("Link passed through...");
