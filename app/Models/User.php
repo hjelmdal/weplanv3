@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
+    use HasRoles;
+    protected $guard_name = 'web'; // or whatever guard you want to use
 
     /**
      * The attributes that are mass assignable.
@@ -44,5 +47,10 @@ class User extends Authenticatable implements MustVerifyEmail
     
     public function google(){
         return $this->hasOne(Google::class);
+    }
+    
+    public function isSuperAdmin()
+    {
+        return $this->hasRole('super-admin');
     }
 }
