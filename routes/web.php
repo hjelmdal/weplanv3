@@ -30,7 +30,7 @@ Route::get('login/google/callback', 'Auth\LoginController@handleGoogleCallback')
 
 // LOGIN ROUTES
 
-Route::middleware(['auth'])->prefix('user')->name("user")->group(function () {
+Route::middleware(['auth'])->prefix('user')->name("user.")->group(function () {
     Route::get('/','UserController@index')->middleware("verified")->name("index");
     Route::get('/profile','UserController@index')->name("profile");
 });

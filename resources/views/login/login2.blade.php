@@ -156,21 +156,7 @@
                         </form>
                         <!--end::Form-->
                         <!--end::Action-->
-                        <!--begin::Separator-->
-                        <div class="k-login-v2__body-separator">
-                            <div class="k-separator k-separator--space-lg k-separator--border-solid"></div>
-                        </div>
-                        <!--end::Separator-->
-                        <h3 class="k-login-v2__body-subtitle">
-                            Or sign up with social account
-                        </h3>
-                        <!--begin::Options-->
-                        <div class="k-login-v2__body-options">
-                            <a href="#" class="btn k-font-white k-login-v2__body-option--facebook"> <i class="fab fa-facebook-f k-font-white"></i> Facebook </a>
-                            <!--a href="#" class="btn k-font-info k-login-v2__body-option--info"> <i class="fab fa-twitter k-font-info"></i> Twitter </a-->
-                            <a href="#" class="btn k-font-white k-login-v2__body-option--google"> <i class="fab fa-google k-font-white"></i> Google </a>
-                        </div>
-                        <!--end::Options-->
+
                     </div>
                 </div>
                 <!--end::Wrapper-->
