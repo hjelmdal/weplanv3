@@ -36,3 +36,7 @@ Route::middleware(['auth'])->prefix('user')->name("user.")->group(function () {
 });
 
 Route::get("/user/pending","UserController@index")->middleware("auth")->name("verification.notice");
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
