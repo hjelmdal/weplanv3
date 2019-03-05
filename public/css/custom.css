@@ -1,0 +1,91 @@
+.k-login-v1 .k-login-v1__body .k-login-v1__body-seaprator {
+  background-color: #ebedf2;
+}
+
+.k-login-v1 .k-login-v1__body .k-login-v1__body-wrapper .k-login-v1__body-container .k-login-v1__body-form .form-group .form-control {
+  border-color: #fff;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: #fff !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+.form-login2:-webkit-autofill,
+.form-login2:-webkit-autofill:hover,
+.form-login2:-webkit-autofill:focus,
+.form-login2:-webkit-autofill:active {
+  -webkit-text-fill-color: #495057 !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+.k-login-v1__body-form .error {
+  padding-left: 30px !important;
+}
+
+body::before {
+  opacity: 0;
+}
+
+.k_login_cancel2 {
+  color: #212529 !important;
+}
+
+.k_login_cancel2:hover {
+  color: #fff !important;
+}
+
+.k-login-v2__body-option--facebook {
+  background-color: #3C5A99 !important;
+  color: #fff;
+}
+
+.k-login-v2__body-option--google {
+  background-color: #DB4437 !important;
+  color: #fff;
+}
+
+.k-font-white {
+  color: #fff !important;
+}
+
+.k-login-v2 .k-login-v2__body .k-login-v2__body-wrapper .k-login-v2__body-container .k-login-v2__body-options > a:last-child {
+  margin: 0 2rem;
+}
+
+.k-login-v2 .k-login-v2__body .k-login-v2__body-pic > img {
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+}
+
+.body1 {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  background-color: #f5f5f5;
+  opacity: 0;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@media (max-width: 1024px) {
+  .k-login-v2 .k-login-v2__body .k-login-v2__body-wrapper .k-login-v2__body-container .k-login-v2__body-options {
+    margin-top: 0rem;
+  }
+
+  .k-login-v2 .k-login-v2__body .k-login-v2__body-wrapper .k-login-v2__body-container .k-login-v2__body-form {
+    padding-bottom: 0rem;
+  }
+
+  .k-login-v2 .k-login-v2__body {
+    margin-top: 1rem;
+  }
+
+  .k-login-v2 .k-login-v2__head .k-login-v2__head-signup {
+    padding-top: 1rem;
+  }
+}
+

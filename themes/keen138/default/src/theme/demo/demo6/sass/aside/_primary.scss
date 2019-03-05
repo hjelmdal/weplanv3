@@ -1,0 +1,148 @@
+//
+// Aside Primary
+//
+
+
+
+.k-aside__primary {   
+    display: flex;
+    flex-direction: column;   
+    height: 100%;
+
+    // Aside Top
+    .k-aside__top {     
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    // Aside Middle
+    .k-aside__middle {       
+        flex: 1;
+        overflow: auto;
+
+        .k-aside__nav {
+            padding: 0;
+            margin-top: 2.5rem;
+
+            .k-aside__nav-item {
+                list-style-type: none;
+                padding: 0;
+                text-align: center;
+                margin-top: 1rem;
+                @include k-transition();
+
+                .k-aside__nav-link {                    
+                    width:3rem;
+                    height: 3rem;
+                    border-radius: 5px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin: 0 auto;
+
+                    i {
+                        font-size: 1.3rem;
+                        color: #fff;
+                        font-weight: 500;                        
+                    }
+
+                    &.active {
+                        background-color: #4da5ff;     
+                    }
+                }
+
+                &:hover {                    
+                    .k-aside__nav-link {                        
+                        background-color: #4da5ff;                        
+                        @include k-transition();
+                    }
+                }               
+            }
+        }
+    }
+
+    // Aside Bottom
+    .k-aside__bottom {
+       .k-aside__nav {
+            padding: 0;
+
+            .k-aside__nav-item {
+                list-style-type: none;
+                padding: 0;
+                text-align: center;
+                margin-top: 1rem;
+                @include k-transition();
+
+                .k-aside__nav-link {
+                    width:3rem;
+                    height: 3rem;
+                    border-radius: 5px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin: 0 auto;
+
+                    i {
+                        font-size: 1.3rem;
+                        color: #fff;
+                        font-weight: 500;
+                    }
+
+                    .k-aside__nav-langs {
+                        border-radius: 50% !important;
+                        width: 2rem;
+                        height: 2rem;
+                    }
+
+                    img {
+                        height: 3rem;
+                        width: 3rem;
+                        border-radius: 5px;
+                    }
+
+                    .k-aside__nav-username {
+                        height: 3rem;
+                        width: 3rem;
+                        border-radius: 5px;
+                        display: block;
+                        margin: 0 auto;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 1.5rem;
+                        font-weight: 500;
+                        color: #fff;
+                    }                                    
+                }
+
+                &:hover {                    
+                    .k-aside__nav-link {                        
+                        background-color: #4da5ff;                        
+                        @include k-transition();
+                    }
+                }                 
+
+                .dropdown-menu {
+                    border-radius: 4px;
+                    margin-left: 5.5rem;
+                    
+                    .k-nav {
+                        .k-nav__item {
+                            .k-nav__link {
+                                .k-nav__link-text {
+                                    padding-left: 1rem; 
+                                }
+                            }
+                        }
+                    }                    
+                }
+
+                &:last-child {
+                    margin-bottom: 2rem;
+                    margin-top: 1.6rem;
+                }
+            }
+        }        
+    }    
+}
+

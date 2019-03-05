@@ -8,7 +8,7 @@
                 <div class="k-menu__submenu k-menu__submenu--classic k-menu__submenu--left">
                     <ul class="k-menu__subnav">
                         <li class="k-menu__item k-menu__item--active " aria-haspopup="true">
-                            <a href="?page=index" class="k-menu__link ">
+                            <a href="{{ route("index") }}" class="k-menu__link ">
                                 <i class="k-menu__link-bullet k-menu__link-bullet--dot"><span></span></i>
                                 <span class="k-menu__link-text">Default</span>
                             </a>

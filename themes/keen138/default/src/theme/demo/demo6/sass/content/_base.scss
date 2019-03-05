@@ -1,0 +1,18 @@
+//
+// Content
+//
+
+
+
+
+@include k-tablet-and-mobile {
+	// Content
+	.k-content {
+		padding: 0 k-get($k-page-padding, mobile) k-get($k-page-padding, mobile) k-get($k-page-padding, mobile);
+
+		// Subheader enabled
+		.k-subheader--enabled.k-subheader--transparent & {
+			padding-top: 0;
+		}
+	}
+}

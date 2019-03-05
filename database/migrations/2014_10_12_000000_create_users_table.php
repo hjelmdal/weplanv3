@@ -33,8 +33,10 @@ class CreateUsersTable extends Migration
             $table->string('refresh_token')->nullable();
             $table->integer('expires_in');
             $table->string('facebook_id');
+            $table->string("facebook_handle")->nullable();
             $table->index('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->timestamps();
         });
     
         Schema::create('users_google', function(Blueprint $table){
@@ -44,8 +46,10 @@ class CreateUsersTable extends Migration
             $table->string('refresh_token')->nullable();
             $table->integer('expires_in');
             $table->string('google_id');
+            $table->string("google_handle")->nullable();
             $table->index('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->timestamps();
         });
     
     }

@@ -1,7 +1,7 @@
 <!-- begin:: Header Mobile -->
 <div id="k_header_mobile" class="k-header-mobile k-header-mobile--fixed " >
     <div class="k-header-mobile__logo">
-        <a href="?page=index">
+        <a href="{{ route("index") }}">
             <img alt="Logo" src="/img/weplan_324x90.png" height="30"/>
         </a>
     </div>
