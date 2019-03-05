@@ -38,6 +38,8 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/user';
 
+    protected $loggedInRouteName = 'user.index';
+
     /**
      * Create a new controller instance.
      *
@@ -79,7 +81,7 @@ class LoginController extends Controller
         
         if($userObj != null){
             $this->guard()->login($userObj);
-            return redirect()->route('home');
+            return redirect()->route($this->loggedInRouteName);
         }
         elseif($request->session()->get('google-intent') == 'login'){
             $request->session()->flash('message', 'Ingen profil passede sammen med google - opret dig forneden');
@@ -115,7 +117,7 @@ class LoginController extends Controller
             $this->guard()->login($userObj);
             
             DB::commit();
-            return redirect()->route('home');
+            return redirect()->route($this->loggedInRouteName);
         }
         redirect()->route('login');
     }
@@ -141,7 +143,7 @@ class LoginController extends Controller
     
         if ($userObj != null) {
             $this->guard()->login($userObj);
-            return redirect()->route('home');
+            return redirect()->route($this->loggedInRouteName);
         } elseif ($request->session()->get('fb-intent') == 'login') {
             $request->session()->flash('message', 'Ingen profil passede sammen med facebook - opret dig forneden');
             return redirect()->route('login');
@@ -176,7 +178,7 @@ class LoginController extends Controller
             $this->guard()->login($userObj);
         
             DB::commit();
-            return redirect()->route('home');
+            return redirect()->route($this->loggedInRouteName);
         }
         redirect()->route('login');
     }
