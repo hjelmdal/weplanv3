@@ -1,0 +1,84 @@
+//
+// Page
+//
+
+
+
+// Page body
+body {
+	background: k-get($k-page-body-bg-color,white);
+
+	&.k-page-bg-grey {
+		background: k-get($k-page-body-bg-color,grey);
+	}	
+}
+
+@include k-desktop {		
+	// Wrapper
+	.k-wrapper {		
+		padding: 10px k-get($k-page-padding, desktop) k-get($k-page-padding, desktop) k-get($k-page-padding, desktop);
+
+		// Fixed subheader mode
+		.k-subheader--fixed.k-subheader--enabled & {
+			padding-top: k-get($k-subheader-config, fixed, height) + k-get($k-page-padding, desktop);
+		}
+
+		// Aside width
+		margin-left: k-get($k-aside-config, base, width, primary, desktop); 
+
+		// Aside secondary enabled
+		.k-aside--secondary-enabled & {
+			margin-left: k-get($k-aside-config, base, width, primary, desktop) + k-get($k-aside-config, base, width, secondary); 
+		}
+	}
+	
+	// Subheader enabled
+	.k-subheader {
+		padding-right: 0;
+		padding-left: 0;
+
+		// Fixed subheader mode
+		.k-subheader--fixed.k-subheader--enabled & {
+			position: fixed;		
+			height: k-get($k-subheader-config, fixed, height);
+			top: 0;
+			right: 0;
+			left: k-get($k-aside-config, base, width, primary, desktop); 
+			transition: all 0.3s ease;
+			z-index: k-get($k-aside-config, base, zindex) - 1;
+			box-shadow: 0px 10px 30px 0px rgba(82,63,105, 0.08);
+			background-color: #fff;
+			padding: 0 k-get($k-page-padding, desktop);
+		}		
+
+		// Aside secondary enabled
+		.k-subheader--fixed.k-subheader--enabled.k-aside--secondary-enabled & {
+			left: k-get($k-aside-config, base, width, primary, desktop) + k-get($k-aside-config, base, width, secondary); 
+		}
+	}
+
+	// Sticky portlet
+	.k-subheader--fixed {
+		.k-portlet.k-portlet--sticky {
+			.k-portlet__head {
+				padding-left: k-get($k-page-padding, desktop);
+				padding-right: k-get($k-page-padding, desktop);
+			}
+		}
+	}		
+}
+
+@include k-tablet-and-mobile {	
+	// Page body
+	body {
+		padding: 0 !important;		
+	}
+
+	// Page
+	.k-page {
+		// Fixed Header
+		.k-header-mobile--fixed & {
+			padding-top: k-get($k-mobile-header-config, self, default, height);
+		}
+	}
+}

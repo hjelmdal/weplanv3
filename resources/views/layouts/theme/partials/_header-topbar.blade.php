@@ -42,13 +42,24 @@
     </div>
     <!--end: Language bar -->
     <!--begin: User bar -->
+    @guest
+        <div class="k-header__topbar-item k-header__topbar-item--user">
+            <span class="k-header__topbar-wrapper" onclick="location.href='{{ route("login") }}'">
+                <span class="k-header__topbar-welcome"><span class="float-right">Login</span></span>
+                <span class="k-header__topbar-icon"><i class="flaticon2-lock"></i></span>
+
+            </span>
+            </a>
+        </div>
+    @else
     <div class="k-header__topbar-item k-header__topbar-item--user" id="k_offcanvas_toolbar_profile_toggler_btn">
-        <div class="k-header__topbar-welcome">Hi,</div>
+        <div class="k-header__topbar-welcome">{{ __("Hi") }},</div>
         <div class="k-header__topbar-username">{{ $firstname }}</div>
         <div class="k-header__topbar-wrapper" >
-            <img alt="Pic" src="{{ config("app.keen_assets") }}/media/users/default.jpg"/>
+            <img alt="Pic" src="@if(!$user->avatar)/img/profile.png @endif{{asset('storage/'.$user->avatar)}}"/>
         </div>
     </div>
+    @endif
     <!--end: User bar -->
 </div>
 <!-- end:: Header Topbar -->

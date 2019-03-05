@@ -64,5 +64,5 @@ var KDemoPanel = function() {
 }();
 
 $(document).ready(function() {
-    KDemoPanel.init();
+    //KDemoPanel.init();
 });
