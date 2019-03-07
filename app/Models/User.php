@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\WePlan\WePlayer;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -52,5 +53,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isSuperAdmin()
     {
         return $this->hasRole('super-admin');
+    }
+
+    public function WePlayer() {
+        return $this->hasOne(WePlayer::class,'user_id','id');
     }
 }
