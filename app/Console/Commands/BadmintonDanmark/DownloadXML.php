@@ -80,7 +80,7 @@ class DownloadXML extends Command
     private function moveToLocalStorage(string $tmpFile)
     {
         $folder = 'DBF_Downloads';
-        $fileName = 'dbf.zip';
+        $fileName = 'DBF.zip';
         $filePath = $folder . '/' . $fileName;
         $this->info('Moving ' . $tmpFile . ' to ' . $filePath);
         Storage::putFileAs($folder, new File($tmpFile), $fileName);
