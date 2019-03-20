@@ -2,22 +2,22 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\HasOne;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class WePlayer extends Resource
+class BpPlayer extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\Models\WePlan\WePlayer';
+    public static $model = 'App\Models\BadmintonPeople\BpPlayer';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -32,18 +32,22 @@ class WePlayer extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'name','dbf_id',
     ];
+
     /**
      * The logical group associated with the resource.
      *
      * @var string
      */
-    public static $group = 'WePlan';
+    public static $group = 'BadmintonPeople';
 
     public static function label() {
         return 'Players';
     }
+
+
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -54,14 +58,17 @@ class WePlayer extends Resource
     {
         return [
             ID::make()->sortable(),
+            Number::make('club_id'),
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
             Select::make('Gender')->options([
-                '0' => 'Kvinde',
-                '1' => 'Mand',
-            ]),
-            BelongsTo::make('User','user',User::class),
+                'K' => 'Kvinde',
+                'M' => 'Mand',
+            ])->sortable(),
+            Date::make('birthday','birthday')->format('DD MMM YYYY')->sortable(),
+            Text::make('dbf_id')->sortable(),
+            Text::make('age_group')->sortable()
         ];
     }
 

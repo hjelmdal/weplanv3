@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\BadmintonPeople\BpClub;
+use App\Models\BadmintonPeople\BpPlayer;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Illuminate\Support\Facades\Gate;
@@ -78,5 +80,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function register()
     {
         //
+    }
+
+    protected function resources()
+    {
+        Nova::resourcesIn(app_path('Nova'));
+
+
     }
 }

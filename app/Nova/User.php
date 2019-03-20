@@ -37,6 +37,16 @@ class User extends Resource
     ];
 
     /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'System';
+
+    public static function label() {
+        return 'Users';
+    }
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request  $request
