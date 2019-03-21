@@ -2,23 +2,21 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class BpPlayer extends Resource
+class BpClub extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\Models\BadmintonPeople\BpPlayer';
+    public static $model = 'App\Models\BadmintonPeople\BpClub';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -33,7 +31,7 @@ class BpPlayer extends Resource
      * @var array
      */
     public static $search = [
-        'name','dbf_id', 'club_id',
+        'id','name'
     ];
 
     /**
@@ -44,10 +42,8 @@ class BpPlayer extends Resource
     public static $group = 'BadmintonPeople';
 
     public static function label() {
-        return 'Players';
+        return 'Clubs';
     }
-
-
 
     /**
      * Get the fields displayed by the resource.
@@ -58,19 +54,9 @@ class BpPlayer extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-            Number::make('club_id'),
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-            Select::make('Gender')->options([
-                'K' => 'Kvinde',
-                'M' => 'Mand',
-            ])->sortable(),
-            Date::make('birthday','birthday')->format('DD MMM YYYY')->sortable(),
-            Text::make('dbf_id')->sortable(),
-            Text::make('age_group')->sortable(),
-            BelongsTo::make('BpClub')
+            Number::make('club_id')->sortable(),
+            Text::make('name')->sortable(),
+            HasMany::make('BpPlayers')
         ];
     }
 

@@ -8,6 +8,9 @@ use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Eminiarts\NovaPermissions\NovaPermissions;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -67,9 +70,14 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      *
      * @return array
      */
+
+
     public function tools()
     {
-        return [];
+        return [
+            // ...
+            new \Eminiarts\NovaPermissions\NovaPermissions(),
+        ];
     }
 
     /**
@@ -85,6 +93,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function resources()
     {
         Nova::resourcesIn(app_path('Nova'));
+
+        Nova::resources([\Eminiarts\NovaPermissions\Nova\Permission::class,
+            \Eminiarts\NovaPermissions\Nova\Role::class]);
 
 
     }

@@ -76,42 +76,45 @@ class ImportPlayers extends Command
             $attr = $elems->attributes();
             if($club_arg == "all" || $club_arg == $attr->id) {
                 $club = BpClub::find($attr->id);
-                $club_id = $club->club_id;
+                if($club) {
+                    $club_id = $club->club_id;
 
-                foreach ($elems->p as $player) {
-                    $pInfo = $player->attributes();
-                    $id = null;
-                    $name = null;
-                    $gender = null;
-                    $birthdate = null;
-                    $group = null;
+                    foreach ($elems->p as $player) {
+                        $pInfo = $player->attributes();
+                        $id = null;
+                        $name = null;
+                        $gender = null;
+                        $birthdate = null;
+                        $group = null;
 
-                    $id = $pInfo->id;
-                    $name = $pInfo->nam;
-                    $gender = $pInfo->gen;
-                    $birthdate = $pInfo->dat;
+                        $id = $pInfo->id;
+                        $name = $pInfo->nam;
+                        $gender = $pInfo->gen;
+                        $birthdate = $pInfo->dat;
 
 
-                    foreach ($player->g as $group => $val1) {
-                        $group  = $val1->attributes()->nam;
+                        foreach ($player->g as $group => $val1) {
+                            $group = $val1->attributes()->nam;
 
-                    }
-
-                    $i++;
-                    if($id) {
-                        $bpPlayer = BpPlayer::updateOrCreate(['dbf_id' => $id],['club_id' => $club_id, 'name' => $name, 'gender' => $gender, 'birthday' => $birthdate, 'age_group' => $group]);
-                        //$bpClub = BpClub::updateOrCreate(['id' => $id],['club_id' => $id, 'name' => $name, 'team_name' => $team_name, 'address' => $address, 'postal_code' => $postal_code, 'city' => $city, 'contact_email' => $email, 'email' => $email, 'association' => $association, 'area' => $area]);
-                        if ($bpPlayer->wasRecentlyCreated) {
-                            $new++;
-                        } elseif($bpPlayer->wasChanged()) {
-                            $old++;
                         }
-                    } else {
-                        $errors++;
+
+                        $i++;
+                        if ($id) {
+                            $bpPlayer = BpPlayer::updateOrCreate(['dbf_id' => $id], ['club_id' => $club_id, 'name' => $name, 'gender' => $gender, 'birthday' => $birthdate, 'age_group' => $group]);
+                            //$bpClub = BpClub::updateOrCreate(['id' => $id],['club_id' => $id, 'name' => $name, 'team_name' => $team_name, 'address' => $address, 'postal_code' => $postal_code, 'city' => $city, 'contact_email' => $email, 'email' => $email, 'association' => $association, 'area' => $area]);
+                            if ($bpPlayer->wasRecentlyCreated) {
+                                $new++;
+                            } elseif ($bpPlayer->wasChanged()) {
+                                $old++;
+                            }
+                        } else {
+                            $errors++;
+                        }
+
+
                     }
-
-
-
+                } else {
+                    $this->error("No club found for id: " . $attr->id);
                 }
             }
         }

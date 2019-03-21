@@ -18,4 +18,8 @@ class BpPlayer extends Model
     public function WePlayer() {
         return $this->HasOne(WePlayer::class,'dbf_id','dbf_id');
     }
+
+    public function BpClub() {
+        return $this->BelongsTo(BpClub::class,'club_id','club_id');
+    }
 }

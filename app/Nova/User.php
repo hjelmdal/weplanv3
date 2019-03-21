@@ -6,6 +6,7 @@ use App\Models\WePlan\WePlayer;
 use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
@@ -75,6 +76,8 @@ class User extends Resource
                 ->updateRules('nullable', 'string', 'min:6'),
 
             HasOne::make('Player','WePlayer',\App\Nova\WePlayer::class),
+            MorphToMany::make('Roles', 'roles', \Eminiarts\NovaPermissions\Nova\Role::class),
+            MorphToMany::make('Permissions', 'permissions', \Eminiarts\NovaPermissions\Nova\Permission::class),
 
         ];
     }

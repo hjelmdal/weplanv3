@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b03b6c238031edaf7588c1334fff3cd3",
+    "content-hash": "a876e7ff0dc0130034e4f7884fa4f749",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -322,6 +322,48 @@
                 "validator"
             ],
             "time": "2018-12-04T22:38:24+00:00"
+        },
+        {
+            "name": "eminiarts/nova-permissions",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eminiarts/nova-permissions.git",
+                "reference": "684a9cb35a598eb785b85433ab47e553a9006481"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eminiarts/nova-permissions/zipball/684a9cb35a598eb785b85433ab47e553a9006481",
+                "reference": "684a9cb35a598eb785b85433ab47e553a9006481",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0",
+                "spatie/laravel-permission": "2.*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Eminiarts\\NovaPermissions\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Eminiarts\\NovaPermissions\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Laravel Nova Grouped Permissions.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "time": "2019-03-08T15:13:45+00:00"
         },
         {
             "name": "erusev/parsedown",
