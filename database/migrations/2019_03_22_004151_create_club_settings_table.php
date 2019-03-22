@@ -15,9 +15,9 @@ class CreateClubSettingsTable extends Migration
     {
         Schema::create('club_settings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('club_id');
-            $table->string('name');
-            $table->integer('season_id');
+            $table->integer('club_id')->nullable();
+            $table->string('name')->nullable();
+            $table->integer('season_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
