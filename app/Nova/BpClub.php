@@ -32,7 +32,7 @@ class BpClub extends Resource
      * @var array
      */
     public static $search = [
-        'id','name'
+        'club_id','name','postal_code','address','association'
     ];
 
     /**
@@ -55,16 +55,19 @@ class BpClub extends Resource
     public function fields(Request $request)
     {
         return [
-            Number::make('club_id')->sortable()->withMeta(['extraAttributes' => [
+            Number::make('Club Id')->sortable()->withMeta(['extraAttributes' => [
                 'readonly' => true
             ]]),
-            Text::make('name')->sortable()->withMeta(['extraAttributes' => [
+            Text::make('Name')->sortable()->withMeta(['extraAttributes' => [
+                'readonly' => true
+            ]]),
+            Text::make('Team Name')->sortable()->withMeta(['extraAttributes' => [
                 'readonly' => true
             ]]),
             Text::make('Address')->withMeta(['extraAttributes' => [
                 'readonly' => true
             ]]),
-            Number::make('Postal_code')->withMeta(['extraAttributes' => [
+            Number::make('Postal Code')->withMeta(['extraAttributes' => [
                 'readonly' => true
             ]]),
             Text::make('City')->withMeta(['extraAttributes' => [
