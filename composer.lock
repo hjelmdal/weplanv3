@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a876e7ff0dc0130034e4f7884fa4f749",
+    "content-hash": "b738fd40f03d1768fc56f6e0469234cc",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -62,6 +62,56 @@
                 "time"
             ],
             "time": "2019-02-11T02:08:31+00:00"
+        },
+        {
+            "name": "daniel-de-wit/nova-single-record-resource",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/daniel-de-wit/nova-single-record-resource.git",
+                "reference": "4f861e19d33166de678755da58dca0dc1739b0d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/daniel-de-wit/nova-single-record-resource/zipball/4f861e19d33166de678755da58dca0dc1739b0d6",
+                "reference": "4f861e19d33166de678755da58dca0dc1739b0d6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "DanielDeWit\\NovaSingleRecordResource\\Providers\\NovaSingleRecordResourceServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DanielDeWit\\NovaSingleRecordResource\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniël de Wit",
+                    "email": "daniel@danieldewit.nl",
+                    "homepage": "https://github.com/daniel-de-wit",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel Nova Single Record Resource. Shows a link in the navigation bar directly to the only record of the resource",
+            "homepage": "https://github.com/daniel-de-wit",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "time": "2018-12-12T11:37:17+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",

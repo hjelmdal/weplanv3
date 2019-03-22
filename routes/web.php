@@ -38,4 +38,9 @@ Route::middleware(['auth'])->prefix('user')->name("user.")->group(function () {
 Route::get("/user/pending","UserController@index")->middleware("auth")->name("verification.notice");
 
 
+// Redirects
+
+Route::get('/nova/login','RedirectController@login')->middleware('guest');
+
+
 

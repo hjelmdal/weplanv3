@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use PharIo\Manifest\Email;
 
 class BpClub extends Resource
 {
@@ -42,7 +43,7 @@ class BpClub extends Resource
     public static $group = 'BadmintonPeople';
 
     public static function label() {
-        return 'Clubs';
+        return 'BP Clubs';
     }
 
     /**
@@ -54,8 +55,29 @@ class BpClub extends Resource
     public function fields(Request $request)
     {
         return [
-            Number::make('club_id')->sortable(),
-            Text::make('name')->sortable(),
+            Number::make('club_id')->sortable()->withMeta(['extraAttributes' => [
+                'readonly' => true
+            ]]),
+            Text::make('name')->sortable()->withMeta(['extraAttributes' => [
+                'readonly' => true
+            ]]),
+            Text::make('Address')->withMeta(['extraAttributes' => [
+                'readonly' => true
+            ]]),
+            Number::make('Postal_code')->withMeta(['extraAttributes' => [
+                'readonly' => true
+            ]]),
+            Text::make('City')->withMeta(['extraAttributes' => [
+                'readonly' => true
+            ]]),
+            Text::make('Contact Email')->withMeta(['extraAttributes' => [
+                'readonly' => true
+            ]])->withMeta(['extraAttributes' => [
+                'readonly' => true
+            ]]),
+            Text::make('Association')->withMeta(['extraAttributes' => [
+                'readonly' => true
+            ]]),
             HasMany::make('BpPlayers')
         ];
     }

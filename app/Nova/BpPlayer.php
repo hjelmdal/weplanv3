@@ -13,6 +13,13 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class BpPlayer extends Resource
 {
+
+    /**
+     * The number of resources to show per page via relationships.
+     *
+     * @var int
+     */
+    public static $perPageViaRelationship = 50;
     /**
      * The model the resource corresponds to.
      *
@@ -44,7 +51,7 @@ class BpPlayer extends Resource
     public static $group = 'BadmintonPeople';
 
     public static function label() {
-        return 'Players';
+        return 'BP Players';
     }
 
 
