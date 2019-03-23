@@ -87,8 +87,8 @@ class NewUserRegistered extends Notification
             ->attachment(function ($attachment) use ($url) {
                 $attachment->title('Go to dashboard', $url)
                     ->fields([
-                        'Channel' => $this->channel,
                         'Name' => $this->user->name,
+                        'Channel' => $this->channel,
                         'Email' => $this->user->email,
                         'Time' => $this->user->created_at
 
