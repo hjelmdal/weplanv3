@@ -106,8 +106,11 @@
                 </div>
                 <div class="k-portlet__body">
                     <div class="k-widget-16">
-                        {{ __('Before proceeding, please check your email for a verification link.') }}
-                        {{ __('If you did not receive the email') }}, <a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.
+                        <div class="k-align-center"><em class="far k-font-brand fa-10x fa-paper-plane"></em><br><br>
+                        <p style="font-size:1.5rem">{{ __('Before proceeding, please check your email for a verification link.') }}<br>
+                        {{ __('If you did not receive the email') }}, <strong><a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a></strong>.
+                        </p>
+                        </div>
                     </div>
                 </div>
             </div>

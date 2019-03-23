@@ -6,6 +6,7 @@ use App\Models\WePlan\WePlayer;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notification;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -57,5 +58,16 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function WePlayer() {
         return $this->hasOne(WePlayer::class,'user_id','id');
+    }
+
+    /**
+     * Route notifications for the Slack channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForSlack(Notification $notification)
+    {
+        return 'https://hooks.slack.com/services/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';
     }
 }

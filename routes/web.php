@@ -42,5 +42,10 @@ Route::get("/user/pending","UserController@index")->middleware("auth")->name("ve
 
 Route::get('/nova/login','RedirectController@login')->middleware('guest');
 
+Route::get('/slack', function() {
+    $user = \App\Models\User::first();
+   \Illuminate\Support\Facades\Notification::send($user,new \App\Notifications\NewUserRegistered($user));
+});
+
 
 
