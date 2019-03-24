@@ -233,9 +233,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     $(target).load(url, function (result) {
       tab.tab('show');
-      KApp.unblock('#portlet .m-portlet__body');
+      KTApp.unblock('#portlet .m-portlet__body');
     });
-    KApp.block('#portlet .m-portlet__body', {
+    KTApp.block('#portlet .m-portlet__body', {
       overlayColor: '#000000',
       type: 'loader',
       state: 'primary',
@@ -255,7 +255,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     if (hrefLink && hrefLink.charAt(0) != "#") {
       setTimeout(function () {
-        KApp.block(ref + ' .modal-content', {
+        KTApp.block(ref + ' .modal-content', {
           overlayColor: '#fff',
           type: 'loader',
           state: 'primary',
@@ -265,11 +265,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
       }, 200);
       $(ref + ' .modal-content').load(hrefLink, function () {
         console.log("Content loaded...");
-        KApp.unblock(ref);
+        KTApp.unblock(ref);
       });
       console.log("href2: " + hrefLink);
       setTimeout(function () {
-        KApp.unblock(ref);
+        KTApp.unblock(ref);
         console.log("Modal ready...");
       }, 2000);
     }
