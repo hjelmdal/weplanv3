@@ -1,6 +1,6 @@
 <!-- begin:: Footer -->
-<div class="k-footer k-grid__item" id="k_footer">
-    <div class="k-footer__copyright">2019&nbsp;&copy;&nbsp;<a href="https://hjelmdal.dk" target="_blank" class="k-link">Pixel8</a> @if($user && $user->hasRole("admin")) {{  }} @endif</div>
-    <div class="k-footer__menu"><a href="/" target="_blank" class="k-link">About</a><a href="/" target="_blank" class="k-link">Team</a><a href="/" target="_blank" class="k-link">Contact</a></div>
+<div class="kt-footer kt-grid__item" id="kt_footer">
+    <div class="kt-footer__copyright">2019&nbsp;&copy;&nbsp;<a href="https://hjelmdal.dk" target="_blank" class="kt-link">Pixel8</a> @if($user && $user->hasRole("admin")) {{  }} @endif</div>
+    <div class="kt-footer__menu"><a href="/" target="_blank" class="kt-link">About</a><a href="/" target="_blank" class="kt-link">Team</a><a href="/" target="_blank" class="kt-link">Contact</a></div>
 </div>
 <!-- end:: Footer -->

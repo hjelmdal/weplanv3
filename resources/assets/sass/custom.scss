@@ -1,8 +1,8 @@
-.k-login-v1 .k-login-v1__body .k-login-v1__body-seaprator {
+.kt-login-v1 .kt-login-v1__body .kt-login-v1__seaprator {
   background-color: #ebedf2;
 }
 
-.k-login-v1 .k-login-v1__body .k-login-v1__body-wrapper .k-login-v1__body-container .k-login-v1__body-form .form-group .form-control {
+.kt-login-v1 .kt-login-v1__body .kt-login-v1__wrapper .kt-login-v1__container .kt-login-v1__form .form-group .form-control {
   border-color: #fff;
 }
 input:-webkit-autofill,
@@ -23,7 +23,7 @@ input:-webkit-autofill:active {
 
 // Form
 
-.k-login-v1__body-form .error  {
+.kt-login-v1__form .error  {
   padding-left:30px !important;
 }
 
@@ -31,33 +31,33 @@ body::before {
   opacity: 0;
 }
 
-.k_login_cancel2 {
+.kt_login_cancel2 {
   color:#212529 !important;
 }
 
-.k_login_cancel2:hover {
+.kt_login_cancel2:hover {
   color:#fff !important;
 }
 
-.k-login-v2__body-option--facebook {
+.kt-login-v2__option--facebook {
   background-color: #3C5A99 !important;
   color:#fff;
 }
 
-.k-login-v2__body-option--google {
+.kt-login-v2__option--google {
   background-color: #DB4437 !important;
   color:#fff;
 }
 
-.k-font-white {
+.kt-font-white {
   color: #fff !important;
 }
 
-.k-login-v2 .k-login-v2__body .k-login-v2__body-wrapper .k-login-v2__body-container .k-login-v2__body-options>a:last-child {
+.kt-login-v2 .kt-login-v2__body .kt-login-v2__wrapper .kt-login-v2__container .kt-login-v2__options>a:last-child {
   margin: 0 2rem;
 }
 
-.k-login-v2 .k-login-v2__body .k-login-v2__body-pic>img {
+.kt-login-v2 .kt-login-v2__body .kt-login-v2__image>img {
   width: 100%;
   max-width: 500px;
   height: 100%;
@@ -73,18 +73,18 @@ body::before {
 }
 
 @media (max-width: 1024px) {
-  .k-login-v2 .k-login-v2__body .k-login-v2__body-wrapper .k-login-v2__body-container .k-login-v2__body-options {
+  .kt-login-v2 .kt-login-v2__body .kt-login-v2__wrapper .kt-login-v2__container .kt-login-v2__options {
     margin-top:0rem;
   }
 
-  .k-login-v2 .k-login-v2__body .k-login-v2__body-wrapper .k-login-v2__body-container .k-login-v2__body-form {
+  .kt-login-v2 .kt-login-v2__body .kt-login-v2__wrapper .kt-login-v2__container .kt-login-v2__form {
     padding-bottom:0rem;
   }
-  .k-login-v2 .k-login-v2__body {
+  .kt-login-v2 .kt-login-v2__body {
     margin-top:1rem;
   }
 
-  .k-login-v2 .k-login-v2__head .k-login-v2__head-signup {
+  .kt-login-v2 .kt-login-v2__head .kt-login-v2__head-signup {
     padding-top:1rem;
   }
 }

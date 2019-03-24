@@ -1,6 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
-
-    $('#k_login_submit').click(function (e) {
+    $('#link_facebook').click(function () {
+        var btn = $(this);
+        btn.addClass('kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light');
+    });
+    $('#link_google').click(function () {
+        var btn = $(this);
+        btn.addClass('kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light');
+    });
+    $('#kt_login_submit').click(function (e) {
         e.preventDefault();
         var btn = $(this);
         var form = $(this).closest('form');
@@ -21,13 +28,13 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        btn.addClass('k-spinner k-spinner--right k-spinner--md k-spinner--light').attr('disabled', true);
+        btn.addClass('kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light').attr('disabled', true);
 
         form.submit();
 
     });
 
-    $('#k_signup_submit').click(function (e) {
+    $('#kt_signup_submit').click(function (e) {
         e.preventDefault();
 
         var btn = $(this);
@@ -58,11 +65,11 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        btn.addClass('k-spinner k-spinner--right k-spinner--md k-spinner--light').attr('disabled', true);
+        btn.addClass('kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light').attr('disabled', true);
         form.submit();
     });
 
-    $('#k_forgot_submit').click(function (e) {
+    $('#kt_forgot_submit').click(function (e) {
         e.preventDefault();
 
         var btn = $(this);
@@ -81,58 +88,58 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        btn.addClass('k-spinner k-spinner--right k-spinner--md k-spinner--light').attr('disabled', true);
+        btn.addClass('kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light').attr('disabled', true);
         form.submit();
     });
 
-    $('#k_signup').click(function (e) {
+    $('#kt_signup').click(function (e) {
         e.preventDefault();
-        $('#k_forgot_form').css("display","none");
-        $('#k_login_form').css("display","none");
-        $('#k_signup_form').css("display","block");
-        $('#k_signup_form').addClass('flipInX animated');
+        $('#kt_forgot_form').css("display","none");
+        $('#kt_login_form').css("display","none");
+        $('#kt_signup_form').css("display","block");
+        $('#kt_signup_form').addClass('flipInX animated');
     });
 
-    $('#k_forgot').click(function (e) {
+    $('#kt_forgot').click(function (e) {
         e.preventDefault();
-        $('#k_login_form').css("display","none");
-        $('#k_signup_form').css("display","none");
-        $('#k_forgot_form').css("display","block");
-        $('#k_forgot_form').addClass('flipInX animated');
+        $('#kt_login_form').css("display","none");
+        $('#kt_signup_form').css("display","none");
+        $('#kt_forgot_form').css("display","block");
+        $('#kt_forgot_form').addClass('flipInX animated');
     });
 
-    $('.k_login_cancel').click(function (e) {
+    $('.kt_login_cancel').click(function (e) {
         e.preventDefault();
-        $('#k_forgot_form').css("display","none");
-        $('#k_signup_form').css("display","none");
-        $('#k_login_form').css("display","block");
-        $('#k_login_form').addClass('flipInX animated');
+        $('#kt_forgot_form').css("display","none");
+        $('#kt_signup_form').css("display","none");
+        $('#kt_login_form').css("display","block");
+        $('#kt_login_form').addClass('flipInX animated');
     });
 
     // V2
 
-    $('#k_signup2').click(function (e) {
+    $('#kt_signup2').click(function (e) {
         e.preventDefault();
-        $('#k_forgot_form2').css("display","none");
-        $('#k_login_form2').css("display","none");
-        $('#k_signup_form2').css("display","flex");
-        $('#k_signup_form2').addClass('flipInX animated');
+        $('#kt_forgot_form2').css("display","none");
+        $('#kt_login_form2').css("display","none");
+        $('#kt_signup_form2').css("display","flex");
+        $('#kt_signup_form2').addClass('flipInX animated');
     });
 
-    $('#k_forgot2').click(function (e) {
+    $('#kt_forgot2').click(function (e) {
         e.preventDefault();
-        $('#k_login_form2').css("display","none");
-        $('#k_signup_form2').css("display","none");
-        $('#k_forgot_form2').css("display","flex");
-        $('#k_forgot_form2').addClass('flipInX animated');
+        $('#kt_login_form2').css("display","none");
+        $('#kt_signup_form2').css("display","none");
+        $('#kt_forgot_form2').css("display","flex");
+        $('#kt_forgot_form2').addClass('flipInX animated');
     });
 
-    $('.k_login_cancel2').click(function (e) {
+    $('.kt_login_cancel2').click(function (e) {
         e.preventDefault();
-        $('#k_forgot_form2').css("display","none");
-        $('#k_signup_form2').css("display","none");
-        $('#k_login_form2').css("display","flex");
-        $('#k_login_form2').addClass('flipInX animated');
+        $('#kt_forgot_form2').css("display","none");
+        $('#kt_signup_form2').css("display","none");
+        $('#kt_login_form2').css("display","flex");
+        $('#kt_login_form2').addClass('flipInX animated');
     });
 
 

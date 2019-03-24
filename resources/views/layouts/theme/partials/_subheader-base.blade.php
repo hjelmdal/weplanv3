@@ -1,5 +1,5 @@
 <!-- begin:: Subheader -->
-<div id="k_subheader" class="k-subheader k-grid__item " >
+<div id="kt_subheader" class="kt-subheader kt-grid__item " >
     @include("layouts.theme.partials._subheader-title")
     @include("layouts.theme.partials._subheader-toolbar")
 </div>

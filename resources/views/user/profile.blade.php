@@ -27,63 +27,63 @@
 @endsection
 @section("content")
     <!--begin::Portlet-->
-    <div class="k-portlet k-profile">
-        <div class="k-profile__content">
+    <div class="kt-portlet kt-profile">
+        <div class="kt-profile__content">
             <div class="row">
                 <div class="col-md-12 col-lg-5 col-xl-4">
-                    <div class="k-profile__main">
-                        <div class="k-profile__main-pic">
+                    <div class="kt-profile__main">
+                        <div class="kt-profile__main-pic">
                             <img src="@if(!$user->avatar)/img/profile.png @else{{asset('storage/'.$user->avatar)}}@endif" alt=""/>
-                            <label class="k-profile__main-pic-upload" > <i class="flaticon-photo-camera"></i> </label>
+                            <label class="kt-profile__main-pic-upload" > <i class="flaticon-photo-camera"></i> </label>
                         </div>
-                        <div class="k-profile__main-info">
-                            <div class="k-profile__main-info-name">{{ $user->name }}</div>
-                            <div class="k-profile__main-info-position">{{ $user->email }}</div>
+                        <div class="kt-profile__main-info">
+                            <div class="kt-profile__main-info-name">{{ $user->name }}</div>
+                            <div class="kt-profile__main-info-position">{{ $user->email }}</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-4 col-xl-4">
-                    <div class="k-profile__contact">
-                        <a href="#" class="k-profile__contact-item">
-                            <span class="k-profile__contact-item-icon k-profile__contact-item-icon-whatsup"><i class="flaticon-whatsapp"></i></span>
-                            <span class="k-profile__contact-item-text">44 8475 804342</span>
+                    <div class="kt-profile__contact">
+                        <a href="#" class="kt-profile__contact-item">
+                            <span class="kt-profile__contact-item-icon kt-profile__contact-item-icon-whatsup"><i class="flaticon-whatsapp"></i></span>
+                            <span class="kt-profile__contact-item-text">44 8475 804342</span>
                         </a>
-                        <a href="#" class="k-profile__contact-item">
-                            <span class="k-profile__contact-item-icon"><i class="flaticon-email-black-circular-button k-font-danger"></i></span>
-                            <span class="k-profile__contact-item-text">{{$user->email}}</span>
+                        <a href="#" class="kt-profile__contact-item">
+                            <span class="kt-profile__contact-item-icon"><i class="flaticon-email-black-circular-button kt-font-danger"></i></span>
+                            <span class="kt-profile__contact-item-text">{{$user->email}}</span>
                         </a>
-                        <a href="#" class="k-profile__contact-item">
-                            <span class="k-profile__contact-item-icon k-profile__contact-item-icon-twitter"><i class="flaticon-twitter-logo-button"></i></span>
-                            <span class="k-profile__contact-item-text">@brianjohnson</span>
+                        <a href="#" class="kt-profile__contact-item">
+                            <span class="kt-profile__contact-item-icon kt-profile__contact-item-icon-twitter"><i class="flaticon-twitter-logo-button"></i></span>
+                            <span class="kt-profile__contact-item-text">@brianjohnson</span>
                         </a>
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-3 col-xl-4">
-                    <div class="k-profile__stats">
-                        <div class="k-profile__stats-item">
-                            <div class="k-profile__stats-item-label">Sales</div>
-                            <div class="k-profile__stats-item-chart">
+                    <div class="kt-profile__stats">
+                        <div class="kt-profile__stats-item">
+                            <div class="kt-profile__stats-item-label">Sales</div>
+                            <div class="kt-profile__stats-item-chart">
                                 <span>USP: +23%</span>
-                                <canvas id="k_profile_mini_chart_1" width="100" height="40"></canvas>
+                                <canvas id="kt_profile_mini_chart_1" width="100" height="40"></canvas>
                             </div>
                         </div>
-                        <div class="k-profile__stats-item">
-                            <div class="k-profile__stats-item-label">Reports</div>
-                            <div class="k-profile__stats-item-chart">
+                        <div class="kt-profile__stats-item">
+                            <div class="kt-profile__stats-item-label">Reports</div>
+                            <div class="kt-profile__stats-item-chart">
                                 <span>RNP: +30%</span>
-                                <canvas id="k_profile_mini_chart_2" width="100" height="40"></canvas>
+                                <canvas id="kt_profile_mini_chart_2" width="100" height="40"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="k-profile__nav">
+        <div class="kt-profile__nav">
             <ul class="nav nav-tabs nav-tabs-line" role="tablist">
-                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#k_tabs_1_1" role="tab">Dashboard</a> </li>
-                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#k_tabs_1_2" role="tab">Account & Profile</a> </li>
-                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#k_tabs_1_3" role="tab">Activities</a> </li>
-                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#k_tabs_1_4" role="tab">Tasks</a> </li>
+                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#kt_tabs_1_1" role="tab">Dashboard</a> </li>
+                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#kt_tabs_1_2" role="tab">Account & Profile</a> </li>
+                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#kt_tabs_1_3" role="tab">Activities</a> </li>
+                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#kt_tabs_1_4" role="tab">Tasks</a> </li>
             </ul>
         </div>
     </div>
@@ -95,18 +95,18 @@
     <div class="row">
         <div class="col-12">
             <!--begin::Portlet-->
-            <div class="k-portlet k-portlet--height-fluid">
-                <div class="k-portlet__head">
-                    <div class="k-portlet__head-label">
-                        <h3 class="k-portlet__head-title">
+            <div class="kt-portlet kt-portlet--height-fluid">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
                             Email verification
                         </h3>
                     </div>
 
                 </div>
-                <div class="k-portlet__body">
-                    <div class="k-widget-16">
-                        <div class="k-align-center"><em class="far k-font-brand fa-10x fa-paper-plane"></em><br><br>
+                <div class="kt-portlet__body">
+                    <div class="kt-widget-16">
+                        <div class="kt-align-center"><em class="far kt-font-brand fa-10x fa-paper-plane"></em><br><br>
                         <p style="font-size:1.5rem">{{ __('Before proceeding, please check your email for a verification link.') }}<br>
                         {{ __('If you did not receive the email') }}, <strong><a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a></strong>.
                         </p>
@@ -120,40 +120,40 @@
     <!--end::Row-->
     @endif
     <div class="tab-content">
-        <div class="tab-pane fade show active" id="k_tabs_1_1" role="tabpanel">
+        <div class="tab-pane fade show active" id="kt_tabs_1_1" role="tabpanel">
         @if($user->email_verified_at)
             <!--begin::Row-->
             <div class="row">
                 <div class="col-lg-6 col-xl-4 order-lg-1 order-xl-1">
                     <!--begin::Portlet-->
-                    <div class="k-portlet k-portlet--height-fluid">
-                        <div class="k-portlet__head">
-                            <div class="k-portlet__head-label">
-                                <h3 class="k-portlet__head-title">
+                    <div class="kt-portlet kt-portlet--height-fluid">
+                        <div class="kt-portlet__head">
+                            <div class="kt-portlet__head-label">
+                                <h3 class="kt-portlet__head-title">
                                     Top Categories
                                 </h3>
                             </div>
-                            <div class="k-portlet__head-toolbar">
-                                <div class="k-portlet__head-toolbar-wrapper">
+                            <div class="kt-portlet__head-toolbar">
+                                <div class="kt-portlet__head-toolbar-wrapper">
                                     <div class="dropdown dropdown-inline">
                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <ul class="k-nav">
-                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">Export Tools</span> </li>
-                                                <li class="k-nav__item">
-                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-print"></i> <span class="k-nav__link-text">Print</span> </a>
+                                            <ul class="kt-nav">
+                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">Export Tools</span> </li>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-print"></i> <span class="kt-nav__link-text">Print</span> </a>
                                                 </li>
-                                                <li class="k-nav__item">
-                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                 </li>
-                                                <li class="k-nav__item">
-                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                 </li>
-                                                <li class="k-nav__item">
-                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-text-o"></i> <span class="k-nav__link-text">CSV</span> </a>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-text-o"></i> <span class="kt-nav__link-text">CSV</span> </a>
                                                 </li>
-                                                <li class="k-nav__item">
-                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-pdf-o"></i> <span class="k-nav__link-text">PDF</span> </a>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-pdf-o"></i> <span class="kt-nav__link-text">PDF</span> </a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -161,100 +161,100 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="k-portlet__body">
-                            <div class="k-widget-16">
-                                <div class="k-widget-16__item k-widget-16__item--info">
-                                    <div class="k-widget-16__labels">
+                        <div class="kt-portlet__body">
+                            <div class="kt-widget-16">
+                                <div class="kt-widget-16__item kt-widget-16__item--info">
+                                    <div class="kt-widget-16__labels">
                                         <a href="">
-                                            <div class="k-widget-16__title">Templates</div>
+                                            <div class="kt-widget-16__title">Templates</div>
                                         </a>
-                                        <div class="k-widget-16__desc">Front-end, Admin</div>
+                                        <div class="kt-widget-16__desc">Front-end, Admin</div>
                                     </div>
-                                    <div class="k-widget-16__data">
-                                        <div class="k-widget-16__item-chart">
+                                    <div class="kt-widget-16__data">
+                                        <div class="kt-widget-16__item-chart">
                                             <!--Doc: For the chart initialization refer to "latestProductsMiniCharts" function in "src\theme\app\scripts\custom\dashboard.js"
                          and "KLib.initMiniChart()" function in "themes/themes/keen/src/theme/app/scripts/bundle/lib.js" -->
-                                            <canvas id="k_widget_latest_products_chart_1" width="80" height="40"></canvas>
+                                            <canvas id="kt_widget_latest_products_chart_1" width="80" height="40"></canvas>
                                         </div>
-                                        <div class="k-widget-16__numbers">
-                                            <div class="k-widget-16__numbers-total">5.7k</div>
-                                            <div class="k-widget-16__numbers-change">+780</div>
+                                        <div class="kt-widget-16__numbers">
+                                            <div class="kt-widget-16__numbers-total">5.7k</div>
+                                            <div class="kt-widget-16__numbers-change">+780</div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="k-widget-16__item k-widget-16__item--danger">
-                                    <div class="k-widget-16__labels">
+                                <div class="kt-widget-16__item kt-widget-16__item--danger">
+                                    <div class="kt-widget-16__labels">
                                         <a href="">
-                                            <div class="k-widget-16__title">Wordpress</div>
+                                            <div class="kt-widget-16__title">Wordpress</div>
                                         </a>
-                                        <div class="k-widget-16__desc">eCommerce, Website</div>
+                                        <div class="kt-widget-16__desc">eCommerce, Website</div>
                                     </div>
-                                    <div class="k-widget-16__data">
-                                        <div class="k-widget-16__item-chart">
+                                    <div class="kt-widget-16__data">
+                                        <div class="kt-widget-16__item-chart">
                                             <!--Doc: For the chart initialization refer to "latestProductsMiniCharts" function in "src\theme\app\scripts\custom\dashboard.js"
                          and "KLib.initMiniChart()" function in "themes/themes/keen/src/theme/app/scripts/bundle/lib.js" -->
-                                            <canvas id="k_widget_latest_products_chart_6" width="80" height="40"></canvas>
+                                            <canvas id="kt_widget_latest_products_chart_6" width="80" height="40"></canvas>
                                         </div>
-                                        <div class="k-widget-16__numbers">
-                                            <div class="k-widget-16__numbers-total">2.8k</div>
-                                            <div class="k-widget-16__numbers-change">+350</div>
+                                        <div class="kt-widget-16__numbers">
+                                            <div class="kt-widget-16__numbers-total">2.8k</div>
+                                            <div class="kt-widget-16__numbers-change">+350</div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="k-widget-16__item k-widget-16__item--warning">
-                                    <div class="k-widget-16__labels">
+                                <div class="kt-widget-16__item kt-widget-16__item--warning">
+                                    <div class="kt-widget-16__labels">
                                         <a href="">
-                                            <div class="k-widget-16__title">eCommerce</div>
+                                            <div class="kt-widget-16__title">eCommerce</div>
                                         </a>
-                                        <div class="k-widget-16__desc">Fashion Websites</div>
+                                        <div class="kt-widget-16__desc">Fashion Websites</div>
                                     </div>
-                                    <div class="k-widget-16__data">
-                                        <div class="k-widget-16__item-chart">
+                                    <div class="kt-widget-16__data">
+                                        <div class="kt-widget-16__item-chart">
                                             <!--Doc: For the chart initialization refer to "latestProductsMiniCharts" function in "src\theme\app\scripts\custom\dashboard.js"
                          and "KLib.initMiniChart()" function in "themes/themes/keen/src/theme/app/scripts/bundle/lib.js" -->
-                                            <canvas id="k_widget_latest_products_chart_3" width="80" height="40"></canvas>
+                                            <canvas id="kt_widget_latest_products_chart_3" width="80" height="40"></canvas>
                                         </div>
-                                        <div class="k-widget-16__numbers">
-                                            <div class="k-widget-16__numbers-total">9.3k</div>
-                                            <div class="k-widget-16__numbers-change">+2.1k</div>
+                                        <div class="kt-widget-16__numbers">
+                                            <div class="kt-widget-16__numbers-total">9.3k</div>
+                                            <div class="kt-widget-16__numbers-change">+2.1k</div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="k-widget-16__item k-widget-16__item--brand">
-                                    <div class="k-widget-16__labels">
+                                <div class="kt-widget-16__item kt-widget-16__item--brand">
+                                    <div class="kt-widget-16__labels">
                                         <a href="">
-                                            <div class="k-widget-16__title">UI/UX Design</div>
+                                            <div class="kt-widget-16__title">UI/UX Design</div>
                                         </a>
-                                        <div class="k-widget-16__desc">Everything you like</div>
+                                        <div class="kt-widget-16__desc">Everything you like</div>
                                     </div>
-                                    <div class="k-widget-16__data">
-                                        <div class="k-widget-16__item-chart">
+                                    <div class="kt-widget-16__data">
+                                        <div class="kt-widget-16__item-chart">
                                             <!--Doc: For the chart initialization refer to "latestProductsMiniCharts" function in "src\theme\app\scripts\custom\dashboard.js"
                          and "KLib.initMiniChart()" function in "themes/themes/keen/src/theme/app/scripts/bundle/lib.js" -->
-                                            <canvas id="k_widget_latest_products_chart_5" width="80" height="40"></canvas>
+                                            <canvas id="kt_widget_latest_products_chart_5" width="80" height="40"></canvas>
                                         </div>
-                                        <div class="k-widget-16__numbers">
-                                            <div class="k-widget-16__numbers-total">9.3k</div>
-                                            <div class="k-widget-16__numbers-change">+1.6k</div>
+                                        <div class="kt-widget-16__numbers">
+                                            <div class="kt-widget-16__numbers-total">9.3k</div>
+                                            <div class="kt-widget-16__numbers-change">+1.6k</div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="k-widget-16__item k-widget-16__item--success">
-                                    <div class="k-widget-16__labels">
+                                <div class="kt-widget-16__item kt-widget-16__item--success">
+                                    <div class="kt-widget-16__labels">
                                         <a href="">
-                                            <div class="k-widget-16__title">SAAS Solution</div>
+                                            <div class="kt-widget-16__title">SAAS Solution</div>
                                         </a>
-                                        <div class="k-widget-16__desc">Monthly Subscription</div>
+                                        <div class="kt-widget-16__desc">Monthly Subscription</div>
                                     </div>
-                                    <div class="k-widget-16__data">
-                                        <div class="k-widget-16__item-chart">
+                                    <div class="kt-widget-16__data">
+                                        <div class="kt-widget-16__item-chart">
                                             <!--Doc: For the chart initialization refer to "latestProductsMiniCharts" function in "src\theme\app\scripts\custom\dashboard.js"
                          and "KLib.initMiniChart()" function in "themes/themes/keen/src/theme/app/scripts/bundle/lib.js" -->
-                                            <canvas id="k_widget_latest_products_chart_4" width="80" height="40"></canvas>
+                                            <canvas id="kt_widget_latest_products_chart_4" width="80" height="40"></canvas>
                                         </div>
-                                        <div class="k-widget-16__numbers">
-                                            <div class="k-widget-16__numbers-total">5.7k</div>
-                                            <div class="k-widget-16__numbers-change">+598</div>
+                                        <div class="kt-widget-16__numbers">
+                                            <div class="kt-widget-16__numbers-total">5.7k</div>
+                                            <div class="kt-widget-16__numbers-change">+598</div>
                                         </div>
                                     </div>
                                 </div>
@@ -265,99 +265,99 @@
                 </div>
                 <div class="col-lg-12 col-xl-8 order-lg-2 order-xl-1">
                     <!--begin::Portlet-->
-                    <div class="k-portlet k-portlet--height-fluid">
-                        <div class="k-portlet__head">
-                            <div class="k-portlet__head-label">
-                                <h3 class="k-portlet__head-title">
+                    <div class="kt-portlet kt-portlet--height-fluid">
+                        <div class="kt-portlet__head">
+                            <div class="kt-portlet__head-label">
+                                <h3 class="kt-portlet__head-title">
                                     General Statistics
                                 </h3>
                             </div>
-                            <div class="k-portlet__head-toolbar">
-                                <div class="k-portlet__head-actions"> <a href="#" class="btn btn-default btn-sm btn-bold">XML</a> <a href="#" class="btn btn-default btn-sm btn-bold">CSV</a> </div>
+                            <div class="kt-portlet__head-toolbar">
+                                <div class="kt-portlet__head-actions"> <a href="#" class="btn btn-default btn-sm btn-bold">XML</a> <a href="#" class="btn btn-default btn-sm btn-bold">CSV</a> </div>
                             </div>
                         </div>
-                        <div class="k-portlet__body k-portlet__body--fluid k-portlet__body--fit">
-                            <div class="k-widget-2">
-                                <div class="k-widget-2__content k-portlet__space-x">
+                        <div class="kt-portlet__body kt-portlet__body--fluid kt-portlet__body--fit">
+                            <div class="kt-widget-2">
+                                <div class="kt-widget-2__content kt-portlet__space-x">
                                     <div class="row">
                                         <div class="col-xl-3 col-lg-6 col-md-6 col-6">
-                                            <div class="k-widget-2__item">
-                                                <div class="k-widget-2__item-title"> Sales </div>
-                                                <div class="k-widget-2__item-stats">
-                                                    <div class="k-widget-2__item-info">
-                                                        <div class="k-widget-2__item-text"> USP: </div>
-                                                        <div class="k-widget-2__item-value"> +23% </div>
+                                            <div class="kt-widget-2__item">
+                                                <div class="kt-widget-2__item-title"> Sales </div>
+                                                <div class="kt-widget-2__item-stats">
+                                                    <div class="kt-widget-2__item-info">
+                                                        <div class="kt-widget-2__item-text"> USP: </div>
+                                                        <div class="kt-widget-2__item-value"> +23% </div>
                                                     </div>
-                                                    <div class="k-widget-2__item-chart">
+                                                    <div class="kt-widget-2__item-chart">
                                                         <!--Doc: For the chart initialization refer to "generalStatistics" function in "src\theme\app\scripts\custom\dashboard.js"
 									and "KLib.initMiniChart()" function in "themes/themes/keen/src/theme/app/scripts/bundle/lib.js" -->
-                                                        <canvas id="k_widget_general_statistics_chart_1" width="80" height="40"></canvas>
+                                                        <canvas id="kt_widget_general_statistics_chart_1" width="80" height="40"></canvas>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-xl-3 col-lg-6 col-md-6 col-6">
-                                            <div class="k-widget-2__item">
-                                                <div class="k-widget-2__item-title"> Products </div>
-                                                <div class="k-widget-2__item-stats">
-                                                    <div class="k-widget-2__item-info">
-                                                        <div class="k-widget-2__item-text"> MRT: </div>
-                                                        <div class="k-widget-2__item-value"> +10% </div>
+                                            <div class="kt-widget-2__item">
+                                                <div class="kt-widget-2__item-title"> Products </div>
+                                                <div class="kt-widget-2__item-stats">
+                                                    <div class="kt-widget-2__item-info">
+                                                        <div class="kt-widget-2__item-text"> MRT: </div>
+                                                        <div class="kt-widget-2__item-value"> +10% </div>
                                                     </div>
-                                                    <div class="k-widget-2__item-chart">
+                                                    <div class="kt-widget-2__item-chart">
                                                         <!--Doc: For the chart initialization refer to "generalStatistics" function in "src\theme\app\scripts\custom\dashboard.js"
 									and "KLib.initMiniChart()" function in "themes/themes/keen/src/theme/app/scripts/bundle/lib.js" -->
-                                                        <canvas id="k_widget_general_statistics_chart_2" width="80" height="40"></canvas>
+                                                        <canvas id="kt_widget_general_statistics_chart_2" width="80" height="40"></canvas>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-xl-3 col-lg-6 col-md-6 col-6">
-                                            <div class="k-widget-2__item">
-                                                <div class="k-widget-2__item-title"> Profit </div>
-                                                <div class="k-widget-2__item-stats">
-                                                    <div class="k-widget-2__item-info">
-                                                        <div class="k-widget-2__item-text"> FTP: </div>
-                                                        <div class="k-widget-2__item-value"> +19% </div>
+                                            <div class="kt-widget-2__item">
+                                                <div class="kt-widget-2__item-title"> Profit </div>
+                                                <div class="kt-widget-2__item-stats">
+                                                    <div class="kt-widget-2__item-info">
+                                                        <div class="kt-widget-2__item-text"> FTP: </div>
+                                                        <div class="kt-widget-2__item-value"> +19% </div>
                                                     </div>
-                                                    <div class="k-widget-2__item-chart">
+                                                    <div class="kt-widget-2__item-chart">
                                                         <!--Doc: For the chart initialization refer to "generalStatistics" function in "src\theme\app\scripts\custom\dashboard.js"
 									and "KLib.initMiniChart()" function in "themes/themes/keen/src/theme/app/scripts/bundle/lib.js" -->
-                                                        <canvas id="k_widget_general_statistics_chart_3" width="80" height="40"></canvas>
+                                                        <canvas id="kt_widget_general_statistics_chart_3" width="80" height="40"></canvas>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-xl-3 col-lg-6 col-md-6 col-6">
-                                            <div class="k-widget-2__item">
-                                                <div class="k-widget-2__item-title"> Reports </div>
-                                                <div class="k-widget-2__item-stats">
-                                                    <div class="k-widget-2__item-info">
-                                                        <div class="k-widget-2__item-text"> RNP: </div>
-                                                        <div class="k-widget-2__item-value"> +30% </div>
+                                            <div class="kt-widget-2__item">
+                                                <div class="kt-widget-2__item-title"> Reports </div>
+                                                <div class="kt-widget-2__item-stats">
+                                                    <div class="kt-widget-2__item-info">
+                                                        <div class="kt-widget-2__item-text"> RNP: </div>
+                                                        <div class="kt-widget-2__item-value"> +30% </div>
                                                     </div>
-                                                    <div class="k-widget-2__item-chart">
+                                                    <div class="kt-widget-2__item-chart">
                                                         <!--Doc: For the chart initialization refer to "generalStatistics" function in "src\theme\app\scripts\custom\dashboard.js"
 									and "KLib.initMiniChart()" function in "themes/themes/keen/src/theme/app/scripts/bundle/lib.js" -->
-                                                        <canvas id="k_widget_general_statistics_chart_4" width="80" height="40"></canvas>
+                                                        <canvas id="kt_widget_general_statistics_chart_4" width="80" height="40"></canvas>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="k-widget-2__stats">
-                                        <div class="k-widget-2__stats-author">
-                                            <div class="k-widget-2__stats-bullet k-bg-brand"></div>
-                                            <span class="k-widget-2__stats-text">Author Sales</span>
+                                    <div class="kt-widget-2__stats">
+                                        <div class="kt-widget-2__stats-author">
+                                            <div class="kt-widget-2__stats-bullet kt-bg-brand"></div>
+                                            <span class="kt-widget-2__stats-text">Author Sales</span>
                                         </div>
-                                        <div class="k-widget-2__stats-product">
-                                            <div class="k-widget-2__stats-bullet k-bg-danger"></div>
-                                            <span class="k-widget-2__stats-text">Product Profit</span>
+                                        <div class="kt-widget-2__stats-product">
+                                            <div class="kt-widget-2__stats-bullet kt-bg-danger"></div>
+                                            <span class="kt-widget-2__stats-text">Product Profit</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="k-widget-2__chart">
-                                    <canvas id="k_widget_general_statistics_chart_main" height="250"></canvas>
+                                <div class="kt-widget-2__chart">
+                                    <canvas id="kt_widget_general_statistics_chart_main" height="250"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -366,78 +366,78 @@
                 </div>
                 <div class="col-lg-6 col-xl-4 order-lg-1 order-xl-1">
                     <!--begin::Portlet-->
-                    <div class="k-portlet k-portlet--tabs k-portlet--height-fluid">
-                        <div class="k-portlet__head">
-                            <div class="k-portlet__head-label">
-                                <h3 class="k-portlet__head-title">
+                    <div class="kt-portlet kt-portlet--tabs kt-portlet--height-fluid">
+                        <div class="kt-portlet__head">
+                            <div class="kt-portlet__head-label">
+                                <h3 class="kt-portlet__head-title">
                                     Work Progress
                                 </h3>
                             </div>
-                            <div class="k-portlet__head-toolbar">
+                            <div class="kt-portlet__head-toolbar">
                                 <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-brand nav-tabs-bold" role="tablist">
-                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#k_portlet_tabs_1111_1_content" role="tab" aria-selected="false"> Emails </a> </li>
-                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#k_portlet_tabs_1111_2_content" role="tab" aria-selected="false"> Tickets </a> </li>
+                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#kt_portlet_tabs_1111_1_content" role="tab" aria-selected="false"> Emails </a> </li>
+                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#kt_portlet_tabs_1111_2_content" role="tab" aria-selected="false"> Tickets </a> </li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="k-portlet__body">
+                        <div class="kt-portlet__body">
                             <div class="tab-content">
-                                <div class="tab-pane fade active show" id="k_portlet_tabs_1111_1_content" role="tabpanel">
-                                    <div class="k-widget-11">
-                                        <div class="k-widget-11__item">
-                                            <div class="k-widget-11__wrapper">
-                                                <div class="k-widget-11__title"> Pendings Tasks </div>
-                                                <div class="k-widget-11__value"> 78% </div>
+                                <div class="tab-pane fade active show" id="kt_portlet_tabs_1111_1_content" role="tabpanel">
+                                    <div class="kt-widget-11">
+                                        <div class="kt-widget-11__item">
+                                            <div class="kt-widget-11__wrapper">
+                                                <div class="kt-widget-11__title"> Pendings Tasks </div>
+                                                <div class="kt-widget-11__value"> 78% </div>
                                             </div>
-                                            <div class="k-widget-11__progress">
+                                            <div class="kt-widget-11__progress">
                                                 <div class="progress">
                                                     <!-- Doc: A bootstrap progress bar can be used to show a user how far along it's in a process, see https://getbootstrap.com/docs/4.1/components/progress/ -->
                                                     <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-11__item">
-                                            <div class="k-widget-11__wrapper">
-                                                <div class="k-widget-11__title"> Completed Tasks </div>
-                                                <div class="k-widget-11__value"> 320&nbsp;/&nbsp;<span class="k-opacity-5">780</span> </div>
+                                        <div class="kt-widget-11__item">
+                                            <div class="kt-widget-11__wrapper">
+                                                <div class="kt-widget-11__title"> Completed Tasks </div>
+                                                <div class="kt-widget-11__value"> 320&nbsp;/&nbsp;<span class="kt-opacity-5">780</span> </div>
                                             </div>
-                                            <div class="k-widget-11__progress">
+                                            <div class="kt-widget-11__progress">
                                                 <div class="progress">
                                                     <!-- Doc: A bootstrap progress bar can be used to show a user how far along it's in a process, see https://getbootstrap.com/docs/4.1/components/progress/ -->
                                                     <div class="progress-bar bg-primary" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-11__item">
-                                            <div class="k-widget-11__wrapper">
-                                                <div class="k-widget-11__title"> Tasks In Progress </div>
-                                                <div class="k-widget-11__value"> 45% </div>
+                                        <div class="kt-widget-11__item">
+                                            <div class="kt-widget-11__wrapper">
+                                                <div class="kt-widget-11__title"> Tasks In Progress </div>
+                                                <div class="kt-widget-11__value"> 45% </div>
                                             </div>
-                                            <div class="k-widget-11__progress">
+                                            <div class="kt-widget-11__progress">
                                                 <div class="progress">
                                                     <!-- Doc: A bootstrap progress bar can be used to show a user how far along it's in a process, see https://getbootstrap.com/docs/4.1/components/progress/ -->
                                                     <div class="progress-bar bg-danger" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-11__item">
-                                            <div class="k-widget-11__wrapper">
-                                                <div class="k-widget-11__title"> All Tasks </div>
-                                                <div class="k-widget-11__value"> 1200 </div>
+                                        <div class="kt-widget-11__item">
+                                            <div class="kt-widget-11__wrapper">
+                                                <div class="kt-widget-11__title"> All Tasks </div>
+                                                <div class="kt-widget-11__value"> 1200 </div>
                                             </div>
-                                            <div class="k-widget-11__progress">
+                                            <div class="kt-widget-11__progress">
                                                 <div class="progress">
                                                     <!-- Doc: A bootstrap progress bar can be used to show a user how far along it's in a process, see https://getbootstrap.com/docs/4.1/components/progress/ -->
                                                     <div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-11__item">
-                                            <div class="k-widget-11__wrapper">
-                                                <div class="k-widget-11__title"> Reports </div>
-                                                <div class="k-widget-11__value"> 40 </div>
+                                        <div class="kt-widget-11__item">
+                                            <div class="kt-widget-11__wrapper">
+                                                <div class="kt-widget-11__title"> Reports </div>
+                                                <div class="kt-widget-11__value"> 40 </div>
                                             </div>
-                                            <div class="k-widget-11__progress">
+                                            <div class="kt-widget-11__progress">
                                                 <div class="progress">
                                                     <!-- Doc: A bootstrap progress bar can be used to show a user how far along it's in a process, see https://getbootstrap.com/docs/4.1/components/progress/ -->
                                                     <div class="progress-bar bg-primary" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
@@ -445,64 +445,64 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="k-margin-t-30 k-align-center"> <a href="#" class="btn btn-brand btn-upper btn-bold k-align-center">Full Report</a> </div>
+                                    <div class="kt-margin-t-30 kt-align-center"> <a href="#" class="btn btn-brand btn-upper btn-bold kt-align-center">Full Report</a> </div>
                                 </div>
-                                <div class="tab-pane fade" id="k_portlet_tabs_1111_2_content" role="tabpanel">
-                                    <div class="k-widget-11">
-                                        <div class="k-widget-11__item">
-                                            <div class="k-widget-11__wrapper">
-                                                <div class="k-widget-11__title"> Pendings Tasks </div>
-                                                <div class="k-widget-11__value"> 78% </div>
+                                <div class="tab-pane fade" id="kt_portlet_tabs_1111_2_content" role="tabpanel">
+                                    <div class="kt-widget-11">
+                                        <div class="kt-widget-11__item">
+                                            <div class="kt-widget-11__wrapper">
+                                                <div class="kt-widget-11__title"> Pendings Tasks </div>
+                                                <div class="kt-widget-11__value"> 78% </div>
                                             </div>
-                                            <div class="k-widget-11__progress">
+                                            <div class="kt-widget-11__progress">
                                                 <div class="progress">
                                                     <!-- Doc: A bootstrap progress bar can be used to show a user how far along it's in a process, see https://getbootstrap.com/docs/4.1/components/progress/ -->
                                                     <div class="progress-bar bg-info" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-11__item">
-                                            <div class="k-widget-11__wrapper">
-                                                <div class="k-widget-11__title"> Completed Tasks </div>
-                                                <div class="k-widget-11__value"> 320&nbsp;/&nbsp;<span class="k-opacity-5">780</span> </div>
+                                        <div class="kt-widget-11__item">
+                                            <div class="kt-widget-11__wrapper">
+                                                <div class="kt-widget-11__title"> Completed Tasks </div>
+                                                <div class="kt-widget-11__value"> 320&nbsp;/&nbsp;<span class="kt-opacity-5">780</span> </div>
                                             </div>
-                                            <div class="k-widget-11__progress">
+                                            <div class="kt-widget-11__progress">
                                                 <div class="progress">
                                                     <!-- Doc: A bootstrap progress bar can be used to show a user how far along it's in a process, see https://getbootstrap.com/docs/4.1/components/progress/ -->
                                                     <div class="progress-bar bg-danger" role="progressbar" style="width: 58%" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-11__item">
-                                            <div class="k-widget-11__wrapper">
-                                                <div class="k-widget-11__title"> Tasks In Progress </div>
-                                                <div class="k-widget-11__value"> 45% </div>
+                                        <div class="kt-widget-11__item">
+                                            <div class="kt-widget-11__wrapper">
+                                                <div class="kt-widget-11__title"> Tasks In Progress </div>
+                                                <div class="kt-widget-11__value"> 45% </div>
                                             </div>
-                                            <div class="k-widget-11__progress">
+                                            <div class="kt-widget-11__progress">
                                                 <div class="progress">
                                                     <!-- Doc: A bootstrap progress bar can be used to show a user how far along it's in a process, see https://getbootstrap.com/docs/4.1/components/progress/ -->
                                                     <div class="progress-bar bg-warning" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-11__item">
-                                            <div class="k-widget-11__wrapper">
-                                                <div class="k-widget-11__title"> All Tasks </div>
-                                                <div class="k-widget-11__value"> 1200 </div>
+                                        <div class="kt-widget-11__item">
+                                            <div class="kt-widget-11__wrapper">
+                                                <div class="kt-widget-11__title"> All Tasks </div>
+                                                <div class="kt-widget-11__value"> 1200 </div>
                                             </div>
-                                            <div class="k-widget-11__progress">
+                                            <div class="kt-widget-11__progress">
                                                 <div class="progress">
                                                     <!-- Doc: A bootstrap progress bar can be used to show a user how far along it's in a process, see https://getbootstrap.com/docs/4.1/components/progress/ -->
                                                     <div class="progress-bar bg-success" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-11__item">
-                                            <div class="k-widget-11__wrapper">
-                                                <div class="k-widget-11__title"> Reports </div>
-                                                <div class="k-widget-11__value"> 40 </div>
+                                        <div class="kt-widget-11__item">
+                                            <div class="kt-widget-11__wrapper">
+                                                <div class="kt-widget-11__title"> Reports </div>
+                                                <div class="kt-widget-11__value"> 40 </div>
                                             </div>
-                                            <div class="k-widget-11__progress">
+                                            <div class="kt-widget-11__progress">
                                                 <div class="progress">
                                                     <!-- Doc: A bootstrap progress bar can be used to show a user how far along it's in a process, see https://getbootstrap.com/docs/4.1/components/progress/ -->
                                                     <div class="progress-bar bg-primary" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
@@ -510,7 +510,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="k-margin-t-30 k-align-center"> <a href="#" class="btn btn-brand btn-upper btn-bold k-align-center">Full Report</a> </div>
+                                    <div class="kt-margin-t-30 kt-align-center"> <a href="#" class="btn btn-brand btn-upper btn-bold kt-align-center">Full Report</a> </div>
                                 </div>
                             </div>
                         </div>
@@ -519,81 +519,81 @@
                 </div>
                 <div class="col-lg-6 col-xl-4 order-lg-1 order-xl-1">
                     <!--begin::Portlet-->
-                    <div class="k-portlet k-portlet--height-fluid">
-                        <div class="k-portlet__head">
-                            <div class="k-portlet__head-label">
-                                <h3 class="k-portlet__head-title">
+                    <div class="kt-portlet kt-portlet--height-fluid">
+                        <div class="kt-portlet__head">
+                            <div class="kt-portlet__head-label">
+                                <h3 class="kt-portlet__head-title">
                                     Daily Salles
                                 </h3>
                             </div>
-                            <div class="k-portlet__head-toolbar">
-                                <div class="k-portlet__head-actions"> <a href="#" class="btn btn-default btn-sm btn-bold btn-upper">CSV</a> </div>
+                            <div class="kt-portlet__head-toolbar">
+                                <div class="kt-portlet__head-actions"> <a href="#" class="btn btn-default btn-sm btn-bold btn-upper">CSV</a> </div>
                             </div>
                         </div>
-                        <div class="k-portlet__body">
-                            <div class="k-widget-4">
-                                <div class="k-widget-4__item">
-                                    <div class="k-widget-4__item-content">
-                                        <div class="k-widget-4__item-section">
-                                            <div class="k-widget-4__item-pic">
+                        <div class="kt-portlet__body">
+                            <div class="kt-widget-4">
+                                <div class="kt-widget-4__item">
+                                    <div class="kt-widget-4__item-content">
+                                        <div class="kt-widget-4__item-section">
+                                            <div class="kt-widget-4__item-pic">
                                                 <img class="" src="{{ config("app.keen_assets") }}/media/users/100_3.jpg" alt="" />
                                             </div>
-                                            <div class="k-widget-4__item-info">
-                                                <a href="#" class="k-widget-4__item-username">Chris Bent</a>
-                                                <div class="k-widget-4__item-desc">SUV Themes Carp</div>
+                                            <div class="kt-widget-4__item-info">
+                                                <a href="#" class="kt-widget-4__item-username">Chris Bent</a>
+                                                <div class="kt-widget-4__item-desc">SUV Themes Carp</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="k-widget-4__item-content">
-                                        <div class="k-widget-4__item-price"> <span class="k-widget-4__item-badge">$</span> <span class="k-widget-4__item-number">830</span> </div>
+                                    <div class="kt-widget-4__item-content">
+                                        <div class="kt-widget-4__item-price"> <span class="kt-widget-4__item-badge">$</span> <span class="kt-widget-4__item-number">830</span> </div>
                                     </div>
                                 </div>
-                                <div class="k-widget-4__item">
-                                    <div class="k-widget-4__item-content">
-                                        <div class="k-widget-4__item-section">
-                                            <div class="k-widget-4__item-pic">
+                                <div class="kt-widget-4__item">
+                                    <div class="kt-widget-4__item-content">
+                                        <div class="kt-widget-4__item-section">
+                                            <div class="kt-widget-4__item-pic">
                                                 <img class="" src="{{ config("app.keen_assets") }}/media/users/100_4.jpg" alt="" />
                                             </div>
-                                            <div class="k-widget-4__item-info">
-                                                <a href="#" class="k-widget-4__item-username">Ashley Stock</a>
-                                                <div class="k-widget-4__item-desc">Merscedes Benz AMGww</div>
+                                            <div class="kt-widget-4__item-info">
+                                                <a href="#" class="kt-widget-4__item-username">Ashley Stock</a>
+                                                <div class="kt-widget-4__item-desc">Merscedes Benz AMGww</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="k-widget-4__item-content">
-                                        <div class="k-widget-4__item-price"> <span class="k-widget-4__item-badge">$</span> <span class="k-widget-4__item-number">675</span> </div>
+                                    <div class="kt-widget-4__item-content">
+                                        <div class="kt-widget-4__item-price"> <span class="kt-widget-4__item-badge">$</span> <span class="kt-widget-4__item-number">675</span> </div>
                                     </div>
                                 </div>
-                                <div class="k-widget-4__item">
-                                    <div class="k-widget-4__item-content">
-                                        <div class="k-widget-4__item-section">
-                                            <div class="k-widget-4__item-pic">
+                                <div class="kt-widget-4__item">
+                                    <div class="kt-widget-4__item-content">
+                                        <div class="kt-widget-4__item-section">
+                                            <div class="kt-widget-4__item-pic">
                                                 <img class="" src="{{ config("app.keen_assets") }}/media/users/100_5.jpg" alt="" />
                                             </div>
-                                            <div class="k-widget-4__item-info">
-                                                <a href="#" class="k-widget-4__item-username">Jimmy Yesuku</a>
-                                                <div class="k-widget-4__item-desc">All Nippon United Airlines</div>
+                                            <div class="kt-widget-4__item-info">
+                                                <a href="#" class="kt-widget-4__item-username">Jimmy Yesuku</a>
+                                                <div class="kt-widget-4__item-desc">All Nippon United Airlines</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="k-widget-4__item-content">
-                                        <div class="k-widget-4__item-price"> <span class="k-widget-4__item-badge">$</span> <span class="k-widget-4__item-number">194</span> </div>
+                                    <div class="kt-widget-4__item-content">
+                                        <div class="kt-widget-4__item-price"> <span class="kt-widget-4__item-badge">$</span> <span class="kt-widget-4__item-number">194</span> </div>
                                     </div>
                                 </div>
-                                <div class="k-widget-4__item">
-                                    <div class="k-widget-4__item-content">
-                                        <div class="k-widget-4__item-section">
-                                            <div class="k-widget-4__item-pic">
+                                <div class="kt-widget-4__item">
+                                    <div class="kt-widget-4__item-content">
+                                        <div class="kt-widget-4__item-section">
+                                            <div class="kt-widget-4__item-pic">
                                                 <img class="" src="{{ config("app.keen_assets") }}/media/users/100_2.jpg" alt="" />
                                             </div>
-                                            <div class="k-widget-4__item-info">
-                                                <a href="#" class="k-widget-4__item-username">Amanda West</a>
-                                                <div class="k-widget-4__item-desc">Comboy Westem Limited</div>
+                                            <div class="kt-widget-4__item-info">
+                                                <a href="#" class="kt-widget-4__item-username">Amanda West</a>
+                                                <div class="kt-widget-4__item-desc">Comboy Westem Limited</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="k-widget-4__item-content">
-                                        <div class="k-widget-4__item-price"> <span class="k-widget-4__item-badge">$</span> <span class="k-widget-4__item-number">65</span> </div>
+                                    <div class="kt-widget-4__item-content">
+                                        <div class="kt-widget-4__item-price"> <span class="kt-widget-4__item-badge">$</span> <span class="kt-widget-4__item-number">65</span> </div>
                                     </div>
                                 </div>
                             </div>
@@ -603,168 +603,92 @@
                 </div>
                 <div class="col-lg-6 col-xl-4 order-lg-1 order-xl-1">
                     <!--begin::Portlet-->
-                    <div class="k-portlet k-portlet--height-fluid k-portlet--tabs">
-                        <div class="k-portlet__head">
-                            <div class="k-portlet__head-label">
-                                <h3 class="k-portlet__head-title">
+                    <div class="kt-portlet kt-portlet--height-fluid kt-portlet--tabs">
+                        <div class="kt-portlet__head">
+                            <div class="kt-portlet__head-label">
+                                <h3 class="kt-portlet__head-title">
                                     Latest Tasks
                                 </h3>
                             </div>
-                            <div class="k-portlet__head-toolbar">
+                            <div class="kt-portlet__head-toolbar">
                                 <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-brand nav-tabs-bold" role="tablist">
-                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#k_portlet_tabs_1_1_content" role="tab" aria-selected="false"> Today </a> </li>
-                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#k_portlet_tabs_1_2_content" role="tab" aria-selected="false"> Week </a> </li>
-                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#k_portlet_tabs_1_3_content" role="tab" aria-selected="true"> Month </a> </li>
+                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#kt_portlet_tabs_1_1_content" role="tab" aria-selected="false"> Today </a> </li>
+                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#kt_portlet_tabs_1_2_content" role="tab" aria-selected="false"> Week </a> </li>
+                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#kt_portlet_tabs_1_3_content" role="tab" aria-selected="true"> Month </a> </li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="k-portlet__body">
+                        <div class="kt-portlet__body">
                             <div class="tab-content">
-                                <div class="tab-pane fade active show" id="k_portlet_tabs_1_1_content" role="tabpanel">
-                                    <div class="k-widget-5">
-                                        <div class="k-widget-5__item k-widget-5__item--info">
-                                            <div class="k-widget-5__item-info">
-                                                <a href="#" class="k-widget-5__item-title"> Management meeting </a>
-                                                <div class="k-widget-5__item-datetime"> 09:30 AM </div>
+                                <div class="tab-pane fade active show" id="kt_portlet_tabs_1_1_content" role="tabpanel">
+                                    <div class="kt-widget-5">
+                                        <div class="kt-widget-5__item kt-widget-5__item--info">
+                                            <div class="kt-widget-5__item-info">
+                                                <a href="#" class="kt-widget-5__item-title"> Management meeting </a>
+                                                <div class="kt-widget-5__item-datetime"> 09:30 AM </div>
                                             </div>
-                                            <div class="k-widget-5__item-check">
-                                                <label class="k-radio">
+                                            <div class="kt-widget-5__item-check">
+                                                <label class="kt-radio">
                                                     <input type="radio" checked="checked" name="radio1">
                                                     <span></span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="k-widget-5__item k-widget-5__item--danger">
-                                            <div class="k-widget-5__item-info">
-                                                <a href="#" class="k-widget-5__item-title"> Replace datatables rows color </a>
-                                                <div class="k-widget-5__item-datetime"> 12:00 AM </div>
+                                        <div class="kt-widget-5__item kt-widget-5__item--danger">
+                                            <div class="kt-widget-5__item-info">
+                                                <a href="#" class="kt-widget-5__item-title"> Replace datatables rows color </a>
+                                                <div class="kt-widget-5__item-datetime"> 12:00 AM </div>
                                             </div>
-                                            <div class="k-widget-5__item-check">
-                                                <label class="k-radio">
+                                            <div class="kt-widget-5__item-check">
+                                                <label class="kt-radio">
                                                     <input type="radio" checked="checked" name="radio1">
                                                     <span></span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="k-widget-5__item k-widget-5__item--brand">
-                                            <div class="k-widget-5__item-info">
-                                                <a href="#" class="k-widget-5__item-title"> Export Navitare booking table </a>
-                                                <div class="k-widget-5__item-datetime"> 01:20 PM </div>
+                                        <div class="kt-widget-5__item kt-widget-5__item--brand">
+                                            <div class="kt-widget-5__item-info">
+                                                <a href="#" class="kt-widget-5__item-title"> Export Navitare booking table </a>
+                                                <div class="kt-widget-5__item-datetime"> 01:20 PM </div>
                                             </div>
-                                            <div class="k-widget-5__item-check">
-                                                <label class="k-radio">
+                                            <div class="kt-widget-5__item-check">
+                                                <label class="kt-radio">
                                                     <input type="radio" checked="checked" name="radio1">
                                                     <span></span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="k-widget-5__item k-widget-5__item--success">
-                                            <div class="k-widget-5__item-info">
-                                                <a href="#" class="k-widget-5__item-title"> NYCS internal discussion </a>
-                                                <div class="k-widget-5__item-datetime"> 03: 00 PM </div>
+                                        <div class="kt-widget-5__item kt-widget-5__item--success">
+                                            <div class="kt-widget-5__item-info">
+                                                <a href="#" class="kt-widget-5__item-title"> NYCS internal discussion </a>
+                                                <div class="kt-widget-5__item-datetime"> 03: 00 PM </div>
                                             </div>
-                                            <div class="k-widget-5__item-check">
-                                                <label class="k-radio">
+                                            <div class="kt-widget-5__item-check">
+                                                <label class="kt-radio">
                                                     <input type="radio" checked="checked" name="radio1">
                                                     <span></span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="k-widget-5__item k-widget-5__item--danger">
-                                            <div class="k-widget-5__item-info">
-                                                <a href="#" class="k-widget-5__item-title"> Project Launch </a>
-                                                <div class="k-widget-5__item-datetime"> 11: 00 AM </div>
+                                        <div class="kt-widget-5__item kt-widget-5__item--danger">
+                                            <div class="kt-widget-5__item-info">
+                                                <a href="#" class="kt-widget-5__item-title"> Project Launch </a>
+                                                <div class="kt-widget-5__item-datetime"> 11: 00 AM </div>
                                             </div>
-                                            <div class="k-widget-5__item-check">
-                                                <label class="k-radio">
+                                            <div class="kt-widget-5__item-check">
+                                                <label class="kt-radio">
                                                     <input type="radio" checked="checked" name="radio1">
                                                     <span></span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="k-widget-5__item k-widget-5__item--success">
-                                            <div class="k-widget-5__item-info">
-                                                <a href="#" class="k-widget-5__item-title"> Server maintenance </a>
-                                                <div class="k-widget-5__item-datetime"> 4: 30 PM </div>
+                                        <div class="kt-widget-5__item kt-widget-5__item--success">
+                                            <div class="kt-widget-5__item-info">
+                                                <a href="#" class="kt-widget-5__item-title"> Server maintenance </a>
+                                                <div class="kt-widget-5__item-datetime"> 4: 30 PM </div>
                                             </div>
-                                            <div class="k-widget-5__item-check">
-                                                <label class="k-radio">
-                                                    <input type="radio" checked="checked" name="radio1">
-                                                    <span></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="k_portlet_tabs_1_2_content" role="tabpanel">
-                                    <div class="k-widget-5">
-                                        <div class="k-widget-5__item k-widget-5__item--brand">
-                                            <div class="k-widget-5__item-info">
-                                                <a href="#" class="k-widget-5__item-title"> Export Navitare booking table </a>
-                                                <div class="k-widget-5__item-datetime"> 01:20 PM </div>
-                                            </div>
-                                            <div class="k-widget-5__item-check">
-                                                <label class="k-radio">
-                                                    <input type="radio" checked="checked" name="radio1">
-                                                    <span></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="k-widget-5__item k-widget-5__item--danger">
-                                            <div class="k-widget-5__item-info">
-                                                <a href="#" class="k-widget-5__item-title"> Replace datatables rows color </a>
-                                                <div class="k-widget-5__item-datetime"> 12:00 AM </div>
-                                            </div>
-                                            <div class="k-widget-5__item-check">
-                                                <label class="k-radio">
-                                                    <input type="radio" checked="checked" name="radio1">
-                                                    <span></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="k-widget-5__item k-widget-5__item--brand">
-                                            <div class="k-widget-5__item-info">
-                                                <a href="#" class="k-widget-5__item-title"> Export Navitare booking table </a>
-                                                <div class="k-widget-5__item-datetime"> 01:20 PM </div>
-                                            </div>
-                                            <div class="k-widget-5__item-check">
-                                                <label class="k-radio">
-                                                    <input type="radio" checked="checked" name="radio1">
-                                                    <span></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="k-widget-5__item k-widget-5__item--danger">
-                                            <div class="k-widget-5__item-info">
-                                                <a href="#" class="k-widget-5__item-title"> Replace datatables rows color </a>
-                                                <div class="k-widget-5__item-datetime"> 12:00 AM </div>
-                                            </div>
-                                            <div class="k-widget-5__item-check">
-                                                <label class="k-radio">
-                                                    <input type="radio" checked="checked" name="radio1">
-                                                    <span></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="k-widget-5__item k-widget-5__item--success">
-                                            <div class="k-widget-5__item-info">
-                                                <a href="#" class="k-widget-5__item-title"> NYCS internal discussion </a>
-                                                <div class="k-widget-5__item-datetime "> 03: 00 PM </div>
-                                            </div>
-                                            <div class="k-widget-5__item-check ">
-                                                <label class="k-radio">
-                                                    <input type="radio" checked="checked" name="radio1">
-                                                    <span></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="k-widget-5__item k-widget-5__item--info ">
-                                            <div class="k-widget-5__item-info ">
-                                                <a href="#" class="k-widget-5__item-title"> Management meeting </a>
-                                                <div class="k-widget-5__item-datetime "> 09:30 AM </div>
-                                            </div>
-                                            <div class="k-widget-5__item-check ">
-                                                <label class="k-radio">
+                                            <div class="kt-widget-5__item-check">
+                                                <label class="kt-radio">
                                                     <input type="radio" checked="checked" name="radio1">
                                                     <span></span>
                                                 </label>
@@ -772,75 +696,151 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade " id="k_portlet_tabs_1_3_content" role="tabpanel">
-                                    <div class="k-widget-5 ">
-                                        <div class="k-widget-5__item k-widget-5__item--success">
-                                            <div class="k-widget-5__item-info ">
-                                                <a href="#" class="k-widget-5__item-title"> NYCS internal discussion </a>
-                                                <div class="k-widget-5__item-datetime"> 03: 00 PM </div>
+                                <div class="tab-pane fade" id="kt_portlet_tabs_1_2_content" role="tabpanel">
+                                    <div class="kt-widget-5">
+                                        <div class="kt-widget-5__item kt-widget-5__item--brand">
+                                            <div class="kt-widget-5__item-info">
+                                                <a href="#" class="kt-widget-5__item-title"> Export Navitare booking table </a>
+                                                <div class="kt-widget-5__item-datetime"> 01:20 PM </div>
                                             </div>
-                                            <div class="k-widget-5__item-check">
-                                                <label class="k-radio">
+                                            <div class="kt-widget-5__item-check">
+                                                <label class="kt-radio">
                                                     <input type="radio" checked="checked" name="radio1">
                                                     <span></span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="k-widget-5__item k-widget-5__item--danger">
-                                            <div class="k-widget-5__item-info ">
-                                                <a href="#" class="k-widget-5__item-title"> Replace datatables rows color </a>
-                                                <div class="k-widget-5__item-datetime"> 12:00 AM </div>
+                                        <div class="kt-widget-5__item kt-widget-5__item--danger">
+                                            <div class="kt-widget-5__item-info">
+                                                <a href="#" class="kt-widget-5__item-title"> Replace datatables rows color </a>
+                                                <div class="kt-widget-5__item-datetime"> 12:00 AM </div>
                                             </div>
-                                            <div class="k-widget-5__item-check">
-                                                <label class="k-radio">
+                                            <div class="kt-widget-5__item-check">
+                                                <label class="kt-radio">
                                                     <input type="radio" checked="checked" name="radio1">
                                                     <span></span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="k-widget-5__item k-widget-5__item--danger">
-                                            <div class="k-widget-5__item-info">
-                                                <a href="#" class="k-widget-5__item-title"> Replace datatables rows color </a>
-                                                <div class="k-widget-5__item-datetime"> 12:00 AM </div>
+                                        <div class="kt-widget-5__item kt-widget-5__item--brand">
+                                            <div class="kt-widget-5__item-info">
+                                                <a href="#" class="kt-widget-5__item-title"> Export Navitare booking table </a>
+                                                <div class="kt-widget-5__item-datetime"> 01:20 PM </div>
                                             </div>
-                                            <div class="k-widget-5__item-check">
-                                                <label class="k-radio">
+                                            <div class="kt-widget-5__item-check">
+                                                <label class="kt-radio">
                                                     <input type="radio" checked="checked" name="radio1">
                                                     <span></span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="k-widget-5__item k-widget-5__item--brand">
-                                            <div class="k-widget-5__item-info">
-                                                <a href="#" class="k-widget-5__item-title"> Export Navitare booking table </a>
-                                                <div class="k-widget-5__item-datetime"> 01:20 PM </div>
+                                        <div class="kt-widget-5__item kt-widget-5__item--danger">
+                                            <div class="kt-widget-5__item-info">
+                                                <a href="#" class="kt-widget-5__item-title"> Replace datatables rows color </a>
+                                                <div class="kt-widget-5__item-datetime"> 12:00 AM </div>
                                             </div>
-                                            <div class="k-widget-5__item-check">
-                                                <label class="k-radio">
+                                            <div class="kt-widget-5__item-check">
+                                                <label class="kt-radio">
                                                     <input type="radio" checked="checked" name="radio1">
                                                     <span></span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="k-widget-5__item k-widget-5__item--brand">
-                                            <div class="k-widget-5__item-info ">
-                                                <a href="#" class="k-widget-5__item-title"> Export Navitare booking table </a>
-                                                <div class="k-widget-5__item-datetime "> 01:20 PM </div>
+                                        <div class="kt-widget-5__item kt-widget-5__item--success">
+                                            <div class="kt-widget-5__item-info">
+                                                <a href="#" class="kt-widget-5__item-title"> NYCS internal discussion </a>
+                                                <div class="kt-widget-5__item-datetime "> 03: 00 PM </div>
                                             </div>
-                                            <div class="k-widget-5__item-check">
-                                                <label class="k-radio">
+                                            <div class="kt-widget-5__item-check ">
+                                                <label class="kt-radio">
                                                     <input type="radio" checked="checked" name="radio1">
                                                     <span></span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="k-widget-5__item k-widget-5__item--info">
-                                            <div class="k-widget-5__item-info ">
-                                                <a href="#" class="k-widget-5__item-title"> Management meeting </a>
-                                                <div class="k-widget-5__item-datetime"> 09:30 AM </div>
+                                        <div class="kt-widget-5__item kt-widget-5__item--info ">
+                                            <div class="kt-widget-5__item-info ">
+                                                <a href="#" class="kt-widget-5__item-title"> Management meeting </a>
+                                                <div class="kt-widget-5__item-datetime "> 09:30 AM </div>
                                             </div>
-                                            <div class="k-widget-5__item-check">
-                                                <label class="k-radio">
+                                            <div class="kt-widget-5__item-check ">
+                                                <label class="kt-radio">
+                                                    <input type="radio" checked="checked" name="radio1">
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade " id="kt_portlet_tabs_1_3_content" role="tabpanel">
+                                    <div class="kt-widget-5 ">
+                                        <div class="kt-widget-5__item kt-widget-5__item--success">
+                                            <div class="kt-widget-5__item-info ">
+                                                <a href="#" class="kt-widget-5__item-title"> NYCS internal discussion </a>
+                                                <div class="kt-widget-5__item-datetime"> 03: 00 PM </div>
+                                            </div>
+                                            <div class="kt-widget-5__item-check">
+                                                <label class="kt-radio">
+                                                    <input type="radio" checked="checked" name="radio1">
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="kt-widget-5__item kt-widget-5__item--danger">
+                                            <div class="kt-widget-5__item-info ">
+                                                <a href="#" class="kt-widget-5__item-title"> Replace datatables rows color </a>
+                                                <div class="kt-widget-5__item-datetime"> 12:00 AM </div>
+                                            </div>
+                                            <div class="kt-widget-5__item-check">
+                                                <label class="kt-radio">
+                                                    <input type="radio" checked="checked" name="radio1">
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="kt-widget-5__item kt-widget-5__item--danger">
+                                            <div class="kt-widget-5__item-info">
+                                                <a href="#" class="kt-widget-5__item-title"> Replace datatables rows color </a>
+                                                <div class="kt-widget-5__item-datetime"> 12:00 AM </div>
+                                            </div>
+                                            <div class="kt-widget-5__item-check">
+                                                <label class="kt-radio">
+                                                    <input type="radio" checked="checked" name="radio1">
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="kt-widget-5__item kt-widget-5__item--brand">
+                                            <div class="kt-widget-5__item-info">
+                                                <a href="#" class="kt-widget-5__item-title"> Export Navitare booking table </a>
+                                                <div class="kt-widget-5__item-datetime"> 01:20 PM </div>
+                                            </div>
+                                            <div class="kt-widget-5__item-check">
+                                                <label class="kt-radio">
+                                                    <input type="radio" checked="checked" name="radio1">
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="kt-widget-5__item kt-widget-5__item--brand">
+                                            <div class="kt-widget-5__item-info ">
+                                                <a href="#" class="kt-widget-5__item-title"> Export Navitare booking table </a>
+                                                <div class="kt-widget-5__item-datetime "> 01:20 PM </div>
+                                            </div>
+                                            <div class="kt-widget-5__item-check">
+                                                <label class="kt-radio">
+                                                    <input type="radio" checked="checked" name="radio1">
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="kt-widget-5__item kt-widget-5__item--info">
+                                            <div class="kt-widget-5__item-info ">
+                                                <a href="#" class="kt-widget-5__item-title"> Management meeting </a>
+                                                <div class="kt-widget-5__item-datetime"> 09:30 AM </div>
+                                            </div>
+                                            <div class="kt-widget-5__item-check">
+                                                <label class="kt-radio">
                                                     <input type="radio" checked="checked" name="radio1">
                                                     <span></span>
                                                 </label>
@@ -857,171 +857,171 @@
             <!--end::Row-->
             @endif
         </div>
-        <div class="tab-pane fade" id="k_tabs_1_2" role="tabpanel">
+        <div class="tab-pane fade" id="kt_tabs_1_2" role="tabpanel">
             <!--begin::Row-->
             <div class="row">
                 <div class="col-lg-4 col-xl-3">
-                    <div class="k-portlet">
-                        <div class="k-portlet__body k-portlet__body--fit">
-                            <ul class="k-nav k-nav--bold k-nav--md-space k-nav--v3 k-margin-t-20 k-margin-b-20 nav nav-tabs" role="tablist">
-                                <li class="k-nav__item">
-                                    <a class="k-nav__link active" data-toggle="tab" href="#k_profile_tab_personal_information" role="tab">
-                                        <span class="k-nav__link-icon"><i class="flaticon2-user-outline-symbol"></i></span>
-                                        <span class="k-nav__link-text">Personal Information</span>
-                                        <span class="k-nav__link-badge"><span class="k-badge k-badge--brand k-badge--inline">2/4 completed</span></span>
+                    <div class="kt-portlet">
+                        <div class="kt-portlet__body kt-portlet__body--fit">
+                            <ul class="kt-nav kt-nav--bold kt-nav--md-space kt-nav--v3 kt-margin-t-20 kt-margin-b-20 nav nav-tabs" role="tablist">
+                                <li class="kt-nav__item">
+                                    <a class="kt-nav__link active" data-toggle="tab" href="#kt_profile_tab_personal_information" role="tab">
+                                        <span class="kt-nav__link-icon"><i class="flaticon2-user-outline-symbol"></i></span>
+                                        <span class="kt-nav__link-text">Personal Information</span>
+                                        <span class="kt-nav__link-badge"><span class="kt-badge kt-badge--brand kt-badge--inline">2/4 completed</span></span>
                                     </a>
                                 </li>
-                                <li class="k-nav__item">
-                                    <a class="k-nav__link" data-toggle="tab" href="#k_profile_tab_account_information" role="tab">
-                                        <span class="k-nav__link-icon"><i class="flaticon2-soft-icons-1"></i></span>
-                                        <span class="k-nav__link-text">Acccount Information</span>
+                                <li class="kt-nav__item">
+                                    <a class="kt-nav__link" data-toggle="tab" href="#kt_profile_tab_account_information" role="tab">
+                                        <span class="kt-nav__link-icon"><i class="flaticon2-soft-icons-1"></i></span>
+                                        <span class="kt-nav__link-text">Acccount Information</span>
                                     </a>
                                 </li>
-                                <li class="k-nav__item">
-                                    <a class="k-nav__link" data-toggle="tab" href="#k_profile_change_password" role="tab">
-                                        <span class="k-nav__link-icon"><i class="flaticon2-lock"></i></span>
-                                        <span class="k-nav__link-text">Change Password</span>
+                                <li class="kt-nav__item">
+                                    <a class="kt-nav__link" data-toggle="tab" href="#kt_profile_change_password" role="tab">
+                                        <span class="kt-nav__link-icon"><i class="flaticon2-lock"></i></span>
+                                        <span class="kt-nav__link-text">Change Password</span>
                                     </a>
                                 </li>
-                                <li class="k-nav__item">
-                                    <a class="k-nav__link" data-toggle="tab" href="#k_profile_email_settings" role="tab">
-                                        <span class="k-nav__link-icon"><i class="flaticon2-mail"></i></span>
-                                        <span class="k-nav__link-text">Email Settings</span>
+                                <li class="kt-nav__item">
+                                    <a class="kt-nav__link" data-toggle="tab" href="#kt_profile_email_settings" role="tab">
+                                        <span class="kt-nav__link-icon"><i class="flaticon2-mail"></i></span>
+                                        <span class="kt-nav__link-text">Email Settings</span>
                                     </a>
                                 </li>
-                                <li class="k-nav__item">
-                                    <a class="k-nav__link" href="#" role="tab" data-toggle="k-tooltip" title="This feature is coming soon!" data-placement="right">
-                                        <span class="k-nav__link-icon"><i class="flaticon2-document"></i></span>
-                                        <span class="k-nav__link-text">Saved Credit Cards</span>
+                                <li class="kt-nav__item">
+                                    <a class="kt-nav__link" href="#" role="tab" data-toggle="kt-tooltip" title="This feature is coming soon!" data-placement="right">
+                                        <span class="kt-nav__link-icon"><i class="flaticon2-document"></i></span>
+                                        <span class="kt-nav__link-text">Saved Credit Cards</span>
                                     </a>
                                 </li>
-                                <li class="k-nav__item">
-                                    <a class="k-nav__link" href="#" role="tab" data-toggle="k-tooltip" title="This feature is coming soon!" data-placement="right">
-                                        <span class="k-nav__link-icon"><i class="flaticon2-calendar-3"></i></span>
-                                        <span class="k-nav__link-text">Social Networks</span>
-                                        <span class="k-nav__link-badge"><span class="k-badge k-badge--danger">3</span></span>
+                                <li class="kt-nav__item">
+                                    <a class="kt-nav__link" href="#" role="tab" data-toggle="kt-tooltip" title="This feature is coming soon!" data-placement="right">
+                                        <span class="kt-nav__link-icon"><i class="flaticon2-calendar-3"></i></span>
+                                        <span class="kt-nav__link-text">Social Networks</span>
+                                        <span class="kt-nav__link-badge"><span class="kt-badge kt-badge--danger">3</span></span>
                                     </a>
                                 </li>
-                                <li class="k-nav__separator"></li>
-                                <li class="k-nav__item">
-                                    <a class="k-nav__link" href="#" role="tab" data-toggle="k-tooltip" title="This feature is coming soon!" data-placement="right">
-                                        <span class="k-nav__link-icon"><i class="flaticon2-calendar-3"></i></span>
-                                        <span class="k-nav__link-text">Tax Information</span>
+                                <li class="kt-nav__separator"></li>
+                                <li class="kt-nav__item">
+                                    <a class="kt-nav__link" href="#" role="tab" data-toggle="kt-tooltip" title="This feature is coming soon!" data-placement="right">
+                                        <span class="kt-nav__link-icon"><i class="flaticon2-calendar-3"></i></span>
+                                        <span class="kt-nav__link-text">Tax Information</span>
                                     </a>
                                 </li>
-                                <li class="k-nav__item">
-                                    <a class="k-nav__link" href="#" role="tab" data-toggle="k-tooltip" title="This feature is coming soon!" data-placement="right">
-                                        <span class="k-nav__link-icon"><i class="flaticon2-shopping-cart-1"></i></span>
-                                        <span class="k-nav__link-text">Purchases</span>
+                                <li class="kt-nav__item">
+                                    <a class="kt-nav__link" href="#" role="tab" data-toggle="kt-tooltip" title="This feature is coming soon!" data-placement="right">
+                                        <span class="kt-nav__link-icon"><i class="flaticon2-shopping-cart-1"></i></span>
+                                        <span class="kt-nav__link-text">Purchases</span>
                                     </a>
                                 </li>
-                                <li class="k-nav__item">
-                                    <a class="k-nav__link" href="#" role="tab" data-toggle="k-tooltip" title="This feature is coming soon!" data-placement="right">
-                                        <span class="k-nav__link-icon"><i class="flaticon2-browser-2"></i></span>
-                                        <span class="k-nav__link-text">Statements</span>
+                                <li class="kt-nav__item">
+                                    <a class="kt-nav__link" href="#" role="tab" data-toggle="kt-tooltip" title="This feature is coming soon!" data-placement="right">
+                                        <span class="kt-nav__link-icon"><i class="flaticon2-browser-2"></i></span>
+                                        <span class="kt-nav__link-text">Statements</span>
                                     </a>
                                 </li>
-                                <li class="k-nav__item">
-                                    <a class="k-nav__link" href="#" role="tab" data-toggle="k-tooltip" title="This feature is coming soon!" data-placement="right">
-                                        <span class="k-nav__link-icon"><i class="flaticon2-cardiogram"></i></span>
-                                        <span class="k-nav__link-text">Audit Log</span>
-                                        <span class="k-nav__link-badge"><span class="k-badge k-badge--warning k-badge--inline">23 new</span></span>
+                                <li class="kt-nav__item">
+                                    <a class="kt-nav__link" href="#" role="tab" data-toggle="kt-tooltip" title="This feature is coming soon!" data-placement="right">
+                                        <span class="kt-nav__link-icon"><i class="flaticon2-cardiogram"></i></span>
+                                        <span class="kt-nav__link-text">Audit Log</span>
+                                        <span class="kt-nav__link-badge"><span class="kt-badge kt-badge--warning kt-badge--inline">23 new</span></span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <div class="k-portlet">
-                        <div class="k-portlet__head">
-                            <div class="k-portlet__head-label">
-                                <h3 class="k-portlet__head-title">
+                    <div class="kt-portlet">
+                        <div class="kt-portlet__head">
+                            <div class="kt-portlet__head-label">
+                                <h3 class="kt-portlet__head-title">
                                     Work Progress
                                 </h3>
                             </div>
                         </div>
-                        <div class="k-portlet__body">
-                            <div class="k-widget-11">
-                                <div class="k-widget-11__item">
-                                    <div class="k-widget-11__wrapper">
-                                        <div class="k-widget-11__title"> Pendings Tasks </div>
-                                        <div class="k-widget-11__value"> 78% </div>
+                        <div class="kt-portlet__body">
+                            <div class="kt-widget-11">
+                                <div class="kt-widget-11__item">
+                                    <div class="kt-widget-11__wrapper">
+                                        <div class="kt-widget-11__title"> Pendings Tasks </div>
+                                        <div class="kt-widget-11__value"> 78% </div>
                                     </div>
-                                    <div class="k-widget-11__progress">
+                                    <div class="kt-widget-11__progress">
                                         <div class="progress">
                                             <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="k-widget-11__item">
-                                    <div class="k-widget-11__wrapper">
-                                        <div class="k-widget-11__title"> Completed Tasks </div>
-                                        <div class="k-widget-11__value"> 320&nbsp;/&nbsp;<span class="k-opacity-5">780</span> </div>
+                                <div class="kt-widget-11__item">
+                                    <div class="kt-widget-11__wrapper">
+                                        <div class="kt-widget-11__title"> Completed Tasks </div>
+                                        <div class="kt-widget-11__value"> 320&nbsp;/&nbsp;<span class="kt-opacity-5">780</span> </div>
                                     </div>
-                                    <div class="k-widget-11__progress">
+                                    <div class="kt-widget-11__progress">
                                         <div class="progress">
                                             <div class="progress-bar bg-primary" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="k-widget-11__item">
-                                    <div class="k-widget-11__wrapper">
-                                        <div class="k-widget-11__title"> Tasks In Progress </div>
-                                        <div class="k-widget-11__value"> 45% </div>
+                                <div class="kt-widget-11__item">
+                                    <div class="kt-widget-11__wrapper">
+                                        <div class="kt-widget-11__title"> Tasks In Progress </div>
+                                        <div class="kt-widget-11__value"> 45% </div>
                                     </div>
-                                    <div class="k-widget-11__progress">
+                                    <div class="kt-widget-11__progress">
                                         <div class="progress">
                                             <div class="progress-bar bg-danger" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="k-widget-11__item">
-                                    <div class="k-widget-11__wrapper">
-                                        <div class="k-widget-11__title"> All Tasks </div>
-                                        <div class="k-widget-11__value"> 1200 </div>
+                                <div class="kt-widget-11__item">
+                                    <div class="kt-widget-11__wrapper">
+                                        <div class="kt-widget-11__title"> All Tasks </div>
+                                        <div class="kt-widget-11__value"> 1200 </div>
                                     </div>
-                                    <div class="k-widget-11__progress">
+                                    <div class="kt-widget-11__progress">
                                         <div class="progress">
                                             <div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="k-margin-t-30 k-align-center"> <a href="#" class="btn btn-sm btn-brand btn-upper btn-bold k-align-center">Full Report</a> </div>
+                            <div class="kt-margin-t-30 kt-align-center"> <a href="#" class="btn btn-sm btn-brand btn-upper btn-bold kt-align-center">Full Report</a> </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-8 col-xl-9">
                     <div class="tab-content">
                         <!--begin: Personal Information-->
-                        <div class="tab-pane fade show active" id="k_profile_tab_personal_information" role="tabpanel">
-                            <div class="k-portlet">
-                                <div class="k-portlet__head">
-                                    <div class="k-portlet__head-label">
-                                        <h3 class="k-portlet__head-title">
+                        <div class="tab-pane fade show active" id="kt_profile_tab_personal_information" role="tabpanel">
+                            <div class="kt-portlet">
+                                <div class="kt-portlet__head">
+                                    <div class="kt-portlet__head-label">
+                                        <h3 class="kt-portlet__head-title">
                                             Personal Information <small>update your personal informaiton</small>
                                         </h3>
                                     </div>
-                                    <div class="k-portlet__head-toolbar">
-                                        <div class="k-portlet__head-wrapper">
+                                    <div class="kt-portlet__head-toolbar">
+                                        <div class="kt-portlet__head-wrapper">
                                             <div class="dropdown dropdown-inline">
                                                 <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon2-gear"></i> </button>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <ul class="k-nav">
-                                                        <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">Export Tools</span> </li>
-                                                        <li class="k-nav__item">
-                                                            <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-print"></i> <span class="k-nav__link-text">Print</span> </a>
+                                                    <ul class="kt-nav">
+                                                        <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">Export Tools</span> </li>
+                                                        <li class="kt-nav__item">
+                                                            <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-print"></i> <span class="kt-nav__link-text">Print</span> </a>
                                                         </li>
-                                                        <li class="k-nav__item">
-                                                            <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                        <li class="kt-nav__item">
+                                                            <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                         </li>
-                                                        <li class="k-nav__item">
-                                                            <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                        <li class="kt-nav__item">
+                                                            <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                         </li>
-                                                        <li class="k-nav__item">
-                                                            <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-text-o"></i> <span class="k-nav__link-text">CSV</span> </a>
+                                                        <li class="kt-nav__item">
+                                                            <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-text-o"></i> <span class="kt-nav__link-text">CSV</span> </a>
                                                         </li>
-                                                        <li class="k-nav__item">
-                                                            <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-pdf-o"></i> <span class="k-nav__link-text">PDF</span> </a>
+                                                        <li class="kt-nav__item">
+                                                            <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-pdf-o"></i> <span class="kt-nav__link-text">PDF</span> </a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -1029,14 +1029,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form class="k-form k-form--label-right">
-                                    <div class="k-portlet__body">
-                                        <div class="k-section k-section--first">
-                                            <div class="k-section__body">
+                                <form class="kt-form kt-form--label-right">
+                                    <div class="kt-portlet__body">
+                                        <div class="kt-section kt-section--first">
+                                            <div class="kt-section__body">
                                                 <div class="row">
                                                     <label class="col-xl-3"></label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                        <h3 class="k-section__title k-section__title-sm">
+                                                        <h3 class="kt-section__title kt-section__title-sm">
                                                             Customer Info:
                                                         </h3>
                                                     </div>
@@ -1044,13 +1044,13 @@
                                                 <div class="form-group row">
                                                     <label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                        <div class="k-avatar k-avatar--outline k-avatar--circle" id="k_profile_avatar">
-                                                            <div class="k-avatar__holder" style="background-image: url({{ config("app.keen_assets") }}/media/users/300_21.jpg)"></div>
-                                                            <label class="k-avatar__upload" data-toggle="k-tooltip" title="Change avatar">
+                                                        <div class="kt-avatar kt-avatar--outline kt-avatar--circle" id="kt_profile_avatar">
+                                                            <div class="kt-avatar__holder" style="background-image: url({{ config("app.keen_assets") }}/media/users/300_21.jpg)"></div>
+                                                            <label class="kt-avatar__upload" data-toggle="kt-tooltip" title="Change avatar">
                                                                 <i class="fa fa-pen"></i>
                                                                 <input type='file' name="profile_avatar" accept=".png, .jpg, .jpeg"/>
                                                             </label>
-                                                            <span class="k-avatar__cancel" data-toggle="k-tooltip" title="Cancel avatar"> <i class="fa fa-times"></i> </span>
+                                                            <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title="Cancel avatar"> <i class="fa fa-times"></i> </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1107,13 +1107,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-separator k-separator--border-dashed k-separator--portlet-fit k-separator--space-lg"></div>
-                                        <div class="k-section k-section--first">
-                                            <div class="k-section__body">
+                                        <div class="kt-separator kt-separator--border-dashed kt-separator--portlet-fit kt-separator--space-lg"></div>
+                                        <div class="kt-section kt-section--first">
+                                            <div class="kt-section__body">
                                                 <div class="row">
                                                     <label class="col-xl-3"></label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                        <h3 class="k-section__title k-section__title-sm">
+                                                        <h3 class="kt-section__title kt-section__title-sm">
                                                             Address Details:
                                                         </h3>
                                                     </div>
@@ -1407,8 +1407,8 @@
                                                 <div class="form-group row">
                                                     <label class="col-xl-3 col-lg-3 col-form-label"></label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                        <div class="k-checkbox-single">
-                                                            <label class="k-checkbox">
+                                                        <div class="kt-checkbox-single">
+                                                            <label class="kt-checkbox">
                                                                 <input type="checkbox">
                                                                 Use as shipping address. <span></span>
                                                             </label>
@@ -1418,8 +1418,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="k-portlet__foot">
-                                        <div class="k-form__actions">
+                                    <div class="kt-portlet__foot">
+                                        <div class="kt-form__actions">
                                             <div class="row">
                                                 <div class="col-lg-3 col-xl-3"></div>
                                                 <div class="col-lg-9 col-xl-9">
@@ -1435,35 +1435,35 @@
                         </div>
                         <!--end: Personal Information-->
                         <!--begin: Account Information-->
-                        <div class="tab-pane fade" id="k_profile_tab_account_information" role="tabpanel">
-                            <div class="k-portlet">
-                                <div class="k-portlet__head">
-                                    <div class="k-portlet__head-label">
-                                        <h3 class="k-portlet__head-title">
+                        <div class="tab-pane fade" id="kt_profile_tab_account_information" role="tabpanel">
+                            <div class="kt-portlet">
+                                <div class="kt-portlet__head">
+                                    <div class="kt-portlet__head-label">
+                                        <h3 class="kt-portlet__head-title">
                                             Account Information <small>change your account settings</small>
                                         </h3>
                                     </div>
-                                    <div class="k-portlet__head-toolbar">
-                                        <div class="k-portlet__head-wrapper">
+                                    <div class="kt-portlet__head-toolbar">
+                                        <div class="kt-portlet__head-wrapper">
                                             <div class="dropdown dropdown-inline">
                                                 <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="la la-sellsy"></i> </button>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <ul class="k-nav">
-                                                        <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">Export Tools</span> </li>
-                                                        <li class="k-nav__item">
-                                                            <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-print"></i> <span class="k-nav__link-text">Print</span> </a>
+                                                    <ul class="kt-nav">
+                                                        <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">Export Tools</span> </li>
+                                                        <li class="kt-nav__item">
+                                                            <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-print"></i> <span class="kt-nav__link-text">Print</span> </a>
                                                         </li>
-                                                        <li class="k-nav__item">
-                                                            <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                        <li class="kt-nav__item">
+                                                            <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                         </li>
-                                                        <li class="k-nav__item">
-                                                            <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                        <li class="kt-nav__item">
+                                                            <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                         </li>
-                                                        <li class="k-nav__item">
-                                                            <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-text-o"></i> <span class="k-nav__link-text">CSV</span> </a>
+                                                        <li class="kt-nav__item">
+                                                            <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-text-o"></i> <span class="kt-nav__link-text">CSV</span> </a>
                                                         </li>
-                                                        <li class="k-nav__item">
-                                                            <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-pdf-o"></i> <span class="k-nav__link-text">PDF</span> </a>
+                                                        <li class="kt-nav__item">
+                                                            <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-pdf-o"></i> <span class="kt-nav__link-text">PDF</span> </a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -1471,14 +1471,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form class="k-form k-form--label-right">
-                                    <div class="k-portlet__body">
-                                        <div class="k-section k-section--first">
-                                            <div class="k-section__body">
+                                <form class="kt-form kt-form--label-right">
+                                    <div class="kt-portlet__body">
+                                        <div class="kt-section kt-section--first">
+                                            <div class="kt-section__body">
                                                 <div class="row">
                                                     <label class="col-xl-3"></label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                        <h3 class="k-section__title k-section__title-sm">
+                                                        <h3 class="kt-section__title kt-section__title-sm">
                                                             Account:
                                                         </h3>
                                                     </div>
@@ -1486,7 +1486,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-xl-3 col-lg-3 col-form-label">Username</label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                        <div class="k-spinner k-spinner--sm k-spinner--success k-spinner--right k-spinner--input">
+                                                        <div class="kt-spinner kt-spinner--sm kt-spinner--success kt-spinner--right kt-spinner--input">
                                                             <input class="form-control" type="text" value="nick84">
                                                         </div>
                                                     </div>
@@ -1500,7 +1500,7 @@
                                                             </div>
                                                             <input type="text" class="form-control" value="nick.watson@loop.com" placeholder="Email" aria-describedby="basic-addon1">
                                                         </div>
-                                                        <span class="form-text text-muted">Email will not be publicly displayed. <a href="#" class="k-link">Learn more</a>.</span>
+                                                        <span class="form-text text-muted">Email will not be publicly displayed. <a href="#" class="kt-link">Learn more</a>.</span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -1711,16 +1711,16 @@
                                                 <div class="form-group form-group-last row">
                                                     <label class="col-xl-3 col-lg-3 col-form-label">Communication</label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                        <div class="k-checkbox-inline">
-                                                            <label class="k-checkbox">
+                                                        <div class="kt-checkbox-inline">
+                                                            <label class="kt-checkbox">
                                                                 <input type="checkbox" checked>
                                                                 Email <span></span>
                                                             </label>
-                                                            <label class="k-checkbox">
+                                                            <label class="kt-checkbox">
                                                                 <input type="checkbox" checked>
                                                                 SMS <span></span>
                                                             </label>
-                                                            <label class="k-checkbox">
+                                                            <label class="kt-checkbox">
                                                                 <input type="checkbox">
                                                                 Phone <span></span>
                                                             </label>
@@ -1729,13 +1729,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-separator k-separator--border-dashed k-separator--portlet-fit k-separator--space-lg"></div>
-                                        <div class="k-section k-section--first">
-                                            <div class="k-section__body">
+                                        <div class="kt-separator kt-separator--border-dashed kt-separator--portlet-fit kt-separator--space-lg"></div>
+                                        <div class="kt-section kt-section--first">
+                                            <div class="kt-section__body">
                                                 <div class="row">
                                                     <label class="col-xl-3"></label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                        <h3 class="k-section__title k-section__title-sm">
+                                                        <h3 class="kt-section__title kt-section__title-sm">
                                                             Security:
                                                         </h3>
                                                     </div>
@@ -1743,33 +1743,33 @@
                                                 <div class="form-group row">
                                                     <label class="col-xl-3 col-lg-3 col-form-label">Login verification</label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                        <button type="button" class="btn btn-outline-primary btn-sm k-margin-t-5 k-margin-b-5">Setup login verification</button>
-                                                        <span class="form-text text-muted"> After you log in, you will be asked for additional information to confirm your identity and protect your account from being compromised. <a href="#" class="k-link">Learn more</a>. </span>
+                                                        <button type="button" class="btn btn-outline-primary btn-sm kt-margin-t-5 kt-margin-b-5">Setup login verification</button>
+                                                        <span class="form-text text-muted"> After you log in, you will be asked for additional information to confirm your identity and protect your account from being compromised. <a href="#" class="kt-link">Learn more</a>. </span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <label class="col-xl-3 col-lg-3 col-form-label">Password reset verification</label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                        <div class="k-checkbox-single">
-                                                            <label class="k-checkbox">
+                                                        <div class="kt-checkbox-single">
+                                                            <label class="kt-checkbox">
                                                                 <input type="checkbox">
                                                                 Require personal information to reset your password. <span></span>
                                                             </label>
                                                         </div>
-                                                        <span class="form-text text-muted"> For extra security, this requires you to confirm your email or phone number when you reset your password. <a href="#" class="k-link">Learn more</a>. </span>
+                                                        <span class="form-text text-muted"> For extra security, this requires you to confirm your email or phone number when you reset your password. <a href="#" class="kt-link">Learn more</a>. </span>
                                                     </div>
                                                 </div>
-                                                <div class="form-group row k-margin-t-10 k-margin-b-10">
+                                                <div class="form-group row kt-margin-t-10 kt-margin-b-10">
                                                     <label class="col-xl-3 col-lg-3 col-form-label"></label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                        <button type="button" class="btn btn-outline-danger btn-sm k-margin-t-5 k-margin-b-5">Deactivate your account ?</button>
+                                                        <button type="button" class="btn btn-outline-danger btn-sm kt-margin-t-5 kt-margin-b-5">Deactivate your account ?</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="k-portlet__foot">
-                                        <div class="k-form__actions">
+                                    <div class="kt-portlet__foot">
+                                        <div class="kt-form__actions">
                                             <div class="row">
                                                 <div class="col-lg-3 col-xl-3"></div>
                                                 <div class="col-lg-9 col-xl-9">
@@ -1785,35 +1785,35 @@
                         </div>
                         <!--end: Account Information-->
                         <!--begin: Change Password -->
-                        <div class="tab-pane fade" id="k_profile_change_password" role="tabpanel">
-                            <div class="k-portlet">
-                                <div class="k-portlet__head">
-                                    <div class="k-portlet__head-label">
-                                        <h3 class="k-portlet__head-title">
+                        <div class="tab-pane fade" id="kt_profile_change_password" role="tabpanel">
+                            <div class="kt-portlet">
+                                <div class="kt-portlet__head">
+                                    <div class="kt-portlet__head-label">
+                                        <h3 class="kt-portlet__head-title">
                                             Change Password<small>change or reset your account password</small>
                                         </h3>
                                     </div>
-                                    <div class="k-portlet__head-toolbar">
-                                        <div class="k-portlet__head-toolbar">
+                                    <div class="kt-portlet__head-toolbar">
+                                        <div class="kt-portlet__head-toolbar">
                                             <div class="dropdown dropdown-inline">
                                                 <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="la la-sellsy"></i> </button>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <ul class="k-nav">
-                                                        <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">Quick Actions</span> </li>
-                                                        <li class="k-nav__item">
-                                                            <a href="#" class="k-nav__link"> <i class="k-nav__link-icon flaticon2-graph-1"></i> <span class="k-nav__link-text">Statistics</span> </a>
+                                                    <ul class="kt-nav">
+                                                        <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">Quick Actions</span> </li>
+                                                        <li class="kt-nav__item">
+                                                            <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon flaticon2-graph-1"></i> <span class="kt-nav__link-text">Statistics</span> </a>
                                                         </li>
-                                                        <li class="k-nav__item">
-                                                            <a href="#" class="k-nav__link"> <i class="k-nav__link-icon flaticon2-calendar-4"></i> <span class="k-nav__link-text">Events</span> </a>
+                                                        <li class="kt-nav__item">
+                                                            <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon flaticon2-calendar-4"></i> <span class="kt-nav__link-text">Events</span> </a>
                                                         </li>
-                                                        <li class="k-nav__item">
-                                                            <a href="#" class="k-nav__link"> <i class="k-nav__link-icon flaticon2-layers-1"></i> <span class="k-nav__link-text">Reports</span> </a>
+                                                        <li class="kt-nav__item">
+                                                            <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon flaticon2-layers-1"></i> <span class="kt-nav__link-text">Reports</span> </a>
                                                         </li>
-                                                        <li class="k-nav__item">
-                                                            <a href="#" class="k-nav__link"> <i class="k-nav__link-icon flaticon2-bell-1o"></i> <span class="k-nav__link-text">Notifications</span> </a>
+                                                        <li class="kt-nav__item">
+                                                            <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon flaticon2-bell-1o"></i> <span class="kt-nav__link-text">Notifications</span> </a>
                                                         </li>
-                                                        <li class="k-nav__item">
-                                                            <a href="#" class="k-nav__link"> <i class="k-nav__link-icon flaticon2-file-1"></i> <span class="k-nav__link-text">Files</span> </a>
+                                                        <li class="kt-nav__item">
+                                                            <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon flaticon2-file-1"></i> <span class="kt-nav__link-text">Files</span> </a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -1821,11 +1821,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form class="k-form k-form--label-right">
-                                    <div class="k-portlet__body">
-                                        <div class="k-section k-section--first">
-                                            <div class="k-section__body">
-                                                <div class="alert alert-outline-danger fade show k-margin-t-20 k-margin-b-40" role="alert">
+                                <form class="kt-form kt-form--label-right">
+                                    <div class="kt-portlet__body">
+                                        <div class="kt-section kt-section--first">
+                                            <div class="kt-section__body">
+                                                <div class="alert alert-outline-danger fade show kt-margin-t-20 kt-margin-b-40" role="alert">
                                                     <div class="alert-icon"><i class="flaticon-warning"></i></div>
                                                     <div class="alert-text">Configure user passwords to expire periodically. Users will need warning that their passwords are going to expire, or they might inadvertently get locked out of the system!</div>
                                                     <div class="alert-close">
@@ -1837,7 +1837,7 @@
                                                 <div class="row">
                                                     <label class="col-xl-3"></label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                        <h3 class="k-section__title k-section__title-sm">
+                                                        <h3 class="kt-section__title kt-section__title-sm">
                                                             Change Or Recover Your Password:
                                                         </h3>
                                                     </div>
@@ -1846,7 +1846,7 @@
                                                     <label class="col-xl-3 col-lg-3 col-form-label">Current Password</label>
                                                     <div class="col-lg-9 col-xl-6">
                                                         <input type="password" class="form-control" value="" placeholder="Current password">
-                                                        <a href="#" class="k-link k-font-sm k-font-bold k-margin-t-5">Forgot password ?</a>
+                                                        <a href="#" class="kt-link kt-font-sm kt-font-bold kt-margin-t-5">Forgot password ?</a>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -1864,8 +1864,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="k-portlet__foot">
-                                        <div class="k-form__actions">
+                                    <div class="kt-portlet__foot">
+                                        <div class="kt-form__actions">
                                             <div class="row">
                                                 <div class="col-lg-3 col-xl-3"></div>
                                                 <div class="col-lg-9 col-xl-9">
@@ -1881,23 +1881,23 @@
                         </div>
                         <!--end: Change Password -->
                         <!--begin: Email Settings -->
-                        <div class="tab-pane fade" id="k_profile_email_settings" role="tabpanel">
-                            <div class="k-portlet">
-                                <div class="k-portlet__head">
-                                    <div class="k-portlet__head-label">
-                                        <h3 class="k-portlet__head-title">
+                        <div class="tab-pane fade" id="kt_profile_email_settings" role="tabpanel">
+                            <div class="kt-portlet">
+                                <div class="kt-portlet__head">
+                                    <div class="kt-portlet__head-label">
+                                        <h3 class="kt-portlet__head-title">
                                             Email Notifications <small>control when and how often Keen sends emails to you</small>
                                         </h3>
                                     </div>
                                 </div>
-                                <form class="k-form k-form--label-right">
-                                    <div class="k-portlet__body">
-                                        <div class="k-section k-section--first">
-                                            <div class="k-section__body">
+                                <form class="kt-form kt-form--label-right">
+                                    <div class="kt-portlet__body">
+                                        <div class="kt-section kt-section--first">
+                                            <div class="kt-section__body">
                                                 <div class="row">
                                                     <label class="col-xl-3"></label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                        <h3 class="k-section__title k-section__title-sm">
+                                                        <h3 class="kt-section__title kt-section__title-sm">
                                                             Setup Email Notification:
                                                         </h3>
                                                     </div>
@@ -1905,7 +1905,7 @@
                                                 <div class="form-group form-group-sm row">
                                                     <label class="col-xl-3 col-lg-3 col-form-label">Email Notification</label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                                                <span class="k-switch">
+                                                                                <span class="kt-switch">
                                                                                     <label>
                                                                                         <input type="checkbox" checked="checked" name="email_notification_1">
                                                                                         <span></span>
@@ -1916,7 +1916,7 @@
                                                 <div class="form-group form-group-last row">
                                                     <label class="col-xl-3 col-lg-3 col-form-label">Send Copy To Personal Email</label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                                                <span class="k-switch">
+                                                                                <span class="kt-switch">
                                                                                     <label>
                                                                                         <input type="checkbox" name="email_notification_2">
                                                                                         <span></span>
@@ -1926,13 +1926,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-separator k-separator--border-dashed k-separator--portlet-fit k-separator--space-lg"></div>
-                                        <div class="k-section k-section--first">
-                                            <div class="k-section__body">
+                                        <div class="kt-separator kt-separator--border-dashed kt-separator--portlet-fit kt-separator--space-lg"></div>
+                                        <div class="kt-section kt-section--first">
+                                            <div class="kt-section__body">
                                                 <div class="row">
                                                     <label class="col-xl-3"></label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                        <h3 class="k-section__title k-section__title-sm">
+                                                        <h3 class="kt-section__title kt-section__title-sm">
                                                             Activity Related Emails:
                                                         </h3>
                                                     </div>
@@ -1940,16 +1940,16 @@
                                                 <div class="form-group row">
                                                     <label class="col-xl-3 col-lg-3 col-form-label">When To Email</label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                        <div class="k-checkbox-list">
-                                                            <label class="k-checkbox">
+                                                        <div class="kt-checkbox-list">
+                                                            <label class="kt-checkbox">
                                                                 <input type="checkbox">
                                                                 You have new notifications. <span></span>
                                                             </label>
-                                                            <label class="k-checkbox">
+                                                            <label class="kt-checkbox">
                                                                 <input type="checkbox">
                                                                 You're sent a direct message <span></span>
                                                             </label>
-                                                            <label class="k-checkbox">
+                                                            <label class="kt-checkbox">
                                                                 <input type="checkbox" checked="checked">
                                                                 Someone adds you as a connection <span></span>
                                                             </label>
@@ -1959,16 +1959,16 @@
                                                 <div class="form-group form-group-last row">
                                                     <label class="col-xl-3 col-lg-3 col-form-label">When To Escalate Emails</label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                        <div class="k-checkbox-list">
-                                                            <label class="k-checkbox k-checkbox--brand">
+                                                        <div class="kt-checkbox-list">
+                                                            <label class="kt-checkbox kt-checkbox--brand">
                                                                 <input type="checkbox">
                                                                 Upon new order. <span></span>
                                                             </label>
-                                                            <label class="k-checkbox k-checkbox--brand">
+                                                            <label class="kt-checkbox kt-checkbox--brand">
                                                                 <input type="checkbox">
                                                                 New membership approval <span></span>
                                                             </label>
-                                                            <label class="k-checkbox k-checkbox--brand">
+                                                            <label class="kt-checkbox kt-checkbox--brand">
                                                                 <input type="checkbox" checked="checked">
                                                                 Member registration <span></span>
                                                             </label>
@@ -1977,13 +1977,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-separator k-separator--border-dashed k-separator--portlet-fit k-separator--space-lg"></div>
-                                        <div class="k-section k-section--first">
-                                            <div class="k-section__body">
+                                        <div class="kt-separator kt-separator--border-dashed kt-separator--portlet-fit kt-separator--space-lg"></div>
+                                        <div class="kt-section kt-section--first">
+                                            <div class="kt-section__body">
                                                 <div class="row">
                                                     <label class="col-xl-3"></label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                        <h3 class="k-section__title k-section__title-sm">
+                                                        <h3 class="kt-section__title kt-section__title-sm">
                                                             Updates From Keen:
                                                         </h3>
                                                     </div>
@@ -1991,24 +1991,24 @@
                                                 <div class="form-group row">
                                                     <label class="col-xl-3 col-lg-3 col-form-label">Email You With</label>
                                                     <div class="col-lg-9 col-xl-6">
-                                                        <div class="k-checkbox-list">
-                                                            <label class="k-checkbox">
+                                                        <div class="kt-checkbox-list">
+                                                            <label class="kt-checkbox">
                                                                 <input type="checkbox">
                                                                 News about Keen product and feature updates <span></span>
                                                             </label>
-                                                            <label class="k-checkbox">
+                                                            <label class="kt-checkbox">
                                                                 <input type="checkbox">
                                                                 Tips on getting more out of Keen <span></span>
                                                             </label>
-                                                            <label class="k-checkbox">
+                                                            <label class="kt-checkbox">
                                                                 <input type="checkbox" checked="checked">
                                                                 Things you missed since you last logged into Keen <span></span>
                                                             </label>
-                                                            <label class="k-checkbox">
+                                                            <label class="kt-checkbox">
                                                                 <input type="checkbox" checked="checked">
                                                                 News about Keen on partner products and other services <span></span>
                                                             </label>
-                                                            <label class="k-checkbox">
+                                                            <label class="kt-checkbox">
                                                                 <input type="checkbox" checked="checked">
                                                                 Tips on Keen business products <span></span>
                                                             </label>
@@ -2018,8 +2018,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="k-portlet__foot">
-                                        <div class="k-form__actions">
+                                    <div class="kt-portlet__foot">
+                                        <div class="kt-form__actions">
                                             <div class="row">
                                                 <div class="col-lg-3 col-xl-3"></div>
                                                 <div class="col-lg-9 col-xl-9">
@@ -2039,39 +2039,39 @@
             </div>
             <!--end::Row-->
         </div>
-        <div class="tab-pane fade" id="k_tabs_1_3" role="tabpanel">
+        <div class="tab-pane fade" id="kt_tabs_1_3" role="tabpanel">
             <!--begin::Row-->
             <div class="row">
                 <div class="col-lg-6 col-xl-4">
                     <!--begin::Portlet-->
-                    <div class="k-portlet k-portlet--height-fluid">
-                        <div class="k-portlet__head">
-                            <div class="k-portlet__head-label">
-                                <h3 class="k-portlet__head-title">
+                    <div class="kt-portlet kt-portlet--height-fluid">
+                        <div class="kt-portlet__head">
+                            <div class="kt-portlet__head-label">
+                                <h3 class="kt-portlet__head-title">
                                     Recent Works
                                 </h3>
                             </div>
-                            <div class="k-portlet__head-toolbar">
-                                <div class="k-portlet__head-toolbar-wrapper">
+                            <div class="kt-portlet__head-toolbar">
+                                <div class="kt-portlet__head-toolbar-wrapper">
                                     <div class="dropdown dropdown-inline">
                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <ul class="k-nav">
-                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">Export Tools</span> </li>
-                                                <li class="k-nav__item">
-                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-print"></i> <span class="k-nav__link-text">Print</span> </a>
+                                            <ul class="kt-nav">
+                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">Export Tools</span> </li>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-print"></i> <span class="kt-nav__link-text">Print</span> </a>
                                                 </li>
-                                                <li class="k-nav__item">
-                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                 </li>
-                                                <li class="k-nav__item">
-                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                 </li>
-                                                <li class="k-nav__item">
-                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-text-o"></i> <span class="k-nav__link-text">CSV</span> </a>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-text-o"></i> <span class="kt-nav__link-text">CSV</span> </a>
                                                 </li>
-                                                <li class="k-nav__item">
-                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-pdf-o"></i> <span class="k-nav__link-text">PDF</span> </a>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-pdf-o"></i> <span class="kt-nav__link-text">PDF</span> </a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -2079,130 +2079,130 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="k-portlet__body">
-                            <div class="k-widget-6">
+                        <div class="kt-portlet__body">
+                            <div class="kt-widget-6">
                                 <!-- begin::Tab Content -->
-                                <div class="k-widget6__tab tab-content">
-                                    <div id="k_personal_income_quater_15c4f43eadca7c" class="tab-pane fade active show">
-                                        <div class="k-widget-6__items">
-                                            <div class="k-widget-6__item">
-                                                <div class="k-widget-6__item-pic">
+                                <div class="kt-widget6__tab tab-content">
+                                    <div id="kt_personal_income_quater_15c4f43eadca7c" class="tab-pane fade active show">
+                                        <div class="kt-widget-6__items">
+                                            <div class="kt-widget-6__item">
+                                                <div class="kt-widget-6__item-pic">
                                                     <img class="" src="{{ config("app.keen_assets") }}/media/blog/blog-7.jpg" alt="" />
                                                 </div>
-                                                <div class="k-widget-6__item-info">
-                                                    <div class="k-widget-6__item-title"> Quickly direct you useful content or people </div>
-                                                    <div class="k-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
+                                                <div class="kt-widget-6__item-info">
+                                                    <div class="kt-widget-6__item-title"> Quickly direct you useful content or people </div>
+                                                    <div class="kt-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
                                                 </div>
-                                                <div class="k-widget-6__item-icon k-widget-6__item-icon--brand">
+                                                <div class="kt-widget-6__item-icon kt-widget-6__item-icon--brand">
                                                     <div class="dropdown dropdown-inline">
                                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <ul class="k-nav">
-                                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">EXPORT TOOLS</span> </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-eye"></i> <span class="k-nav__link-text">View</span> </a>
+                                                            <ul class="kt-nav">
+                                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">EXPORT TOOLS</span> </li>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-eye"></i> <span class="kt-nav__link-text">View</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-comment-o"></i> <span class="k-nav__link-text">Coments</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-comment-o"></i> <span class="kt-nav__link-text">Coments</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="k-widget-6__item">
-                                                <div class="k-widget-6__item-pic">
+                                            <div class="kt-widget-6__item">
+                                                <div class="kt-widget-6__item-pic">
                                                     <img class="" src="{{ config("app.keen_assets") }}/media/blog/blog-6.jpg" alt="" />
                                                 </div>
-                                                <div class="k-widget-6__item-info">
-                                                    <div class="k-widget-6__item-title"> Get the point across </div>
-                                                    <div class="k-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
+                                                <div class="kt-widget-6__item-info">
+                                                    <div class="kt-widget-6__item-title"> Get the point across </div>
+                                                    <div class="kt-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
                                                 </div>
-                                                <div class="k-widget-6__item-icon k-widget-6__item-icon--brand">
+                                                <div class="kt-widget-6__item-icon kt-widget-6__item-icon--brand">
                                                     <div class="dropdown dropdown-inline">
                                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <ul class="k-nav">
-                                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">EXPORT TOOLS</span> </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-eye"></i> <span class="k-nav__link-text">View</span> </a>
+                                                            <ul class="kt-nav">
+                                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">EXPORT TOOLS</span> </li>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-eye"></i> <span class="kt-nav__link-text">View</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-comment-o"></i> <span class="k-nav__link-text">Coments</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-comment-o"></i> <span class="kt-nav__link-text">Coments</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="k-widget-6__item">
-                                                <div class="k-widget-6__item-pic">
+                                            <div class="kt-widget-6__item">
+                                                <div class="kt-widget-6__item-pic">
                                                     <img class="" src="{{ config("app.keen_assets") }}/media/blog/blog-5.jpg" alt="" />
                                                 </div>
-                                                <div class="k-widget-6__item-info">
-                                                    <div class="k-widget-6__item-title"> Contain amazing email sign up form </div>
-                                                    <div class="k-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
+                                                <div class="kt-widget-6__item-info">
+                                                    <div class="kt-widget-6__item-title"> Contain amazing email sign up form </div>
+                                                    <div class="kt-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
                                                 </div>
-                                                <div class="k-widget-6__item-icon k-widget-6__item-icon--brand">
+                                                <div class="kt-widget-6__item-icon kt-widget-6__item-icon--brand">
                                                     <div class="dropdown dropdown-inline">
                                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <ul class="k-nav">
-                                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">EXPORT TOOLS</span> </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-eye"></i> <span class="k-nav__link-text">View</span> </a>
+                                                            <ul class="kt-nav">
+                                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">EXPORT TOOLS</span> </li>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-eye"></i> <span class="kt-nav__link-text">View</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-comment-o"></i> <span class="k-nav__link-text">Coments</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-comment-o"></i> <span class="kt-nav__link-text">Coments</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="k-widget-6__item">
-                                                <div class="k-widget-6__item-pic">
+                                            <div class="kt-widget-6__item">
+                                                <div class="kt-widget-6__item-pic">
                                                     <img class="" src="{{ config("app.keen_assets") }}/media/blog/blog-2.jpg" alt="" />
                                                 </div>
-                                                <div class="k-widget-6__item-info">
-                                                    <div class="k-widget-6__item-title"> Tips on How to Write an About me page </div>
-                                                    <div class="k-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
+                                                <div class="kt-widget-6__item-info">
+                                                    <div class="kt-widget-6__item-title"> Tips on How to Write an About me page </div>
+                                                    <div class="kt-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
                                                 </div>
-                                                <div class="k-widget-6__item-icon k-widget-6__item-icon--brand">
+                                                <div class="kt-widget-6__item-icon kt-widget-6__item-icon--brand">
                                                     <div class="dropdown dropdown-inline">
                                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <ul class="k-nav">
-                                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">EXPORT TOOLS</span> </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-eye"></i> <span class="k-nav__link-text">View</span> </a>
+                                                            <ul class="kt-nav">
+                                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">EXPORT TOOLS</span> </li>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-eye"></i> <span class="kt-nav__link-text">View</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-comment-o"></i> <span class="k-nav__link-text">Coments</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-comment-o"></i> <span class="kt-nav__link-text">Coments</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -2211,126 +2211,126 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="k_personal_income_quater_25c4f43eadca7c" class="tab-pane fade">
-                                        <div class="k-widget-6__items">
-                                            <div class="k-widget-6__item">
-                                                <div class="k-widget-6__item-pic">
+                                    <div id="kt_personal_income_quater_25c4f43eadca7c" class="tab-pane fade">
+                                        <div class="kt-widget-6__items">
+                                            <div class="kt-widget-6__item">
+                                                <div class="kt-widget-6__item-pic">
                                                     <img class="" src="{{ config("app.keen_assets") }}/media/blog/blog-6.jpg" alt="" />
                                                 </div>
-                                                <div class="k-widget-6__item-info">
-                                                    <div class="k-widget-6__item-title"> Get the point across </div>
-                                                    <div class="k-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
+                                                <div class="kt-widget-6__item-info">
+                                                    <div class="kt-widget-6__item-title"> Get the point across </div>
+                                                    <div class="kt-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
                                                 </div>
-                                                <div class="k-widget-6__item-icon k-widget-6__item-icon--brand">
+                                                <div class="kt-widget-6__item-icon kt-widget-6__item-icon--brand">
                                                     <div class="dropdown dropdown-inline">
                                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <ul class="k-nav">
-                                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">EXPORT TOOLS</span> </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-eye"></i> <span class="k-nav__link-text">View</span> </a>
+                                                            <ul class="kt-nav">
+                                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">EXPORT TOOLS</span> </li>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-eye"></i> <span class="kt-nav__link-text">View</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-comment-o"></i> <span class="k-nav__link-text">Coments</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-comment-o"></i> <span class="kt-nav__link-text">Coments</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="k-widget-6__item">
-                                                <div class="k-widget-6__item-pic">
+                                            <div class="kt-widget-6__item">
+                                                <div class="kt-widget-6__item-pic">
                                                     <img class="" src="{{ config("app.keen_assets") }}/media/blog/blog-2.jpg" alt="" />
                                                 </div>
-                                                <div class="k-widget-6__item-info">
-                                                    <div class="k-widget-6__item-title"> Tips on How to Write an About me page </div>
-                                                    <div class="k-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
+                                                <div class="kt-widget-6__item-info">
+                                                    <div class="kt-widget-6__item-title"> Tips on How to Write an About me page </div>
+                                                    <div class="kt-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
                                                 </div>
-                                                <div class="k-widget-6__item-icon k-widget-6__item-icon--brand">
+                                                <div class="kt-widget-6__item-icon kt-widget-6__item-icon--brand">
                                                     <div class="dropdown dropdown-inline">
                                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <ul class="k-nav">
-                                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">EXPORT TOOLS</span> </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-eye"></i> <span class="k-nav__link-text">View</span> </a>
+                                                            <ul class="kt-nav">
+                                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">EXPORT TOOLS</span> </li>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-eye"></i> <span class="kt-nav__link-text">View</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-comment-o"></i> <span class="k-nav__link-text">Coments</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-comment-o"></i> <span class="kt-nav__link-text">Coments</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="k-widget-6__item">
-                                                <div class="k-widget-6__item-pic">
+                                            <div class="kt-widget-6__item">
+                                                <div class="kt-widget-6__item-pic">
                                                     <img class="" src="{{ config("app.keen_assets") }}/media/blog/blog-7.jpg" alt="" />
                                                 </div>
-                                                <div class="k-widget-6__item-info">
-                                                    <div class="k-widget-6__item-title"> Quickly direct you useful content or people </div>
-                                                    <div class="k-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
+                                                <div class="kt-widget-6__item-info">
+                                                    <div class="kt-widget-6__item-title"> Quickly direct you useful content or people </div>
+                                                    <div class="kt-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
                                                 </div>
-                                                <div class="k-widget-6__item-icon k-widget-6__item-icon--brand">
+                                                <div class="kt-widget-6__item-icon kt-widget-6__item-icon--brand">
                                                     <div class="dropdown dropdown-inline">
                                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <ul class="k-nav">
-                                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">EXPORT TOOLS</span> </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-eye"></i> <span class="k-nav__link-text">View</span> </a>
+                                                            <ul class="kt-nav">
+                                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">EXPORT TOOLS</span> </li>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-eye"></i> <span class="kt-nav__link-text">View</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-comment-o"></i> <span class="k-nav__link-text">Coments</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-comment-o"></i> <span class="kt-nav__link-text">Coments</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="k-widget-6__item">
-                                                <div class="k-widget-6__item-pic">
+                                            <div class="kt-widget-6__item">
+                                                <div class="kt-widget-6__item-pic">
                                                     <img class="" src="{{ config("app.keen_assets") }}/media/blog/blog-5.jpg" alt="" />
                                                 </div>
-                                                <div class="k-widget-6__item-info">
-                                                    <div class="k-widget-6__item-title"> Contain amazing email sign up form </div>
-                                                    <div class="k-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
+                                                <div class="kt-widget-6__item-info">
+                                                    <div class="kt-widget-6__item-title"> Contain amazing email sign up form </div>
+                                                    <div class="kt-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
                                                 </div>
-                                                <div class="k-widget-6__item-icon k-widget-6__item-icon--brand">
+                                                <div class="kt-widget-6__item-icon kt-widget-6__item-icon--brand">
                                                     <div class="dropdown dropdown-inline">
                                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <ul class="k-nav">
-                                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">EXPORT TOOLS</span> </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-eye"></i> <span class="k-nav__link-text">View</span> </a>
+                                                            <ul class="kt-nav">
+                                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">EXPORT TOOLS</span> </li>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-eye"></i> <span class="kt-nav__link-text">View</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-comment-o"></i> <span class="k-nav__link-text">Coments</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-comment-o"></i> <span class="kt-nav__link-text">Coments</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -2339,126 +2339,126 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="k_personal_income_quater_35c4f43eadca7c" class="tab-pane fade">
-                                        <div class="k-widget-6__items">
-                                            <div class="k-widget-6__item">
-                                                <div class="k-widget-6__item-pic">
+                                    <div id="kt_personal_income_quater_35c4f43eadca7c" class="tab-pane fade">
+                                        <div class="kt-widget-6__items">
+                                            <div class="kt-widget-6__item">
+                                                <div class="kt-widget-6__item-pic">
                                                     <img class="" src="{{ config("app.keen_assets") }}/media/blog/blog-5.jpg" alt="" />
                                                 </div>
-                                                <div class="k-widget-6__item-info">
-                                                    <div class="k-widget-6__item-title"> Contain amazing email sign up form </div>
-                                                    <div class="k-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
+                                                <div class="kt-widget-6__item-info">
+                                                    <div class="kt-widget-6__item-title"> Contain amazing email sign up form </div>
+                                                    <div class="kt-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
                                                 </div>
-                                                <div class="k-widget-6__item-icon k-widget-6__item-icon--brand">
+                                                <div class="kt-widget-6__item-icon kt-widget-6__item-icon--brand">
                                                     <div class="dropdown dropdown-inline">
                                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <ul class="k-nav">
-                                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">EXPORT TOOLS</span> </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-eye"></i> <span class="k-nav__link-text">View</span> </a>
+                                                            <ul class="kt-nav">
+                                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">EXPORT TOOLS</span> </li>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-eye"></i> <span class="kt-nav__link-text">View</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-comment-o"></i> <span class="k-nav__link-text">Coments</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-comment-o"></i> <span class="kt-nav__link-text">Coments</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="k-widget-6__item">
-                                                <div class="k-widget-6__item-pic">
+                                            <div class="kt-widget-6__item">
+                                                <div class="kt-widget-6__item-pic">
                                                     <img class="" src="{{ config("app.keen_assets") }}/media/blog/blog-4.jpg" alt="" />
                                                 </div>
-                                                <div class="k-widget-6__item-info">
-                                                    <div class="k-widget-6__item-title"> Tips on How to Write an About me page </div>
-                                                    <div class="k-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
+                                                <div class="kt-widget-6__item-info">
+                                                    <div class="kt-widget-6__item-title"> Tips on How to Write an About me page </div>
+                                                    <div class="kt-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
                                                 </div>
-                                                <div class="k-widget-6__item-icon k-widget-6__item-icon--brand">
+                                                <div class="kt-widget-6__item-icon kt-widget-6__item-icon--brand">
                                                     <div class="dropdown dropdown-inline">
                                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <ul class="k-nav">
-                                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">EXPORT TOOLS</span> </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-eye"></i> <span class="k-nav__link-text">View</span> </a>
+                                                            <ul class="kt-nav">
+                                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">EXPORT TOOLS</span> </li>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-eye"></i> <span class="kt-nav__link-text">View</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-comment-o"></i> <span class="k-nav__link-text">Coments</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-comment-o"></i> <span class="kt-nav__link-text">Coments</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="k-widget-6__item">
-                                                <div class="k-widget-6__item-pic">
+                                            <div class="kt-widget-6__item">
+                                                <div class="kt-widget-6__item-pic">
                                                     <img class="" src="{{ config("app.keen_assets") }}/media/blog/blog-6.jpg" alt="" />
                                                 </div>
-                                                <div class="k-widget-6__item-info">
-                                                    <div class="k-widget-6__item-title"> Get the point across </div>
-                                                    <div class="k-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
+                                                <div class="kt-widget-6__item-info">
+                                                    <div class="kt-widget-6__item-title"> Get the point across </div>
+                                                    <div class="kt-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
                                                 </div>
-                                                <div class="k-widget-6__item-icon k-widget-6__item-icon--brand">
+                                                <div class="kt-widget-6__item-icon kt-widget-6__item-icon--brand">
                                                     <div class="dropdown dropdown-inline">
                                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <ul class="k-nav">
-                                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">EXPORT TOOLS</span> </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-eye"></i> <span class="k-nav__link-text">View</span> </a>
+                                                            <ul class="kt-nav">
+                                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">EXPORT TOOLS</span> </li>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-eye"></i> <span class="kt-nav__link-text">View</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-comment-o"></i> <span class="k-nav__link-text">Coments</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-comment-o"></i> <span class="kt-nav__link-text">Coments</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="k-widget-6__item">
-                                                <div class="k-widget-6__item-pic">
+                                            <div class="kt-widget-6__item">
+                                                <div class="kt-widget-6__item-pic">
                                                     <img class="" src="{{ config("app.keen_assets") }}/media/blog/blog-2.jpg" alt="" />
                                                 </div>
-                                                <div class="k-widget-6__item-info">
-                                                    <div class="k-widget-6__item-title"> Tips on How to Write an About me page </div>
-                                                    <div class="k-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
+                                                <div class="kt-widget-6__item-info">
+                                                    <div class="kt-widget-6__item-title"> Tips on How to Write an About me page </div>
+                                                    <div class="kt-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
                                                 </div>
-                                                <div class="k-widget-6__item-icon k-widget-6__item-icon--brand">
+                                                <div class="kt-widget-6__item-icon kt-widget-6__item-icon--brand">
                                                     <div class="dropdown dropdown-inline">
                                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <ul class="k-nav">
-                                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">EXPORT TOOLS</span> </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-eye"></i> <span class="k-nav__link-text">View</span> </a>
+                                                            <ul class="kt-nav">
+                                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">EXPORT TOOLS</span> </li>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-eye"></i> <span class="kt-nav__link-text">View</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-comment-o"></i> <span class="k-nav__link-text">Coments</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-comment-o"></i> <span class="kt-nav__link-text">Coments</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -2467,126 +2467,126 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="k_personal_income_quater_45c4f43eadca7c" class="tab-pane fade">
-                                        <div class="k-widget-6__items">
-                                            <div class="k-widget-6__item">
-                                                <div class="k-widget-6__item-pic">
+                                    <div id="kt_personal_income_quater_45c4f43eadca7c" class="tab-pane fade">
+                                        <div class="kt-widget-6__items">
+                                            <div class="kt-widget-6__item">
+                                                <div class="kt-widget-6__item-pic">
                                                     <img class="" src="{{ config("app.keen_assets") }}/media/blog/blog-6.jpg" alt="" />
                                                 </div>
-                                                <div class="k-widget-6__item-info">
-                                                    <div class="k-widget-6__item-title"> Get the point across </div>
-                                                    <div class="k-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
+                                                <div class="kt-widget-6__item-info">
+                                                    <div class="kt-widget-6__item-title"> Get the point across </div>
+                                                    <div class="kt-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
                                                 </div>
-                                                <div class="k-widget-6__item-icon k-widget-6__item-icon--brand">
+                                                <div class="kt-widget-6__item-icon kt-widget-6__item-icon--brand">
                                                     <div class="dropdown dropdown-inline">
                                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <ul class="k-nav">
-                                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">EXPORT TOOLS</span> </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-eye"></i> <span class="k-nav__link-text">View</span> </a>
+                                                            <ul class="kt-nav">
+                                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">EXPORT TOOLS</span> </li>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-eye"></i> <span class="kt-nav__link-text">View</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-comment-o"></i> <span class="k-nav__link-text">Coments</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-comment-o"></i> <span class="kt-nav__link-text">Coments</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="k-widget-6__item">
-                                                <div class="k-widget-6__item-pic">
+                                            <div class="kt-widget-6__item">
+                                                <div class="kt-widget-6__item-pic">
                                                     <img class="" src="{{ config("app.keen_assets") }}/media/blog/blog-5.jpg" alt="" />
                                                 </div>
-                                                <div class="k-widget-6__item-info">
-                                                    <div class="k-widget-6__item-title"> Contain amazing email sign up form </div>
-                                                    <div class="k-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
+                                                <div class="kt-widget-6__item-info">
+                                                    <div class="kt-widget-6__item-title"> Contain amazing email sign up form </div>
+                                                    <div class="kt-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
                                                 </div>
-                                                <div class="k-widget-6__item-icon k-widget-6__item-icon--brand">
+                                                <div class="kt-widget-6__item-icon kt-widget-6__item-icon--brand">
                                                     <div class="dropdown dropdown-inline">
                                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <ul class="k-nav">
-                                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">EXPORT TOOLS</span> </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-eye"></i> <span class="k-nav__link-text">View</span> </a>
+                                                            <ul class="kt-nav">
+                                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">EXPORT TOOLS</span> </li>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-eye"></i> <span class="kt-nav__link-text">View</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-comment-o"></i> <span class="k-nav__link-text">Coments</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-comment-o"></i> <span class="kt-nav__link-text">Coments</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="k-widget-6__item">
-                                                <div class="k-widget-6__item-pic">
+                                            <div class="kt-widget-6__item">
+                                                <div class="kt-widget-6__item-pic">
                                                     <img class="" src="{{ config("app.keen_assets") }}/media/blog/blog-3.jpg" alt="" />
                                                 </div>
-                                                <div class="k-widget-6__item-info">
-                                                    <div class="k-widget-6__item-title"> Get the point across </div>
-                                                    <div class="k-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
+                                                <div class="kt-widget-6__item-info">
+                                                    <div class="kt-widget-6__item-title"> Get the point across </div>
+                                                    <div class="kt-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
                                                 </div>
-                                                <div class="k-widget-6__item-icon k-widget-6__item-icon--brand">
+                                                <div class="kt-widget-6__item-icon kt-widget-6__item-icon--brand">
                                                     <div class="dropdown dropdown-inline">
                                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <ul class="k-nav">
-                                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">EXPORT TOOLS</span> </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-eye"></i> <span class="k-nav__link-text">View</span> </a>
+                                                            <ul class="kt-nav">
+                                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">EXPORT TOOLS</span> </li>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-eye"></i> <span class="kt-nav__link-text">View</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-comment-o"></i> <span class="k-nav__link-text">Coments</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-comment-o"></i> <span class="kt-nav__link-text">Coments</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="k-widget-6__item">
-                                                <div class="k-widget-6__item-pic">
+                                            <div class="kt-widget-6__item">
+                                                <div class="kt-widget-6__item-pic">
                                                     <img class="" src="{{ config("app.keen_assets") }}/media/blog/blog-2.jpg" alt="" />
                                                 </div>
-                                                <div class="k-widget-6__item-info">
-                                                    <div class="k-widget-6__item-title"> Tips on How to Write an About me page </div>
-                                                    <div class="k-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
+                                                <div class="kt-widget-6__item-info">
+                                                    <div class="kt-widget-6__item-title"> Tips on How to Write an About me page </div>
+                                                    <div class="kt-widget-6__item-desc"> HTML, CSS, JavaScripts </div>
                                                 </div>
-                                                <div class="k-widget-6__item-icon k-widget-6__item-icon--brand">
+                                                <div class="kt-widget-6__item-icon kt-widget-6__item-icon--brand">
                                                     <div class="dropdown dropdown-inline">
                                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <ul class="k-nav">
-                                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">EXPORT TOOLS</span> </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-eye"></i> <span class="k-nav__link-text">View</span> </a>
+                                                            <ul class="kt-nav">
+                                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">EXPORT TOOLS</span> </li>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-eye"></i> <span class="kt-nav__link-text">View</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-comment-o"></i> <span class="k-nav__link-text">Coments</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-comment-o"></i> <span class="kt-nav__link-text">Coments</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                                 </li>
-                                                                <li class="k-nav__item">
-                                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                                <li class="kt-nav__item">
+                                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -2598,11 +2598,11 @@
                                 </div>
                                 <!-- end::Tab Content -->
                                 <!-- begin::Nav pills -->
-                                <ul class="k-widget-6__nav-items nav nav-pills nav-fill" role="tablist">
-                                    <li class="k-widget-6__nav-item nav-item"> <a class="nav-link active show" data-toggle="pill" href="#k_personal_income_quater_15c4f43eadca7c">1</a> </li>
-                                    <li class="k-widget-6__nav-item nav-item"> <a class="nav-link" data-toggle="pill" href="#k_personal_income_quater_25c4f43eadca7c">2</a> </li>
-                                    <li class="k-widget-6__nav-item nav-item"> <a class="nav-link" data-toggle="pill" href="#">3</a> </li>
-                                    <li class="k-widget-6__nav-item nav-item"> <a class="nav-link" data-toggle="pill" href="#">4</a> </li>
+                                <ul class="kt-widget-6__nav-items nav nav-pills nav-fill" role="tablist">
+                                    <li class="kt-widget-6__nav-item nav-item"> <a class="nav-link active show" data-toggle="pill" href="#kt_personal_income_quater_15c4f43eadca7c">1</a> </li>
+                                    <li class="kt-widget-6__nav-item nav-item"> <a class="nav-link" data-toggle="pill" href="#kt_personal_income_quater_25c4f43eadca7c">2</a> </li>
+                                    <li class="kt-widget-6__nav-item nav-item"> <a class="nav-link" data-toggle="pill" href="#">3</a> </li>
+                                    <li class="kt-widget-6__nav-item nav-item"> <a class="nav-link" data-toggle="pill" href="#">4</a> </li>
                                 </ul>
                                 <!-- end::Nav pills -->
                             </div>
@@ -2612,19 +2612,19 @@
                 </div>
                 <div class="col-lg-12 col-xl-8">
                     <!--begin::Portlet-->
-                    <div class="k-portlet k-portlet--height-fluid">
-                        <div class="k-portlet__head k-portlet__head--lg k-portlet__head--noborder k-portlet__head--break-sm">
-                            <div class="k-portlet__head-label">
-                                <h3 class="k-portlet__head-title">
+                    <div class="kt-portlet kt-portlet--height-fluid">
+                        <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+                            <div class="kt-portlet__head-label">
+                                <h3 class="kt-portlet__head-title">
                                     Recent Orders <small>32500 total</small>
                                 </h3>
                             </div>
-                            <div class="k-portlet__head-toolbar">
-                                <div class="k-portlet__head-wrapper k-form">
-                                    <div class="k-form__group k-form__group--inline k-margin-r-10">
-                                        <div class="k-form__label">Sort By:</div>
-                                        <div class="k-form__control" style="width: 160px;">
-                                            <select class="form-control bootstrap-select" id="k_form_status" title="Status">
+                            <div class="kt-portlet__head-toolbar">
+                                <div class="kt-portlet__head-wrapper kt-form">
+                                    <div class="kt-form__group kt-form__group--inline kt-margin-r-10">
+                                        <div class="kt-form__label">Sort By:</div>
+                                        <div class="kt-form__control" style="width: 160px;">
+                                            <select class="form-control bootstrap-select" id="kt_form_status" title="Status">
                                                 <option value="1">Pending</option>
                                                 <option value="2">Delivered</option>
                                                 <option value="3">Canceled</option>
@@ -2638,9 +2638,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="k-portlet__body k-portlet__body--fit">
+                        <div class="kt-portlet__body kt-portlet__body--fit">
                             <!--Doc: For the datatable initialization refer to "recentOrdersInit" function in "src\theme\app\scripts\custom\dashboard.js" -->
-                            <div class="k-datatable" id="k_recent_orders"></div>
+                            <div class="kt-datatable" id="kt_recent_orders"></div>
                         </div>
                     </div>
                     <!--end::Portlet-->
@@ -2648,39 +2648,39 @@
             </div>
             <!--end::Row-->
         </div>
-        <div class="tab-pane fade" id="k_tabs_1_4" role="tabpanel">
+        <div class="tab-pane fade" id="kt_tabs_1_4" role="tabpanel">
             <!--begin::Row-->
             <div class="row">
                 <div class="col-lg-6 col-xl-4">
                     <!--begin::Portlet-->
-                    <div class="k-portlet k-portlet--height-fluid">
-                        <div class="k-portlet__head">
-                            <div class="k-portlet__head-label">
-                                <h3 class="k-portlet__head-title">
+                    <div class="kt-portlet kt-portlet--height-fluid">
+                        <div class="kt-portlet__head">
+                            <div class="kt-portlet__head-label">
+                                <h3 class="kt-portlet__head-title">
                                     Top Products
                                 </h3>
                             </div>
-                            <div class="k-portlet__head-toolbar">
-                                <div class="k-portlet__head-toolbar-wrapper">
+                            <div class="kt-portlet__head-toolbar">
+                                <div class="kt-portlet__head-toolbar-wrapper">
                                     <div class="dropdown dropdown-inline">
                                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flaticon-more-1"></i> </button>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <ul class="k-nav">
-                                                <li class="k-nav__section k-nav__section--first"> <span class="k-nav__section-text">Export Tools</span> </li>
-                                                <li class="k-nav__item">
-                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-print"></i> <span class="k-nav__link-text">Print</span> </a>
+                                            <ul class="kt-nav">
+                                                <li class="kt-nav__section kt-nav__section--first"> <span class="kt-nav__section-text">Export Tools</span> </li>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-print"></i> <span class="kt-nav__link-text">Print</span> </a>
                                                 </li>
-                                                <li class="k-nav__item">
-                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-copy"></i> <span class="k-nav__link-text">Copy</span> </a>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-copy"></i> <span class="kt-nav__link-text">Copy</span> </a>
                                                 </li>
-                                                <li class="k-nav__item">
-                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-excel-o"></i> <span class="k-nav__link-text">Excel</span> </a>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-excel-o"></i> <span class="kt-nav__link-text">Excel</span> </a>
                                                 </li>
-                                                <li class="k-nav__item">
-                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-text-o"></i> <span class="k-nav__link-text">CSV</span> </a>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-text-o"></i> <span class="kt-nav__link-text">CSV</span> </a>
                                                 </li>
-                                                <li class="k-nav__item">
-                                                    <a href="#" class="k-nav__link"> <i class="k-nav__link-icon la la-file-pdf-o"></i> <span class="k-nav__link-text">PDF</span> </a>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link"> <i class="kt-nav__link-icon la la-file-pdf-o"></i> <span class="kt-nav__link-text">PDF</span> </a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -2688,94 +2688,94 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="k-portlet__body">
-                            <div class="k-widget-1">
+                        <div class="kt-portlet__body">
+                            <div class="kt-widget-1">
                                 <ul class="nav nav-pills nav-tabs-btn nav-pills-btn-brand" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" data-toggle="tab" href="#k_tabs_19_15c4f43eadd0d7" role="tab">
+                                        <a class="nav-link active" data-toggle="tab" href="#kt_tabs_19_15c4f43eadd0d7" role="tab">
                                             <span class="nav-link-icon"><i class="flaticon2-graphic"></i></span>
                                             <span class="nav-link-title">Settings</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#k_tabs_19_25c4f43eadd0d7" role="tab">
+                                        <a class="nav-link" data-toggle="tab" href="#kt_tabs_19_25c4f43eadd0d7" role="tab">
                                             <span class="nav-link-icon"><i class="flaticon2-position"></i></span>
                                             <span class="nav-link-title">Code</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#k_tabs_19_35c4f43eadd0d7" role="tab">
+                                        <a class="nav-link" data-toggle="tab" href="#kt_tabs_19_35c4f43eadd0d7" role="tab">
                                             <span class="nav-link-icon"><i class="flaticon2-layers-1"></i></span>
                                             <span class="nav-link-title">Design</span>
                                         </a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane fade active show" id="k_tabs_19_15c4f43eadd0d7" role="tabpanel">
-                                        <div class="k-widget-1__item">
-                                            <div class="k-widget-1__item-info">
-                                                <a href="#" class="k-widget-1__item-title"> HTML 5 Templates </a>
-                                                <div class="k-widget-1__item-desc">Font-end,Admin & Email</div>
+                                    <div class="tab-pane fade active show" id="kt_tabs_19_15c4f43eadd0d7" role="tabpanel">
+                                        <div class="kt-widget-1__item">
+                                            <div class="kt-widget-1__item-info">
+                                                <a href="#" class="kt-widget-1__item-title"> HTML 5 Templates </a>
+                                                <div class="kt-widget-1__item-desc">Font-end,Admin & Email</div>
                                             </div>
-                                            <div class="k-widget-1__item-stats">
-                                                <div class="k-widget-1__item-value">+79%</div>
-                                                <div class="k-widget-1__item-progress">
+                                            <div class="kt-widget-1__item-stats">
+                                                <div class="kt-widget-1__item-value">+79%</div>
+                                                <div class="kt-widget-1__item-progress">
                                                     <div class="progress">
                                                         <div class="progress-bar bg-danger" role="progressbar" style="width: 79%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-1__item">
-                                            <div class="k-widget-1__item-info">
-                                                <a href="#" class="k-widget-1__item-title"> Wordpress Themes </a>
-                                                <div class="k-widget-1__item-desc">eCommerce Website, Plugin</div>
+                                        <div class="kt-widget-1__item">
+                                            <div class="kt-widget-1__item-info">
+                                                <a href="#" class="kt-widget-1__item-title"> Wordpress Themes </a>
+                                                <div class="kt-widget-1__item-desc">eCommerce Website, Plugin</div>
                                             </div>
-                                            <div class="k-widget-1__item-stats">
-                                                <div class="k-widget-1__item-value">+21%</div>
-                                                <div class="k-widget-1__item-progress">
+                                            <div class="kt-widget-1__item-stats">
+                                                <div class="kt-widget-1__item-value">+21%</div>
+                                                <div class="kt-widget-1__item-progress">
                                                     <div class="progress">
                                                         <div class="progress-bar bg-brand" role="progressbar" style="width: 60%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-1__item">
-                                            <div class="k-widget-1__item-info">
-                                                <a href="#" class="k-widget-1__item-title">eCommerce Websites</a>
-                                                <div class="k-widget-1__item-desc">Shops, Fasion wep sites & atc</div>
+                                        <div class="kt-widget-1__item">
+                                            <div class="kt-widget-1__item-info">
+                                                <a href="#" class="kt-widget-1__item-title">eCommerce Websites</a>
+                                                <div class="kt-widget-1__item-desc">Shops, Fasion wep sites & atc</div>
                                             </div>
-                                            <div class="k-widget-1__item-stats">
-                                                <div class="k-widget-1__item-value">-16%</div>
-                                                <div class="k-widget-1__item-progress">
+                                            <div class="kt-widget-1__item-stats">
+                                                <div class="kt-widget-1__item-value">-16%</div>
+                                                <div class="kt-widget-1__item-progress">
                                                     <div class="progress">
                                                         <div class="progress-bar bg-success" role="progressbar" style="width: 80%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-1__item">
-                                            <div class="k-widget-1__item-info">
-                                                <a href="#" class="k-widget-1__item-title">UI/UX Design</a>
-                                                <div class="k-widget-1__item-desc">Evrything you ever imagine</div>
+                                        <div class="kt-widget-1__item">
+                                            <div class="kt-widget-1__item-info">
+                                                <a href="#" class="kt-widget-1__item-title">UI/UX Design</a>
+                                                <div class="kt-widget-1__item-desc">Evrything you ever imagine</div>
                                             </div>
-                                            <div class="k-widget-1__item-stats">
-                                                <div class="k-widget-1__item-value">+4%</div>
-                                                <div class="k-widget-1__item-progress">
+                                            <div class="kt-widget-1__item-stats">
+                                                <div class="kt-widget-1__item-value">+4%</div>
+                                                <div class="kt-widget-1__item-progress">
                                                     <div class="progress">
                                                         <div class="progress-bar bg-focus" role="progressbar" style="width: 90%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-1__item">
-                                            <div class="k-widget-1__item-info">
-                                                <a href="#" class="k-widget-1__item-title">Freebie Themes</a>
-                                                <div class="k-widget-1__item-desc">Font-end & Admin</div>
+                                        <div class="kt-widget-1__item">
+                                            <div class="kt-widget-1__item-info">
+                                                <a href="#" class="kt-widget-1__item-title">Freebie Themes</a>
+                                                <div class="kt-widget-1__item-desc">Font-end & Admin</div>
                                             </div>
-                                            <div class="k-widget-1__item-stats">
-                                                <div class="k-widget-1__item-value">+34</div>
-                                                <div class="k-widget-1__item-progress">
+                                            <div class="kt-widget-1__item-stats">
+                                                <div class="kt-widget-1__item-value">+34</div>
+                                                <div class="kt-widget-1__item-progress">
                                                     <div class="progress">
                                                         <div class="progress-bar bg-warning" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
@@ -2783,71 +2783,71 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="k_tabs_19_25c4f43eadd0d7" role="tabpanel">
-                                        <div class="k-widget-1__item">
-                                            <div class="k-widget-1__item-info">
-                                                <a href="#" class="k-widget-1__item-title">UI/UX Design</a>
-                                                <div class="k-widget-1__item-desc">Evrything you ever imagine</div>
+                                    <div class="tab-pane fade" id="kt_tabs_19_25c4f43eadd0d7" role="tabpanel">
+                                        <div class="kt-widget-1__item">
+                                            <div class="kt-widget-1__item-info">
+                                                <a href="#" class="kt-widget-1__item-title">UI/UX Design</a>
+                                                <div class="kt-widget-1__item-desc">Evrything you ever imagine</div>
                                             </div>
-                                            <div class="k-widget-1__item-stats">
-                                                <div class="k-widget-1__item-value">+4%</div>
-                                                <div class="k-widget-1__item-progress">
+                                            <div class="kt-widget-1__item-stats">
+                                                <div class="kt-widget-1__item-value">+4%</div>
+                                                <div class="kt-widget-1__item-progress">
                                                     <div class="progress">
                                                         <div class="progress-bar bg-focus" role="progressbar" style="width: 90%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-1__item">
-                                            <div class="k-widget-1__item-info">
-                                                <a href="#" class="k-widget-1__item-title">HTML 5 Templates</a>
-                                                <div class="k-widget-1__item-desc">Font-end,Admin & Email</div>
+                                        <div class="kt-widget-1__item">
+                                            <div class="kt-widget-1__item-info">
+                                                <a href="#" class="kt-widget-1__item-title">HTML 5 Templates</a>
+                                                <div class="kt-widget-1__item-desc">Font-end,Admin & Email</div>
                                             </div>
-                                            <div class="k-widget-1__item-stats">
-                                                <div class="k-widget-1__item-value">+79%</div>
-                                                <div class="k-widget-1__item-progress">
+                                            <div class="kt-widget-1__item-stats">
+                                                <div class="kt-widget-1__item-value">+79%</div>
+                                                <div class="kt-widget-1__item-progress">
                                                     <div class="progress">
                                                         <div class="progress-bar bg-danger" role="progressbar" style="width: 79%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-1__item">
-                                            <div class="k-widget-1__item-info">
-                                                <a href="#" class="k-widget-1__item-title">Wordpress Themes</a>
-                                                <div class="k-widget-1__item-desc">eCommerce Website, Plugin</div>
+                                        <div class="kt-widget-1__item">
+                                            <div class="kt-widget-1__item-info">
+                                                <a href="#" class="kt-widget-1__item-title">Wordpress Themes</a>
+                                                <div class="kt-widget-1__item-desc">eCommerce Website, Plugin</div>
                                             </div>
-                                            <div class="k-widget-1__item-stats">
-                                                <div class="k-widget-1__item-value">+21%</div>
-                                                <div class="k-widget-1__item-progress">
+                                            <div class="kt-widget-1__item-stats">
+                                                <div class="kt-widget-1__item-value">+21%</div>
+                                                <div class="kt-widget-1__item-progress">
                                                     <div class="progress">
                                                         <div class="progress-bar bg-brand" role="progressbar" style="width: 60%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-1__item">
-                                            <div class="k-widget-1__item-info">
-                                                <a href="#" class="k-widget-1__item-title">eCommerce Websites</a>
-                                                <div class="k-widget-1__item-desc">Shops, Fasion wep sites & atc</div>
+                                        <div class="kt-widget-1__item">
+                                            <div class="kt-widget-1__item-info">
+                                                <a href="#" class="kt-widget-1__item-title">eCommerce Websites</a>
+                                                <div class="kt-widget-1__item-desc">Shops, Fasion wep sites & atc</div>
                                             </div>
-                                            <div class="k-widget-1__item-stats">
-                                                <div class="k-widget-1__item-value">-16%</div>
-                                                <div class="k-widget-1__item-progress">
+                                            <div class="kt-widget-1__item-stats">
+                                                <div class="kt-widget-1__item-value">-16%</div>
+                                                <div class="kt-widget-1__item-progress">
                                                     <div class="progress">
                                                         <div class="progress-bar bg-success" role="progressbar" style="width: 80%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-1__item">
-                                            <div class="k-widget-1__item-info">
-                                                <a href="#" class="k-widget-1__item-title">Freebie Themes</a>
-                                                <div class="k-widget-1__item-desc">Font-end & Admin</div>
+                                        <div class="kt-widget-1__item">
+                                            <div class="kt-widget-1__item-info">
+                                                <a href="#" class="kt-widget-1__item-title">Freebie Themes</a>
+                                                <div class="kt-widget-1__item-desc">Font-end & Admin</div>
                                             </div>
-                                            <div class="k-widget-1__item-stats">
-                                                <div class="k-widget-1__item-value">+34</div>
-                                                <div class="k-widget-1__item-progress">
+                                            <div class="kt-widget-1__item-stats">
+                                                <div class="kt-widget-1__item-value">+34</div>
+                                                <div class="kt-widget-1__item-progress">
                                                     <div class="progress">
                                                         <div class="progress-bar bg-info" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
@@ -2855,71 +2855,71 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="k_tabs_19_35c4f43eadd0d7" role="tabpanel">
-                                        <div class="k-widget-1__item">
-                                            <div class="k-widget-1__item-info">
-                                                <a href="#" class="k-widget-1__item-title">eCommerce Websites</a>
-                                                <div class="k-widget-1__item-desc">Shops, Fasion wep sites & atc</div>
+                                    <div class="tab-pane fade" id="kt_tabs_19_35c4f43eadd0d7" role="tabpanel">
+                                        <div class="kt-widget-1__item">
+                                            <div class="kt-widget-1__item-info">
+                                                <a href="#" class="kt-widget-1__item-title">eCommerce Websites</a>
+                                                <div class="kt-widget-1__item-desc">Shops, Fasion wep sites & atc</div>
                                             </div>
-                                            <div class="k-widget-1__item-stats">
-                                                <div class="k-widget-1__item-value">-16%</div>
-                                                <div class="k-widget-1__item-progress">
+                                            <div class="kt-widget-1__item-stats">
+                                                <div class="kt-widget-1__item-value">-16%</div>
+                                                <div class="kt-widget-1__item-progress">
                                                     <div class="progress">
                                                         <div class="progress-bar bg-success" role="progressbar" style="width: 80%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-1__item">
-                                            <div class="k-widget-1__item-info">
-                                                <a href="#" class="k-widget-1__item-title">UI/UX Design</a>
-                                                <div class="k-widget-1__item-desc">Evrything you ever imagine</div>
+                                        <div class="kt-widget-1__item">
+                                            <div class="kt-widget-1__item-info">
+                                                <a href="#" class="kt-widget-1__item-title">UI/UX Design</a>
+                                                <div class="kt-widget-1__item-desc">Evrything you ever imagine</div>
                                             </div>
-                                            <div class="k-widget-1__item-stats">
-                                                <div class="k-widget-1__item-value">+4%</div>
-                                                <div class="k-widget-1__item-progress">
+                                            <div class="kt-widget-1__item-stats">
+                                                <div class="kt-widget-1__item-value">+4%</div>
+                                                <div class="kt-widget-1__item-progress">
                                                     <div class="progress">
                                                         <div class="progress-bar bg-focus" role="progressbar" style="width: 90%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-1__item">
-                                            <div class="k-widget-1__item-info">
-                                                <a href="#" class="k-widget-1__item-title">Latest Trends</a>
-                                                <div class="k-widget-1__item-desc">eCommerce Website, Plugin</div>
+                                        <div class="kt-widget-1__item">
+                                            <div class="kt-widget-1__item-info">
+                                                <a href="#" class="kt-widget-1__item-title">Latest Trends</a>
+                                                <div class="kt-widget-1__item-desc">eCommerce Website, Plugin</div>
                                             </div>
-                                            <div class="k-widget-1__item-stats">
-                                                <div class="k-widget-1__item-value">+34%</div>
-                                                <div class="k-widget-1__item-progress">
+                                            <div class="kt-widget-1__item-stats">
+                                                <div class="kt-widget-1__item-value">+34%</div>
+                                                <div class="kt-widget-1__item-progress">
                                                     <div class="progress">
                                                         <div class="progress-bar bg-warning" role="progressbar" style="width: 50%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-1__item">
-                                            <div class="k-widget-1__item-info">
-                                                <a href="#" class="k-widget-1__item-title">HTML 5 Templates</a>
-                                                <div class="k-widget-1__item-desc">Font-end,Admin & Email</div>
+                                        <div class="kt-widget-1__item">
+                                            <div class="kt-widget-1__item-info">
+                                                <a href="#" class="kt-widget-1__item-title">HTML 5 Templates</a>
+                                                <div class="kt-widget-1__item-desc">Font-end,Admin & Email</div>
                                             </div>
-                                            <div class="k-widget-1__item-stats">
-                                                <div class="k-widget-1__item-value">+79%</div>
-                                                <div class="k-widget-1__item-progress">
+                                            <div class="kt-widget-1__item-stats">
+                                                <div class="kt-widget-1__item-value">+79%</div>
+                                                <div class="kt-widget-1__item-progress">
                                                     <div class="progress">
                                                         <div class="progress-bar bg-danger" role="progressbar" style="width: 79%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="k-widget-1__item">
-                                            <div class="k-widget-1__item-info">
-                                                <a href="#" class="k-widget-1__item-title">Freebie Themes</a>
-                                                <div class="k-widget-1__item-desc">Font-end & Admin</div>
+                                        <div class="kt-widget-1__item">
+                                            <div class="kt-widget-1__item-info">
+                                                <a href="#" class="kt-widget-1__item-title">Freebie Themes</a>
+                                                <div class="kt-widget-1__item-desc">Font-end & Admin</div>
                                             </div>
-                                            <div class="k-widget-1__item-stats">
-                                                <div class="k-widget-1__item-value">+34</div>
-                                                <div class="k-widget-1__item-progress">
+                                            <div class="kt-widget-1__item-stats">
+                                                <div class="kt-widget-1__item-value">+34</div>
+                                                <div class="kt-widget-1__item-progress">
                                                     <div class="progress">
                                                         <div class="progress-bar bg-info" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
@@ -2935,87 +2935,87 @@
                 </div>
                 <div class="col-lg-6 col-xl-4">
                     <!--begin::Portlet-->
-                    <div class="k-portlet k-portlet--height-fluid-half k-widget-12">
-                        <div class="k-portlet__body">
-                            <div class="k-widget-12__body">
-                                <div class="k-widget-12__head">
-                                    <div class="k-widget-12__date k-widget-12__date--warning"> <span class="k-widget-12__day">23</span> <span class="k-widget-12__month">Dec</span> </div>
-                                    <div class="k-widget-12__label">
-                                        <h3 class="k-widget-12__title">
+                    <div class="kt-portlet kt-portlet--height-fluid-half kt-widget-12">
+                        <div class="kt-portlet__body">
+                            <div class="kt-widget-12__body">
+                                <div class="kt-widget-12__head">
+                                    <div class="kt-widget-12__date kt-widget-12__date--warning"> <span class="kt-widget-12__day">23</span> <span class="kt-widget-12__month">Dec</span> </div>
+                                    <div class="kt-widget-12__label">
+                                        <h3 class="kt-widget-12__title">
                                             Christmas Party
                                         </h3>
-                                        <span class="k-widget-12__desc">Bolton House</span>
+                                        <span class="kt-widget-12__desc">Bolton House</span>
                                     </div>
                                 </div>
-                                <div class="k-widget-12__info"> To start a blog, think of a topic about and first brainstorm party is ways to write details </div>
+                                <div class="kt-widget-12__info"> To start a blog, think of a topic about and first brainstorm party is ways to write details </div>
                             </div>
                         </div>
-                        <div class="k-portlet__foot k-portlet__foot--md">
-                            <div class="k-portlet__foot-wrapper">
-                                <div class="k-portlet__foot-info">
-                                    <div class="k-widget-12__members">
-                                        <a href="#" class="k-widget-12__member" data-toggle="k-tooltip" data-skin="brand" data-placement="top" title="John Myer">
+                        <div class="kt-portlet__foot kt-portlet__foot--md">
+                            <div class="kt-portlet__foot-wrapper">
+                                <div class="kt-portlet__foot-info">
+                                    <div class="kt-widget-12__members">
+                                        <a href="#" class="kt-widget-12__member" data-toggle="kt-tooltip" data-skin="brand" data-placement="top" title="John Myer">
                                             <img src="{{ config("app.keen_assets") }}/media/users/100_1.jpg" alt="image"/>
                                         </a>
-                                        <a href="#" class="k-widget-12__member" data-toggle="k-tooltip" data-skin="brand" data-placement="top" title="Alison Brandy">
+                                        <a href="#" class="kt-widget-12__member" data-toggle="kt-tooltip" data-skin="brand" data-placement="top" title="Alison Brandy">
                                             <img src="{{ config("app.keen_assets") }}/media/users/100_10.jpg" alt="image"/>
                                         </a>
-                                        <a href="#" class="k-widget-12__member" data-toggle="k-tooltip" data-skin="brand" data-placement="top" title="Selina Cranson">
+                                        <a href="#" class="kt-widget-12__member" data-toggle="kt-tooltip" data-skin="brand" data-placement="top" title="Selina Cranson">
                                             <img src="{{ config("app.keen_assets") }}/media/users/100_11.jpg" alt="image"/>
                                         </a>
-                                        <a href="#" class="k-widget-12__member" data-toggle="k-tooltip" data-skin="brand" data-placement="top" title="Luke Walls">
+                                        <a href="#" class="kt-widget-12__member" data-toggle="kt-tooltip" data-skin="brand" data-placement="top" title="Luke Walls">
                                             <img src="{{ config("app.keen_assets") }}/media/users/100_2.jpg" alt="image"/>
                                         </a>
-                                        <a href="#" class="k-widget-12__member" data-toggle="k-tooltip" data-skin="brand" data-placement="top" title="Micheal York">
+                                        <a href="#" class="kt-widget-12__member" data-toggle="kt-tooltip" data-skin="brand" data-placement="top" title="Micheal York">
                                             <img src="{{ config("app.keen_assets") }}/media/users/100_3.jpg" alt="image"/>
                                         </a>
-                                        <a href="#" class="k-widget-12__member k-widget-12__member--last"> +10 </a>
+                                        <a href="#" class="kt-widget-12__member kt-widget-12__member--last"> +10 </a>
                                     </div>
                                 </div>
-                                <div class="k-portlet__foot-toolbar"> <a href="#" class="btn btn-default btn-sm btn-bold btn-upper">Join</a> </div>
+                                <div class="kt-portlet__foot-toolbar"> <a href="#" class="btn btn-default btn-sm btn-bold btn-upper">Join</a> </div>
                             </div>
                         </div>
                     </div>
                     <!--end::Portlet-->
                     <!--begin::Portlet-->
-                    <div class="k-portlet k-portlet--height-fluid-half k-widget-12">
-                        <div class="k-portlet__body">
-                            <div class="k-widget-12__body">
-                                <div class="k-widget-12__head">
-                                    <div class="k-widget-12__date k-widget-12__date--focus"> <span class="k-widget-12__day">05</span> <span class="k-widget-12__month">Jan</span> </div>
-                                    <div class="k-widget-12__label">
-                                        <h3 class="k-widget-12__title">
+                    <div class="kt-portlet kt-portlet--height-fluid-half kt-widget-12">
+                        <div class="kt-portlet__body">
+                            <div class="kt-widget-12__body">
+                                <div class="kt-widget-12__head">
+                                    <div class="kt-widget-12__date kt-widget-12__date--focus"> <span class="kt-widget-12__day">05</span> <span class="kt-widget-12__month">Jan</span> </div>
+                                    <div class="kt-widget-12__label">
+                                        <h3 class="kt-widget-12__title">
                                             Outdoor Activity Day
                                         </h3>
-                                        <span class="k-widget-12__desc">South Suton</span>
+                                        <span class="kt-widget-12__desc">South Suton</span>
                                     </div>
                                 </div>
-                                <div class="k-widget-12__info"> To start a blog, think of a topic about and first brainstorm party is ways to write details </div>
+                                <div class="kt-widget-12__info"> To start a blog, think of a topic about and first brainstorm party is ways to write details </div>
                             </div>
                         </div>
-                        <div class="k-portlet__foot k-portlet__foot--md">
-                            <div class="k-portlet__foot-wrapper">
-                                <div class="k-portlet__foot-info">
-                                    <div class="k-widget-12__members">
-                                        <a href="#" class="k-widget-12__member" data-toggle="k-tooltip" data-skin="brand" data-placement="top" title="John Myer">
+                        <div class="kt-portlet__foot kt-portlet__foot--md">
+                            <div class="kt-portlet__foot-wrapper">
+                                <div class="kt-portlet__foot-info">
+                                    <div class="kt-widget-12__members">
+                                        <a href="#" class="kt-widget-12__member" data-toggle="kt-tooltip" data-skin="brand" data-placement="top" title="John Myer">
                                             <img src="{{ config("app.keen_assets") }}/media/users/100_1.jpg" alt="image"/>
                                         </a>
-                                        <a href="#" class="k-widget-12__member" data-toggle="k-tooltip" data-skin="brand" data-placement="top" title="Alison Brandy">
+                                        <a href="#" class="kt-widget-12__member" data-toggle="kt-tooltip" data-skin="brand" data-placement="top" title="Alison Brandy">
                                             <img src="{{ config("app.keen_assets") }}/media/users/100_10.jpg" alt="image"/>
                                         </a>
-                                        <a href="#" class="k-widget-12__member" data-toggle="k-tooltip" data-skin="brand" data-placement="top" title="Selina Cranson">
+                                        <a href="#" class="kt-widget-12__member" data-toggle="kt-tooltip" data-skin="brand" data-placement="top" title="Selina Cranson">
                                             <img src="{{ config("app.keen_assets") }}/media/users/100_11.jpg" alt="image"/>
                                         </a>
-                                        <a href="#" class="k-widget-12__member" data-toggle="k-tooltip" data-skin="brand" data-placement="top" title="Luke Walls">
+                                        <a href="#" class="kt-widget-12__member" data-toggle="kt-tooltip" data-skin="brand" data-placement="top" title="Luke Walls">
                                             <img src="{{ config("app.keen_assets") }}/media/users/100_2.jpg" alt="image"/>
                                         </a>
-                                        <a href="#" class="k-widget-12__member" data-toggle="k-tooltip" data-skin="brand" data-placement="top" title="Micheal York">
+                                        <a href="#" class="kt-widget-12__member" data-toggle="kt-tooltip" data-skin="brand" data-placement="top" title="Micheal York">
                                             <img src="{{ config("app.keen_assets") }}/media/users/100_3.jpg" alt="image"/>
                                         </a>
-                                        <a href="#" class="k-widget-12__member k-widget-12__member--last"> +7 </a>
+                                        <a href="#" class="kt-widget-12__member kt-widget-12__member--last"> +7 </a>
                                     </div>
                                 </div>
-                                <div class="k-portlet__foot-toolbar"> <a href="#" class="btn btn-default btn-sm btn-bold btn-upper">Join</a> </div>
+                                <div class="kt-portlet__foot-toolbar"> <a href="#" class="btn btn-default btn-sm btn-bold btn-upper">Join</a> </div>
                             </div>
                         </div>
                     </div>
@@ -3023,56 +3023,56 @@
                 </div>
                 <div class="col-lg-6 col-xl-4">
                     <!--begin::Portlet-->
-                    <div class="k-portlet k-portlet--height-fluid-half k-widget ">
-                        <div class="k-portlet__body">
-                            <div id="k-widget-slider-13-1" class="k-slider carousel slide" data-ride="carousel" data-interval="8000">
-                                <div class="k-slider__head">
-                                    <div class="k-slider__label">Announcements</div>
-                                    <div class="k-slider__nav">
-                                        <a class="k-slider__nav-prev carousel-control-prev" href="#k-widget-slider-13-1" role="button" data-slide="prev"> <i class="fa fa-angle-left"></i> </a>
-                                        <a class="k-slider__nav-next carousel-control-next" href="#k-widget-slider-13-1" role="button" data-slide="next"> <i class="fa fa-angle-right"></i> </a>
+                    <div class="kt-portlet kt-portlet--height-fluid-half kt-widget ">
+                        <div class="kt-portlet__body">
+                            <div id="kt-widget-slider-13-1" class="kt-slider carousel slide" data-ride="carousel" data-interval="8000">
+                                <div class="kt-slider__head">
+                                    <div class="kt-slider__label">Announcements</div>
+                                    <div class="kt-slider__nav">
+                                        <a class="kt-slider__nav-prev carousel-control-prev" href="#kt-widget-slider-13-1" role="button" data-slide="prev"> <i class="fa fa-angle-left"></i> </a>
+                                        <a class="kt-slider__nav-next carousel-control-next" href="#kt-widget-slider-13-1" role="button" data-slide="next"> <i class="fa fa-angle-right"></i> </a>
                                     </div>
                                 </div>
                                 <div class="carousel-inner">
-                                    <div class="carousel-item active k-slider__body">
-                                        <div class="k-widget-13">
-                                            <div class="k-widget-13__body">
-                                                <a class="k-widget-13__title" href="#">Keen Admin Launch Day</a>
-                                                <div class="k-widget-13__desc"> To start a blog, think of a topic about and first brainstorm party is ways to write details </div>
+                                    <div class="carousel-item active kt-slider__body">
+                                        <div class="kt-widget-13">
+                                            <div class="kt-widget-13__body">
+                                                <a class="kt-widget-13__title" href="#">Keen Admin Launch Day</a>
+                                                <div class="kt-widget-13__desc"> To start a blog, think of a topic about and first brainstorm party is ways to write details </div>
                                             </div>
-                                            <div class="k-widget-13__foot">
-                                                <div class="k-widget-13__label">
+                                            <div class="kt-widget-13__foot">
+                                                <div class="kt-widget-13__label">
                                                     <div class="btn btn-sm btn-label btn-bold"> 07 OCT, 2018 </div>
                                                 </div>
-                                                <div class="k-widget-13__toolbar"> <a href="#" class="btn btn-default btn-sm btn-bold btn-upper">View</a> </div>
+                                                <div class="kt-widget-13__toolbar"> <a href="#" class="btn btn-default btn-sm btn-bold btn-upper">View</a> </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="carousel-item k-slider__body">
-                                        <div class="k-widget-13">
-                                            <div class="k-widget-13__body">
-                                                <a class="k-widget-13__title" href="#">Incredibly Positive Reviews</a>
-                                                <div class="k-widget-13__desc"> To start a blog, think of a topic about and first brainstorm party is ways to write details </div>
+                                    <div class="carousel-item kt-slider__body">
+                                        <div class="kt-widget-13">
+                                            <div class="kt-widget-13__body">
+                                                <a class="kt-widget-13__title" href="#">Incredibly Positive Reviews</a>
+                                                <div class="kt-widget-13__desc"> To start a blog, think of a topic about and first brainstorm party is ways to write details </div>
                                             </div>
-                                            <div class="k-widget-13__foot">
-                                                <div class="k-widget-13__title">
+                                            <div class="kt-widget-13__foot">
+                                                <div class="kt-widget-13__title">
                                                     <div class="btn btn-sm btn-label btn-bold"> 17 NOV, 2018 </div>
                                                 </div>
-                                                <div class="k-widget-13__toolbar"> <a href="#" class="btn btn-default btn-sm btn-bold btn-upper">View</a> </div>
+                                                <div class="kt-widget-13__toolbar"> <a href="#" class="btn btn-default btn-sm btn-bold btn-upper">View</a> </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="carousel-item k-slider__body">
-                                        <div class="k-widget-13">
-                                            <div class="k-widget-13__body">
-                                                <a class="k-widget-13__title" href="#">Award Winning Theme</a>
-                                                <div class="k-widget-13__desc"> To start a blog, think of a topic about and first brainstorm party is ways to write details </div>
+                                    <div class="carousel-item kt-slider__body">
+                                        <div class="kt-widget-13">
+                                            <div class="kt-widget-13__body">
+                                                <a class="kt-widget-13__title" href="#">Award Winning Theme</a>
+                                                <div class="kt-widget-13__desc"> To start a blog, think of a topic about and first brainstorm party is ways to write details </div>
                                             </div>
-                                            <div class="k-widget-13__foot">
-                                                <div class="k-widget-13__label">
+                                            <div class="kt-widget-13__foot">
+                                                <div class="kt-widget-13__label">
                                                     <div class="btn btn-sm btn-label btn-bold"> 03 SEP, 2018 </div>
                                                 </div>
-                                                <div class="k-widget-13__toolbar"> <a href="#" class="btn btn-default btn-sm btn-bold btn-upper">View</a> </div>
+                                                <div class="kt-widget-13__toolbar"> <a href="#" class="btn btn-default btn-sm btn-bold btn-upper">View</a> </div>
                                             </div>
                                         </div>
                                     </div>
@@ -3082,69 +3082,69 @@
                     </div>
                     <!--end::Portlet-->
                     <!--begin::Portlet-->
-                    <div class="k-portlet k-portlet--height-fluid-half k-widget-13">
-                        <div class="k-portlet__body">
-                            <div id="k-widget-slider-13-2" class="k-slider carousel slide" data-ride="carousel" data-interval="4000">
-                                <div class="k-slider__head">
-                                    <div class="k-slider__label">Projects</div>
-                                    <div class="k-slider__nav">
-                                        <a class="k-slider__nav-prev carousel-control-prev" href="#k-widget-slider-13-2" role="button" data-slide="prev"> <i class="fa fa-angle-left"></i> </a>
-                                        <a class="k-slider__nav-next carousel-control-next" href="#k-widget-slider-13-2" role="button" data-slide="next"> <i class="fa fa-angle-right"></i> </a>
+                    <div class="kt-portlet kt-portlet--height-fluid-half kt-widget-13">
+                        <div class="kt-portlet__body">
+                            <div id="kt-widget-slider-13-2" class="kt-slider carousel slide" data-ride="carousel" data-interval="4000">
+                                <div class="kt-slider__head">
+                                    <div class="kt-slider__label">Projects</div>
+                                    <div class="kt-slider__nav">
+                                        <a class="kt-slider__nav-prev carousel-control-prev" href="#kt-widget-slider-13-2" role="button" data-slide="prev"> <i class="fa fa-angle-left"></i> </a>
+                                        <a class="kt-slider__nav-next carousel-control-next" href="#kt-widget-slider-13-2" role="button" data-slide="next"> <i class="fa fa-angle-right"></i> </a>
                                     </div>
                                 </div>
                                 <div class="carousel-inner">
-                                    <div class="carousel-item active k-slider__body">
-                                        <div class="k-widget-13">
-                                            <div class="k-widget-13__body">
-                                                <a class="k-widget-13__title" href="#">Keen Admin Launch Day</a>
-                                                <div class="k-widget-13__desc"> To start a blog, think of a topic about and first brainstorm party is ways to write details </div>
+                                    <div class="carousel-item active kt-slider__body">
+                                        <div class="kt-widget-13">
+                                            <div class="kt-widget-13__body">
+                                                <a class="kt-widget-13__title" href="#">Keen Admin Launch Day</a>
+                                                <div class="kt-widget-13__desc"> To start a blog, think of a topic about and first brainstorm party is ways to write details </div>
                                             </div>
-                                            <div class="k-widget-13__foot">
-                                                <div class="k-widget-13__progress">
-                                                    <div class="k-widget-13__progress-info">
-                                                        <div class="k-widget-13__progress-status"> Progress </div>
-                                                        <div class="k-widget-13__progress-value">78%</div>
+                                            <div class="kt-widget-13__foot">
+                                                <div class="kt-widget-13__progress">
+                                                    <div class="kt-widget-13__progress-info">
+                                                        <div class="kt-widget-13__progress-status"> Progress </div>
+                                                        <div class="kt-widget-13__progress-value">78%</div>
                                                     </div>
                                                     <div class="progress">
-                                                        <div class="progress-bar k-bg-brand" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <div class="progress-bar kt-bg-brand" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="carousel-item k-slider__body">
-                                        <div class="k-widget-13">
-                                            <div class="k-widget-13__body">
-                                                <a class="k-widget-13__title" href="#">First Milestone Achivement</a>
-                                                <div class="k-widget-13__desc"> To start a blog, think of a topic about and first brainstorm party is ways to write details </div>
+                                    <div class="carousel-item kt-slider__body">
+                                        <div class="kt-widget-13">
+                                            <div class="kt-widget-13__body">
+                                                <a class="kt-widget-13__title" href="#">First Milestone Achivement</a>
+                                                <div class="kt-widget-13__desc"> To start a blog, think of a topic about and first brainstorm party is ways to write details </div>
                                             </div>
-                                            <div class="k-widget-13__foot">
-                                                <div class="k-widget-13__progress">
-                                                    <div class="k-widget-13__progress-info">
-                                                        <div class="k-widget-13__progress-status"> Progress </div>
-                                                        <div class="k-widget-13__progress-value">55%</div>
+                                            <div class="kt-widget-13__foot">
+                                                <div class="kt-widget-13__progress">
+                                                    <div class="kt-widget-13__progress-info">
+                                                        <div class="kt-widget-13__progress-status"> Progress </div>
+                                                        <div class="kt-widget-13__progress-value">55%</div>
                                                     </div>
                                                     <div class="progress">
-                                                        <div class="progress-bar k-bg-brand" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <div class="progress-bar kt-bg-brand" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="carousel-item k-slider__body">
-                                        <div class="k-widget-13">
-                                            <div class="k-widget-13__body">
-                                                <a class="k-widget-13__title" href="#">Reached 50,000 sales</a>
-                                                <div class="k-widget-13__desc"> To start a blog, think of a topic about and first brainstorm party is ways to write details </div>
+                                    <div class="carousel-item kt-slider__body">
+                                        <div class="kt-widget-13">
+                                            <div class="kt-widget-13__body">
+                                                <a class="kt-widget-13__title" href="#">Reached 50,000 sales</a>
+                                                <div class="kt-widget-13__desc"> To start a blog, think of a topic about and first brainstorm party is ways to write details </div>
                                             </div>
-                                            <div class="k-widget-13__foot">
-                                                <div class="k-widget-13__progress">
-                                                    <div class="k-widget-13__progress-info">
-                                                        <div class="k-widget-13__progress-status"> Progress </div>
-                                                        <div class="k-widget-13__progress-value">24%</div>
+                                            <div class="kt-widget-13__foot">
+                                                <div class="kt-widget-13__progress">
+                                                    <div class="kt-widget-13__progress-info">
+                                                        <div class="kt-widget-13__progress-status"> Progress </div>
+                                                        <div class="kt-widget-13__progress-value">24%</div>
                                                     </div>
                                                     <div class="progress">
-                                                        <div class="progress-bar k-bg-brand" role="progressbar" style="width: 24%" aria-valuenow="24" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <div class="progress-bar kt-bg-brand" role="progressbar" style="width: 24%" aria-valuenow="24" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>

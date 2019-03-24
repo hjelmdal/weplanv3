@@ -7,7 +7,7 @@
  */
 ?>
 <!-- begin::Global Config(global config for global JS sciprts) -->
-<script>var KAppOptions = {
+<script>var KTAppOptions = {
         "colors": {
             "state": {
                 "brand": "#385aeb",

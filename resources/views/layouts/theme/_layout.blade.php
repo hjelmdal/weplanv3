@@ -1,12 +1,12 @@
 <!-- begin:: Page -->
 @include("layouts.theme.partials._header-base-mobile")
-<div class="k-grid k-grid--hor k-grid--root">
-    <div class="k-grid__item k-grid__item--fluid k-grid k-grid--ver k-page">
-        <div class="k-grid__item k-grid__item--fluid k-grid k-grid--hor k-wrapper" id="k_wrapper">
+<div class="kt-grid kt-grid--hor kt-grid--root">
+    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+        <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
             @include("layouts.theme.partials._header-base")
             @include("layouts.theme.partials._subheader-base")
-            <div class="k-grid__item k-grid__item--fluid k-grid k-grid--ver k-grid--stretch">
-                <div class="k-body k-body--fixed k-grid__item k-grid__item--fluid k-grid k-grid--ver" id="k_body">
+            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-grid--stretch">
+                <div class="kt-body kt-body--fixed kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver" id="kt_body">
                     @include("layouts.theme.partials._content-base")
                 </div>
             </div>

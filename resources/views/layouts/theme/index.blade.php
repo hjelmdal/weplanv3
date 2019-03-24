@@ -15,7 +15,7 @@ $firstname = $names[0];
     </head>
     <!-- end::Head -->
     <!-- begin::Body -->
-    <body class="k-header--fixed k-header-mobile--fixed k-aside--enabled k-aside--fixed k-aside--offcanvas-default k-page--loading">
+    <body class="kt-header--fixed kt-header-mobile--fixed kt-aside--enabled kt-aside--fixed kt-aside--offcanvas-default kt-page--loading">
         @include("layouts.theme.partials._layout-page-loader")
         @include("layouts.theme._layout")
         @include("layouts.theme._foot")
