@@ -1,3 +1,13 @@
+.kt-aside {
+    left:-345px;
+}
+.kt-aside.kt-aside--on {
+    left:0;
+}
+.kt-svg-icon g [fill] {
+  fill: #5d78ff;
+}
+
 .kt-login-v1 .kt-login-v1__body .kt-login-v1__seaprator {
   background-color: #ebedf2;
 }
