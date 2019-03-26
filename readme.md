@@ -1,6 +1,17 @@
 ## Welcome to WePlan V3 project
 
-### Installation instructions
+
+## Installation instructions
+
+### Prerequisites
+Composer: [https://getcomposer.org/download/](https://getcomposer.org/download/)
+NPM and Node.js: [https://nodejs.org/en/download/](https://nodejs.org/en/download/)  
+SSH-keys: [https://docs.microsoft.com](https://docs.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops)
+Sequel Pro (MAC): [https://www.sequelpro.com/](https://www.sequelpro.com/)
+Docker (optional): [MAC](https://www.docker.com/community-edition) or [Windows](https://store.docker.com/editions/community/docker-ce-desktop-windows)
+MAMP Pro (optional): [link](https://coming.soon)
+
+### Instructions
 
  1. Download Docker installer [MAC](https://www.docker.com/community-edition) or [Windows](https://store.docker.com/editions/community/docker-ce-desktop-windows)
  2. ```Windows Only : Share your C drive in docker settings```  
@@ -62,7 +73,7 @@ For theme components look into theme : [link](https://keenthemes.com/keen/previe
 
 | Tool   | Url                                                                             |
 |----------|---------------------------------------------------------------------------------|  
-| Repo   | Hjelmdal@vs-ssh.visualstudio.com:v3/Hjelmdal/WePlan/WePlanV3                                          |
+| Git repo   | Hjelmdal@vs-ssh.visualstudio.com:v3/Hjelmdal/WePlan/WePlanV3                                          |
 | Azure Devops   | https://hjelmdal.visualstudio.com/WePlan
 
 
