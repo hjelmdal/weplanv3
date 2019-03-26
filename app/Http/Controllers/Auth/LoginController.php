@@ -8,6 +8,7 @@ use App\Models\Google;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -59,9 +60,19 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
+        session(['link' => url()->previous()]);
         return view("login/login2");
     }
-    
+
+    protected function redirectToPage() {
+        if(session('url.intended')) {
+            return redirect(session("url.intended"));
+        } else {
+            return redirect("/user");
+        }
+    }
+
+
     public function redirectToGoogleLogin(Request $request){
         $request->session()->put('google-intent', 'login');
         return Socialite::driver('google')->redirect();
@@ -82,25 +93,25 @@ class LoginController extends Controller
         
         if($userObj != null){
             $this->guard()->login($userObj);
-            return redirect()->route($this->loggedInRouteName);
+            return $this->redirectToPage();
         }
         elseif($request->session()->get('google-intent') == 'login'){
             $request->session()->flash('message', 'Ingen profil passede sammen med google - opret dig forneden');
             return redirect()->route('login');
         }
-        
+
         $userObj = \App\Models\User::where('email', $user->getEmail())->first();
         if($userObj != null){
             $request->session()->flash('message', 'Emailen eksister allerede på en bruger');
             return redirect()->route('login');
         }
-        
+
         if($request->session()->get('google-intent') == 'create'){
             $fileName = tempnam(sys_get_temp_dir(), 'profile-pic');
             copy($user->getAvatar(), $fileName);
             /** @var Filesystem $disk */
             $file = Storage::disk('public')->putFile('profile', new File($fileName));
-            
+
             DB::beginTransaction();
             $userObj = \App\Models\User::create([
                 'name' => $user->getName(),
@@ -117,52 +128,53 @@ class LoginController extends Controller
             $userObj->google()->save($facebook);
             $userObj->notify(new VerifyEmail());
             $this->guard()->login($userObj);
-            
+
             DB::commit();
-            return redirect()->route($this->loggedInRouteName);
+            return $this->redirectToPage();
         }
         redirect()->route('login');
     }
-    
+
     public function redirectToFacebookLogin(Request $request){
         $request->session()->put('fb-intent', 'login');
         return Socialite::driver('facebook')->redirect();
     }
-    
+
     public function redirectToFacebookCreate(Request $request){
         $request->session()->put('fb-intent', 'create');
         return Socialite::driver('facebook')->redirect();
     }
-    
+
     public function handleFacebookCallback(Request $request)
     {
         /** @var User $user */
         $user = Socialite::driver('facebook')->user();
-    
+
         $userObj = \App\Models\User::where('email', $user->getEmail())->whereHas('facebook', function (Builder $query) use ($user) {
             $query->where('facebook_id', $user->getId());
         })->first();
-    
+
         if ($userObj != null) {
             $this->guard()->login($userObj);
-            return redirect()->route($this->loggedInRouteName);
+            return $this->redirectToPage();
+
         } elseif ($request->session()->get('fb-intent') == 'login') {
             $request->session()->flash('message', 'Ingen profil passede sammen med facebook - opret dig forneden');
             return redirect()->route('login');
         }
-    
+
         $userObj = \App\Models\User::where('email', $user->getEmail())->first();
         if ($userObj != null) {
             $request->session()->flash('message', 'Email already exist');
             return redirect()->route('login');
         }
-    
+
         if ($request->session()->get('fb-intent') == 'create') {
             $fileName = tempnam(sys_get_temp_dir(), 'profile-pic');
             copy($user->getAvatar(), $fileName);
             /** @var Filesystem $disk */
             $file = Storage::disk('public')->putFile('profile', new File($fileName));
-        
+
             DB::beginTransaction();
             $userObj = \App\Models\User::create([
                 'name' => $user->getName(),
@@ -179,9 +191,9 @@ class LoginController extends Controller
             $userObj->facebook()->save($facebook);
             $userObj->notify(new VerifyEmail());
             $this->guard()->login($userObj);
-        
+
             DB::commit();
-            return redirect()->route($this->loggedInRouteName);
+            return $this->redirectToPage();
         }
         redirect()->route('login');
     }

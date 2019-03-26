@@ -40,7 +40,7 @@ Route::get("/user/pending","UserController@index")->middleware("auth")->name("ve
 
 // Redirects
 
-Route::get('/nova/login','RedirectController@login')->middleware('guest');
+//Route::get('/nova/login','RedirectController@login')->middleware('guest');
 
 Route::get('/slack', function() {
     $user = \App\Models\User::first();
