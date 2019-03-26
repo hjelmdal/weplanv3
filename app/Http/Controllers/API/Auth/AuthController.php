@@ -51,7 +51,7 @@ class AuthController extends Controller
                         return response()->json([
                             'name'         => $user->name,
                             'email'        => $user->email,
-                            'access_token' => $this->apiToken,
+                            'auth_token' => $this->apiToken,
                         ]);
                     }
                 } else {
