@@ -220,6 +220,9 @@ document.addEventListener("DOMContentLoaded", function () {
     $('#kt_login_form2').css("display", "flex");
     $('#kt_login_form2').addClass('flipInX animated');
   });
+  $("#toggle_aside_mobile").on("click", function () {
+    $("#kt_aside_toggler").trigger("click");
+  });
 });
 document.addEventListener("DOMContentLoaded", function (event) {
   //Tabs loading

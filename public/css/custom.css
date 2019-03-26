@@ -4,8 +4,22 @@
 .kt-aside.kt-aside--on {
     left:0;
 }
+.kt-menu__item svg {
+    margin-top: -3px;
+    margin-right: 5px;
+}
+.kt-menu__item:hover .kt-svg-icon g [fill] {
+    transition: fill 0.3s ease;
+    fill: #5d78ff;
+}
+
 .kt-svg-icon g [fill] {
-  fill: #5d78ff;
+    transition: fill 0.3s ease;
+    fill: #aaaaaa;
+}
+.svg-hover:hover .kt-svg-icon g [fill] {
+    transition: fill 0.3s ease;
+    fill: #5d78ff;
 }
 
 .kt-login-v1 .kt-login-v1__body .kt-login-v1__seaprator {

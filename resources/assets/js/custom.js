@@ -142,6 +142,10 @@ document.addEventListener("DOMContentLoaded", function () {
         $('#kt_login_form2').addClass('flipInX animated');
     });
 
+    $("#toggle_aside_mobile").on("click",function() {
+        $( "#kt_aside_toggler" ).trigger( "click" );
+    });
+
 
 });
 
