@@ -5,8 +5,14 @@
  * Date: 21/02/2019
  * Time: 18.31
  */
+$user = Auth::user();
 ?>
 <!--link rel="manifest" href="/manifest.json"-->
+@if($user)
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="api-token" content="{{ $user->api_token }}">
+@endif
+@yield("meta")
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no, user-scalable=no">
 <meta name="description" content="Badminton trainingssystem">
 <meta name="keywords" content="training, badminton, pixel8">
