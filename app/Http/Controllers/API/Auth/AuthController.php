@@ -36,7 +36,7 @@ class AuthController extends Controller
             // Validation failed
             return response()->json([
                 'message' => $validator->messages(),
-            ]);
+            ],400);
         } else {
             // Fetch User
             $user = User::where('email',$request->email)->first();
@@ -56,13 +56,13 @@ class AuthController extends Controller
                     }
                 } else {
                     return response()->json([
-                        'message' => 'Invalid Password',
-                    ]);
+                        'message' => 'Invalid Password'
+                    ],403);
                 }
             } else {
                 return response()->json([
                     'message' => 'User not found',
-                ]);
+                ],404);
             }
         }
     }
@@ -102,7 +102,7 @@ class AuthController extends Controller
             } else {
                 return response()->json([
                     'message' => 'Registration failed, please try again.',
-                ]);
+                ],404);
             }
         }
     }
@@ -119,12 +119,12 @@ class AuthController extends Controller
             if($logout) {
                 return response()->json([
                     'message' => 'User Logged Out',
-                ]);
+                ],200);
             }
         } else {
             return response()->json([
                 'message' => 'User not found',
-            ]);
+            ],404);
         }
     }
 }
