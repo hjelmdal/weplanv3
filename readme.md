@@ -20,22 +20,28 @@ MAMP Pro (optional): [link](https://coming.soon)
  2. Setup new virtual server pointing to http://local.weplan.dk on port 80 with MYSQL pointing on Port 3306
 ####Run the following commands in your terminal in the project root folder  
 __Before you can clone the project you need to setup a key pair and upload the public key to your profile in Azure DevOps - see instructions [here](https://docs.microsoft.com/en-us/azure/devops/repos/git/use-ssh-keys-to-authenticate?view=azure-devops)__
- 3. ```git clone Hjelmdal@vs-ssh.visualstudio.com:v3/Hjelmdal/WePlan/WePlanV3 .```
- 4. ```navigate to project root folder```  
+
+
+ 1. ```git clone Hjelmdal@vs-ssh.visualstudio.com:v3/Hjelmdal/WePlan/WePlanV3 .```
+ 2. ```navigate to project root folder```  
+ 
+ 
  IF Docker is chosen  
- 5. ```docker-compose run --rm composer install --ignore-platform-reqs```
- 6. ```docker-compose up -d weplan database```
- 7. ```copy .env.local and rename to .env```
- 8. ```docker-compose run --rm artisan migrate```
- 9. ```docker-compose run --rm artisan key:generate```
- 10. ```Add local.weplan.dk to your hosts file```
- 11. ```In terminal run: export DB_HOST=127.0.0.1 or add it to your .bashrc file to make it permanently ```  
- IF MAMP is chosen  
- 5. Follow instructions here: [link](https://gist.github.com/irazasyed/5987693)
- 6. ```Make MAMP Pro add local.weplan.dk to your hosts file```
- 7. ```composer install --ignore-platform-reqs```
- 8. ```copy .env.local and rename to .env```
- 9. ```php artisan migrate```
+ 1. ```docker-compose run --rm composer install --ignore-platform-reqs```
+ 2. ```docker-compose up -d weplan database```
+ 3. ```copy .env.local and rename to .env```
+ 4. ```docker-compose run --rm artisan migrate```
+ 5. ```docker-compose run --rm artisan key:generate```
+ 6. ```Add local.weplan.dk to your hosts file```
+ 7. ```In terminal run: export DB_HOST=127.0.0.1 or add it to your .bashrc file to make it permanently ```  
+ 
+ 
+   IF MAMP is chosen  
+ 1. Follow instructions here: [link](https://gist.github.com/irazasyed/5987693)
+ 2. ```Make MAMP Pro add local.weplan.dk to your hosts file```
+ 3. ```composer install --ignore-platform-reqs```
+ 4. ```copy .env.local and rename to .env```
+ 5. ```php artisan migrate```
 ### Ready to go!
  -Open [http://local.weplan.dk](http://local.weplan.dk) in your browser
  
