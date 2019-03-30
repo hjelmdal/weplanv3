@@ -19,12 +19,20 @@ Route::prefix('v1')->namespace('API')->group(function () {
     // Register
     Route::post('/register','Auth\AuthController@postRegister');
     // Protected with APIToken Middleware
-    //Route::middleware('APIToken')->group(function () {
+    Route::middleware('api.token')->group(function () {
         // Logout
-        //Route::post('/logout','Auth\AuthController@postLogout');
-    //});
+        Route::post('/logout','Auth\AuthController@postLogout');
+    });
+
+    Route::middleware('api.role:super-admin')->get('/user', function (Request $request) {
+        $user = \App\Models\User::first();
+        $user->revoke();
+    });
+
+
+    Route::namespace('WePlan')->middleware("api.token")->group(function () {
+        Route::apiResource('activities','WeActivitiesAPI');
+    });
 });
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+

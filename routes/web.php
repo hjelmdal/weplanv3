@@ -37,15 +37,12 @@ Route::middleware(['auth'])->prefix('user')->name("user.")->group(function () {
 
 Route::get("/user/pending","UserController@index")->middleware("auth")->name("verification.notice");
 
-
+Route::get("/activities","WePlan\ActivitiesController@index");
 // Redirects
 
 //Route::get('/nova/login','RedirectController@login')->middleware('guest');
 
-Route::get('/slack', function() {
-    $user = \App\Models\User::first();
-   \Illuminate\Support\Facades\Notification::send($user,new \App\Notifications\NewUserRegistered($user));
-});
+
 
 
 

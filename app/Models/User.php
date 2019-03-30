@@ -60,6 +60,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(WePlayer::class,'user_id','id');
     }
 
+    public function revoke() {
+        $this->api_token = NULL;
+        $this->save();
+    }
+
     /**
      * Route notifications for the Slack channel.
      *
