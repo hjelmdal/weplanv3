@@ -25,6 +25,11 @@ class EventServiceProvider extends ServiceProvider
         'Illuminate\Auth\Events\Logout' => [
             'App\Listeners\DeleteTokenOnLogout',
         ],
+
+        'Illuminate\Auth\Events\Registered' => [
+            'App\Listeners\Slack\UserRegistered'
+        ],
+
     ];
 
     /**

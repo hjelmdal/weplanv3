@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWePlayersTable extends Migration
+class CreateWePlayersAndWeActivitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -29,45 +29,43 @@ class CreateWePlayersTable extends Migration
 
         });
 
-        Schema::create('we_trainings', function (Blueprint $table) {
+        Schema::create('we_activities', function (Blueprint $table) {
             $table->increments('id');
             $table->index('id');
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->time('start');
-            $table->time('end');
-            $table->binary('recurringid')->nullable();
+            $table->timeTz('start');
+            $table->timeTz('end');
+            $table->uuid('recurring_id')->nullable();
             $table->integer('type_id');
             $table->string('title', 255)->nullable();
             $table->text('info')->nullable();
-            $table->time('response_time');
+            $table->text('address')->nullable();
+            $table->timeTz('response_time');
             $table->date('response_date')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->nullableTimestamps();
             $table->softDeletes();
-
-
-
-
         });
 
-        Schema::create('we_player_trainings', function (Blueprint $table) {
+        Schema::create('we_player_activities', function (Blueprint $table) {
             $table->integer('player_id')->unsigned();
-            $table->integer('training_id')->unsigned();
+            $table->integer('activity_id')->unsigned();
             $table->timestamp('confirmed_at')->nullable();
             $table->timestamp('declined_at')->nullable();
             $table->nullableTimestamps();
             $table->softDeletes();
 
-            $table->primary(['training_id', 'player_id']);
+            $table->primary(['activity_id', 'player_id']);
             $table->index('player_id');
-            $table->index('training_id');
+            $table->index('activity_id');
+
+            $table->foreign('activity_id')->references('id')
+                ->on('we_activities')->onDelete('cascade')->onUpdate('cascade');
 
             $table->foreign('player_id')->references('id')
                 ->on('we_players')->onDelete('cascade')->onUpdate('cascade');
 
-            $table->foreign('training_id')->references('id')
-                ->on('we_trainings')->onDelete('cascade')->onUpdate('cascade');
 
 
 
@@ -85,8 +83,8 @@ class CreateWePlayersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('we_players');
-        Schema::dropIfExists('we_trainings');
-        Schema::dropIfExists('we_player_trainings');
+        Schema::dropIfExists('we_activities');
+        Schema::dropIfExists('we_player_activities');
 
     }
 }
