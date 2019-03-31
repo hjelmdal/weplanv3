@@ -2,11 +2,16 @@
 
 namespace App\Notifications;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\URL;
 
 class NewUserRegistered extends Notification
 {
@@ -32,7 +37,7 @@ class NewUserRegistered extends Notification
      */
     public function via($notifiable)
     {
-        return ['slack'];
+        return ['mail'];
     }
 
     /**
@@ -43,9 +48,15 @@ class NewUserRegistered extends Notification
      */
     public function toMail($notifiable)
     {
+
         return (new MailMessage)
                     ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
+                    ->action(__('Verify Email Address'),
+                        URL::temporarySignedRoute(
+                            'verification.verify',
+                            Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+                            ['id' => $notifiable->id]
+                        ))
                     ->line('Thank you for using our application!');
     }
 

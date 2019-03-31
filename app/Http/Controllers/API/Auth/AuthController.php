@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use \Illuminate\Support\Facades\Notification;
+use \App\Notifications\NewUserRegistered;
 
 class AuthController extends Controller
 {
@@ -92,6 +94,8 @@ class AuthController extends Controller
             ];
             // $user = User::GetInsertId($postArray);
             $user = User::insert($postArray);
+            $user1 = User::where("email",$request->email)->get();
+            Notification::send($user1,new NewUserRegistered($user1));
 
             if($user) {
                 return response()->json([

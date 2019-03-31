@@ -58,7 +58,7 @@
                         <form class="kt-login-v2__form kt-form" method="POST" action="{{ route('login') }}" autocomplete="new-password" >
                             @csrf
                             <div class="form-group">
-                                <input id="login_email" class="form-control form-login2 {{ $errors->has('email') ? ' is-invalid' : '' }}" type="text" placeholder="{{ __('E-Mail Address') }}" name="email" autocomplete="new-password">
+                                <input id="login_email" class="form-control form-login2 {{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" placeholder="{{ __('E-Mail Address') }}" name="email" autocomplete="new-password">
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback kt-padding-l-30" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
