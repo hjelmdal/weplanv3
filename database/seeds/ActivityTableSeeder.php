@@ -13,5 +13,6 @@ class ActivityTableSeeder extends Seeder
     public function run()
     {
         $activities = factory(WeActivity::class,5)->create();
+
     }
 }
