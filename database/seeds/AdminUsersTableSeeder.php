@@ -25,5 +25,17 @@ class AdminUsersTableSeeder extends Seeder
         $u->assignRole(Role::findByName("super-admin","web"));
         $u->save();
 
+        $u = User::firstOrNew(["email" => "mortenspjuth@gmail.com"]);
+        if(!$u->exists) {
+            $u->id = 2000;
+            $u->name = "Administrator";
+            $u->password = bcrypt(Str::random(20));
+
+        }
+
+        $u->assignRole(Role::findByName("super-admin","web"));
+        $u->save();
+
+
     }
 }
