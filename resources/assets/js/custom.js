@@ -209,14 +209,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 }
                 else if (status == "success") {
                     console.log("Content loaded...");
-                    KTApp.unblock(ref);
+                    setTimeout(function () {
+                        KTApp.unblock(ref + ' .modal-content');
+                    },200);
                 }
             });
             console.log("href2: " + hrefLink);
             setTimeout(function () {
-                KTApp.unblock(ref);
+                KTApp.unblock(ref + ' .modal-content');
                 console.log("Modal ready...");
-            },2000);
+            },1000);
         }
     });
 
