@@ -248,6 +248,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   }); // Modals
 
   $('body').on('click', '[data-toggle="modal"]', function (e) {
+    e.preventDefault();
     var ref = $(this).data("target");
     console.log("target: " + ref);
     var hrefLink = $(this).attr("href");
