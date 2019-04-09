@@ -3,7 +3,7 @@ use Faker\Generator as Faker;
 use App\Models\WePlan\WeActivity;
 
 $factory->define(WeActivity::class, function (Faker $faker) {
-    $start_date = $faker->dateTimeBetween("this week","+6 days");
+    $start_date = $faker->dateTimeBetween("this week","+21 days");
     $start_hr = $faker->numberBetween(12,21);
     $start =  $start_hr .":00:00";
     $end = $start_hr + 2;
