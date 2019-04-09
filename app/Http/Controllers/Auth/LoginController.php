@@ -80,7 +80,10 @@ class LoginController extends Controller
     
     public function redirectToGoogleCreate(Request $request){
         $request->session()->put('google-intent', 'create');
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')
+            ->scopes(["openid", "https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"]) // For any extra scopes you need, see https://developers.google.com/identity/protocols/googlescopes for a full list; alternatively use constants shipped with Google's PHP Client Library
+            ->with(["access_type" => "offline", "prompt" => "consent select_account"])
+            ->redirect();
     }
     
     public function handleGoogleCallback(Request $request){
@@ -92,7 +95,8 @@ class LoginController extends Controller
         })->first();
         
         if($userObj != null){
-            $this->guard()->login($userObj);
+            Auth::login($userObj,true);
+            //$this->guard()->login($userObj);
             return $this->redirectToPage();
         }
         elseif($request->session()->get('google-intent') == 'login'){
@@ -119,15 +123,16 @@ class LoginController extends Controller
                 'password' => bcrypt(uniqid()),
                 'avatar' => $file
             ]);
-            $facebook = new Google([
+            $google = new Google([
                 'token' => $user->token,
                 'refresh_token' => $user->refreshToken,
                 'expires_in' => $user->expiresIn,
                 'google_id' => $user->getId()
             ]);
-            $userObj->google()->save($facebook);
+            $userObj->google()->save($google);
             $userObj->notify(new VerifyEmail());
-            $this->guard()->login($userObj);
+            Auth::login($userObj,true);
+            //$this->guard()->login($userObj,true);
 
             DB::commit();
             return $this->redirectToPage();
@@ -155,7 +160,7 @@ class LoginController extends Controller
         })->first();
 
         if ($userObj != null) {
-            $this->guard()->login($userObj);
+            $this->guard()->login($userObj,true);
             return $this->redirectToPage();
 
         } elseif ($request->session()->get('fb-intent') == 'login') {
@@ -190,7 +195,8 @@ class LoginController extends Controller
             ]);
             $userObj->facebook()->save($facebook);
             $userObj->notify(new VerifyEmail());
-            $this->guard()->login($userObj);
+            Auth::login($userObj,true);
+            //$this->guard()->login($userObj);
 
             DB::commit();
             return $this->redirectToPage();

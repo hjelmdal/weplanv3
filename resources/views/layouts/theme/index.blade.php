@@ -18,7 +18,9 @@ $firstname = $names[0];
     <body class="kt-header--fixed kt-header-mobile--fixed kt-aside--enabled kt-aside--fixed kt-aside--offcanvas-default kt-page--loading">
         @include("layouts.theme.partials._layout-page-loader")
         @include("layouts.theme._layout")
+        @yield("modal")
         @include("layouts.theme._foot")
+
     </body>
     <!-- end::Body -->
 </html>

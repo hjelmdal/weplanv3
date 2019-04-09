@@ -10,8 +10,9 @@ $factory->define(WeActivity::class, function (Faker $faker) {
     $end = $end . ":00:00";
     $res_time = $start_hr - 5;
     $res_time = $res_time . ":00:00";
+    $title = $faker->sentence(6, true);
     return [
-        "title" => "Title " . $faker->randomDigit,
+        "title" => $title,
         "start_date" => $start_date,
         "start" => $start,
         "end" => $end,

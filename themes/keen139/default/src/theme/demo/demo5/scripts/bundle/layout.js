@@ -210,11 +210,11 @@ var KTLayout = function() {
             this.initPageStickyPortlet();
 
             // Non functional links notice(can be removed in production)
-            $('#kt_aside_menu, #kt_header_menu').on('click', '.kt-menu__link[href="#"]:not(.kt-menu__toggle)', function(e) {
-                swal("", "You have clicked on a non-functional dummy link!");
-
-                e.preventDefault();
-            });
+            // $('#kt_aside_menu, #kt_header_menu').on('click', '.kt-menu__link[href="#"]:not(.kt-menu__toggle)', function(e) {
+            //     swal("", "You have clicked on a non-functional dummy link!");
+            //
+            //     e.preventDefault();
+            // });
         },
 
         initHeader: function() {

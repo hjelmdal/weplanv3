@@ -37,7 +37,8 @@ Route::middleware(['auth'])->prefix('user')->name("user.")->group(function () {
 
 Route::get("/user/pending","UserController@index")->middleware("auth")->name("verification.notice");
 
-Route::get("/activities","WePlan\ActivitiesController@index");
+Route::get("/activities","WePlan\ActivitiesController@index")->middleware("auth")->name("activities");
+Route::get("/activities/{id}","WePlan\ActivitiesController@show")->middleware("auth")->name("activities.show")->where('id', '[0-9]+');
 // Redirects
 
 //Route::get('/nova/login','RedirectController@login')->middleware('guest');

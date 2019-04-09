@@ -8,7 +8,7 @@ class Facebook extends Model
 {
     
     protected $table = 'users_facebook';
-    public $timestamps = false;
+    public $timestamps = true;
     protected $fillable = ['token', 'refresh_token', 'expires_in', 'facebook_id','facebook_handle'];
     
     public function user(){

@@ -192,9 +192,25 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 });
 
             },200);
-            $(ref + ' .modal-content').load(hrefLink, function () {
-                console.log("Content loaded...");
-                KTApp.unblock(ref);
+            $(ref + ' .modal-content').load(hrefLink, function (response, status, xhr) {
+                //console.log(xhr);
+                //console.log("response " + response);
+                //console.log("status " + status);
+                if(response.startsWith("<!DOCTYPE html")) {
+                    $(ref + ' .modal-content').empty();
+                    swal({
+                        position: 'top',
+                        type: 'warning',
+                        title: "Session expired - reloading page",
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
+                    window.location.reload();
+                }
+                else if (status == "success") {
+                    console.log("Content loaded...");
+                    KTApp.unblock(ref);
+                }
             });
             console.log("href2: " + hrefLink);
             setTimeout(function () {

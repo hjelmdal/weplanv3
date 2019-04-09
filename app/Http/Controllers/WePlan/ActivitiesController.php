@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\WePlan;
 
 use App\Http\Controllers\API\WePlan\WeActivitiesAPI;
+use App\Models\WePlan\WeActivity;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -49,7 +50,9 @@ class ActivitiesController extends Controller
      */
     public function show($id)
     {
-        //
+        $activity = new WeActivitiesAPI();
+        $activity = $activity->show($id);
+        return view("app.activities.show",["activity" => $activity]);
     }
 
     /**

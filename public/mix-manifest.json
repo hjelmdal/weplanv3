@@ -1,5 +1,6 @@
 {
     "/js/custom.js": "/js/custom.js",
     "/css/custom.css": "/css/custom.css",
-    "/js/fullscreen.js": "/js/fullscreen.js"
+    "/js/fullscreen.js": "/js/fullscreen.js",
+    "/vuejs/index.js": "/vuejs/index.js"
 }

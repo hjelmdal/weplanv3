@@ -2536,7 +2536,7 @@
                                 <div class="kt-widget-4__item-content">
                                     <div class="kt-widget-4__item-section">
                                         <div class="kt-widget-4__item-pic">
-                                            <img class="" src="{{ config("app.keen_assets") }}/media/users/100_5.jpg" alt="" />
+                                            <img srcset="{{ config("app.keen_assets") }}/media/users/100_5.jpg 3x, {{ config("app.keen_assets") }}/media/users/100_5.jpg 2x, {{ config("app.keen_assets") }}/media/users/100_5.jpg 1x" src="{{ config("app.keen_assets") }}/media/users/100_5.jpg" alt="" />
                                         </div>
                                         <div class="kt-widget-4__item-info">
                                             <a href="#" class="kt-widget-4__item-username">Jimmy Yesuku</a>

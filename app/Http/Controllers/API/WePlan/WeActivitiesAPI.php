@@ -3,20 +3,49 @@
 namespace App\Http\Controllers\API\WePlan;
 
 use App\Models\WePlan\WeActivity;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Date;
 
 class WeActivitiesAPI extends Controller
 {
+
+    public function index() {
+        //
+    }
+
     /**
      * Display a listing of the resource.
-     *
+     * @param string
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function get($date = null)
     {
-        $activities = WeActivity::all();
+        if($date == null) {
+            $date = date("Y-m-d");
+        }
+
+        $date = new \DateTime($date);
+        $date->modify('This Monday');
+        $date = $date->format("Y-m-d");
+        $weektime = strtotime($date);
+        $greater = date("Y-m-d",$weektime);
+        $less = date("Y-m-d",$weektime + 604800);
+        try {
+            $activities = WeActivity::where("start_date", ">=", $greater)->where("start_date", "<", $less)->orderBy("start_date","ASC")->orderBy("start","ASC")->get();
+        } catch (ModelNotFoundException $e) {
+            return response()->json("No activities found", 404);
+        }
+        $data = $activities;
+        $this_week_url = route("api.v1.activities.get",["date" => date("Y-m-d",$weektime)]);
+        $next_week_url = route("api.v1.activities.get",["date" => date("Y-m-d",$weektime+604800)]);
+        $prev_week_url = route("api.v1.activities.get",["date" => date("Y-m-d",$weektime-604800)]);
+        return response()->json(array("data" => $data, "total" => 100, "to" => 4, "from" => 0,"this_week_url" => $this_week_url, "next_week_url" => $next_week_url, "prev_week_url" => $prev_week_url));
+        //$activities = WeActivity::paginate(4);
         //$activities->load("");
+
+
         return $activities;
     }
 
@@ -49,7 +78,16 @@ class WeActivitiesAPI extends Controller
      */
     public function show($id)
     {
-        //
+        if($id) {
+            try {
+                $activity = WeActivity::findOrFail($id);
+                return $activity;
+            } catch (ModelNotFoundException $e) {
+                return response()->json("Not found",404);
+            }
+        } else {
+            return response()->json("Bad request",400);
+        }
     }
 
     /**

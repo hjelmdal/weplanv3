@@ -8,7 +8,7 @@ class Google extends Model
 {
     
     protected $table = 'users_google';
-    public $timestamps = false;
+    public $timestamps = true;
     protected $fillable = ['token', 'refresh_token', 'expires_in', 'google_id','google_handle'];
     
     public function user(){

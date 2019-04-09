@@ -12,26 +12,28 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::name('api.')->group(function () {
+    Route::prefix('v1')->namespace('API')->name("v1.")->group(function () {
+        // Login
+        Route::post('/login','Auth\AuthController@postLogin');
+        // Register
+        Route::post('/register','Auth\AuthController@postRegister');
+        // Protected with APIToken Middleware
+        Route::middleware('api.token')->group(function () {
+            // Logout
+            Route::post('/logout','Auth\AuthController@postLogout');
+        });
 
-Route::prefix('v1')->namespace('API')->group(function () {
-    // Login
-    Route::post('/login','Auth\AuthController@postLogin');
-    // Register
-    Route::post('/register','Auth\AuthController@postRegister');
-    // Protected with APIToken Middleware
-    Route::middleware('api.token')->group(function () {
-        // Logout
-        Route::post('/logout','Auth\AuthController@postLogout');
-    });
-
-    Route::middleware('api.role:super-admin')->get('/user', function (Request $request) {
-        $user = \App\Models\User::first();
-        $user->revoke();
-    });
+        Route::middleware('api.role:super-admin')->get('/user', function (Request $request) {
+            $user = \App\Models\User::first();
+            $user->revoke();
+        });
 
 
-    Route::namespace('WePlan')->middleware("api.token")->group(function () {
-        Route::apiResource('activities','WeActivitiesAPI');
+        Route::namespace('WePlan')->middleware("api.token")->group(function () {
+            Route::apiResource('activities','WeActivitiesAPI');
+            Route::get('/activities/get/{date?}','WeActivitiesAPI@get')->name("activities.get");
+        });
     });
 });
 
