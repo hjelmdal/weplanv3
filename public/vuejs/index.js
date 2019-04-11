@@ -19716,6 +19716,7 @@ new Vue({
         _this.activities = response.data.data;
         _this.days = [];
         _this.start_date = response.data.start_date;
+        _this.end_date = response.data.end_date;
         var last_start_date;
         response.data.data.forEach(function (event) {
           if (event.start_date === last_start_date) {

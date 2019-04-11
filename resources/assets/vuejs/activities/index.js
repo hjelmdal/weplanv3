@@ -73,6 +73,7 @@ new Vue({
                 this.activities = response.data.data;
                 this.days = [];
                 this.start_date = response.data.start_date;
+                this.end_date = response.data.end_date;
 
                 let last_start_date;
                 response.data.data.forEach(event => {

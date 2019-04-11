@@ -47,7 +47,8 @@ class WeActivitiesAPI extends Controller
         $next_week_url = route("api.v1.activities.get",["date" => date("Y-m-d",$weektime+604800)]);
         $prev_week_url = route("api.v1.activities.get",["date" => date("Y-m-d",$weektime-604800)]);
         $start_date = $dateObj->format("Y-m-d");
-        return response()->json(array("data" => $data, "total" => 100, "to" => 4, "from" => 0,"this_week_url" => $this_week_url, "next_week_url" => $next_week_url, "prev_week_url" => $prev_week_url, "start_date" => $start_date));
+        $end_date = $dateObj->modify("+6 days")->format("Y-m-d");
+        return response()->json(array("data" => $data, "total" => 100, "to" => 4, "from" => 0,"this_week_url" => $this_week_url, "next_week_url" => $next_week_url, "prev_week_url" => $prev_week_url, "start_date" => $start_date, "end_date" => $end_date));
         //$activities = WeActivity::paginate(4);
         //$activities->load("");
 
