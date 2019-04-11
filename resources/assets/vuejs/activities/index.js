@@ -22,6 +22,8 @@ new Vue({
         next: 0,
         prev: 0,
         start_date: 0,
+        end_date:0,
+        days:[],
         to: 0,
         from: 0,
         total: 0,
