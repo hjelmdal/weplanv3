@@ -18,7 +18,7 @@ class ActivitiesController extends Controller
     {
         $activities = new WeActivitiesAPI();
         $activities = $activities->index();
-        return view("app.activities.index", ["activities" => $activities ]);
+        return view("app.activities.index2", ["activities" => $activities ]);
     }
 
     /**

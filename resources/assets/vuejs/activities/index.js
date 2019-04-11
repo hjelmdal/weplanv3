@@ -15,11 +15,13 @@ Vue.filter('formatDate', function(value,format = "YYYY-MM-DD") {
 new Vue({
     el: '#app',
 
+
     data:  {
         activities: [],
-        url : '/api/v1/activities/get/2019-04-04',
+        url : '/api/v1/activities/get/' + moment().format("YYYY-MM-DD"),
         next: 0,
         prev: 0,
+        start_date: 0,
         to: 0,
         from: 0,
         total: 0,
@@ -70,6 +72,7 @@ new Vue({
                 this.total = response.data.total;
                 this.activities = response.data.data;
                 this.days = [];
+                this.start_date = response.data.start_date;
 
                 let last_start_date;
                 response.data.data.forEach(event => {

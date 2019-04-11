@@ -25,10 +25,15 @@ class WeActivitiesAPI extends Controller
         if($date == null) {
             $date = date("Y-m-d");
         }
+        $dateObj = new \DateTime($date);
+        $dayOfWeek = $dateObj->format("w");
+        if($dayOfWeek == 1) {
+            $dateObj->modify('This Monday');
+        } else {
+            $dateObj->modify('Last Monday');
+        }
 
-        $date = new \DateTime($date);
-        $date->modify('This Monday');
-        $date = $date->format("Y-m-d");
+        $date = $dateObj->format("Y-m-d");
         $weektime = strtotime($date);
         $greater = date("Y-m-d",$weektime);
         $less = date("Y-m-d",$weektime + 604800);
@@ -41,7 +46,8 @@ class WeActivitiesAPI extends Controller
         $this_week_url = route("api.v1.activities.get",["date" => date("Y-m-d",$weektime)]);
         $next_week_url = route("api.v1.activities.get",["date" => date("Y-m-d",$weektime+604800)]);
         $prev_week_url = route("api.v1.activities.get",["date" => date("Y-m-d",$weektime-604800)]);
-        return response()->json(array("data" => $data, "total" => 100, "to" => 4, "from" => 0,"this_week_url" => $this_week_url, "next_week_url" => $next_week_url, "prev_week_url" => $prev_week_url));
+        $start_date = $dateObj->format("Y-m-d");
+        return response()->json(array("data" => $data, "total" => 100, "to" => 4, "from" => 0,"this_week_url" => $this_week_url, "next_week_url" => $next_week_url, "prev_week_url" => $prev_week_url, "start_date" => $start_date));
         //$activities = WeActivity::paginate(4);
         //$activities->load("");
 

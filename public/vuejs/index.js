@@ -19653,9 +19653,10 @@ new Vue({
   el: '#app',
   data: {
     activities: [],
-    url: '/api/v1/activities/get/2019-04-04',
+    url: '/api/v1/activities/get/' + moment__WEBPACK_IMPORTED_MODULE_1___default()().format("YYYY-MM-DD"),
     next: 0,
     prev: 0,
+    start_date: 0,
     to: 0,
     from: 0,
     total: 0,
@@ -19714,6 +19715,7 @@ new Vue({
         _this.total = response.data.total;
         _this.activities = response.data.data;
         _this.days = [];
+        _this.start_date = response.data.start_date;
         var last_start_date;
         response.data.data.forEach(function (event) {
           if (event.start_date === last_start_date) {
