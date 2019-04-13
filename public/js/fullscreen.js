@@ -109,7 +109,7 @@
       // if you want all links, use if('href' in curnode) instead.
 
 
-      if ('href' in curnode && (curnode.href.indexOf('http') || ~curnode.href.indexOf(location.host))) {
+      if ('href' in curnode && !curnode.getAttribute("data-toggle") && !curnode.getAttribute("data-target") && (curnode.href.indexOf('http') || ~curnode.href.indexOf(location.host))) {
         e.preventDefault();
         location.href = curnode.href;
       }
