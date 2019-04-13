@@ -120,12 +120,138 @@
     .item:nth-child(even)  {
         background-color: #eee;
     }
+
+
+    .test1 {
+        position:relative;
+        display:inline;
+        float:left !important;
+        width:80px;
+    }
+    .test2 {
+        position:relative;
+        display:inline;
+        float:left !important;
+        width: calc(100% - 100px);
+        margin:1rem;
+    }
+
+    .div-row {
+        display:flex;
+        flex-direction:row;
+
+    }
+    .div-row:nth-child(even)  {
+        background-color: #eee;
+    }
+    .div-test {
+        flex: 1 1 auto;
+    }
+    .row-column {
+        position: relative;
+        display:flex;
+        flex-direction:column;
+        text-overflow: ellipsis;
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+    .div-text {
+        font-weight: 500;
+        font-size: 1.1rem;
+        color: #3e4466;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 1 1 auto;
+        min-width: 0;
+        margin: 0 0 0 0.5rem;
+        padding: 0 0 0 0.5rem;
+    }
+    .row-column::before {
+        position: absolute;
+        display: block;
+        width: 0.2rem;
+        height: 100%;
+        top: 0.3rem;
+        left:0rem;
+        height: calc(100% - 0.8rem);
+        content: "";
+        border-radius: 0.2rem;
+        background: #645ca1;
+    }
+
+    .div-time {
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: #a1a8c3;
+        margin: 0 0 0 0.5rem;
+        padding: 0 0 0 0.5rem;
+    }
+
+    .div-right {
+        flex: 0 0 auto;
+        margin-left:auto;
+
+    }
+
+    .div-date {
+        flex: 0 0 auto;
+        margin-right:auto;
+
+    }
+
+    .card1 {
+        padding: 0px;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid #ebedf2;
+        border-radius: .25rem;
+        display: flex;
+    }
+
     </style>
 @endsection
 @section("content")
-<div id="app">
-    <button id="btnPrev" :disabled="from == 1" class="btn btn-warning" type="button" v-on:click="activitiesLoad('prev')">Prev</button>
-    <button id="btnNext" :disabled="to == total" class="btn btn-success" type="button" v-on:click="activitiesLoad('next')">Next</button>
+    <template v-for="day in days">
+        <div class="col-12 card1  kt-margin-b-20">
+        <div class="test1">
+            <div class="div-date">
+                <div class="p8-date">
+                    <div class="p8-date-mon">@{{day.date | formatDate("MMM")}}</div>
+                    <div class="p8-date-num">@{{day.date | formatDate("DD")}}</div>
+                    <div class="p8-date-day">@{{day.date | formatDate("ddd")}}</div>
+
+                </div>
+            </div>
+        </div>
+        <div class="test2">
+            <template v-for="activity in day.events">
+            <div class="div-row">
+                <div class="row-column">
+                    <a data-toggle="modal" data-target="#modal1" :href="'{{ route("activities") }}/'+activity.id" class="div-text">@{{ activity.title }}</a>
+                    <div class="div-time">@{{ activity.start | formatTime("HH:mm") }} - @{{ activity.end | formatTime("HH:mm") }}</div>
+                </div>
+                <div class="div-right"><a data-toggle="modal" data-target="#modal1" :href="'{{ route("activities") }}/'+activity.id" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">
+                        <i class="la la-edit"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Delete">
+                        <i class="la la-trash"></i>
+                    </a></div>
+            </div>
+
+
+            </template>
+        </div>
+
+        </div>
+        <div class="clearfix"></div>
+    </template>
+
+
+
+
+        <!--button id="btnPrev" :disabled="from == 1" class="btn btn-warning" type="button" v-on:click="activitiesLoad('prev')">Prev</button>
+        <button id="btnNext" :disabled="to == total" class="btn btn-success" type="button" v-on:click="activitiesLoad('next')">Next</button-->
     <div class="card kt-margin-b-20">
         <div class="col-12 kt-margin-0 kt-padding-0">
             <div class="p8-left">
@@ -269,7 +395,7 @@
         </div>
         <!--end::Form-->
     </div>
-</div>
+
 @endsection
 @section("modal")
     @include("layouts.theme.blocks.modal1")

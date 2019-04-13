@@ -13,7 +13,7 @@ Vue.filter('formatDate', function(value,format = "YYYY-MM-DD") {
 });
 
 new Vue({
-    el: '#app',
+    el: '#vuejs',
 
 
     data:  {

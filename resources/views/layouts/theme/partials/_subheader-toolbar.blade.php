@@ -1,7 +1,9 @@
 <!-- begin:: Sub-header toolbar -->
 <div class="kt-subheader__toolbar">
     <div class="kt-subheader__toolbar-wrapper">
-        <a href="#" class="btn btn-default btn-sm btn-bold btn-upper">Create</a><a href="#" class="btn btn-default btn-sm btn-bold btn-upper">Update</a><a href="#" class="btn btn-default btn-sm btn-bold btn-upper">Settings</a>
+        <a id="btnPrev" href="#" class="btn btn-default btn-sm btn-bold btn-upper" v-on:click="activitiesLoad('prev')">Prev</a>
+        <a id="btnNext" href="#" class="btn btn-default btn-sm btn-bold btn-upper" v-on:click="activitiesLoad('next')">Next</a>
+        <a href="#" class="btn btn-default btn-sm btn-bold btn-upper">Settings</a>
         <div class="dropdown dropdown-inline" data-toggle="kt-tooltip" title="Quick actions" data-placement="top">
             <a href="#" class="btn btn-icon btn btn-label btn-label-brand btn-bold" data-toggle="dropdown" data-offset="0 5px" aria-haspopup="true" aria-expanded="false"> <i class="flaticon2-add-1"></i> </a>
             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right dropdown-menu-anim">
