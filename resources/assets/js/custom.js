@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-
     $('#link_facebook').click(function () {
         var btn = $(this);
         btn.addClass('kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light');

@@ -97,6 +97,18 @@
   // prevents links from apps from oppening in mobile safari
   // this javascript must be the first script in your <head>
   if (standalone in navigator && navigator[standalone]) {
+    // Remember state for x minutes
+    var date = new Date();
+
+    if (!window.sessionStorage.getItem('urlState') && window.localStorage.getItem('urlState') && window.localStorage.getItem('urlTime') > date.getTime() - 360000) {
+      location.href = window.localStorage.getItem('urlState');
+    }
+
+    window.sessionStorage.setItem('urlState', window.location.href);
+    window.localStorage.setItem('urlState', window.location.href);
+    window.localStorage.setItem('test', window.localStorage.getItem('urlTime') - (date.getTime() - 60 * 60000));
+    var timestamp = date.getTime();
+    window.localStorage.setItem('urlTime', timestamp);
     var curnode,
         location = document.location,
         stop = /^(a|html)$/i;
