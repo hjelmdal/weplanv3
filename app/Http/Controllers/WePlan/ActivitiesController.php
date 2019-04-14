@@ -16,9 +16,9 @@ class ActivitiesController extends Controller
      */
     public function index()
     {
-        $activities = new WeActivitiesAPI();
-        $activities = $activities->index();
-        return view("app.activities.index2", ["activities" => $activities ]);
+        //$activities = new WeActivitiesAPI();
+        //$activities = $activities->index();
+        return view("app.activities.index2");
     }
 
     /**
