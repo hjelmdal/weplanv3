@@ -35,7 +35,7 @@
     .p8-date {
         position: relative;
         margin: 1rem 0rem 1rem 0rem;
-        width: 80px;
+        width: 70px;
         display: block;
         border-right: 1px solid #ccc;
     }
@@ -122,18 +122,18 @@
     }
 
 
-    .test1 {
+    .flex-left {
         position:relative;
         display:inline;
         float:left !important;
         width:80px;
     }
-    .test2 {
+    .flex-right {
         position:relative;
         display:inline;
         float:left !important;
         width: calc(100% - 100px);
-        margin:1rem;
+        margin:1rem 1rem 1rem 0.3rem;
     }
 
     .div-row {
@@ -170,15 +170,48 @@
     .row-column::before {
         position: absolute;
         display: block;
-        width: 0.2rem;
+        width: 0.25rem;
         height: 100%;
         top: 0.3rem;
         left:0rem;
         height: calc(100% - 0.8rem);
         content: "";
         border-radius: 0.2rem;
-        background: #645ca1;
+        background: #385aeb;
     }
+
+    .bef-brand::before {
+        background: #385aeb;
+    }
+
+    .bef-metal::before {
+        background: #c4c5d6;
+    }
+    .bef-light::before {
+        background: #ffffff;
+    }
+    .bef-accent::before {
+        background: #00c5dc;
+    }
+    .bef-primary::before {
+        background: #5867dd;
+    }
+    .bef-success::before {
+        background: #34bfa3;
+    }
+    .bef-info::before {
+        background: #36a3f7;
+    }
+    .bef-warning::before {
+        background: #ffb822;
+    }
+    .bef-danger::before {
+        background: #fd3995;
+    }
+    .bef-focus::before {
+        background: #9816f4;
+    }
+
 
     .div-time {
         font-weight: 500;
@@ -214,7 +247,7 @@
 @section("content")
     <template v-for="day in days">
         <div class="col-12 card1  kt-margin-b-20">
-        <div class="test1">
+        <div class="flex-left">
             <div class="div-date">
                 <div class="p8-date">
                     <div class="p8-date-mon">@{{day.date | formatDate("MMM")}}</div>
@@ -224,10 +257,10 @@
                 </div>
             </div>
         </div>
-        <div class="test2">
+        <div class="flex-right">
             <template v-for="activity in day.events">
             <div class="div-row">
-                <div class="row-column">
+                <div class="row-column" v-bind:class="{'bef-success':(activity.type_id == 0), 'bef-warning':(activity.type_id == 1), 'bef-danger':(activity.type_id == 2), 'bef-info':(activity.type_id == 3), 'bef-dark':(activity.type_id == 4)}">
                     <a data-toggle="modal" data-target="#modal1" :href="'{{ route("activities") }}/'+activity.id" class="div-text">@{{ activity.title }}</a>
                     <div class="div-time">@{{ activity.start | formatTime("HH:mm") }} - @{{ activity.end | formatTime("HH:mm") }}</div>
                 </div>
