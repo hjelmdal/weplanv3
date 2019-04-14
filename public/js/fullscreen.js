@@ -101,7 +101,8 @@
     var date = new Date();
 
     if (!window.sessionStorage.getItem('urlState') && window.localStorage.getItem('urlState') && window.localStorage.getItem('urlTime') > date.getTime() - 360000) {
-      location.href = window.localStorage.getItem('urlState');
+      e.preventDefault();
+      self.location = window.localStorage.getItem('urlState');
     }
 
     window.sessionStorage.setItem('urlState', window.location.href);
