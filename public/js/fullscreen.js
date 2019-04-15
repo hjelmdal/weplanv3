@@ -94,37 +94,33 @@
 /***/ (function(module, exports) {
 
 (function (document, navigator, standalone) {
-  // prevents links from apps from oppening in mobile safari
-  // this javascript must be the first script in your <head>
   if (standalone in navigator && navigator[standalone]) {
-    // Remember state for x minutes
-    var date = new Date();
+    var insideApp = sessionStorage.getItem('insideApp'),
+        location = window.location,
+        stop = /^(a|html)$/i;
 
-    if (!window.sessionStorage.getItem('urlState') && window.localStorage.getItem('urlState') && window.localStorage.getItem('urlTime') > date.getTime() - 360000) {
-      e.preventDefault();
-      self.location = window.localStorage.getItem('urlState');
+    if (insideApp) {
+      localStorage.setItem('returnToPage', location);
+    } else {
+      var returnToPage = localStorage.getItem('returnToPage');
+
+      if (returnToPage) {
+        window.location = returnToPage;
+      }
+
+      sessionStorage.setItem('insideApp', true);
     }
 
-    window.sessionStorage.setItem('urlState', window.location.href);
-    window.localStorage.setItem('urlState', window.location.href);
-    window.localStorage.setItem('test', window.localStorage.getItem('urlTime') - (date.getTime() - 60 * 60000));
-    var timestamp = date.getTime();
-    window.localStorage.setItem('urlTime', timestamp);
-    var curnode,
-        location = document.location,
-        stop = /^(a|html)$/i;
-    document.addEventListener('click', function (e) {
-      curnode = e.target;
+    document.addEventListener('click', function (event) {
+      var clickedLink = event.target;
 
-      while (!stop.test(curnode.nodeName)) {
-        curnode = curnode.parentNode;
-      } // Condidions to do this only on links to your own app
-      // if you want all links, use if('href' in curnode) instead.
+      while (!stop.test(clickedLink.nodeName)) {
+        clickedLink = clickedLink.parentNode;
+      }
 
-
-      if ('href' in curnode && !curnode.getAttribute("data-toggle") && !curnode.getAttribute("data-target") && (curnode.href.indexOf('http') || ~curnode.href.indexOf(location.host))) {
-        e.preventDefault();
-        location.href = curnode.href;
+      if ('href' in clickedLink && (clickedLink.href.indexOf('http') || ~clickedLink.href.indexOf(location.host))) {
+        event.preventDefault();
+        location.href = clickedLink.href;
       }
     }, false);
   }
