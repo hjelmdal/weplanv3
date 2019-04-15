@@ -6,7 +6,7 @@
         } else {
             var returnToPage = localStorage.getItem('returnToPage');
             if ( returnToPage ) {
-                window.location = returnToPage;
+                self.location = returnToPage;
             }
             sessionStorage.setItem('insideApp', true);
         }
