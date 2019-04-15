@@ -101,10 +101,23 @@
 
     if (insideApp) {
       localStorage.setItem('returnToPage', location);
+      localStorage.setItem('sessionTime', new Date().getTime());
     } else {
       var returnToPage = localStorage.getItem('returnToPage');
+      var sessionTime = localStorage.getItem('sessionTime');
+      var isValid = false;
 
-      if (returnToPage) {
+      if (sessionTime) {
+        var time = new Date() - sessionTime;
+        var timeout = 60 * 60 * 1000;
+        /* ms */
+
+        if (time < timeout) {
+          isValid = true;
+        }
+      }
+
+      if (returnToPage && isValid) {
         location.href = returnToPage;
       }
 
