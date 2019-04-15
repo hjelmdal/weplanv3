@@ -105,7 +105,7 @@
       var returnToPage = localStorage.getItem('returnToPage');
 
       if (returnToPage) {
-        window.location = returnToPage;
+        location.href = returnToPage;
       }
 
       sessionStorage.setItem('insideApp', true);
@@ -118,7 +118,7 @@
         clickedLink = clickedLink.parentNode;
       }
 
-      if ('href' in clickedLink && (clickedLink.href.indexOf('http') || ~clickedLink.href.indexOf(location.host))) {
+      if ('href' in clickedLink && !clickedLink.getAttribute("data-toggle") && !clickedLink.getAttribute("data-target") && (clickedLink.href.indexOf('http') || ~clickedLink.href.indexOf(location.host))) {
         event.preventDefault();
         location.href = clickedLink.href;
       }
