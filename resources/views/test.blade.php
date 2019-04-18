@@ -282,9 +282,9 @@
             templates: t,
             language:'da',
             weekStart: 1,
-            startDate: new Date()
+            startDate: todayDate,
         });
-
+        var todayDate = new Date();
         $(".timeonly").datetimepicker({
             format: "hh:ii",
             showMeridian: false,
@@ -297,12 +297,14 @@
             todayHighlight: false,
             templates: t,
             language:'da',
+            startDate: todayDate,
         });
 
-        $("#startD").datetimepicker().on('changeDate', function(ev){
 
+
+        $("#startD").datetimepicker().on('changeDate', function(ev){
             var input = ev.date.valueOf();
-            var dateString = printDate(input,"date");
+            var dateString = printDate(input,"datetime");
             var recurEnd = printDate(input+604800000,"date");
 
 
@@ -323,6 +325,7 @@
         });
 
         $("#startT").datetimepicker().on('changeDate', function(ev){
+            validateResponseDate();
             $('#endD').datetimepicker('show');
         });
 
@@ -358,9 +361,10 @@
                 var valStart = new Date($('#startD').val()).valueOf();
                 //If earlier start date is set after end date is set
                 if(valStart > valEnd) {
-                    $('#endD').val(dateString);
+                    console.log("End date is illegal!");
+                    $('#endD').val(printDate(valStart,"date"));
                     $('#endD').datetimepicker('update');
-                    $('#endD').datetimepicker({ initialDate: dateString});
+                    $('#endD').datetimepicker({ initialDate: valStart});
                     $('#endD').datetimepicker('show');
                 }
             } else {
@@ -371,16 +375,21 @@
         function validateResponseDate() {
             $('#respD').datetimepicker('setEndDate', $('#startD').val());
             var responseDate = new Date($('#respD').val() + " " + $('#respT').val()).valueOf();
+            console.log("resp:" + responseDate);
             var startDate = new Date($('#startD').val() + " " + $('#startT').val()).valueOf();
+            console.log("start:" + startDate);
             if(responseDate > startDate) {
+                console.log("Response date is too late!");
                 $('#respD').val($('#startD').val());
                 $('#respT').val($('#startT').val());
+                $('#respD').datetimepicker('update');
+                $('#respT').datetimepicker('update');
                 console.log($('#startT').val());
             } else {
 
 
-                $('#respT').val($('#respD').val());
-                $('#respT').datetimepicker('update');
+                //$('#respT').val($('#respD').val());
+                //$('#respT').datetimepicker('update');
                 //Forcing to validate - it's ugly, I know :-(
                 $('#respT').datetimepicker('show');
                 $('#respT').datetimepicker('hide');
