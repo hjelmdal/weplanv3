@@ -245,6 +245,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
       message: 'Processing...',
       opacity: '0.3'
     });
+  }); // OffCanvas
+
+  $('.kt-offcanvas-panel__close').click(function () {
+    $(this).parent().parent().removeClass("kt-offcanvas-panel--on");
   }); // Modals
 
   $('body').on('click', '[data-toggle="modal"]', function (e) {

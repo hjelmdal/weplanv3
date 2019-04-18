@@ -11,7 +11,22 @@
 @section("scripts")
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
     <script src="{{ route("index") }}/vuejs/index.js?v={{ Helpers::gitVersion()->getVersion() }}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
 
+            var headerMenuOffcanvas = new KTOffcanvas('kt_offcanvas_01', {
+                overlay: true,
+                baseClass: 'kt-offcanvas-panel',
+                closeBy: 'kt_offcanvas_custom_close',
+                toggleBy: {
+                    target: 'testid',
+                    state: 'kt-header-mobile__toolbar-toggler--active'
+                }
+            });
+
+
+        });
+    </script>
 @endsection
 @section("styles")
     <style>
@@ -267,7 +282,7 @@
                 <div class="div-right"><a data-toggle="modal" data-target="#modal1" :href="'{{ route("activities") }}/'+activity.id" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">
                         <i class="la la-edit"></i>
                     </a>
-                    <a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Delete">
+                    <a href="#" v-on:click="loadOffCanvas(true)" class="btn btn-sm btn-clean btn-icon btn-icon-md kt_offcanvas_01" title="Delete">
                         <i class="la la-trash"></i>
                     </a></div>
             </div>
@@ -276,11 +291,13 @@
             </template>
         </div>
 
+
+
         </div>
         <div class="clearfix"></div>
     </template>
 
-
+    <a id="testid" class="kt_offcanvas_01">Test</a>
 
 
         <!--button id="btnPrev" :disabled="from == 1" class="btn btn-warning" type="button" v-on:click="activitiesLoad('prev')">Prev</button>

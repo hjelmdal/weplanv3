@@ -13,7 +13,7 @@
 @section('meta.title','Activities')
 
 
-@section('title','Teams')
+@section('title','Ny Aktivitet')
 
 @section('styles','')
 @section('scripts')
@@ -39,15 +39,15 @@
             });
 
             var t;
-            t = mUtil.isRTL() ? {
+            t = KTUtil.isRTL() ? {
                 leftArrow: '<i class="la la-angle-right"></i>',
                 rightArrow: '<i class="la la-angle-left"></i>'
             } : {
                 leftArrow: '<i class="la la-angle-left"></i>',
                 rightArrow: '<i class="la la-angle-right"></i>'
             };
-            $("#m_datepicker_1, #m_datepicker_1_validate").datepicker({
-                rtl: mUtil.isRTL(),
+            $("#kt_datepicker_1, #kt_datepicker_1_validate").datepicker({
+                rtl: KTUtil.isRTL(),
                 todayHighlight: !0,
                 orientation: "bottom left",
                 autoclose: true,
@@ -55,7 +55,7 @@
             });
             //Bootstrap select
 
-            $(".m_selectpicker").selectpicker();
+            $(".kt_selectpicker").selectpicker();
 
 
             $(".datetime").datetimepicker({
@@ -276,21 +276,21 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="m-portlet">
-                <div class="m-portlet__head">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-title">
-						<span class="m-portlet__head-icon">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-caption">
+                        <div class="kt-portlet__head-title">
+						<span class="kt-portlet__head-icon">
 							<i class="fa fa-users"></i>
 						</span>
-                            <h3 class="m-portlet__head-text">
+                            <h3 class="kt-portlet__head-text">
                                 Ny aktivitet
                             </h3>
                         </div>
                     </div>
-                    <div class="m-portlet__head-tools">
-                        <ul class="m-portlet__nav">
-                            <li class="m-portlet__nav-item">
+                    <div class="kt-portlet__head-tools">
+                        <ul class="kt-portlet__nav">
+                            <li class="kt-portlet__nav-item">
                                 <a href="{{ route("coach.activities.create") }}" data-target="#modal" data-toggle="modal" class="btn btn-success m-btn--icon">
 								<span>									<i class="fa fa-plus"></i>
 									<span>Tilføj</span>
@@ -300,18 +300,18 @@
                         </ul>
                     </div>
                 </div>
-                <form id="myform" class="m-form m-form--label-align-right" method="POST" action="{{ route("coach.activities.store") }}">
+                <form id="myform" class="kt-form kt-form--label-align-right" method="POST" action="{{ route("coach.activities.store") }}">
                     @csrf
-                    <div class="m-portlet__body">
+                    <div class="kt-portlet__body">
                         <!--begin::Section-->
-                        <div class="m-section m-form__section--first">
-                            <div class="m-form__heading">
-                                <h3 class="m-form__heading-title">Generel Info:</h3>
+                        <div class="kt-section kt-form__section--first">
+                            <div class="kt-form__heading">
+                                <h3 class="kt-form__heading-title">Generel Info:</h3>
                             </div>
-                            <div class="form-group m-form__group row">
+                            <div class="form-group kt-form__group row">
                                 <label class="col-form-label col-lg-3 col-sm-12">Aktivitetstype</label>
                                 <div class="col-lg-6 col-md-9 col-sm-12">
-                                    <select class="form-control m-bootstrap-select m_selectpicker" name="type_id">
+                                    <select class="form-control m-bootstrap-select kt_selectpicker" name="type_id">
                                         <option value="" <?php if (empty($opt_type)) echo 'selected'; ?>>
                                             - <?= __('Vælg en type'); ?> -
                                         </option>
@@ -325,28 +325,28 @@
                             </div>
 
                             <!-- Title -->
-                            <div class="form-group m-form__group row">
+                            <div class="form-group kt-form__group row">
                                 <label class="col-lg-3 col-form-label">Titel</label>
                                 <div class="col-lg-6 col-md-9 col-sm-12">
-                                    <input name="title" type="text" class="form-control m-input" placeholder="Aktivitetens titel" required>
-                                    <span class="m-form__help">Skriv en titel til aktiviteten</span>
+                                    <input name="title" type="text" class="form-control kt-input" placeholder="Aktivitetens titel" required>
+                                    <span class="kt-form__help">Skriv en titel til aktiviteten</span>
                                 </div>
                             </div>
                             <!-- Description -->
-                            <div class="form-group m-form__group row">
+                            <div class="form-group kt-form__group row">
                                 <label class="col-lg-3 col-form-label">Beskrivelse</label>
                                 <div class="col-lg-6 col-md-9 col-sm-12">
-                                    <textarea name="info" class="form-control m-input" placeholder="Aktivitetens titel" rows="3"></textarea>
-                                    <span class="m-form__help">Skriv en beskrivelse til aktiviteten</span>
+                                    <textarea name="info" class="form-control kt-input" placeholder="Aktivitetens titel" rows="3"></textarea>
+                                    <span class="kt-form__help">Skriv en beskrivelse til aktiviteten</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Groups -->
-                        <div class="form-group m-form__group row">
+                        <div class="form-group kt-form__group row">
                             <label class="col-form-label col-lg-3 col-sm-12">Multiple Select</label>
                             <div class="col-lg-4 col-md-9 col-sm-12">
-                                <select name="group_ids[]" class="form-control m-bootstrap-select m_selectpicker" multiple>
+                                <select name="group_ids[]" class="form-control m-bootstrap-select kt_selectpicker" multiple>
                                     <option value="1">Mustard</option>
                                     <option value="2">Ketchup</option>
                                     <option value="3">Relish</option>
@@ -354,25 +354,25 @@
                             </div>
                         </div>
 
-                        <div class="m-form__seperator m-form__seperator--dashed"></div>
+                        <div class="kt-form__seperator kt-form__seperator--dashed"></div>
 
                         <!-- Date and time -->
-                        <div class="form-group m-form__group row">
+                        <div class="form-group kt-form__group row">
                             <div class="col-sm-4 col-md-3 col-lg-2 offset-lg-3 m-col" style="border-right: 1px dashed #ebedf2;">
                                 <label>Startdato</label>
 
-                                <div class="m-input-icon m-input-icon--right m--margin-bottom-10">
-                                    <input name="start_date" id="startD" type="text" class="form-control m-input dateonly" placeholder="Dato" required>
-                                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <div class="kt-input-icon kt-input-icon--right kt--margin-bottom-10">
+                                    <input name="start_date" id="startD" type="text" class="form-control kt-input dateonly" placeholder="Dato" required>
+                                    <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-calendar glyphicon-th"></i>
                                         </span>
                                     </span>
                                 </div>
 
-                                <div class="m-input-icon m-input-icon--right">
-                                    <input name="start" id="startT" type="text" class="form-control m-input timeonly" placeholder="Tid" required>
-                                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <div class="kt-input-icon kt-input-icon--right">
+                                    <input name="start" id="startT" type="text" class="form-control kt-input timeonly" placeholder="Tid" required>
+                                    <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-clock-o glyphicon-th"></i>
                                         </span>
@@ -382,18 +382,18 @@
 
                             <div class="col-sm-4 col-md-3 col-lg-2" style="border-right: 1px dashed #ebedf2;">
                                 <label>Slutdato</label>
-                                <div class="m-input-icon m-input-icon--right m--margin-bottom-10">
-                                    <input name="end_date" id="endD" type="text" class="form-control m-input dateonly" placeholder="Dato" required>
-                                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <div class="kt-input-icon kt-input-icon--right kt--margin-bottom-10">
+                                    <input name="end_date" id="endD" type="text" class="form-control kt-input dateonly" placeholder="Dato" required>
+                                    <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-calendar glyphicon-th"></i>
                                         </span>
                                     </span>
                                 </div>
 
-                                <div class="m-input-icon m-input-icon--right">
-                                    <input name="end" id="endT" type="text" class="form-control m-input timeonly" placeholder="Tid" required>
-                                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <div class="kt-input-icon kt-input-icon--right">
+                                    <input name="end" id="endT" type="text" class="form-control kt-input timeonly" placeholder="Tid" required>
+                                    <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-clock-o glyphicon-th"></i>
                                         </span>
@@ -402,17 +402,17 @@
                             </div>
                             <div class="col-sm-4 col-md-3 col-lg-2">
                                 <label>Sidste respons</label>
-                                <div class="m-input-icon m-input-icon--right m--margin-bottom-10">
-                                    <input name="response_date" id="respD" type="text" class="form-control m-input dateonly" placeholder="Dato" required>
-                                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <div class="kt-input-icon kt-input-icon--right kt--margin-bottom-10">
+                                    <input name="response_date" id="respD" type="text" class="form-control kt-input dateonly" placeholder="Dato" required>
+                                    <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-calendar glyphicon-th"></i>
                                         </span>
                                     </span>
                                 </div>
-                                <div class="m-input-icon m-input-icon--right">
-                                    <input name="response_time" id="respT" type="text" class="form-control m-input timeonly" placeholder="Tid" required>
-                                    <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <div class="kt-input-icon kt-input-icon--right">
+                                    <input name="response_time" id="respT" type="text" class="form-control kt-input timeonly" placeholder="Tid" required>
+                                    <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-clock-o glyphicon-th"></i>
                                         </span>
@@ -420,11 +420,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="m-form__seperator m-form__seperator--dashed"></div>
-                        <div class="form-group m-form__group row">
+                        <div class="kt-form__seperator kt-form__seperator--dashed"></div>
+                        <div class="form-group kt-form__group row">
                             <label class="col-form-label col-lg-3 col-sm-12">Gentag aktivitet?</label>
                             <div class="col-lg-6 col-md-9 col-sm-12">
-                                <span class="m-switch m-switch--icon">
+                                <span class="kt-switch kt-switch--icon">
                                 <label>
                                     <input data-id="recurring" class="showhide" type="checkbox" name="recur">
                                     <span></span>
@@ -433,41 +433,41 @@
                             </div>
                         </div>
                         <div id="recurring" style="display: none;">
-                            <div class="form-group m-form__group row">
+                            <div class="form-group kt-form__group row">
                                 <div class="col-lg-3 col-6 offset-lg-3" style="border-right: 1px dashed #ebedf2;">
-                                    <div class="m-checkbox-list">
+                                    <div class="kt-checkbox-list">
 
-                                        <label class="m-checkbox m-checkbox--state-primary">
+                                        <label class="kt-checkbox kt-checkbox--state-primary">
                                             <input id="day1" name="weekdays[]" type="checkbox" value="1"> Mandage
                                             <span></span>
                                         </label>
 
-                                        <label class="m-checkbox m-checkbox--state-primary">
+                                        <label class="kt-checkbox kt-checkbox--state-primary">
                                             <input id="day2" name="weekdays[]" type="checkbox" value="2"> Tirsdage
                                             <span></span>
                                         </label>
 
-                                        <label class="m-checkbox m-checkbox--state-primary">
+                                        <label class="kt-checkbox kt-checkbox--state-primary">
                                             <input id="day3" name="weekdays[]" type="checkbox" value="3"> Onsdage
                                             <span></span>
                                         </label>
 
-                                        <label class="m-checkbox m-checkbox--state-primary">
+                                        <label class="kt-checkbox kt-checkbox--state-primary">
                                             <input id="day4" name="weekdays[]" type="checkbox" value="4"> Torsdage
                                             <span></span>
                                         </label>
 
-                                        <label class="m-checkbox m-checkbox--state-primary">
+                                        <label class="kt-checkbox kt-checkbox--state-primary">
                                             <input id="day5" name="weekdays[]" type="checkbox" value="5"> Fredage
                                             <span></span>
                                         </label>
 
-                                        <label class="m-checkbox m-checkbox--state-primary">
+                                        <label class="kt-checkbox kt-checkbox--state-primary">
                                             <input id="day6" name="weekdays[]" type="checkbox" value="6"> L&oslash;rdage
                                             <span></span>
                                         </label>
 
-                                        <label class="m-checkbox m-checkbox--state-primary">
+                                        <label class="kt-checkbox kt-checkbox--state-primary">
                                             <input id="day0" name="weekdays[]" type="checkbox" value="7"> S&oslash;ndage
                                             <span></span>
                                         </label>
@@ -477,9 +477,9 @@
                                 <div class="col-lg-3 col-6">
                                     <label>Slutdato</label>
 
-                                    <div class="m-input-icon m-input-icon--right m--margin-bottom-10">
-                                        <input name="recur_end" id="recurD" type="text" class="form-control m-input dateonly" placeholder="Dato">
-                                        <span class="m-input-icon__icon m-input-icon__icon--right">
+                                    <div class="kt-input-icon kt-input-icon--right kt--margin-bottom-10">
+                                        <input name="recur_end" id="recurD" type="text" class="form-control kt-input dateonly" placeholder="Dato">
+                                        <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-calendar glyphicon-th"></i>
                                         </span>
@@ -497,8 +497,8 @@
 
                         <!--end::Section-->
                     </div>
-                    <div class="m-portlet__foot m-portlet__foot--fit">
-                        <div class="m-form__actions m-form__actions">
+                    <div class="kt-portlet__foot kt-portlet__foot--fit">
+                        <div class="kt-form__actions kt-form__actions">
                             <div class="row">
                                 <div class="col-lg-3"></div>
                                 <div class="col-lg-6">

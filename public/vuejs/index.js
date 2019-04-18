@@ -19676,6 +19676,27 @@ new Vue({
 
       return true;
     },
+    loadOffCanvas: function loadOffCanvas(bool) {
+      var headerMenuOffcanvas = new KTOffcanvas('kt_offcanvas_01', {
+        overlay: true,
+        baseClass: 'kt-offcanvas-panel',
+        closeBy: 'kt_offcanvas_custom_close',
+        toggleBy: {
+          target: 'testid',
+          state: 'kt-header-mobile__toolbar-toggler--active'
+        }
+      });
+
+      if (bool) {
+        var canvasBody = document.getElementById("kt_offcanvas_01_body");
+        $(canvasBody).load('/test');
+        headerMenuOffcanvas.show();
+      } else {
+        headerMenuOffcanvas.hide();
+      }
+
+      return true;
+    },
     activitiesLoad: function activitiesLoad(string) {
       var _this = this;
 
