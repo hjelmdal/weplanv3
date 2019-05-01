@@ -1,5 +1,4 @@
 <!-- begin:: Page -->
-<div id="vuejs" class="kt-grid kt-grid--hor kt-grid--root">
 @include("layouts.theme.partials._header-base-mobile")
 <div class="kt-grid kt-grid--hor kt-grid--root">
     <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
@@ -28,4 +27,3 @@
 @include("layouts.theme.partials._layout-scrolltop")
 {{--@include("layouts.theme.partials._layout-toolbar")--}}
 {{--@include("layouts.theme.partials._layout-demo-panel")--}}
-</div>

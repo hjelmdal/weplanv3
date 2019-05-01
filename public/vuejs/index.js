@@ -19650,7 +19650,7 @@ Vue.filter('formatDate', function (value) {
   }
 });
 new Vue({
-  el: '#vuejs',
+  el: '#kt_body',
   data: {
     activities: [],
     url: '/api/v1/activities/get/' + moment__WEBPACK_IMPORTED_MODULE_1___default()().format("YYYY-MM-DD"),

@@ -15,7 +15,74 @@
 
 @section('title','Ny Aktivitet')
 
-@section('styles','')
+@section('styles')
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+ * element that contains the map. */
+        #map {
+            height: 200px;
+        }
+
+
+
+        #infowindow-content .title {
+            font-weight: bold;
+        }
+
+        #infowindow-content {
+            display: none;
+        }
+
+        #map #infowindow-content {
+            display: inline;
+        }
+
+        .pac-card {
+            margin: 10px 10px 0 0;
+            border-radius: 2px 0 0 2px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            background-color: #fff;
+            font-family: Roboto;
+        }
+
+        #pac-container {
+            padding-bottom: 12px;
+            margin-right: 12px;
+        }
+
+        .pac-controls {
+            display: inline-block;
+            padding: 5px 11px;
+        }
+
+
+
+
+
+
+
+        #target {
+            width: 345px;
+        }
+
+        .pac-container {
+            background-color: #fff;
+            position: absolute!important;
+            z-index: 1999 !important;
+            border-radius: 2px;
+            border-top: 1px solid #d9d9d9;
+            font-family: Arial,sans-serif;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+    </style>
+@endsection
 @section('scripts')
     <script>
 
@@ -313,9 +380,90 @@
         }
 
 
+
+
+        function initAutocomplete() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 56.177857, lng: 10.209540},
+                zoom: 17,
+                mapTypeId: 'roadmap',
+                gestureHandling: 'cooperative',
+                streetViewControl: false,
+                mapTypeControl: false,
+            });
+
+            // Create the search box and link it to the UI element.
+            var input = document.getElementById('pac-input');
+            var searchBox = new google.maps.places.SearchBox(input);
+            //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+            // Bias the SearchBox results towards current map's viewport.
+            map.addListener('bounds_changed', function() {
+                searchBox.setBounds(map.getBounds());
+            });
+
+            var markers = [];
+            // Listen for the event fired when the user selects a prediction and retrieve
+            // more details for that place.
+            searchBox.addListener('places_changed', function() {
+                var places = searchBox.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+
+                // Clear out the old markers.
+                markers.forEach(function(marker) {
+                    marker.setMap(null);
+                });
+                markers = [];
+
+                // For each place, get the icon, name and location.
+                var bounds = new google.maps.LatLngBounds();
+                places.forEach(function(place) {
+                    if (!place.geometry) {
+                        console.log("Returned place contains no geometry");
+                        return;
+                    }
+                    var icon = {
+                        url: place.icon,
+                        size: new google.maps.Size(71, 71),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(17, 34),
+                        scaledSize: new google.maps.Size(25, 25)
+                    };
+
+                    // Create a marker for each place.
+                    markers.push(new google.maps.Marker({
+                        map: map,
+                        icon: icon,
+                        title: place.name,
+                        position: place.geometry.location
+                    }));
+
+                    if (place.geometry.viewport) {
+                        // Only geocodes have viewport.
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+                });
+                map.fitBounds(bounds);
+            });
+
+
+        }
         $("#myform").validate();
+        $('#myform').on('keyup keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
 
     </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDB1bTnXXhAUuNGyP-M0oHhaYTZfPrChek&callback=initAutocomplete&libraries=places" async defer></script>
 @endsection
 @section("content")
 
@@ -339,7 +487,7 @@
             <div class="form-group kt-form__group row">
                 <label class="col-form-label col-lg-3 col-sm-12">Aktivitetstype</label>
                 <div class="col-lg-6 col-md-9 col-sm-12">
-                    <select class="form-control m-bootstrap-select kt_selectpicker" name="type_id">
+                    <select class="form-control kt-bootstrap-select kt_selectpicker" name="type_id" required>
                         <option value="" <?php if (empty($opt_type)) echo 'selected'; ?>>
                             - <?= __('Vælg en type'); ?> -
                         </option>
@@ -364,12 +512,27 @@
             <div class="form-group kt-form__group row">
                 <label class="col-lg-3 col-form-label">Beskrivelse</label>
                 <div class="col-lg-6 col-md-9 col-sm-12">
-                    <textarea name="info" class="form-control kt-input" placeholder="Aktivitetens titel" rows="3"></textarea>
+                    <textarea name="info" class="form-control kt-input" placeholder="Aktivitetens beskrivelse" rows="3"></textarea>
                     <span class="kt-form__help">Skriv en beskrivelse til aktiviteten</span>
                 </div>
             </div>
         </div>
 
+        <!-- Map -->
+        <div class="form-group kt-form__group row">
+            <label class="col-form-label col-lg-3 col-sm-12">Sted</label>
+
+            <div class="col-lg-6 col-md-9 col-sm-12">
+                <input class="form-control kt-input" id="pac-input" autocomplete="true" type="text" placeholder="Skovbakken Badminton">
+                <span class="kt-form__help">Skriv adresse på eventen</span>
+
+                </div>
+        </div>
+        <div class="form-group kt-form__group row">
+            <div class="col-lg-6 col-md-9 col-sm-12 offset-lg-3">
+                <div id="map"></div>
+            </div>
+        </div>
         <!-- Groups -->
         <div class="form-group kt-form__group row">
             <label class="col-form-label col-lg-3 col-sm-12">Multiple Select</label>
@@ -460,7 +623,7 @@
                                 </span>
             </div>
         </div>
-        <div id="recurring" style="display: block;">
+        <div id="recurring" style="display: none;">
             <div class="form-group kt-form__group row">
                 <div class="col-lg-3 col-6 offset-lg-3" style="border-right: 1px dashed #ebedf2;">
                     <div class="kt-checkbox-list">
@@ -530,7 +693,7 @@
             <div class="row">
                 <div class="col-lg-3"></div>
                 <div class="col-lg-6">
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button id="formsubmit" type="submit" class="btn btn-success">Submit</button>
                     <button id="clickme" type="reset" class="btn btn-secondary">Cancel</button>
                 </div>
             </div>
