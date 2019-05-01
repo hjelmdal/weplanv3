@@ -4,6 +4,7 @@ namespace App\Http\Controllers\WePlan;
 
 use App\Http\Controllers\API\WePlan\WeActivitiesAPI;
 use App\Models\WePlan\WeActivity;
+use App\Models\WePlan\WeActivityType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -28,7 +29,8 @@ class ActivitiesController extends Controller
      */
     public function create()
     {
-        //
+        $types = WeActivityType::all();
+        return view("app.activities.create",["types" => $types]);
     }
 
     /**

@@ -11,22 +11,7 @@
 @section("scripts")
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
     <script src="{{ route("index") }}/vuejs/index.js?v={{ Helpers::gitVersion()->getVersion() }}"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
 
-            var headerMenuOffcanvas = new KTOffcanvas('kt_offcanvas_01', {
-                overlay: true,
-                baseClass: 'kt-offcanvas-panel',
-                closeBy: 'kt_offcanvas_custom_close',
-                toggleBy: {
-                    target: 'testid',
-                    state: 'kt-header-mobile__toolbar-toggler--active'
-                }
-            });
-
-
-        });
-    </script>
 @endsection
 @section("styles")
     <style>
@@ -260,6 +245,24 @@
     </style>
 @endsection
 @section("content")
+
+    <div class="row">
+        <div class="col-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__body">
+                    <div class="kt-section__content kt-section__content--border">
+                    <a href="{{ route("activities.create") }}" data-target="#modal1" data-toggle="modal" class="btn btn-success kt-btn--icon">
+                        <span>
+                            <i class="fa fa-plus"></i>
+                            <span>Tilføj</span>
+                        </span>
+                    </a>
+                    <button type="button" class="btn btn-primary"><i class="fa fa-dollar-sign"></i> Primary</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <template v-for="day in days">
         <div class="col-12 card1  kt-margin-b-20">
         <div class="flex-left">
@@ -297,7 +300,7 @@
         <div class="clearfix"></div>
     </template>
 
-    <a id="testid" class="kt_offcanvas_01">Test</a>
+
 
 
         <!--button id="btnPrev" :disabled="from == 1" class="btn btn-warning" type="button" v-on:click="activitiesLoad('prev')">Prev</button>

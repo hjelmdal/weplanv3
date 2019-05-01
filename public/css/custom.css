@@ -126,6 +126,11 @@ body::before {
   cursor: not-allowed;
 }
 
+.datetimepicker tbody tr > td.day.selected,
+.datetimepicker tbody tr > td.day.active {
+  background: #1dc9b7;
+}
+
 #kt_offcanvas_01.kt-offcanvas-panel {
   right: calc(-100vw - 20px);
   width: calc(100vw - 20px) !important;

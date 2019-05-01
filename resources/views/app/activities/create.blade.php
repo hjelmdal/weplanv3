@@ -6,7 +6,7 @@
  * Time: 22:53
  */
 ?>
-@extends("modal")
+@extends("layouts.theme.modal")
 
 @section('meta','')
 
@@ -18,7 +18,7 @@
 @section('styles','')
 @section('scripts')
     <script>
-        document.addEventListener("DOMContentLoaded", function(event) {
+
 
             $('.showhide').click(function () {
                 var id = "#" + $(this).attr("data-id");
@@ -109,24 +109,74 @@
                 var recurEnd = printDate(input+604800000,"date");
 
 
-                $('#startT').datetimepicker('setStartDate',dateString);
-                $('#respD').datetimepicker('setEndDate', dateString);
-                $('#endD').datetimepicker('setStartDate', dateString);
-                $('#recurD').datetimepicker('setStartDate', recurEnd);
-                validateEndDate();
-                validateRecurringDate();
-
-                //console.log("Changed to: "+ recurEnd);
-
-
-                validateResponseDate();
+                validateAllDates(input);
+                // $('#startT').datetimepicker('setStartDate',dateString);
+                // $('#respD').datetimepicker('setEndDate', dateString);
+                // $('#endD').datetimepicker('setStartDate', dateString);
+                // $('#recurD').datetimepicker('setStartDate', recurEnd);
+                // //validateEndDate();
+                // validateRecurringDate();
+                //
+                // //console.log("Changed to: "+ recurEnd);
+                //
+                //
+                // validateResponseDate();
 
 
 
             });
 
+            function validateAllDates(date) {
+                var input = date;
+                var dateString = printDate(input,"date");
+                var recurEnd = printDate(input+604800000,"date");
+                var startD = $('#startD').val();
+                var startT = $('#startT').val();
+                var endD = $('#endD').val();
+                var endT = $('#endT').val();
+                var respD = $('#respD').val();
+                var respT = $('#respT').val();
+                var recurD = $('#recurD').val();
+                if(startD) {
+                    $('#startT').datetimepicker('setStartDate',dateString);
+                    $('#respD').datetimepicker('setEndDate', dateString);
+                    $('#endD').datetimepicker('setStartDate', dateString);
+                    $('#recurD').datetimepicker('setStartDate', recurEnd);
+                    if(endD) {
+                        if(endD < startD) {
+                            $('#endD').val(dateString);
+                            $('#endD').datetimepicker('update');
+                            $('#endD').datetimepicker({ initialDate: dateString});
+                            $('#endT').val("");
+                            $('#endT').datetimepicker('update');
+                            $('#endD').datetimepicker('show');
+                        }
+                    } else {
+                        $("#endD").val(startD);
+                    }
+                }
+
+            }
+
+            $("#startD").datetimepicker().on('changeDate', function(ev){
+                if(!$('#startT').val()) {
+                    $('#startT').datetimepicker('show');
+                } else if(!$('#endD').val()) {
+                    $('#endD').datetimepicker('show');
+
+                } else if(!$('#endT').val()) {
+                    $('#endT').datetimepicker('show');
+
+                }
+
+            });
+
             $("#startT").datetimepicker().on('changeDate', function(ev){
-                $('#endD').datetimepicker('show');
+                if(!$('#startD').val()) {
+                    $('#startD').datetimepicker('show');
+                } else {
+                    $('#endD').datetimepicker('show');
+                }
             });
 
 
@@ -155,6 +205,8 @@
 
 
             });
+
+
             function validateEndDate() {
                 if($('#endD').val()) {
                     var valEnd = new Date($('#endD').val()).valueOf();
@@ -262,7 +314,7 @@
 
 
             $("#myform").validate();
-        });
+
     </script>
 @endsection
 @section("content")
@@ -274,35 +326,11 @@
 
 
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="kt-portlet">
-                <div class="kt-portlet__head">
-                    <div class="kt-portlet__head-caption">
-                        <div class="kt-portlet__head-title">
-						<span class="kt-portlet__head-icon">
-							<i class="fa fa-users"></i>
-						</span>
-                            <h3 class="kt-portlet__head-text">
-                                Ny aktivitet
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="kt-portlet__head-tools">
-                        <ul class="kt-portlet__nav">
-                            <li class="kt-portlet__nav-item">
-                                <a href="{{ route("coach.activities.create") }}" data-target="#modal" data-toggle="modal" class="btn btn-success m-btn--icon">
-								<span>									<i class="fa fa-plus"></i>
-									<span>Tilføj</span>
-								</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <form id="myform" class="kt-form kt-form--label-align-right" method="POST" action="{{ route("coach.activities.store") }}">
+
+
+                <form id="myform" class="kt-form kt-form--label-align-right" method="POST" action="{{ route("activities") }}">
                     @csrf
-                    <div class="kt-portlet__body">
+
                         <!--begin::Section-->
                         <div class="kt-section kt-form__section--first">
                             <div class="kt-form__heading">
@@ -362,7 +390,7 @@
                                 <label>Startdato</label>
 
                                 <div class="kt-input-icon kt-input-icon--right kt--margin-bottom-10">
-                                    <input name="start_date" id="startD" type="text" class="form-control kt-input dateonly" placeholder="Dato" required>
+                                    <input name="start_date" id="startD" type="text" class="form-control kt-input dateonly" autocomplete="off" placeholder="Dato" required >
                                     <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-calendar glyphicon-th"></i>
@@ -371,7 +399,7 @@
                                 </div>
 
                                 <div class="kt-input-icon kt-input-icon--right">
-                                    <input name="start" id="startT" type="text" class="form-control kt-input timeonly" placeholder="Tid" required>
+                                    <input name="start" id="startT" type="text" class="form-control kt-input timeonly" autocomplete="off" placeholder="Tid" required>
                                     <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-clock-o glyphicon-th"></i>
@@ -383,7 +411,7 @@
                             <div class="col-sm-4 col-md-3 col-lg-2" style="border-right: 1px dashed #ebedf2;">
                                 <label>Slutdato</label>
                                 <div class="kt-input-icon kt-input-icon--right kt--margin-bottom-10">
-                                    <input name="end_date" id="endD" type="text" class="form-control kt-input dateonly" placeholder="Dato" required>
+                                    <input name="end_date" id="endD" type="text" class="form-control kt-input dateonly" autocomplete="off" placeholder="Dato" required>
                                     <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-calendar glyphicon-th"></i>
@@ -392,7 +420,7 @@
                                 </div>
 
                                 <div class="kt-input-icon kt-input-icon--right">
-                                    <input name="end" id="endT" type="text" class="form-control kt-input timeonly" placeholder="Tid" required>
+                                    <input name="end" id="endT" type="text" class="form-control kt-input timeonly" autocomplete="off" placeholder="Tid" required>
                                     <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-clock-o glyphicon-th"></i>
@@ -401,9 +429,9 @@
                                 </div>
                             </div>
                             <div class="col-sm-4 col-md-3 col-lg-2">
-                                <label>Sidste respons</label>
+                                <label>Responstid</label>
                                 <div class="kt-input-icon kt-input-icon--right kt--margin-bottom-10">
-                                    <input name="response_date" id="respD" type="text" class="form-control kt-input dateonly" placeholder="Dato" required>
+                                    <input name="response_date" id="respD" type="text" class="form-control kt-input dateonly" autocomplete="off" placeholder="Dato" required>
                                     <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-calendar glyphicon-th"></i>
@@ -411,7 +439,7 @@
                                     </span>
                                 </div>
                                 <div class="kt-input-icon kt-input-icon--right">
-                                    <input name="response_time" id="respT" type="text" class="form-control kt-input timeonly" placeholder="Tid" required>
+                                    <input name="response_time" id="respT" type="text" class="form-control kt-input timeonly" autocomplete="off" placeholder="Tid" required>
                                     <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-clock-o glyphicon-th"></i>
@@ -496,8 +524,8 @@
 
 
                         <!--end::Section-->
-                    </div>
-                    <div class="kt-portlet__foot kt-portlet__foot--fit">
+
+
                         <div class="kt-form__actions kt-form__actions">
                             <div class="row">
                                 <div class="col-lg-3"></div>
@@ -507,10 +535,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+
                     <!--end::Form-->
                 </form>
-            </div>
-        </div>
-    </div>
+
 @endsection

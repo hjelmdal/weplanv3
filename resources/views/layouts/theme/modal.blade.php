@@ -10,7 +10,7 @@
 @yield("styles")
 <div class="modal-loading">
     @hasSection('form-action')
-        <form data-action="@yield("form-action")" data-callback="@yield("callback",$_SERVER['PHP_SELF'])" role="form" id="modalForm" @hasSection("refresh") data-refresh="@yield("refresh")" @endif @hasSection("modal-id") data-modal="@yield("modal-id")" @endif class="m-form" enctype="application/json" method="POST">
+        <form data-action="@yield("form-action")" data-callback="@yield("callback",$_SERVER['PHP_SELF'])" role="form" id="modalForm" @hasSection("refresh") data-refresh="@yield("refresh")" @endif @hasSection("modal-id") data-modal="@yield("modal-id")" @endif class="kt-form vue-form ajax-form" enctype="application/json" method="POST">
             @endif
             <div class="modal-header">
                 <h5 class="modal-title" id="modalTitle">@yield("title")</h5>
@@ -21,15 +21,15 @@
 
 
             <div class="modal-body">
-                <div id="scrollbox" class="m-scrollable" data-scrollbar-shown="true" data-scrollable="true" data-height="200">
+
                     @yield("content")
-                </div>
+
 
             </div>
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-default">@yield("close","Luk")</button>
                 @hasSection('form-action')
-                    <button id="modalSubmit" type="submit" class="btn @hasSection("submit-color") btn-@yield("submit-color")@else btn-primary @endif btn-submit">@yield("submit","OK")
+                    <button id="modalSubmit" type="submit" class="btn @hasSection("submit-color") btn-@yield("submit-color")@else btn-primary @endif btn-submit">@yield("submit","Gem")
                     </button>
                 @endif
             </div>
@@ -38,16 +38,22 @@
 @yield("scripts")
 @hasSection("form-action")
     <script>
+
+        //let submit = document.querySelector('.ajax-form').querySelector("submit");
+
         $(function() {
             function submitLoader(e) {
                 if(e == "on") {
-                    $("#modalForm #modalSubmit").prop("disabled", true).addClass("m-loader m-loader--right m-loader--light");
+                    $("#modalForm #modalSubmit").prop("disabled", true).addClass("kt-loader kt-loader--right kt-loader--light");
                 } else if(e == "off") {
-                    $("#modalForm #modalSubmit").prop("disabled", false).removeClass("m-loader m-loader--right m-loader--light");
+                    $("#modalForm #modalSubmit").prop("disabled", false).removeClass("kt-loader kt-loader--right kt-loader--light");
                 }
             }
-            $('#modalForm').submit(function (e) {
+
+
+            $('.ajax-form').submit(function (e) {
                 e.preventDefault();
+                console.log("haha");
                 var modal = "#modal";
                 if($(this).attr("data-modal")) {
                     modal = $(this).attr("data-modal");
@@ -58,7 +64,7 @@
                 var refresh = $("#modalForm").data("refresh");
                 console.log("refresh method from modal: " + refresh);
                 submitLoader("on");
-                mApp.block(modal +' .modal-loading', {
+                KTApp.block(modal +' .modal-loading', {
                     overlayColor: '#000000',
                     type: 'loader',
                     state: 'primary',
@@ -102,7 +108,7 @@
 
                         console.log("error", errorMsg + ". Status: " + xhr.status);
                         console.log($('meta[name="csrf-token"]').attr('content'));
-                        mApp.unblock(modal +' .modal-loading');
+                        KTApp.unblock(modal +' .modal-loading');
                         submitLoader("off");
 
 
@@ -116,7 +122,7 @@
                         } else {
                             var successMsg = "Done";
                         }
-                        mApp.unblock(modal + ' .modal-content');
+                        KTApp.unblock(modal + ' .modal-content');
                         swal({
                             position: 'top',
                             type: 'success',

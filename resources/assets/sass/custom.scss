@@ -99,13 +99,16 @@ body::before {
     -webkit-box-shadow: 0px 0px 40px 0px rgba(82,63,105,0.1);
     box-shadow: 0px 0px 40px 0px rgba(82,63,105,0.1);
 }
-// Datetimepicker disabled
+// Datetimepicker
 .datetimepicker table tr td.disabled, .datetimepicker table tr td.disabled:hover, .datetimepicker table tr td span.disabled, .datetimepicker table tr td span.disabled:hover {
     background: 0;
     color: #ddd!important;
     cursor: not-allowed;
 }
 
+.datetimepicker tbody tr>td.day.selected, .datetimepicker tbody tr>td.day.active {
+    background: #1dc9b7;
+}
 
 // Panel
 #kt_offcanvas_01.kt-offcanvas-panel {
