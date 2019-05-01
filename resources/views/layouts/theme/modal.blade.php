@@ -8,7 +8,6 @@
 ?>
 @yield("meta")
 @yield("styles")
-<div class="modal-loading">
     @hasSection('form-action')
         <form data-action="@yield("form-action")" data-callback="@yield("callback",$_SERVER['PHP_SELF'])" role="form" id="modalForm" @hasSection("refresh") data-refresh="@yield("refresh")" @endif @hasSection("modal-id") data-modal="@yield("modal-id")" @endif class="kt-form vue-form ajax-form" enctype="application/json" method="POST">
             @endif
@@ -20,7 +19,7 @@
             </div>
 
 
-            <div class="modal-body">
+            <div id="modal1-body" class="modal-body kt-scroll">
 
                     @yield("content")
 
@@ -34,7 +33,6 @@
                 @endif
             </div>
         </form>
-</div>
 @yield("scripts")
 @hasSection("form-action")
     <script>
@@ -153,6 +151,7 @@
         if($(".m_selectpicker").length) {
             $(".m_selectpicker").selectpicker();
         }
+
 
 
     </script>
