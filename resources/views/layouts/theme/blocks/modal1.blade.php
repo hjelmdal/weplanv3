@@ -7,7 +7,7 @@
  */
 
 ?>
-<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="display: none;" data-backdrop="static">
     <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">

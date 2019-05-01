@@ -148,6 +148,13 @@ body::before {
   }
 }
 
+@media (min-width: 768px) {
+  .modal-lg,
+  .modal-xl {
+    max-width: calc(100% - 1rem);
+  }
+}
+
 @media (min-width: 992px) {
   #kt_offcanvas_01.kt-offcanvas-panel {
     right: calc(-100vw - 200px);
