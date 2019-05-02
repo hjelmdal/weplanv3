@@ -43,6 +43,7 @@ Route::get("/user/pending","UserController@index")->middleware("auth")->name("ve
 Route::get("/activities","WePlan\ActivitiesController@index")->middleware("auth")->name("activities");
 Route::get("/activities/{id}","WePlan\ActivitiesController@show")->middleware("auth")->name("activities.show")->where('id', '[0-9]+');
 Route::get("/activities/create","WePlan\ActivitiesController@create")->middleware("auth")->name("activities.create");
+Route::post("/activities/create","WePlan\ActivitiesController@store")->middleware("auth")->name("activities.store");
 
 
 // Redirects

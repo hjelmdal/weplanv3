@@ -8,8 +8,10 @@
 ?>
 @yield("meta")
 @yield("styles")
+
     @hasSection('form-action')
         <form data-action="@yield("form-action")" data-callback="@yield("callback",$_SERVER['PHP_SELF'])" role="form" id="modalForm" @hasSection("refresh") data-refresh="@yield("refresh")" @endif @hasSection("modal-id") data-modal="@yield("modal-id")" @endif class="kt-form vue-form ajax-form" enctype="application/json" method="POST">
+            @csrf
             @endif
             <div class="modal-header">
                 <h5 class="modal-title" id="modalTitle">@yield("title")</h5>
@@ -19,7 +21,7 @@
             </div>
 
 
-            <div id="modal1-body" class="modal-body kt-scroll">
+            <div id="modal1-body" class="modal-body">
 
                     @yield("content")
 
@@ -40,6 +42,8 @@
         //let submit = document.querySelector('.ajax-form').querySelector("submit");
 
         $(function() {
+
+
             function submitLoader(e) {
                 if(e == "on") {
                     $("#modalForm #modalSubmit").prop("disabled", true).addClass("kt-loader kt-loader--right kt-loader--light");
@@ -148,9 +152,7 @@
                 });
             });
         });
-        if($(".m_selectpicker").length) {
-            $(".m_selectpicker").selectpicker();
-        }
+
 
 
 

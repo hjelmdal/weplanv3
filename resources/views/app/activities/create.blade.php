@@ -15,6 +15,10 @@
 
 @section('title','Ny Aktivitet')
 
+@section("form-action", route("activities.store"))
+@section("callback",route("activities"))
+
+
 @section('styles')
     <style>
         /* Always set the map height explicitly to define the size of the div
@@ -104,6 +108,8 @@
             }
 
         });
+
+
 
         var t;
         t = KTUtil.isRTL() ? {
@@ -222,6 +228,7 @@
                     $("#endD").val(startD);
                 }
             }
+            $("#myform").validate();
 
         }
 
@@ -462,6 +469,13 @@
             }
         });
 
+        const container = document.querySelector('#modal-scroll');
+
+        var ps = new PerfectScrollbar(container, {
+            suppressScrollX: true,
+        });
+        console.log("Scroll activated!");
+
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDB1bTnXXhAUuNGyP-M0oHhaYTZfPrChek&callback=initAutocomplete&libraries=places" async defer></script>
 @endsection
@@ -476,8 +490,8 @@
 
 
 
-    <form id="myform" class="kt-form kt-form--label-align-right" method="POST" action="{{ route("activities") }}">
-    @csrf
+
+<div id="modal-scroll" class="kt-scroll" data-scroll="true" data-height="200" style="height: calc(100vh - 200px); overflow-x:hidden;">
 
     <!--begin::Section-->
         <div class="kt-section kt-form__section--first">
@@ -689,17 +703,9 @@
         <!--end::Section-->
 
 
-        <div class="kt-form__actions kt-form__actions">
-            <div class="row">
-                <div class="col-lg-3"></div>
-                <div class="col-lg-6">
-                    <button id="formsubmit" type="submit" class="btn btn-success">Submit</button>
-                    <button id="clickme" type="reset" class="btn btn-secondary">Cancel</button>
-                </div>
-            </div>
-        </div>
+</div>
 
         <!--end::Form-->
-    </form>
+
 
 @endsection
