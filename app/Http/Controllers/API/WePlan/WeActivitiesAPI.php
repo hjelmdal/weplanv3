@@ -43,12 +43,16 @@ class WeActivitiesAPI extends Controller
             return response()->json("No activities found", 404);
         }
         $data = $activities;
+
+        $next_week = date("Y-m-d",$weektime+604800);
+        $prev_week = date("Y-m-d",$weektime-604800);
         $this_week_url = route("api.v1.activities.get",["date" => date("Y-m-d",$weektime)]);
-        $next_week_url = route("api.v1.activities.get",["date" => date("Y-m-d",$weektime+604800)]);
-        $prev_week_url = route("api.v1.activities.get",["date" => date("Y-m-d",$weektime-604800)]);
+        $next_week_url = route("api.v1.activities.get",["date" => $next_week]);
+        $prev_week_url = route("api.v1.activities.get",["date" => $prev_week]);
+
         $start_date = $dateObj->format("Y-m-d");
         $end_date = $dateObj->modify("+6 days")->format("Y-m-d");
-        return response()->json(array("data" => $data, "total" => 100, "to" => 4, "from" => 0,"this_week_url" => $this_week_url, "next_week_url" => $next_week_url, "prev_week_url" => $prev_week_url, "start_date" => $start_date, "end_date" => $end_date));
+        return response()->json(array("data" => $data, "total" => 100, "to" => 4, "from" => 0,"this_week_url" => $this_week_url, "next_week_url" => $next_week_url, "prev_week_url" => $prev_week_url, "start_date" => $start_date, "end_date" => $end_date, "next_week" => $next_week, "prev_week" => $prev_week));
         //$activities = WeActivity::paginate(4);
         //$activities->load("");
 

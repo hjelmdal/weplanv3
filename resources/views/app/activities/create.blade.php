@@ -392,7 +392,7 @@
         function initAutocomplete() {
             var map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 56.177857, lng: 10.209540},
-                zoom: 17,
+                zoom: 13,
                 mapTypeId: 'roadmap',
                 gestureHandling: 'cooperative',
                 streetViewControl: false,
@@ -469,7 +469,7 @@
             }
         });
 
-        const container = document.querySelector('#modal-scroll');
+        var container = document.querySelector('#modal-scroll');
 
         var ps = new PerfectScrollbar(container, {
             suppressScrollX: true,
@@ -477,7 +477,7 @@
         console.log("Scroll activated!");
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDB1bTnXXhAUuNGyP-M0oHhaYTZfPrChek&callback=initAutocomplete&libraries=places" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env("GOOGLE_MAPS_API","AIzaSyDB1bTnXXhAUuNGyP-M0oHhaYTZfPrChek") }}&callback=initAutocomplete&libraries=places" async defer></script>
 @endsection
 @section("content")
 
@@ -491,7 +491,7 @@
 
 
 
-<div id="modal-scroll" class="kt-scroll" data-scroll="true" data-height="200" style="height: calc(100vh - 200px); overflow-x:hidden;">
+<div id="modal-scroll" class="kt-scroll" style="height: calc(100vh - 230px); overflow-x:hidden;">
 
     <!--begin::Section-->
         <div class="kt-section kt-form__section--first">
@@ -537,7 +537,7 @@
             <label class="col-form-label col-lg-3 col-sm-12">Sted</label>
 
             <div class="col-lg-6 col-md-9 col-sm-12">
-                <input class="form-control kt-input" id="pac-input" autocomplete="true" type="text" placeholder="Skovbakken Badminton">
+                <input name="address" class="form-control kt-input" id="pac-input" autocomplete="true" type="text" placeholder="Skovbakken Badminton">
                 <span class="kt-form__help">Skriv adresse på eventen</span>
 
                 </div>

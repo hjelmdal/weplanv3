@@ -19662,6 +19662,8 @@ new Vue({
     to: 0,
     from: 0,
     total: 0,
+    next_week: 0,
+    prev_week: 0,
     authStr: document.querySelector('meta[name="api-token"]').getAttribute('content')
   },
   methods: {
@@ -19740,6 +19742,8 @@ new Vue({
         _this.days = [];
         _this.start_date = response.data.start_date;
         _this.end_date = response.data.end_date;
+        _this.next_week = response.data.next_week;
+        _this.prev_week = response.data.prev_week;
         var last_start_date;
         response.data.data.forEach(function (event) {
           if (event.start_date === last_start_date) {

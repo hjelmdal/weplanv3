@@ -51,6 +51,7 @@ class ActivitiesController extends Controller
         $activity->title = $request->title;
         $activity->info = $request->info;
         $activity->type_id = $request->type_id;
+        $activity->address = $request->address;
         $activity->start_date = $request->start_date;
         $activity->start = $request->start;
         $activity->end_date = $request->end_date;
@@ -58,7 +59,7 @@ class ActivitiesController extends Controller
         $activity->response_date = $request->response_date;
         $activity->response_time = $request->response_time;
         if($request->recur && $request->recur_end) {
-            $activity->recurringid = UUID::v4();
+            $activity->recurring_id = UUID::v4();
         }
 
         if($request->recur && $request->recur_end) {
@@ -74,9 +75,9 @@ class ActivitiesController extends Controller
             $response_date = (string) $request->input("response_date");
             while ($i++ < $num) {
                 // Create a new DateTime object
-                $start_date = new DateTime($start_date);
-                $end_date = new DateTime($end_date);
-                $response_date = new DateTime($response_date);
+                $start_date = new \DateTime($start_date);
+                $end_date = new \DateTime($end_date);
+                $response_date = new \DateTime($response_date);
                 // Modify the date it contains
                 $start_date->modify('+7 days');
                 $end_date->modify('+7 days');
@@ -85,17 +86,18 @@ class ActivitiesController extends Controller
                 $end_date = $end_date->format("Y-m-d");
                 $response_date = $response_date->format("Y-m-d");
 
-                $act = new WeTraining();
+                $act = new WeActivity();
                 $act->title = $request->title;
                 $act->info = $request->info;
                 $act->type_id = $request->type_id;
+                $activity->address = $request->address;
                 $act->start_date = $start_date;
                 $act->start = $request->start;
                 $act->end_date = $end_date;
                 $act->end = $request->end;
                 $act->response_date = $response_date;
                 $act->response_time = $request->response_time;
-                $act->recurringid = $activity->recurringid;
+                $act->recurring_id = $activity->recurring_id;
                 $act->save();
 
             }

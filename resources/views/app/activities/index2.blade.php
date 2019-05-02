@@ -11,22 +11,7 @@
 @section("scripts")
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
     <script src="{{ route("index") }}/vuejs/index.js?v={{ Helpers::gitVersion()->getVersion() }}"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
 
-            var headerMenuOffcanvas = new KTOffcanvas('kt_offcanvas_01', {
-                overlay: true,
-                baseClass: 'kt-offcanvas-panel',
-                closeBy: 'kt_offcanvas_custom_close',
-                toggleBy: {
-                    target: 'testid',
-                    state: 'kt-header-mobile__toolbar-toggler--active'
-                }
-            });
-
-
-        });
-    </script>
 @endsection
 @section("styles")
     <style>
@@ -272,12 +257,17 @@
                             <span>Tilføj</span>
                         </span>
                     </a>
-                    <button type="button" class="btn btn-primary"><i class="fa fa-dollar-sign"></i> Primary</button>
+                        <span class="kt-align-center" style="width: 100%;">Uge @{{start_date | formatDate("ww")}}</span>
+                        <div class="float-right">
+                        <button id="btnPrev" type="button" class="btn btn-primary" v-on:click="activitiesLoad('prev')"><i class="fa fa-arrow-left"></i>Uge @{{prev_week | formatDate("ww")}}</button>
+                        <button id="btnNext" type="button" class="btn btn-primary" v-on:click="activitiesLoad('next')">Uge @{{next_week | formatDate("ww")}} <i class="fa fa-arrow-right"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <template v-if="days.length == 0"><div class="col-12 card1  kt-margin-b-20"><div class="flex-left"></div><div class="flex-right"><div class="div-row">Der blev ikke fundet nogle aktiviteter i denne uge!</div></div></div></template>
     <template v-for="day in days">
         <div class="col-12 card1  kt-margin-b-20">
         <div class="flex-left">
