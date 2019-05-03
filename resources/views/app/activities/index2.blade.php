@@ -9,7 +9,7 @@
 ?>
 @extends("layouts.theme.index")
 @section("scripts")
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js" xmlns="http://www.w3.org/1999/html"></script>
     <script src="{{ route("index") }}/vuejs/index.js?v={{ Helpers::gitVersion()->getVersion() }}"></script>
 
 @endsection
@@ -22,16 +22,7 @@
         text-transform: uppercase;
     }
 
-    .p8-left {
-        float:left;
-        width: 80px;
-        display: inline;
-    }
-    .p8-right {
-        float: left;
-        display: inline;
-        margin: 1rem;
-    }
+
     .p8-date {
         position: relative;
         margin: 1rem 0rem 1rem 0rem;
@@ -65,52 +56,14 @@
         margin:0 auto;
         text-align: center;
     }
-
-
-    .truncate-ellipsis {
-        display: table;
-        table-layout: fixed;
-        width: 150px;
-        white-space: nowrap;
-    }
-    .week-title {
-        font-size: 3.4rem;
-    }
-    @media (max-width: 575px) {
-        .week-title {
-            font-size: 2.5rem;
-        }
-    }
-
-    @media (min-width: 576px) {
-        .truncate-ellipsis {
-            width: 350px;
-        }
-        .week-title {
-            font-size:3.4rem;
-        }
+    .p8-vertical-container {
+        display: flex;
+        align-items: center;
+        height: 100%
     }
 
 
-    @media (min-width: 768px) {
-        .truncate-ellipsis {
-            width: 540px;
-        }
-    }
 
-
-    @media (min-width: 992px) {
-        .truncate-ellipsis {
-            width: 765px;
-        }
-    }
-
-
-    @media (min-width: 1200px) {
-        .truncate-ellipsis {
-            width: 940px;
-        }
-    }
 
     .truncate-ellipsis > * {
         display: table-cell;
@@ -128,12 +81,20 @@
         float:left !important;
         width:80px;
     }
+    .flex-center {
+        position:relative;
+        display:inline;
+        float:left !important;
+        width: calc(100% - 130px);
+        margin:1rem 0.5rem 1rem 0.3rem;
+    }
+
     .flex-right {
         position:relative;
         display:inline;
         float:left !important;
-        width: calc(100% - 100px);
-        margin:1rem 1rem 1rem 0.3rem;
+        width: 32px;
+        margin:1rem 1rem 1rem 0rem;
     }
 
     .div-row {
@@ -251,17 +212,23 @@
             <div class="kt-portlet">
                 <div class="kt-portlet__body">
                     <div class="kt-section__content kt-section__content--border">
+                        <div class="row">
+                    <div class="col-3">
                     <a href="{{ route("activities.create") }}" data-target="#modal1" data-toggle="modal" class="btn btn-success kt-btn--icon">
-                        <span>
-                            <i class="fa fa-plus"></i>
-                            <span>Tilføj</span>
+                        &nbsp;<span><i class="fa fa-plus"></i><span class="d-none d-sm-inline">Tilføj</span>
                         </span>
                     </a>
-                        <span class="kt-align-center" style="width: 100%;">Uge @{{start_date | formatDate("ww")}}</span>
-                        <div class="float-right">
-                        <button id="btnPrev" type="button" class="btn btn-primary" v-on:click="activitiesLoad('prev')"><i class="fa fa-arrow-left"></i>Uge @{{prev_week | formatDate("ww")}}</button>
-                        <button id="btnNext" type="button" class="btn btn-primary" v-on:click="activitiesLoad('next')">Uge @{{next_week | formatDate("ww")}} <i class="fa fa-arrow-right"></i></button>
+                    </div>
+                        <div class="col-5 kt-align-center">
+                            <h3><span class="d-none d-sm-inline">Aktiviteter i </span>Uge @{{start_date | formatDate("ww")}}</h3>
                         </div>
+                        <div class="col-4">
+                        <div class="float-right">
+                            <button id="btnPrev" type="button" class="btn btn-primary" v-on:click="activitiesLoad('prev')">&nbsp;<i class="fa fa-arrow-left"></i><span class="d-none d-sm-inline">Uge @{{prev_week | formatDate("ww")}}</span></button>
+                            <button id="btnNext" type="button" class="btn btn-primary" v-on:click="activitiesLoad('next')">&nbsp;<span class="d-none d-sm-inline">Uge @{{next_week | formatDate("ww")}} </span><i class="fa fa-arrow-right"></i></button>
+                        </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -280,7 +247,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex-right">
+        <div class="flex-center">
             <template v-for="activity in day.events">
             <div class="div-row">
                 <div class="row-column" v-bind:class="{'bef-success':(activity.type_id == 0), 'bef-warning':(activity.type_id == 1), 'bef-danger':(activity.type_id == 2), 'bef-info':(activity.type_id == 3), 'bef-dark':(activity.type_id == 4)}">
@@ -298,6 +265,13 @@
 
             </template>
         </div>
+            <div class="flex-right">
+                <div class="p8-vertical-container">
+                    <div class="p8-vertical-center">
+                        <button type="button" class="btn btn-success btn-icon"><i class="fa fa-calendar-alt"></i></button>
+                    </div>
+                </div>
+            </div>
 
 
 
