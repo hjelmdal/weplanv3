@@ -215,7 +215,7 @@
                         <div class="row">
                     <div class="col-3">
                     <a href="{{ route("activities.create") }}" data-target="#modal1" data-toggle="modal" class="btn btn-success kt-btn--icon">
-                        &nbsp;<span><i class="fa fa-plus"></i><span class="d-none d-sm-inline">Tilføj</span>
+                        <span class="d-inline d-sm-none">&nbsp;&nbsp;</span><span><i class="fa fa-plus"></i><span class="d-none d-sm-inline">Tilføj</span>
                         </span>
                     </a>
                     </div>
@@ -234,7 +234,7 @@
             </div>
         </div>
     </div>
-    <template v-if="days.length == 0"><div class="col-12 card1  kt-margin-b-20"><div class="flex-left"></div><div class="flex-right"><div class="div-row">Der blev ikke fundet nogle aktiviteter i denne uge!</div></div></div></template>
+    <template v-if="days.length == 0"><div class="col-12 card1  kt-margin-b-20"><div class="flex-left"></div><div class="flex-center"><div class="div-row">Der blev ikke fundet nogle aktiviteter i denne uge!</div></div></div></template>
     <template v-for="day in days">
         <div class="col-12 card1  kt-margin-b-20">
         <div class="flex-left">
@@ -250,7 +250,7 @@
         <div class="flex-center">
             <template v-for="activity in day.events">
             <div class="div-row">
-                <div class="row-column" v-bind:class="{'bef-success':(activity.type_id == 0), 'bef-warning':(activity.type_id == 1), 'bef-danger':(activity.type_id == 2), 'bef-info':(activity.type_id == 3), 'bef-dark':(activity.type_id == 4)}">
+                <div class="row-column" v-bind:class="{'bef-success':(activity.type_id == 1), 'bef-warning':(activity.type_id == 5), 'bef-danger':(activity.type_id == 2), 'bef-info':(activity.type_id == 3), 'bef-dark':(activity.type_id == 4)}">
                     <a data-toggle="modal" data-target="#modal1" :href="'{{ route("activities") }}/'+activity.id" class="div-text">@{{ activity.title }}</a>
                     <div class="div-time">@{{ activity.start | formatTime("HH:mm") }} - @{{ activity.end | formatTime("HH:mm") }}</div>
                 </div>
