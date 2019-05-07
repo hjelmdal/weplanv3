@@ -201,7 +201,58 @@
         border: 1px solid #ebedf2;
         border-radius: .25rem;
         display: flex;
+        position: relative;
+        overflow: hidden;
     }
+
+    .overlay {
+        position: absolute;
+        bottom: 100%;
+        right: 0;
+        overflow: hidden;
+        width: calc(100% - 80px);
+        height:100%;
+        transition: .5s ease;
+        z-index: 10;
+        padding: 1rem;
+    }
+
+    .overlay-container:hover .overlay {
+        bottom:0;
+        background: rgba(40, 40, 40, 0.6);
+        transition: .5s ease;
+        color: #fff;
+
+    }
+
+
+    .kt-iconbox-xs {
+        width: 70px;
+        height: 70px;
+        padding: 0.2rem;
+    }
+
+    .kt-iconbox-xs .kt-iconbox__icon {
+        font-size: 3rem;
+        margin:0;
+    }
+
+    .kt-iconbox-xs .kt-iconbox__icon:hover {
+        cursor: pointer;
+    }
+
+    .kt-iconbox-xs .kt-iconbox__icon-bg {
+        width: 70px;
+        height: 70px;
+        top: -0.5rem;
+        left: -0.5rem;
+    }
+
+    .kt-iconbox-xs .kt-iconbox__title {
+
+    }
+
+
 
     </style>
 @endsection
@@ -234,9 +285,34 @@
             </div>
         </div>
     </div>
-    <template v-if="days.length == 0"><div class="col-12 card1  kt-margin-b-20"><div class="flex-left"></div><div class="flex-center"><div class="div-row">Der blev ikke fundet nogle aktiviteter i denne uge!</div></div></div></template>
-    <template v-for="day in days">
+
+    <template v-if="days.length == 0">
         <div class="col-12 card1  kt-margin-b-20">
+            <div class="flex-left"></div>
+            <div class="flex-center">
+                <div class="div-row">Der blev ikke fundet nogle aktiviteter i denne uge!</div>
+            </div>
+        </div>
+    </template>
+
+    <template v-for="day in days">
+        <div class="col-12 card1  kt-margin-b-20 overlay-container">
+            <div class="overlay">
+                <div class="overlay-text" style="width:200px">
+                    <div class="kt-iconbox kt-iconbox--success kt-iconbox-xs">
+                        <div class="kt-iconbox__icon">
+                            <div class="kt-iconbox__icon-bg"></div>
+                            <i class="flaticon-like"></i>
+                        </div>
+                        <div class="kt-iconbox__title kt-font-white">
+                            Ja!
+                        </div>
+                        <div class="kt-iconbox__content">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sapien ligula, euismod vel
+                        </div>
+                    </div>
+                </div>
+            </div>
         <div class="flex-left">
             <div class="div-date">
                 <div class="p8-date">
@@ -276,6 +352,7 @@
 
 
         </div>
+
         <div class="clearfix"></div>
     </template>
 
