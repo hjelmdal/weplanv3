@@ -352,8 +352,10 @@ body::before {
 }
 
 .overlay-text {
+  height: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .kt-iconbox-xs {

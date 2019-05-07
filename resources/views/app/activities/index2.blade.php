@@ -73,9 +73,6 @@
                         <div class="kt-iconbox__title kt-font-dark">
                             Ja!
                         </div>
-                        <div class="kt-iconbox__content">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sapien ligula, euismod vel
-                        </div>
                     </div>
                     <div class="kt-iconbox kt-iconbox--danger kt-iconbox-xs">
                         <div class="kt-iconbox__icon">
