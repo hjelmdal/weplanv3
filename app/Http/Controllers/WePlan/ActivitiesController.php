@@ -20,7 +20,11 @@ class ActivitiesController extends Controller
     {
         //$activities = new WeActivitiesAPI();
         //$activities = $activities->index();
-        return view("app.activities.index2");
+        return view("app.activities.index");
+    }
+
+    public function admin($date = null) {
+        return view("app.activities.admin");
     }
 
     /**
@@ -157,5 +161,9 @@ class ActivitiesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function plan($date = null) {
+        return view("app.activities.plan",["date" => $date]);
     }
 }

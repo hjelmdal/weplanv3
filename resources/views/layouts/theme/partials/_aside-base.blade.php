@@ -18,7 +18,7 @@
                         <i class="kt-menu__section-icon flaticon-more-v2"></i>
                     </li>
                     <li class="kt-menu__item kt-menu__item" >
-                        <a href="{{ route("activities") }}" class="kt-menu__link ">
+                        <a href="{{ route("players.index") }}" class="kt-menu__link ">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20px" height="20px" viewBox="0 0 20 20" version="1.1" class="kt-svg-icon">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <polygon id="Shape" points="0 0 24 0 24 24 0 24"/>
@@ -29,7 +29,7 @@
                             <span class="kt-menu__link-text">Spillere</span></a>
                     </li>
                     <li class="kt-menu__item ">
-                        <a href="{{ route("activities") }}" class="kt-menu__link ">
+                        <a href="{{ route("activities.index") }}" class="kt-menu__link ">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                 <rect id="bound" x="0" y="0" width="24" height="24"/>

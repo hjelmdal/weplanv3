@@ -18,7 +18,8 @@ class CreateWePlayersAndWeActivitiesTable extends Migration
             $table->index('id');
             $table->text('name');
             $table->tinyInteger('team_id')->nullable();
-            $table->tinyInteger('gender');
+            $table->text('gender');
+            $table->date("birthday")->nullable();
             $table->integer('user_id')->nullable();
             $table->unsignedTinyInteger('inactive')->nullable()->default(0);
             $table->string('dbf_id', 10)->nullable();
