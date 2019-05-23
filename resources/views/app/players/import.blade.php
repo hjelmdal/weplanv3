@@ -238,8 +238,8 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="kt-portlet kt-portlet--mobile">
                 <div class="kt-portlet__head">
                     <div class="kt-portlet__head-label">
-                        <h3 class="kt-portlet__head-title">
-                            Ajax Sourced Server-side Processing
+                        <h3 class="kt-portlet__head-title truncate-ellipsis">
+                            Importer fra BP
                         </h3>
                     </div>
                     <div class="kt-portlet__head-toolbar">

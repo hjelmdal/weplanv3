@@ -33,12 +33,18 @@ Route::name('api.')->group(function () {
         Route::namespace('WePlan')->middleware("api.token")->group(function () {
             Route::apiResource('activities','WeActivitiesAPI');
             Route::get('/activities/get/{date?}','WeActivitiesAPI@get')->name("activities.get");
+            Route::apiResource('teams','WeTeamAPI');
+            Route::apiResource('players','WePlayerAPI');
+
 
 
 
 
         });
-        Route::namespace('BadmintonPeople')->prefix("BP")->name("badmintonpeople.")->middleware("api.token")->group(function () {
+
+
+
+            Route::namespace('BadmintonPeople')->prefix("BP")->name("badmintonpeople.")->middleware("api.token")->group(function () {
             Route::get("/players","BpPlayerAPI@index")->name("players.index");
             Route::post("/players/store","BpPlayerAPI@store")->name("players.store");
         });

@@ -16,7 +16,7 @@
 @section('title','Ny Aktivitet')
 
 @section("form-action", route("activities.store"))
-@section("callback",route("activities"))
+@section("callback",route("activities.index"))
 
 
 @section('styles')

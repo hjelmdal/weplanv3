@@ -3,5 +3,6 @@
     "/css/custom.css": "/css/custom.css",
     "/js/fullscreen.js": "/js/fullscreen.js",
     "/vuejs/activities/index.js": "/vuejs/activities/index.js",
-    "/vuejs/activities/plan.js": "/vuejs/activities/plan.js"
+    "/vuejs/activities/plan.js": "/vuejs/activities/plan.js",
+    "/vuejs/teams/index.js": "/vuejs/teams/index.js"
 }

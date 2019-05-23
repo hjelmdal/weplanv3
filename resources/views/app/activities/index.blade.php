@@ -10,7 +10,7 @@
 @extends("layouts.theme.index")
 @section("scripts")
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js" xmlns="http://www.w3.org/1999/html"></script>
-    <script src="{{ route("index") }}/vuejs/index.js?v={{ Helpers::gitVersion()->getVersion() }}"></script>
+    <script src="{{ route("index") }}/vuejs/activities/index.js?v={{ Helpers::gitVersion()->getVersion() }}"></script>
 
 @endsection
 @section("styles")

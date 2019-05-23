@@ -53,6 +53,14 @@ Route::middleware(['auth'])->prefix('players')->name("players.")->group(function
     Route::get("/import", "WePlan\PlayerController@import")->name("import");
 
 });
+
+
+Route::middleware(['auth'])->prefix('teams')->name("teams.")->group(function () {
+    Route::get("/","WePlan\TeamController@index")->middleware("auth")->name("index");
+
+
+});
+
 // Redirects
 
 //Route::get('/nova/login','RedirectController@login')->middleware('guest');
