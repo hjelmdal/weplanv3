@@ -33,7 +33,7 @@ new Vue({
 
     data:  {
         teams: [],
-        url : '/api/v1/teams/',
+        url : '/api/v1/teams',
         authStr: document.querySelector('meta[name="api-token"]').getAttribute('content')
     },
 
