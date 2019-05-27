@@ -19666,17 +19666,26 @@ Vue.filter('formatNumber', function () {
     return len + " " + name;
   }
 });
+Vue.directive('tooltip', function (el, binding) {
+  $(el).tooltip({
+    title: binding.value,
+    placement: binding.arg,
+    trigger: 'hover'
+  });
+});
 new Vue({
   el: '#kt_body',
   data: {
     teams: [],
-    url: '/api/v1/teams/',
+    url: '/api/v1/teams',
     authStr: document.querySelector('meta[name="api-token"]').getAttribute('content')
   },
+  computed: {},
   methods: {
     teamsLoad: function teamsLoad(string) {
       var _this = this;
 
+      KTApp.blockPage();
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
         method: 'get',
         url: this.url,
@@ -19693,7 +19702,36 @@ new Vue({
         }
       }).then(function (response) {
         _this.teams = response.data.data;
+        var i;
+        response.data.data.forEach(function (event) {
+          event.men = 0;
+          event.women = 0;
+          event.menP = 0;
+          event.womenP = 0;
+
+          if (event.players.length > 0) {
+            event.players.forEach(function (player) {
+              if (player.gender === "M") {
+                event.men++;
+              } else if (player.gender === "K") {
+                event.women++;
+              }
+            });
+
+            if (event.max_players > 0) {
+              event.menP = Math.round(event.men / event.max_players * 100);
+              event.womenP = Math.round(event.women / event.max_players * 100);
+            }
+          }
+
+          console.log(event);
+          i++;
+        });
       });
+      Vue.nextTick(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+      });
+      KTApp.unblockPage();
     }
   },
   mounted: function mounted() {

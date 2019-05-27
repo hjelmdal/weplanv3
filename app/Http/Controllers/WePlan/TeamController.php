@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\WePlan;
 
+use App\Http\Controllers\API\WePlan\WeTeamAPI;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -35,7 +36,7 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -57,7 +58,9 @@ class TeamController extends Controller
      */
     public function edit($id)
     {
-        //
+        $team = new WeTeamAPI();
+        $team = $team->show($id);
+        return view("app.teams.edit", ["team" => $team]);
     }
 
     /**
@@ -69,7 +72,7 @@ class TeamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**

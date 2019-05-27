@@ -10,7 +10,7 @@
 @yield("styles")
 
     @hasSection('form-action')
-        <form data-action="@yield("form-action")" data-callback="@yield("callback",$_SERVER['PHP_SELF'])" role="form" id="modalForm" @hasSection("refresh") data-refresh="@yield("refresh")" @endif @hasSection("modal-id") data-modal="@yield("modal-id")" @endif class="kt-form vue-form ajax-form" enctype="application/json" method="POST">
+        <form data-action="@yield("form-action")" data-keep-open="@yield("keep-open")" data-callback="@yield("callback",$_SERVER['PHP_SELF'])" role="form" id="modalForm" @hasSection("refresh") data-refresh="@yield("refresh")" @endif @hasSection("modal-id") data-modal="@yield("modal-id")" @endif class="kt-form kt-form--label-right vue-form ajax-form" enctype="application/json" method="POST">
             @csrf
             @endif
             <div class="modal-header">
@@ -56,7 +56,8 @@
             $('.ajax-form').submit(function (e) {
                 e.preventDefault();
                 console.log("haha");
-                var modal = "#modal";
+                var modal = "#" + $(this).closest("div.modal").attr("id");
+                console.log("Modal: " + modal);
                 if($(this).attr("data-modal")) {
                     modal = $(this).attr("data-modal");
                 }
@@ -64,6 +65,7 @@
                 console.log("data:" + data);
                 var callback = $(this).attr("data-callback");
                 var refresh = $("#modalForm").data("refresh");
+                var keepOpen = $("#modalForm").data("keep-open");
                 console.log("refresh method from modal: " + refresh);
                 submitLoader("on");
                 KTApp.block(modal +' .modal-loading', {
@@ -132,8 +134,6 @@
                             showConfirmButton: false,
                             timer: 1000
                         });
-                        $('#modal_confirm').modal('hide');
-                        $(modal).modal('hide');
                         if(refresh) {
                             $(refresh).trigger( "click" );
                             submitLoader("off");
@@ -148,6 +148,8 @@
                             $("body").addClass('m-page--loading');
                         }
                         console.log("success data:", data, "StatusCode:", xhr.status);
+                        $(modal).modal('hide');
+
                     }
                 });
             });

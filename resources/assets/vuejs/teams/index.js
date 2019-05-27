@@ -27,6 +27,14 @@ Vue.filter('formatNumber', function (value = false) {
 
 });
 
+Vue.directive('tooltip', function(el, binding){
+    $(el).tooltip({
+        title: binding.value,
+        placement: binding.arg,
+        trigger: 'hover'
+    })
+});
+
 new Vue({
     el: '#kt_body',
 
@@ -37,9 +45,16 @@ new Vue({
         authStr: document.querySelector('meta[name="api-token"]').getAttribute('content')
     },
 
+    computed : {
+
+    },
+
+
+
     methods : {
 
         teamsLoad(string) {
+            KTApp.blockPage();
 
             axios({
                 method: 'get',
@@ -54,16 +69,50 @@ new Vue({
                 }
             }).then((response) => {
                 this.teams = response.data.data;
+                let i;
 
+                response.data.data.forEach(event => {
+                    event.men = 0;
+                    event.women = 0;
+                    event.menP = 0;
+                    event.womenP = 0;
+                    if(event.players.length > 0) {
+                        event.players.forEach(player => {
+                           if(player.gender === "M") {
+                               event.men++;
+                           } else if(player.gender === "K") {
+                               event.women++;
+                           }
+                        });
+                        if(event.max_players > 0) {
+                            event.menP = Math.round(event.men / event.max_players * 100);
+                            event.womenP = Math.round(event.women / event.max_players * 100);
+
+                        }
+                    }
+
+                    console.log(event);
+                    i++;
+                });
+
+
+            });
+            Vue.nextTick(function () {
+                $('[data-toggle="tooltip"]').tooltip()
             })
+
+            KTApp.unblockPage();
 
 
 
         },
+
+
     },
 
     mounted: function () {
         this.teamsLoad("reload");
+
 
 
 

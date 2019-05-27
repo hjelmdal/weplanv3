@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                         showConfirmButton: false,
                         timer: 1000
                     });
-                    window.location.reload();
+                    //window.location.reload();
                 }
                 else if (status == "success") {
                     console.log("Content loaded...");

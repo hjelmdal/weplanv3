@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\WePlan;
 
 use App\Models\WePlan\WeTeam;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -20,15 +21,7 @@ class WeTeamAPI extends Controller
         return response()->json(["data" => $teams],200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -38,7 +31,30 @@ class WeTeamAPI extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate($this->validation());
+
+        if($request->active == "on") {
+            $active = 1;
+        } else {
+            $active = 0;
+        }
+
+
+        $team = WeTeam::updateOrCreate(
+            ["id" => $request->id],
+            [
+                "name" => $request->name,
+                "max_players" => $request->max_players,
+                "active" => $active
+            ]
+        );
+        if($team->wasRecentlyCreated) {
+            $status = 201;
+        } else {
+            $status = 200;
+        }
+
+        return response()->json($team,$status);
     }
 
     /**
@@ -49,19 +65,15 @@ class WeTeamAPI extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $team = WeTeam::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json("Team not found", 404);
+        }
+        return $team;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -72,7 +84,28 @@ class WeTeamAPI extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate($this->validation());
+        if($request->id != $id) {
+            return response()->json(["message" => "Bad request or ID"],400);
+        }
+
+        try {
+            $team = WeTeam::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(["message" => "Team not found" ], 404);
+        }
+        $team->name = $request->name;
+        $team->max_players = $request->max_players;
+        if($request->active) {
+            $team->active = 1;
+        } else {
+            $team->active = 0;
+        }
+        //$team->owner_id = $request->owner_id;
+        $team->save();
+
+        return response()->json(["message" => "Team is updated"],200);
+
     }
 
     /**
@@ -84,5 +117,11 @@ class WeTeamAPI extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function validation() {
+        return [
+            "name" => "required|string|min:3|max:50",
+            "max_players" => "required|integer|min:0|max:1000"];
     }
 }

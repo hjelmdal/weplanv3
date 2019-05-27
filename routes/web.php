@@ -55,10 +55,7 @@ Route::middleware(['auth'])->prefix('players')->name("players.")->group(function
 });
 
 
-Route::middleware(['auth'])->prefix('teams')->name("teams.")->group(function () {
-    Route::get("/","WePlan\TeamController@index")->middleware("auth")->name("index");
 
-});
 
 Route::middleware(['auth'])->namespace('WePlan')->group(function () {
     Route::resource('teams', 'TeamController');

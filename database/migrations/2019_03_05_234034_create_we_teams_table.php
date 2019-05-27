@@ -17,7 +17,8 @@ class CreateWeTeamsTable extends Migration
             $table->increments('id');
             $table->index('id');
             $table->string('name', 100);
-            $table->integer('active')->default(1);
+            $table->integer('max_players')->nullable();
+            $table->integer('active')->default(1)->nullable();
             $table->nullableTimestamps();
             $table->softDeletes();
         });

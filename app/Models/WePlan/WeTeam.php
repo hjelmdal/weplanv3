@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class WeTeam extends Model
 {
+    protected $fillable = ["id","name","max_players","active"];
     use SoftDeletes;
     public function owner() {
         return $this->belongsTo(User::class,'owner_id','id');
