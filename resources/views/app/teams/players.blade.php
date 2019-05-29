@@ -96,6 +96,8 @@
                 {data: 'team_id'}
             ],
             columnDefs: [
+                { responsivePriority: 1, targets: 0 },
+                { responsivePriority: 2, targets: -1 },
                 {
                     targets: -1,
                     title: "Actions",
@@ -139,6 +141,7 @@
         });
 
         $("#playersTable").on("click", ".delPlayer", function(){
+            loading("#playersTable","on");
             var dataObj = new Object();
             dataObj.player_id = $(this).data("player");
             dataObj.team = $(this).data("team");
@@ -167,12 +170,14 @@
                         table1.ajax.reload();
 
 
-                    }
+                    },
+
 
                 });
             } else {
                 console.log("No data!");
             }
+
 
         });
 
@@ -193,14 +198,9 @@
                 $('#processingIndicator').css('display', 'none');
 
                 if (processing) {
-                    KTApp.block("#playersTable",{
-                        overlayColor: "#000000",
-                        type: "v2",
-                        state: "primary",
-                        message: "Processing..."
-                    });
+                    //loading("#playersTable","on");
                 } else {
-                    KTApp.unblock("#playersTable");
+                    loading("#playersTable","off");
                 }
             });
 
@@ -211,5 +211,20 @@
         var ps = new PerfectScrollbar(container, {
             suppressScrollX: true,
         });
+
+        function loading(identifier, state) {
+            if(state == "on") {
+                KTApp.block(identifier,{
+                    overlayColor: "#000000",
+                    opacity:"0.4",
+                    type: "v2",
+                    state: "primary",
+                    message: "Processing..."
+                });
+            } else if(state == "off") {
+                KTApp.unblock(identifier);
+            }
+            console.log("Loading done");
+        }
     </script>
 @endsection

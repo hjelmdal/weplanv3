@@ -64,11 +64,12 @@ class LoginController extends Controller
         return view("login/login2");
     }
 
-    protected function redirectToPage() {
+    protected function redirectToPage($message = false) {
+
         if(session('url.intended')) {
-            return redirect(session("url.intended"));
+            return redirect(session("url.intended"))->with($message);
         } else {
-            return redirect("/user");
+            return redirect("/user")->with($message);
         }
     }
 
@@ -93,12 +94,15 @@ class LoginController extends Controller
         $userObj = \App\Models\User::where('email', $user->getEmail())->whereHas('google', function(Builder $query) use ($user){
             $query->where('google_id', $user->getId());
         })->first();
-        
+
+        // User is found with Google associated account
         if($userObj != null){
             Auth::login($userObj,true);
             //$this->guard()->login($userObj);
             return $this->redirectToPage();
         }
+
+        // Should not be relevant anymore, as we always use "create-intent"
         elseif($request->session()->get('google-intent') == 'login'){
             $request->session()->flash('message', 'Ingen profil passede sammen med google - opret dig forneden');
             return redirect()->route('login');
@@ -106,8 +110,18 @@ class LoginController extends Controller
 
         $userObj = \App\Models\User::where('email', $user->getEmail())->first();
         if($userObj != null){
-            $request->session()->flash('message', 'Emailen eksister allerede på en bruger');
-            return redirect()->route('login');
+            $google = new Google([
+                'token' => $user->token,
+                'refresh_token' => $user->refreshToken,
+                'expires_in' => $user->expiresIn,
+                'google_id' => $user->getId()
+            ]);
+            $userObj->google()->save($google);
+            Auth::login($userObj,true);
+
+            return $this->redirectToPage(["message" => "Din Google account er nu tilknyttet din WePlan bruger"]);
+            //$request->session()->flash('message', 'Emailen eksister allerede på en bruger');
+            //return redirect()->route('login');
         }
 
         if($request->session()->get('google-intent') == 'create'){
