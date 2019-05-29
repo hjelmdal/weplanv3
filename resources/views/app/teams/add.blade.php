@@ -52,7 +52,7 @@
             <tr>
                 <th>Navn</th>
                 <th>Køn</th>
-                <th class="d-none d-sm-block">Trup</th>
+                <th>Trup</th>
                 <th>#</th>
 
             </tr>
@@ -105,13 +105,16 @@
             ],
             createdRow: function( row, data, dataIndex ) {
                 // Set the data-status attribute, and add a class
-                $(row).find('td:eq(3)').addClass('d-none d-sm-block');
+                //$(row).find('td:eq(3)').addClass('d-none d-sm-block');
                 if(data.team_id == "{{ $team->id }}") {
                     $(row).addClass('kt-bg-metal');
                 }
             },
 
             columnDefs: [
+                { responsivePriority: 1, targets: 0 },
+                { responsivePriority: 2, targets: -1 },
+
                 {
                     targets: -1,
                     title: "Actions",
