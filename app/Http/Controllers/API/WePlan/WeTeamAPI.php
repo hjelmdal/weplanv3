@@ -67,10 +67,26 @@ class WeTeamAPI extends Controller
     {
         try {
             $team = WeTeam::findOrFail($id);
+            $team->load("players");
         } catch (ModelNotFoundException $e) {
             return response()->json("Team not found", 404);
         }
         return $team;
+    }
+
+    public function players($id)
+    {
+        try {
+            $team = WeTeam::findOrFail($id);
+            $team->load("players");
+        } catch (ModelNotFoundException $e) {
+            return response()->json("Team not found", 404);
+        }
+        if(!$team->players) {
+            return response()->json("No players found", 404);
+
+        }
+        return response()->json(["data" => $team->players]);
     }
 
 

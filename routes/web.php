@@ -58,7 +58,10 @@ Route::middleware(['auth'])->prefix('players')->name("players.")->group(function
 
 
 Route::middleware(['auth'])->namespace('WePlan')->group(function () {
+    Route::get("/teams/{id}/players","TeamController@players")->name("teams.players")->where('id', '[0-9]+');
+    Route::get("/teams/{id}/add","TeamController@add")->name("teams.add")->where('id', '[0-9]+');
     Route::resource('teams', 'TeamController');
+
 });
 
 // Redirects

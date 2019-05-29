@@ -19,6 +19,32 @@ class TeamController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function players($id)
+    {
+        $team = new WeTeamAPI();
+        $team = $team->show($id);
+        return view("app.teams.players", ["team" => $team]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function add($id)
+    {
+        $team = new WeTeamAPI();
+        $team = $team->show($id);
+        return view("app.teams.add", ["team" => $team]);
+    }
+
+
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

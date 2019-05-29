@@ -10,20 +10,19 @@
 
 @section("meta.title","")
 @section("meta","")
+@section("title", "Ny trup")
 @section("form-action", route("api.v1.teams.store"))
 @section("callback",route("teams.index"))
+@section("refresh", "#reload")
 
 @section("styles","")
 @section("scripts","")
 
 @section("content")
-    <div id="modal-scroll" class="kt-scroll" style="height: calc(100vh - 230px); overflow-x:hidden;">
 
         <!--begin::Section-->
         <div class="kt-section kt-form__section--first">
-            <div class="kt-form__heading">
-                <h3 class="kt-form__heading-title">Form input</h3>
-            </div>
+
             <!-- begin::form rows -->
             <div class="form-group kt-form__group row">
                 <label class="col-form-label col-lg-3 col-sm-12">Navn</label>
@@ -52,18 +51,21 @@
             <div class="form-group kt-form__group row">
 
 
-                <label class="col-form-label col-lg-3 col-sm-12">Aktiv?</label>
+                <label class="col-lg-3 col-sm-12">Aktiv?</label>
 
-                    <div class="col-lg-6 col-md-9 col-sm-12">
-                        <input name="active" class="form-control kt-input kt-checkbox--brand" id="active" type="checkbox" checked="checked">
+                <div class="col-lg-6 col-md-9 col-sm-12">
+                    <label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
+                        <input name="active"  type="checkbox" checked="checked"> Er truppen aktiv?
+                        <span></span>
+                    </label>
 
 
-                    </div>
+
+                </div>
 
             </div>
         </div>
         <!--end::Section-->
-    </div>
 @endsection
 
 @section("modal")

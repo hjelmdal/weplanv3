@@ -11,7 +11,16 @@ $img_url = "https://keenthemes.com/keen/preview/assets/media/users/100_";
 @extends("layouts.theme.index")
 @section("meta.title","")
 @section("meta","")
-@section("styles","")
+@section("styles")
+<style>
+    .modal:nth-of-type(even) {
+        z-index: 1052 !important;
+    }
+    .modal-backdrop.show:nth-of-type(odd) {
+        z-index: 1051 !important;
+    }
+</style>
+@endsection
 @section("scripts")
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js" xmlns="http://www.w3.org/1999/html"></script>
     <script src="{{ route("index") }}/vuejs/teams/index.js?v={{ Helpers::gitVersion()->getVersion() }}"></script>
@@ -19,7 +28,10 @@ $img_url = "https://keenthemes.com/keen/preview/assets/media/users/100_";
         document.addEventListener("DOMContentLoaded", function () {
 
             KTApp.initTooltips();
+
+
         });
+
     </script>
 @endsection
 
@@ -36,7 +48,7 @@ $img_url = "https://keenthemes.com/keen/preview/assets/media/users/100_";
                 </div>
                 <div class="kt-portlet__head-toolbar">
                     <button id="reload" v-on:click="teamsLoad('reload')" class="btn btn-brand btn-icon kt-margin-r-10"><i class="la la-refresh"></i></button>
-                    <a data-target="#modal1" data-toggle="modal" href="{{ route("teams.create") }}" class="btn btn-success"><i class="flaticon2-plus-1"></i> <span>Opret trup</span></a>
+                    <a data-target="#modal-std" data-toggle="modal" href="{{ route("teams.create") }}" class="btn btn-success"><i class="flaticon2-plus-1"></i> <span>Opret trup</span></a>
 
 
 
@@ -61,7 +73,7 @@ $img_url = "https://keenthemes.com/keen/preview/assets/media/users/100_";
                     <div class="kt-widget-12__head">
                         <div class="kt-widget-12__label">
                             <h3 class="kt-widget-12__title" v-text="team.name"></h3>
-                            <span class="kt-widget-12__desc">@{{ team.players | formatNumber() }} / @{{ team.max_players }} spillere</span>
+                            <span class="kt-widget-12__desc"><span v-bind:class="[team.players.length > team.max_players ? 'kt-font-danger' : '']">@{{ team.players | formatNumber() }}</span> / @{{ team.max_players }} spillere</span>
                         </div>
                     </div>
                     <div class="kt-widget-12__info">
@@ -126,8 +138,10 @@ $img_url = "https://keenthemes.com/keen/preview/assets/media/users/100_";
                         </div>
                     </div>
                     <div class="kt-portlet__foot-toolbar">
-
-                        <a data-toggle="modal" data-target="#modal1" :href="'{{ route("teams.index") }}/' + team.id + '/edit'" class="btn btn-outline-brand btn-elevate btn-icon btn-sm">
+                        <a data-toggle="modal" data-target="#modal1" :href="'{{ route("teams.index") }}/' + team.id + '/players'" class="btn btn-outline-metal btn-elevate btn-icon btn-sm">
+                            <i class="la la-users"></i>
+                        </a>
+                        <a data-toggle="modal" data-target="#modal-std" :href="'{{ route("teams.index") }}/' + team.id + '/edit'" class="btn btn-outline-brand btn-elevate btn-icon btn-sm">
                             <i class="la la-pencil-square-o"></i>
                         </a>
                         <a href="#" class="btn btn-outline-danger btn-elevate btn-icon btn-sm" title="Slet">
@@ -147,4 +161,5 @@ $img_url = "https://keenthemes.com/keen/preview/assets/media/users/100_";
 
 @section("modal")
     @include("layouts.theme.blocks.modal-std")
+    @include("layouts.theme.blocks.modal1")
 @endsection

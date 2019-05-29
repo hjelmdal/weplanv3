@@ -85,8 +85,14 @@ new Vue({
                            }
                         });
                         if(event.max_players > 0) {
-                            event.menP = Math.round(event.men / event.max_players * 100);
-                            event.womenP = Math.round(event.women / event.max_players * 100);
+                            if(event.men + event.women > event.max_players) {
+                                event.menP = Math.round(event.men / (event.men + event.women) * 100);
+                                event.womenP = Math.round(event.women / (event.men + event.women) * 100);
+
+                            } else {
+                                event.menP = Math.round(event.men / event.max_players * 100);
+                                event.womenP = Math.round(event.women / event.max_players * 100);
+                            }
 
                         }
                     }
