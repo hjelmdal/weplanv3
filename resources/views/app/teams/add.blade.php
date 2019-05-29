@@ -157,6 +157,12 @@
             },
         });
         $("#playersTable").on("click", ".addPlayer", function(){
+            KTApp.block("#modal-scroll",{
+                overlayColor: "#000000",
+                type: "v2",
+                state: "primary",
+                message: "Processing..."
+            });
             var dataObj = new Object();
             dataObj.player_id = $(this).data("player");
             dataObj.team = $(this).data("team");
@@ -192,6 +198,9 @@
                 console.log("No data!");
             }
 
+            setTimeout(function() {
+            KTApp.unblock("#modal-scroll");
+            },200);
         });
 
         var container = document.querySelector('#modal-scroll');

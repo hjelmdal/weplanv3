@@ -87,7 +87,11 @@ class WePlayerAPI extends Controller
                 $player->gender = $request->gender;
             }
             if (request()->has('team')) {
-                $player->team_id = $request->team;
+                if($request->team == 0) {
+                    $player->team_id = null;
+                } else {
+                    $player->team_id = $request->team;
+                }
             }
             $player->save();
             return response()->json($player->name ." blev opdateret!",200);

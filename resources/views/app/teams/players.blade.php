@@ -48,6 +48,7 @@
                 <th>Navn</th>
                 <th>Køn</th>
                 <th>F&oslash;dseldag</th>
+                <th>#</th>
 
             </tr>
             </thead>
@@ -92,8 +93,19 @@
                 {data: 'name'},
                 {data: 'gender'},
                 {data: 'birthday'},
+                {data: 'team_id'}
             ],
             columnDefs: [
+                {
+                    targets: -1,
+                    title: "Actions",
+                    orderable: !1,
+                    render: function(t, a, e, n) {
+
+                            return '\n<button data-team="0" data-player="'+e.id+'"  class="delPlayer btn btn-outline-danger btn-elevate btn-icon btn-sm" title="View">\n<i class="la la-minus"></i>\n </button>'
+
+                    }
+                },
                 {
                     targets:3,
                     title: "Fødselsdag",
@@ -123,6 +135,44 @@
                     }
                 }
             ]
+
+        });
+
+        $("#playersTable").on("click", ".delPlayer", function(){
+            var dataObj = new Object();
+            dataObj.player_id = $(this).data("player");
+            dataObj.team = $(this).data("team");
+            if (dataObj) {
+                $.ajax({
+                    url: "{{ route("api.v1.players.index") }}/" + dataObj.player_id,
+                    type: "PATCH",
+                    dataType: "json",
+                    data: dataObj,
+                    error: function (data) {
+                        console.log("error", data);
+                        if(data.status == 401) {
+                            //window.location.reload();
+                        }
+
+                    },
+                    success: function (data, status, xhr) {
+                        console.log("success data:", data, "StatusCode:", xhr.status);
+                        toastr.options.closeButton = true;
+                        toastr.options.positionClass = "toast-top-center";
+                        toastr.options.showMethod = "fadeIn";
+                        toastr.options.showDuration = 1000;
+                        toastr.options.extendedTimeOut = 100000;
+                        toastr.success(data, "Udført!");
+                        $("#teamReload").trigger( "click" );
+                        table1.ajax.reload();
+
+
+                    }
+
+                });
+            } else {
+                console.log("No data!");
+            }
 
         });
 
