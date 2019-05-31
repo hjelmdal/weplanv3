@@ -12,18 +12,32 @@ Vue.filter('formatDate', function(value,format = "YYYY-MM-DD") {
     }
 });
 
+Vue.directive('tooltip', function(el, binding){
+    $(el).tooltip({
+        title: binding.value,
+        placement: binding.arg,
+        trigger: 'hover'
+    })
+});
+
 new Vue({
     el: '#kt_body',
 
 
     data:  {
+        info: 0,
+        today: document.querySelector('meta[name="start-date"]').getAttribute('content'),
+        tomorrow:0,
+        yesterday:0,
+        start_date: document.querySelector('meta[name="start-date"]').getAttribute('content'),
+        end_date:0,
         activities: [],
-        url : '/api/v1/activities/get/' + moment().format("YYYY-MM-DD"),
+        uri: '/api/v1/calendar/',
+        url: '/api/v1/calendar/' + document.querySelector('meta[name="start-date"]').getAttribute('content'),
         next: 0,
         prev: 0,
-        start_date: 0,
-        end_date:0,
         days:[],
+        players:[],
         to: 0,
         from: 0,
         total: 0,
@@ -43,26 +57,6 @@ new Vue({
             return true;
         },
 
-        loadOffCanvas(bool) {
-
-            let headerMenuOffcanvas = new KTOffcanvas('kt_offcanvas_01', {
-                overlay: true,
-                baseClass: 'kt-offcanvas-panel',
-                closeBy: 'kt_offcanvas_custom_close',
-                toggleBy: {
-                    target: 'testid',
-                    state: 'kt-header-mobile__toolbar-toggler--active'
-                }
-            });
-            if(bool) {
-                let canvasBody = document.getElementById("kt_offcanvas_01_body");
-                $(canvasBody).load('/test');
-                headerMenuOffcanvas.show();
-            } else {
-                headerMenuOffcanvas.hide();
-            }
-            return true;
-        },
         activitiesLoad(string) {
             let btn = "null";
             if(!document.querySelector('meta[name="api-token"]').getAttribute('content')) {
@@ -92,18 +86,21 @@ new Vue({
                     }
                 }
             }).then((response) => {
+                this.info = response.data.data;
                 this.to = response.data.to;
                 this.from = response.data.from;
                 this.total = response.data.total;
-                this.activities = response.data.data;
+                this.activities = response.data.activities;
                 this.days = [];
+                this.players = response.data.players;
                 this.start_date = response.data.start_date;
                 this.end_date = response.data.end_date;
-                this.next_week = response.data.next_week;
-                this.prev_week = response.data.prev_week;
+                this.today = this.info.today;
+                this.yesterday = this.info.yesterday;
+                this.tomorrow = this.info.tomorrow;
 
                 let last_start_date;
-                response.data.data.forEach(event => {
+                this.activities.forEach(event => {
                     if(event.start_date === last_start_date) {
                         this.days[this.days.length-1].events.push(event);
                     } else {
@@ -115,12 +112,15 @@ new Vue({
                     last_start_date = event.start_date;
                 });
 
-                //console.log(this.days);
 
-                this.next = response.data.next_week_url;
-                this.prev = response.data.prev_week_url;
-                console.log("to: " + this.to + ", total: " + this.total);
+                this.next = this.uri + this.tomorrow;
+                this.prev = this.uri + this.yesterday;
+                //console.log("to: " + this.to + ", total: " + this.total);
+                history.pushState(null,"", this.url);
                 this.setLoadingSpinner(false,btn);
+            });
+            Vue.nextTick(function () {
+                $('[data-toggle="tooltip"]').tooltip()
             })
 
 

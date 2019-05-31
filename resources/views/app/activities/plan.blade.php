@@ -11,15 +11,39 @@
 @section("scripts")
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js" xmlns="http://www.w3.org/1999/html"></script>
     <script src="{{ route("index") }}/vuejs/activities/plan.js?v={{ Helpers::gitVersion()->getVersion() }}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
 
+            KTApp.initTooltips();
+
+
+        });
+
+    </script>
 @endsection
 @section("styles")
     <style>
+        .weplayer-team {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #343d3e;
+            color:#000;
+        }
+        .weplayer-row {
+            background-color: #f0f0f0;
+            border-bottom:1px solid #fff;
+        }
 
+        .weplayer-cell {
+            border-bottom: 1px solid #e6e6e6;
+        }
 
 
 
     </style>
+@endsection
+@section("meta")
+    <meta name="start-date" content="{{ $date }}">
 @endsection
 @section("content")
 
@@ -36,12 +60,12 @@
                     </a>
                     </div>
                         <div class="col-5 kt-align-center">
-                            <h3><span class="d-none d-sm-inline">Aktiviteter i </span>Uge @{{start_date | formatDate("ww")}}</h3>
+                            <h3 style="text-transform: capitalize "><span class="d-none d-sm-inline"></span> @{{today | formatDate("dddd DD. MMM")}}</h3>
                         </div>
                         <div class="col-4">
                         <div class="float-right">
-                            <button id="btnPrev" type="button" class="btn btn-primary" v-on:click="activitiesLoad('prev')">&nbsp;<i class="fa fa-arrow-left"></i><span class="d-none d-sm-inline">Uge @{{prev_week | formatDate("ww")}}</span></button>
-                            <button id="btnNext" type="button" class="btn btn-primary" v-on:click="activitiesLoad('next')">&nbsp;<span class="d-none d-sm-inline">Uge @{{next_week | formatDate("ww")}} </span><i class="fa fa-arrow-right"></i></button>
+                            <button id="btnPrev" type="button" class="btn btn-primary" v-on:click="activitiesLoad('prev')">&nbsp;<i class="fa fa-arrow-left"></i><span class="d-none d-sm-inline">@{{yesterday | formatDate("DD. MMM")}}</span></button>
+                            <button id="btnNext" type="button" class="btn btn-primary" v-on:click="activitiesLoad('next')">&nbsp;<span class="d-none d-sm-inline">@{{tomorrow | formatDate("DD. MMM")}} </span><i class="fa fa-arrow-right"></i></button>
                         </div>
                         </div>
                     </div>
@@ -55,7 +79,7 @@
         <div class="col-12 card1  kt-margin-b-20">
             <div class="flex-left"></div>
             <div class="flex-center">
-                <div class="div-row">Der blev ikke fundet nogle aktiviteter i denne uge!</div>
+                <div class="div-row">Der blev ikke fundet nogle aktiviteter i dag!</div>
             </div>
         </div>
     </template>
@@ -105,6 +129,75 @@
         <div class="clearfix"></div>
     </template>
 
+    <div class="col-12 kt-portlet kt-padding-20">
+        <div class="row sticky-top kt-padding-10 kt-margin-b-10" style="top:120px; background-color: #f7f8fa">
+            <div class="col-4"><span class="kt-font-boldest">Spillere</span></div>
+        <template v-for="activity in activities">
+            <div class="col-1 text-center">
+                @{{activity.start | formatTime("HH:mm")}} - @{{activity.end | formatTime("HH:mm")}}
+            </div>
+        </template>
+        </div>
+
+
+        <template v-for="(player,index) in players">
+            <!-- begin::team row -->
+            <div v-if="index == 0 || players[index-1].team_id != player.team_id" class="row kt-padding-5">
+                <div class="col-12 text-truncate">
+                    <span v-if="player.team" class="weplayer-team" v-text="player.team.name || 'None'"></span>
+                    <span v-else class="weplayer-team">Ikke på en trup</span>
+                </div>
+            </div>
+            <!-- end::team row -->
+            <!-- begin::player row -->
+            <div class="row weplayer-row" v-bind:style="[index % 2 == 0 ? {'background-color':'#f7f8fa'} : {}]">
+                <!-- begin::player name -->
+                <div class="col-4 kt-padding-5 text-truncate weplayer-cell">
+                    <div class="kt-user-card-v2" v-if="player.user">
+                        <div class="kt-user-card-v2__pic">
+                            <img v-if="player.user.avatar" :src="'/storage/' + player.user.avatar" class="kt-img-rounded kt-marginless" alt="photo">
+                        </div>
+                        <div class="kt-user-card-v2__details text-truncate">
+                            <span class="kt-user-card-v2__name text-truncate" v-text="player.name"></span>
+                            <a href="#" class="kt-user-card-v2__email kt-link" v-text="player.dbf_id"></a>
+                        </div>
+                    </div>
+
+                    <div v-else class="kt-user-card-v2">
+                        <div class="kt-user-card-v2__pic">
+                            <div class="kt-badge kt-badge--xl" v-bind:class="{'kt-badge--danger': player.gender == 'K', 'kt-badge--brand': player.gender == 'M'}">
+                                <span data-toggle="kt-tooltip" data-placement="top" v-bind:title="player.name" v-tooltip:top="''" v-text="player.name.substring(0, 1)"></span>
+                            </div>
+                        </div>
+                        <div class="kt-user-card-v2__details text-truncate">
+                            <span class="kt-user-card-v2__name text-truncate" v-text="player.name"></span>
+                            <a href="#" class="kt-user-card-v2__email kt-link" v-text="player.dbf_id"></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- begin::activity cells -->
+                <div v-for="activity in activities" class="col-md-1 col-2 text-center kt-padding-5 text-truncate weplayer-cell">
+                    <template v-if="activity.type && activity.type.decline == 1">
+                        <!-- planning relevant -->
+                        <template v-if="player.declines.length > 0" v-for="decline in player.declines">
+                            <!-- player declined? -->
+                            <button v-if="decline.start_date == activity.start_date" data-toggle="kt-tooltip" data-placement="top" title="Gone surfing!!!" v-tooltip:top="''" type="button" class="btn btn-outline-warning btn-elevate btn-icon btn-md"><i class="la la-plane"></i></button>
+
+                            <button v-else v-bind:data-id="activity.id" type="button" class="btn btn-secondary btn-elevate btn-icon"><i class="la la-plus"></i></button>
+                        </template>
+
+                        <button v-if="player.declines.length == 0" v-bind:data-id="activity.id" type="button" class="btn btn-outline-success btn-elevate btn-icon btn-md"><i class="la la-plus"></i></button>
+                    </template>
+                    <template v-else>
+                        <button type="button" class="btn btn-secondary btn-elevate btn-icon"><span style="color:#ccc">N/A</span></button>
+                    </template>
+                </div>
+                <div class="weplayer-cell" v-bind:class="'col-md-'+(12 - activities.length - 4) +' col-'+(12 - activities.length * 2  - 4)"></div>
+                <!-- end::activity cells -->
+            </div>
+            <!-- end::player row -->
+        </template>
+    </div>
 
 
 

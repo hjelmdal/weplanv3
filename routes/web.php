@@ -62,6 +62,13 @@ Route::middleware(['auth'])->namespace('WePlan')->group(function () {
     Route::get("/teams/{id}/add","TeamController@add")->name("teams.add")->where('id', '[0-9]+');
     Route::resource('teams', 'TeamController');
 
+
+
+    // Calendar
+
+    Route::get("/calendar/list","CalendarController@list")->name("calendar.list");
+
+
 });
 
 // Redirects

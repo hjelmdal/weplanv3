@@ -24,5 +24,17 @@ class WePlayer extends Model
         return $this->belongsTo(WeTeam::class,'team_id','id');
     }
 
+    public function activities() {
+        return $this->belongsToMany(WeActivity::class,'we_player_activities','player_id', 'activity_id')
+            ->withPivot("confirmed_at","declined_at")
+            ->withTimestamps();
+    }
+
+    public function declines() {
+        return $this->hasMany(WeDecline::class,'player_id','id');
+    }
+
+
+
 
 }

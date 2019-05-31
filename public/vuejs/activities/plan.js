@@ -19649,16 +19649,29 @@ Vue.filter('formatDate', function (value) {
     return moment__WEBPACK_IMPORTED_MODULE_1___default()(String(value), "YYYY-MM-DD").format(format);
   }
 });
+Vue.directive('tooltip', function (el, binding) {
+  $(el).tooltip({
+    title: binding.value,
+    placement: binding.arg,
+    trigger: 'hover'
+  });
+});
 new Vue({
   el: '#kt_body',
   data: {
+    info: 0,
+    today: document.querySelector('meta[name="start-date"]').getAttribute('content'),
+    tomorrow: 0,
+    yesterday: 0,
+    start_date: document.querySelector('meta[name="start-date"]').getAttribute('content'),
+    end_date: 0,
     activities: [],
-    url: '/api/v1/activities/get/' + moment__WEBPACK_IMPORTED_MODULE_1___default()().format("YYYY-MM-DD"),
+    uri: '/api/v1/calendar/',
+    url: '/api/v1/calendar/' + document.querySelector('meta[name="start-date"]').getAttribute('content'),
     next: 0,
     prev: 0,
-    start_date: 0,
-    end_date: 0,
     days: [],
+    players: [],
     to: 0,
     from: 0,
     total: 0,
@@ -19674,27 +19687,6 @@ new Vue({
         elem.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
       } else {
         elem.classList.remove("kt-spinner", "kt-spinner--right", "kt-spinner--md", "kt-spinner--light");
-      }
-
-      return true;
-    },
-    loadOffCanvas: function loadOffCanvas(bool) {
-      var headerMenuOffcanvas = new KTOffcanvas('kt_offcanvas_01', {
-        overlay: true,
-        baseClass: 'kt-offcanvas-panel',
-        closeBy: 'kt_offcanvas_custom_close',
-        toggleBy: {
-          target: 'testid',
-          state: 'kt-header-mobile__toolbar-toggler--active'
-        }
-      });
-
-      if (bool) {
-        var canvasBody = document.getElementById("kt_offcanvas_01_body");
-        $(canvasBody).load('/test');
-        headerMenuOffcanvas.show();
-      } else {
-        headerMenuOffcanvas.hide();
       }
 
       return true;
@@ -19735,17 +19727,21 @@ new Vue({
           }
         }
       }).then(function (response) {
+        _this.info = response.data.data;
         _this.to = response.data.to;
         _this.from = response.data.from;
         _this.total = response.data.total;
-        _this.activities = response.data.data;
+        _this.activities = response.data.activities;
         _this.days = [];
+        _this.players = response.data.players;
         _this.start_date = response.data.start_date;
         _this.end_date = response.data.end_date;
-        _this.next_week = response.data.next_week;
-        _this.prev_week = response.data.prev_week;
+        _this.today = _this.info.today;
+        _this.yesterday = _this.info.yesterday;
+        _this.tomorrow = _this.info.tomorrow;
         var last_start_date;
-        response.data.data.forEach(function (event) {
+
+        _this.activities.forEach(function (event) {
           if (event.start_date === last_start_date) {
             _this.days[_this.days.length - 1].events.push(event);
           } else {
@@ -19756,13 +19752,17 @@ new Vue({
           }
 
           last_start_date = event.start_date;
-        }); //console.log(this.days);
+        });
 
-        _this.next = response.data.next_week_url;
-        _this.prev = response.data.prev_week_url;
-        console.log("to: " + _this.to + ", total: " + _this.total);
+        _this.next = _this.uri + _this.tomorrow;
+        _this.prev = _this.uri + _this.yesterday; //console.log("to: " + this.to + ", total: " + this.total);
+
+        history.pushState(null, "", _this.url);
 
         _this.setLoadingSpinner(false, btn);
+      });
+      Vue.nextTick(function () {
+        $('[data-toggle="tooltip"]').tooltip();
       });
     }
   },
