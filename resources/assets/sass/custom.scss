@@ -92,6 +92,10 @@ body::before {
   .kt-login-v2 .kt-login-v2__head .kt-login-v2__head-signup {
     padding-top:1rem;
   }
+
+  .kt-user-card-v2 .kt-user-card-v2__pic img {
+    max-width: 40px !important;
+  }
 }
 
 

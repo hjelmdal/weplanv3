@@ -116,7 +116,7 @@ new Vue({
                 this.next = this.uri + this.tomorrow;
                 this.prev = this.uri + this.yesterday;
                 //console.log("to: " + this.to + ", total: " + this.total);
-                history.pushState(null,"", this.url);
+                history.pushState(null,"", "/activities/plan/" +this.today);
                 this.setLoadingSpinner(false,btn);
             });
             Vue.nextTick(function () {

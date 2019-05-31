@@ -19757,7 +19757,7 @@ new Vue({
         _this.next = _this.uri + _this.tomorrow;
         _this.prev = _this.uri + _this.yesterday; //console.log("to: " + this.to + ", total: " + this.total);
 
-        history.pushState(null, "", _this.url);
+        history.pushState(null, "", "/activities/plan/" + _this.today);
 
         _this.setLoadingSpinner(false, btn);
       });
