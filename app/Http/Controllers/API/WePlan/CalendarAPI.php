@@ -6,18 +6,34 @@ use App\Models\WePlan\WeActivity;
 use App\Models\WePlan\WePlayer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Date;
 
 class CalendarAPI extends Controller
 {
+    private $date;
     /**
      * Display a listing of the resource.
-     *
+     * @param Date
      * @return \Illuminate\Http\Response
      */
     public function plan($date)
     {
+        $this->date = $date;
         $players = WePlayer::orderByRaw('ISNULL(team_id), team_id ASC')->orderBy("gender","asc")->orderBy("name","asc")->get();
-        $players->load("activities","team","declines","user");
+        $players->load("team","user");
+        $players->load(["declines" => function ($q) {
+            $q->where("start_date", "<=", $this->date);
+            $q->where("end_date", ">=", $this->date);
+            $q->orWhere("start_date", $this->date);
+            $q->where("end_date", NULL);
+            $q->orderBy("start_date","asc");
+        }, "activities" => function ($q) {
+            $q->where("start_date", "<=", $this->date);
+            $q->where("end_date", ">=", $this->date);
+            $q->orWhere("start_date", $this->date);
+            $q->where("end_date", NULL);
+            $q->orderBy("start_date","asc");
+        }]);
         $activities = WeActivity::where("start_date",$date)->orderBy("start","asc")->get();
         $activities->load("type");
         $dateObj = new \DateTime($date);

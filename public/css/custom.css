@@ -399,6 +399,10 @@ body::before {
   width: 2.5rem;
 }
 
+.sticky-top {
+  z-index: 10;
+}
+
 @media (max-width: 575px) {
   .kt-content {
     padding: 15px 0px 15px 0px;

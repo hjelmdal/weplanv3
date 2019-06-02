@@ -126,6 +126,33 @@ new Vue({
 
 
         },
+        playerIsOn: function(activity,id) {
+            let isOn = false;
+            if(activity.length > 0) {
+                activity.forEach(event => {
+                    if(event.id === id) {
+                        isOn = true;
+                        return isOn;
+                    }
+                });
+            }
+            return isOn;
+        }
+    },
+
+    computed: {
+      playerIsOn: function(activity,id) {
+          let isOn = false;
+          if(activity.length > 0) {
+              activity.forEach(event => {
+                 if(event.id === id) {
+                     isOn = true;
+                     return isOn;
+                 }
+              });
+          }
+          return isOn;
+      }
     },
 
     mounted: function () {

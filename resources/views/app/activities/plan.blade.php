@@ -130,10 +130,10 @@
     </template>
 
     <div class="col-12 kt-portlet kt-padding-20">
-        <div class="row sticky-top kt-padding-10 kt-margin-b-10" style="top:120px; background-color: #f7f8fa">
+        <div class="row kt-padding-10 kt-margin-b-10" style="background-color: #f7f8fa">
             <div class="col-4"><span class="kt-font-boldest">Spillere</span></div>
         <template v-for="activity in activities">
-            <div class="col-1 text-center">
+            <div :class="[activities.length < 5 ? 'col-2' : 'col-1' ]" class="col-md-1 text-center">
                 @{{activity.start | formatTime("HH:mm")}} - @{{activity.end | formatTime("HH:mm")}}
             </div>
         </template>
@@ -176,17 +176,20 @@
                     </div>
                 </div>
                 <!-- begin::activity cells -->
-                <div v-for="activity in activities" class="col-md-1 col-2 text-center kt-padding-5 text-truncate weplayer-cell">
+                <div v-for="activity in activities" :class="[activities.length < 5 ? 'col-2' : 'col-1' ]" class="col-md-1 text-center kt-padding-5 text-truncate weplayer-cell">
                     <template v-if="activity.type && activity.type.decline == 1">
                         <!-- planning relevant -->
                         <template v-if="player.declines.length > 0" v-for="decline in player.declines">
                             <!-- player declined? -->
                             <button v-if="decline.start_date == activity.start_date" data-toggle="kt-tooltip" data-placement="top" title="Gone surfing!!!" v-tooltip:top="''" type="button" class="btn btn-outline-warning btn-elevate btn-icon btn-md"><i class="la la-plane"></i></button>
 
-                            <button v-else v-bind:data-id="activity.id" type="button" class="btn btn-secondary btn-elevate btn-icon"><i class="la la-plus"></i></button>
+                            <button v-else-if="decline.start_date <= activity.start_date && decline.end_date >= activity.start_date || decline.start_date <= activity.start_date && decline.end_date >= activity.start_date" data-toggle="kt-tooltip" data-placement="top" title="Gone flying!!!" v-tooltip:top="''" type="button" class="btn btn-outline-warning btn-elevate btn-icon btn-md"><i class="la la-plane"></i></button>
+
+
                         </template>
 
-                        <button v-if="player.declines.length == 0" v-bind:data-id="activity.id" type="button" class="btn btn-outline-success btn-elevate btn-icon btn-md"><i class="la la-plus"></i></button>
+                        <button v-if="playerIsOn(player.activities,activity.id) && player.declines.length == 0" v-bind:data-id="activity.id" type="button" class="btn btn-outline-brand btn-elevate btn-icon btn-md"><i class="la la-check"></i></button>
+                        <button v-else-if="player.declines.length == 0" v-bind:data-id="activity.id" type="button" class="btn btn-outline-success btn-elevate btn-icon btn-md"><i class="la la-plus"></i></button>
                     </template>
                     <template v-else>
                         <button type="button" class="btn btn-secondary btn-elevate btn-icon"><span style="color:#ccc">N/A</span></button>

@@ -19764,6 +19764,36 @@ new Vue({
       Vue.nextTick(function () {
         $('[data-toggle="tooltip"]').tooltip();
       });
+    },
+    playerIsOn: function playerIsOn(activity, id) {
+      var isOn = false;
+
+      if (activity.length > 0) {
+        activity.forEach(function (event) {
+          if (event.id === id) {
+            isOn = true;
+            return isOn;
+          }
+        });
+      }
+
+      return isOn;
+    }
+  },
+  computed: {
+    playerIsOn: function playerIsOn(activity, id) {
+      var isOn = false;
+
+      if (activity.length > 0) {
+        activity.forEach(function (event) {
+          if (event.id === id) {
+            isOn = true;
+            return isOn;
+          }
+        });
+      }
+
+      return isOn;
     }
   },
   mounted: function mounted() {
