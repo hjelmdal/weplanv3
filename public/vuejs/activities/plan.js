@@ -19634,6 +19634,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
 
 
+axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common['Authorization'] = document.querySelector('meta[name="api-token"]').getAttribute('content');
 moment__WEBPACK_IMPORTED_MODULE_1___default.a.locale("da");
 Vue.filter('formatTime', function (value) {
   var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "HH:mm";
@@ -19765,7 +19766,7 @@ new Vue({
         $('[data-toggle="tooltip"]').tooltip();
       });
     },
-    playerIsOn: function playerIsOn(activity, id) {
+    isEnrolled: function isEnrolled(activity, id) {
       var isOn = false;
 
       if (activity.length > 0) {
@@ -19778,22 +19779,37 @@ new Vue({
       }
 
       return isOn;
-    }
-  },
-  computed: {
-    playerIsOn: function playerIsOn(activity, id) {
-      var isOn = false;
+    },
+    setActivityStatus: function setActivityStatus(event, player, activity) {
+      var _this2 = this;
 
-      if (activity.length > 0) {
-        activity.forEach(function (event) {
-          if (event.id === id) {
-            isOn = true;
-            return isOn;
+      var btn = event.target;
+      btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+      btn.innerHTML = "";
+      console.log("activity: " + activity.id);
+      console.log("player: " + player.id);
+      var postData = [];
+      postData = {
+        "player_id": player.id,
+        "activity_id": activity.id
+      }, axios__WEBPACK_IMPORTED_MODULE_0___default()({
+        method: 'post',
+        url: document.querySelector('meta[name="enroll-url"]').getAttribute('content'),
+        data: postData
+      }).catch(function (error) {
+        if (error.response) {
+          console.log("Status: " + error.response.status);
+          console.log("Error:" + error.response.data);
+
+          if (error.response.status == 401) {
+            location.reload();
           }
-        });
-      }
 
-      return isOn;
+          event.target.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+        }
+      }).then(function (response) {
+        _this2.activitiesLoad("reload");
+      });
     }
   },
   mounted: function mounted() {

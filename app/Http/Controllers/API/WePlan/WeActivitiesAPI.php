@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Input;
 
 class WeActivitiesAPI extends Controller
 {
@@ -58,6 +59,30 @@ class WeActivitiesAPI extends Controller
 
 
         return $activities;
+    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function enroll(Request $request) {
+        $action = "";
+        $input = $request->only("player_id", "activity_id");
+        try {
+            $activity = WeActivity::findOrFail($request->activity_id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json("Bad input!", 400);
+        }
+        if($activity->players->contains($request->player_id)) {
+            $activity->players()->detach($request->player_id, ["activity_id" => $request->activity_id]);
+            $action = "dissociated";
+        } else {
+            $activity->players()->attach($request->player_id, ["activity_id" => $request->activity_id]);
+            $action = "associated";
+        }
+        $activity->save();
+        return response()->json("Player is " . $action . " OK", 200);
     }
 
     /**

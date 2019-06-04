@@ -33,6 +33,7 @@ Route::name('api.')->group(function () {
         Route::namespace('WePlan')->middleware("api.token")->group(function () {
             Route::apiResource('activities','WeActivitiesAPI');
             Route::get('/activities/get/{date?}','WeActivitiesAPI@get')->name("activities.get");
+            Route::post('/activities/enroll','WeActivitiesAPI@enroll')->name("activities.enroll");
             Route::get('/teams/{id}/players',"WeTeamAPI@players")->name("teams.players");
             Route::apiResource('teams','WeTeamAPI');
             Route::get('/players/byteam',"WePlayerAPI@byTeam")->name("players.byteam");

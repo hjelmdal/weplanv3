@@ -380,6 +380,17 @@ body::before {
   z-index: 10;
 }
 
+.cursor-disabled {
+  cursor: not-allowed !important;
+}
+
+.cursor-disabled:hover {
+  cursor: not-allowed  !important;
+}
+.cursor-disabled:active {
+  cursor: not-allowed  !important;
+}
+
 @media (max-width: 575px) {
     .kt-content {
         padding: 15px 0px 15px 0px;

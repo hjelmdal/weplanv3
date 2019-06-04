@@ -6,6 +6,7 @@
  * Time: 16:50
  */
 
+$user = Auth::user();
 ?>
 @extends("layouts.theme.index")
 @section("scripts")
@@ -44,6 +45,10 @@
 @endsection
 @section("meta")
     <meta name="start-date" content="{{ $date }}">
+
+    @if($user && $user->hasPermissionTo("enroll-player"))
+    <meta name="enroll-url" content="{{ route("api.v1.activities.enroll") }}">
+    @endif
 @endsection
 @section("content")
 
@@ -181,15 +186,22 @@
                         <!-- planning relevant -->
                         <template v-if="player.declines.length > 0" v-for="decline in player.declines">
                             <!-- player declined? -->
-                            <button v-if="decline.start_date == activity.start_date" data-toggle="kt-tooltip" data-placement="top" title="Gone surfing!!!" v-tooltip:top="''" type="button" class="btn btn-outline-warning btn-elevate btn-icon btn-md"><i class="la la-plane"></i></button>
+                            <template v-if="decline.type_id < 1">
+                                <button v-if="decline.start_date == activity.start_date" data-toggle="kt-tooltip" data-placement="top" data-html="true" title="<strong>Gone surfing!!!</strong><br><i class='la la-plane'></i> 2019-09" v-tooltip:top="''" type="button" class="btn btn-outline-warning btn-elevate btn-icon btn-md cursor-disabled"><i class="la la-plane"></i></button>
 
-                            <button v-else-if="decline.start_date <= activity.start_date && decline.end_date >= activity.start_date || decline.start_date <= activity.start_date && decline.end_date >= activity.start_date" data-toggle="kt-tooltip" data-placement="top" title="Gone flying!!!" v-tooltip:top="''" type="button" class="btn btn-outline-warning btn-elevate btn-icon btn-md"><i class="la la-plane"></i></button>
+                                <button v-else-if="decline.start_date <= activity.start_date && decline.end_date >= activity.start_date || decline.start_date <= activity.start_date && decline.end_date >= activity.start_date" data-toggle="kt-tooltip" data-placement="top" title="Gammelmandsskade!!!" v-tooltip:top="''" type="button" class="btn btn-outline-warning btn-elevate btn-icon btn-md cursor-disabled"><i class="la la-plane"></i></button>
+                            </template>
+                            <template v-else-if="decline.type_id == 1">
+                                <button v-if="decline.start_date == activity.start_date" data-toggle="kt-tooltip" data-placement="top" title="Gone surfing!!!" v-tooltip:top="''" type="button" class="btn btn-outline-danger btn-elevate btn-icon btn-md cursor-disabled"><i class="la la-ambulance"></i></button>
+
+                                <button v-else-if="decline.start_date <= activity.start_date && decline.end_date >= activity.start_date || decline.start_date <= activity.start_date && decline.end_date >= activity.start_date" data-toggle="kt-tooltip" data-placement="top" title="Injured!!!" v-tooltip:top="''" type="button" class="btn btn-outline-danger btn-elevate btn-icon btn-md cursor-disabled"><i class="la la-ambulance"></i></button>
+                            </template>
 
 
                         </template>
 
-                        <button v-if="playerIsOn(player.activities,activity.id) && player.declines.length == 0" v-bind:data-id="activity.id" type="button" class="btn btn-outline-brand btn-elevate btn-icon btn-md"><i class="la la-check"></i></button>
-                        <button v-else-if="player.declines.length == 0" v-bind:data-id="activity.id" type="button" class="btn btn-outline-success btn-elevate btn-icon btn-md"><i class="la la-plus"></i></button>
+                        <button v-if="isEnrolled(player.activities,activity.id) && player.declines.length == 0" v-on:click="setActivityStatus($event, player, activity)" type="button" class="btn btn-outline-brand btn-elevate btn-icon btn-md"><i class="la la-check"></i></button>
+                        <button v-else-if="player.declines.length == 0" v-on:click="setActivityStatus($event, player, activity)" type="button" class="btn btn-outline-success btn-elevate btn-icon btn-md"><i class="la la-plus"></i></button>
                     </template>
                     <template v-else>
                         <button type="button" class="btn btn-secondary btn-elevate btn-icon"><span style="color:#ccc">N/A</span></button>

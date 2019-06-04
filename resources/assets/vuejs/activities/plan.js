@@ -1,5 +1,6 @@
 import axios from "axios"
 import moment from "moment"
+axios.defaults.headers.common['Authorization'] = document.querySelector('meta[name="api-token"]').getAttribute('content')
 moment.locale("da");
 Vue.filter('formatTime', function(value,format = "HH:mm") {
     if (value) {
@@ -126,7 +127,7 @@ new Vue({
 
 
         },
-        playerIsOn: function(activity,id) {
+        isEnrolled: function(activity,id) {
             let isOn = false;
             if(activity.length > 0) {
                 activity.forEach(event => {
@@ -137,23 +138,41 @@ new Vue({
                 });
             }
             return isOn;
-        }
+        },
+        setActivityStatus(event, player, activity) {
+            let btn = event.target;
+            btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+            btn.innerHTML = "";
+            console.log("activity: " + activity.id);
+            console.log("player: " + player.id);
+            let postData = [];
+            postData = {
+                "player_id" : player.id,
+                "activity_id" : activity.id,
+            },
+            axios({
+                method: 'post',
+                url: document.querySelector('meta[name="enroll-url"]').getAttribute('content'),
+                data: postData,
+            }).catch(error => {
+                if(error.response) {
+                    console.log("Status: " + error.response.status);
+                    console.log("Error:" + error.response.data);
+                    if(error.response.status == 401) {
+                        location.reload();
+                    }
+                    event.target.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+                }
+            }).then((response) => {
+
+                this.activitiesLoad("reload");
+            })
+        },
     },
 
-    computed: {
-      playerIsOn: function(activity,id) {
-          let isOn = false;
-          if(activity.length > 0) {
-              activity.forEach(event => {
-                 if(event.id === id) {
-                     isOn = true;
-                     return isOn;
-                 }
-              });
-          }
-          return isOn;
-      }
-    },
+
+
+
 
     mounted: function () {
         this.activitiesLoad("reload");
