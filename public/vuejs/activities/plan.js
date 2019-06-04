@@ -19783,9 +19783,10 @@ new Vue({
     setActivityStatus: function setActivityStatus(event, player, activity) {
       var _this2 = this;
 
-      var btn = event.target;
-      btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
-      btn.innerHTML = "";
+      var btn = event.target; //KTApp.blockPage();
+
+      btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light"); //btn.innerHTML = "";
+
       console.log("activity: " + activity.id);
       console.log("player: " + player.id);
       var postData = [];
@@ -19809,6 +19810,7 @@ new Vue({
         }
       }).then(function (response) {
         _this2.activitiesLoad("reload");
+      }).then(function () {//KTApp.unblockPage();
       });
     }
   },

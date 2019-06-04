@@ -141,8 +141,9 @@ new Vue({
         },
         setActivityStatus(event, player, activity) {
             let btn = event.target;
+            //KTApp.blockPage();
             btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
-            btn.innerHTML = "";
+            //btn.innerHTML = "";
             console.log("activity: " + activity.id);
             console.log("player: " + player.id);
             let postData = [];
@@ -166,6 +167,9 @@ new Vue({
             }).then((response) => {
 
                 this.activitiesLoad("reload");
+
+            }).then(() => {
+                //KTApp.unblockPage();
             })
         },
     },
