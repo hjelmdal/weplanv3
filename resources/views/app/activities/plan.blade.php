@@ -45,10 +45,7 @@ $user = Auth::user();
 @endsection
 @section("meta")
     <meta name="start-date" content="{{ $date }}">
-
-    @if($user && $user->hasPermissionTo("enroll-player"))
     <meta name="enroll-url" content="{{ route("api.v1.activities.enroll") }}">
-    @endif
 @endsection
 @section("content")
 
