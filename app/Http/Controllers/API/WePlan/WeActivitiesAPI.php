@@ -2,15 +2,28 @@
 
 namespace App\Http\Controllers\API\WePlan;
 
+use App\Http\Controllers\API\Auth\AuthController;
 use App\Models\WePlan\WeActivity;
+use App\Models\WePlan\WeActivityType;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Input;
 
 class WeActivitiesAPI extends Controller
 {
+    private $user;
+
+    /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct() {
+
+    }
 
     public function index() {
         //
@@ -21,7 +34,7 @@ class WeActivitiesAPI extends Controller
      * @param string
      * @return \Illuminate\Http\Response
      */
-    public function get($date = null)
+    public function get($date = null, Request $request)
     {
         if($date == null) {
             $date = date("Y-m-d");
@@ -40,11 +53,32 @@ class WeActivitiesAPI extends Controller
         $less = date("Y-m-d",$weektime + 604800);
         try {
             $activities = WeActivity::where("start_date", ">=", $greater)->where("start_date", "<", $less)->orderBy("start_date","ASC")->orderBy("start","ASC")->get();
-            $activities->load("players");
+            $activities->load("type","players");
+            foreach ($activities as $activity) {
+                $activity->my_activity = false;
+                $activity->confirmed = 0;
+                $activity->declined = 0;
+                $activity->enrolled = count($activity->players);
+                if($activity->enrolled > 0) {
+                foreach ($activity->players as $player) {
+                    if ($player->id === $request->get('user')->id) {
+                        $activity->my_activity = true;
+
+                    }
+                    if($player->pivot->confirmed_at) {
+                        $activity->confirmed++;
+                    }
+                    if($player->pivot->declined_at) {
+                        $activity->declined++;
+                    }
+                }
+                }
+            }
         } catch (ModelNotFoundException $e) {
             return response()->json("No activities found", 404);
         }
         $data = $activities;
+        $types = WeActivityType::all();
 
         $next_week = date("Y-m-d",$weektime+604800);
         $prev_week = date("Y-m-d",$weektime-604800);
@@ -54,7 +88,7 @@ class WeActivitiesAPI extends Controller
 
         $start_date = $dateObj->format("Y-m-d");
         $end_date = $dateObj->modify("+6 days")->format("Y-m-d");
-        return response()->json(array("data" => $data, "total" => 100, "to" => 4, "from" => 0,"this_week_url" => $this_week_url, "next_week_url" => $next_week_url, "prev_week_url" => $prev_week_url, "start_date" => $start_date, "end_date" => $end_date, "next_week" => $next_week, "prev_week" => $prev_week));
+        return response()->json(array("user" => $this->user,"types" => $types, "data" => $data, "total" => 100, "to" => 4, "from" => 0,"this_week_url" => $this_week_url, "next_week_url" => $next_week_url, "prev_week_url" => $prev_week_url, "start_date" => $start_date, "end_date" => $end_date, "next_week" => $next_week, "prev_week" => $prev_week));
         //$activities = WeActivity::paginate(4);
         //$activities->load("");
 

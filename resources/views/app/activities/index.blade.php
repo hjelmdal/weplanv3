@@ -51,6 +51,24 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__body">
+                    <div class="kt-section__content kt-section__content--border">
+                        <div class="row">
+                            <div class="col-12">
+                                <template v-for="type in types">
+                                    <span class="badge" v-bind:class="{'badge-success':(type.id == 1), 'badge-warning':(type.id == 5), 'badge-danger':(type.id == 2), 'badge-primary':(type.id == 3), 'badge-light':(type.id == 4)}">&nbsp;</span> @{{ type.name }}
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <template v-if="days.length == 0">
         <div class="col-12 card1  kt-margin-b-20">
             <div class="flex-left"></div>
@@ -108,11 +126,15 @@
             <div class="flex-center" style="width: calc(100% - 90px);">
                 <template v-for="activity in day.events">
                     <div class="div-row">
-                        <div class="row-column" v-bind:class="{'bef-success':(activity.type_id == 1), 'bef-warning':(activity.type_id == 5), 'bef-danger':(activity.type_id == 2), 'bef-info':(activity.type_id == 3), 'bef-dark':(activity.type_id == 4)}">
+                        <div class="row-column" v-bind:class="{'bef-success':(activity.type_id == 1), 'bef-warning':(activity.type_id == 5), 'bef-danger':(activity.type_id == 2), 'bef-brand':(activity.type_id == 3), 'bef-metal':(activity.type_id == 4)}">
                             <span class="div-text" style="font-size: 1.5rem;">@{{ activity.title }}</span>
-                            <div class="div-time"><i class="la la-clock-o"></i> @{{ activity.start | formatTime("HH:mm") }} - @{{ activity.end | formatTime("HH:mm") }}</div>
+                            <div class="div-time"><i class="la la-clock-o"></i> @{{ activity.start | formatTime("HH:mm") }} - @{{ activity.end | formatTime("HH:mm") }} <span class="btn btn-outline-metal btn-xs"><i class="la la-users"></i><span class="kt-font-brand">@{{ activity.enrolled }}</span> <span class="kt-font-success">@{{ activity.confirmed }}</span> <span class="kt-font-danger">@{{ activity.declined }}</span></span> </div>
                         </div>
-                        <div class="div-right" style="align-self: center; width: 40px; text-align: right;"><a href="#" class="btn btn-sm btn-outline-brand btn-icon btn-icon-md" title="RSVP">
+                        <div class="div-right" style="align-self: center; width: 40px; text-align: right;">
+                            <a v-if="activity.my_activity === true" href="#" class="btn btn-sm btn-outline-success btn-icon btn-icon-md" title="RSVP">
+                                <i class="la la-calendar-o"></i>
+                            </a>
+                            <a v-else href="#" class="btn btn-sm btn-outline-metal btn-icon btn-icon-md" title="RSVP">
                                 <i class="la la-chevron-right"></i>
                             </a>
 

@@ -19659,6 +19659,7 @@ new Vue({
     start_date: 0,
     end_date: 0,
     days: [],
+    types: [],
     to: 0,
     from: 0,
     total: 0,
@@ -19735,6 +19736,7 @@ new Vue({
           }
         }
       }).then(function (response) {
+        _this.types = response.data.types;
         _this.to = response.data.to;
         _this.from = response.data.from;
         _this.total = response.data.total;

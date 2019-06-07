@@ -79,6 +79,7 @@ $user = Auth::user();
         </div>
     </div>
 
+
     <template v-if="days.length == 0">
         <div class="col-12 card1  kt-margin-b-20">
             <div class="flex-left"></div>

@@ -24,6 +24,7 @@ new Vue({
         start_date: 0,
         end_date:0,
         days:[],
+        types:[],
         to: 0,
         from: 0,
         total: 0,
@@ -92,6 +93,7 @@ new Vue({
                     }
                 }
             }).then((response) => {
+                this.types = response.data.types;
                 this.to = response.data.to;
                 this.from = response.data.from;
                 this.total = response.data.total;

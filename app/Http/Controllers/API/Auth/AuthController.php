@@ -131,4 +131,14 @@ class AuthController extends Controller
             ],404);
         }
     }
+
+    static function user(Request $request) {
+        $token = $request->header('Authorization');
+        $user = User::where('api_token',$token)->first();
+        if($user) {
+            return $user;
+        }
+        return false;
+
+    }
 }

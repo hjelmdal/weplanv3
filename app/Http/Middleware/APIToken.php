@@ -29,6 +29,8 @@ class APIToken
                 return response()->json(["message" => 'Unauthorized!', "header" => $request->header("Authorization")], 401);
 
             }
+            $request->attributes->add(['user' => $user]);
+
             Log::info($token);
             Log::info("User". $user->id);
 
