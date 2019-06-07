@@ -60,12 +60,14 @@ $user = Auth::user();
                         <span class="d-inline d-sm-none">&nbsp;&nbsp;</span><span><i class="fa fa-plus"></i><span class="d-none d-sm-inline">Tilføj</span>
                         </span>
                     </a>
+                        <button id="reload" class="d-none d-sm-inline btn btn-brand btn-icon kt-margin-l-10" v-on:click="activitiesLoad('reload')"><i class="la la-refresh"></i></button>
                     </div>
                         <div class="col-5 kt-align-center">
-                            <h3 style="text-transform: capitalize "><span class="d-none d-sm-inline"></span> @{{today | formatDate("dddd DD. MMM")}}</h3>
+                            <h3 style="text-transform: capitalize "><span class="d-none d-sm-inline"></span> @{{today | formatDate("ddd DD. MMM")}}</h3>
                         </div>
                         <div class="col-4">
                         <div class="float-right">
+
                             <button id="btnPrev" type="button" class="btn btn-primary" v-on:click="activitiesLoad('prev')">&nbsp;<i class="fa fa-arrow-left"></i><span class="d-none d-sm-inline">@{{yesterday | formatDate("DD. MMM")}}</span></button>
                             <button id="btnNext" type="button" class="btn btn-primary" v-on:click="activitiesLoad('next')">&nbsp;<span class="d-none d-sm-inline">@{{tomorrow | formatDate("DD. MMM")}} </span><i class="fa fa-arrow-right"></i></button>
                         </div>

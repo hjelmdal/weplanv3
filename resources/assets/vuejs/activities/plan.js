@@ -44,6 +44,7 @@ new Vue({
         total: 0,
         next_week: 0,
         prev_week: 0,
+        reload: 1,
         authStr: document.querySelector('meta[name="api-token"]').getAttribute('content')
     },
 
@@ -58,21 +59,26 @@ new Vue({
             return true;
         },
 
-        activitiesLoad(string) {
+        activitiesLoad(string = false) {
             let btn = "null";
             if(!document.querySelector('meta[name="api-token"]').getAttribute('content')) {
                 location.reload();
             }
             if(string == "next") {
+                this.reload = 0;
                 this.url = this.next;
                  btn = "btnNext";
             } else if(string == "prev") {
+                this.reload = 0;
                 this.url = this.prev;
                 btn = "btnPrev";
             } else if(string == "reload") {
+                this.reload = 1;
                 console.log("Reloading");
-                btn = "btnNext";
+                btn = "reload";
+
             }
+
             this.setLoadingSpinner(true,btn);
 
             axios({
@@ -117,7 +123,9 @@ new Vue({
                 this.next = this.uri + this.tomorrow;
                 this.prev = this.uri + this.yesterday;
                 //console.log("to: " + this.to + ", total: " + this.total);
-                history.pushState(null,"", "/activities/plan/" +this.today);
+                if(this.reload === 0) {
+                    history.pushState(null, "", "/activities/plan/" + this.today);
+                }
                 this.setLoadingSpinner(false,btn);
             });
             Vue.nextTick(function () {

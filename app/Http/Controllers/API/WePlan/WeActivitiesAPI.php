@@ -40,6 +40,7 @@ class WeActivitiesAPI extends Controller
         $less = date("Y-m-d",$weektime + 604800);
         try {
             $activities = WeActivity::where("start_date", ">=", $greater)->where("start_date", "<", $less)->orderBy("start_date","ASC")->orderBy("start","ASC")->get();
+            $activities->load("players");
         } catch (ModelNotFoundException $e) {
             return response()->json("No activities found", 404);
         }

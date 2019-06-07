@@ -19678,6 +19678,7 @@ new Vue({
     total: 0,
     next_week: 0,
     prev_week: 0,
+    reload: 1,
     authStr: document.querySelector('meta[name="api-token"]').getAttribute('content')
   },
   methods: {
@@ -19692,9 +19693,10 @@ new Vue({
 
       return true;
     },
-    activitiesLoad: function activitiesLoad(string) {
+    activitiesLoad: function activitiesLoad() {
       var _this = this;
 
+      var string = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
       var btn = "null";
 
       if (!document.querySelector('meta[name="api-token"]').getAttribute('content')) {
@@ -19702,14 +19704,17 @@ new Vue({
       }
 
       if (string == "next") {
+        this.reload = 0;
         this.url = this.next;
         btn = "btnNext";
       } else if (string == "prev") {
+        this.reload = 0;
         this.url = this.prev;
         btn = "btnPrev";
       } else if (string == "reload") {
+        this.reload = 1;
         console.log("Reloading");
-        btn = "btnNext";
+        btn = "reload";
       }
 
       this.setLoadingSpinner(true, btn);
@@ -19758,7 +19763,9 @@ new Vue({
         _this.next = _this.uri + _this.tomorrow;
         _this.prev = _this.uri + _this.yesterday; //console.log("to: " + this.to + ", total: " + this.total);
 
-        history.pushState(null, "", "/activities/plan/" + _this.today);
+        if (_this.reload === 0) {
+          history.pushState(null, "", "/activities/plan/" + _this.today);
+        }
 
         _this.setLoadingSpinner(false, btn);
       });
