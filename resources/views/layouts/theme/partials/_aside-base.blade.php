@@ -40,7 +40,7 @@
                             <span class="kt-menu__link-text">Trupper</span></a>
                     </li>
                     <li class="kt-menu__item ">
-                        <a href="{{ route("activities.index") }}" class="kt-menu__link ">
+                        <a href="{{ route("activities.admin") }}" class="kt-menu__link ">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                 <rect id="bound" x="0" y="0" width="24" height="24"/>
@@ -50,47 +50,7 @@
                         </svg>
                         <span class="kt-menu__link-text">Aktiviteter</span></a>
                     </li>
-                    <li class="kt-menu__item kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                        <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">Active Vendors</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
-                        <div class="kt-menu__submenu ">
-                            <span class="kt-menu__arrow"></span>
-                            <ul class="kt-menu__subnav">
-                                <li class="kt-menu__item kt-menu__item--parent" aria-haspopup="true" >
-                                    <span class="kt-menu__link"><span class="kt-menu__link-text">Active Vendors</span></span>
-                                </li>
-                                <li class="kt-menu__item " aria-haspopup="true" >
-                                    <a href="#" class="kt-menu__link ">
-                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                                        <span class="kt-menu__link-text">Vendors Dashboard</span>
-                                    </a>
-                                </li>
-                                <li class="kt-menu__item " aria-haspopup="true" >
-                                    <a href="#" class="kt-menu__link ">
-                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                                        <span class="kt-menu__link-text">Vendors Revenue</span>
-                                    </a>
-                                </li>
-                                <li class="kt-menu__item " aria-haspopup="true" >
-                                    <a href="#" class="kt-menu__link ">
-                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                                        <span class="kt-menu__link-text">Sales Reports</span>
-                                    </a>
-                                </li>
-                                <li class="kt-menu__item " aria-haspopup="true" >
-                                    <a href="#" class="kt-menu__link ">
-                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                                        <span class="kt-menu__link-text">Transactions</span>
-                                    </a>
-                                </li>
-                                <li class="kt-menu__item " aria-haspopup="true" >
-                                    <a href="#" class="kt-menu__link ">
-                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                                        <span class="kt-menu__link-text">Statements</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+
                     <li class="kt-menu__section ">
                         <h4 class="kt-menu__section-text">
                             Vendor Reports

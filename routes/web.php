@@ -11,7 +11,9 @@
 |
 */
 
-Route::get('/','HomeController@welcome')->name("index");
+//Route::get('/','HomeController@welcome')->name("index");
+Route::get("/","WePlan\ActivitiesController@index")->middleware("auth")->name("index");
+
 
 Auth::routes(['verify' => true]);
 
