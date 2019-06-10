@@ -21,6 +21,10 @@
 
     </style>
 @endsection
+@section("meta")
+    <meta name="start-date" content="{{ $date }}">
+@endsection
+
 @section("content")
 
     <div class="row">
@@ -80,7 +84,7 @@
 
     <template v-for="day in days">
         <div class="col-12 card1  kt-margin-b-20 overlay-container">
-            <div class="overlay">
+            <!--div class="overlay">
                 <div class="overlay-text">
                     <div class="kt-iconbox kt-iconbox--success kt-iconbox-xs">
                         <div class="kt-iconbox__icon">
@@ -112,7 +116,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div-->
         <div class="flex-left">
             <div class="div-date">
                 <div class="p8-date">
@@ -125,18 +129,22 @@
             </div>
             <div class="flex-center" style="width: calc(100% - 90px);">
                 <template v-for="activity in day.events">
-                    <div class="div-row" v-bind:class="{'activities-confirmed-bg':(activity.my_status == 2), 'activities-declined-bg':(activity.my_status == 0), 'activities-subscribed-bg':(activity.my_status == 1)}">
+                    <div class="div-row" v-bind:class="{'activities-confirmed-bg overlay1-container':(activity.my_status == 2), 'activities-declined-bg overlay1-container':(activity.my_status == 0), 'activities-subscribed-bg overlay1-container':(activity.my_status == 1)}">
+                        <div v-if="activity.my_activity" class="overlay1">
+                            <button type="button" class="btn btn-success btn-sm kt-margin-r-10 kt-margin-l-10"><i class="fa fa-user-check"></i> Tilmeld</button>
+                            <button type="button" class="btn btn-danger btn-sm kt-margin-r-10 kt-margin-l-10"><i class="fa fa-user-slash"></i> Afbud</button>
+                        </div>
                         <div class="row-column" v-bind:class="{'bef-success':(activity.type_id == 1), 'bef-warning':(activity.type_id == 5), 'bef-danger':(activity.type_id == 2), 'bef-brand':(activity.type_id == 3), 'bef-metal':(activity.type_id == 4)}">
                             <span class="div-text" style="font-size: 1.5rem;">@{{ activity.title }}</span>
                             <div class="div-time"><i class="la la-clock-o"></i> @{{ activity.start | formatTime("HH:mm") }} - @{{ activity.end | formatTime("HH:mm") }} <span class="btn btn-outline-metal btn-xs"><i class="la la-users"></i><span class="kt-font-brand">@{{ activity.enrolled }}</span> <span class="kt-font-success">@{{ activity.confirmed }}</span> <span class="kt-font-danger">@{{ activity.declined }}</span></span> </div>
                         </div>
                         <div class="div-right" style="align-self: center; width: 40px; text-align: right;">
-                            <a v-if="activity.my_activity === true" href="#" class="btn btn-sm btn-outline-success btn-icon btn-icon-md" title="RSVP">
+                            <span v-if="activity.my_activity === true"  class="btn btn-sm btn-outline-success btn-icon btn-icon-md" title="RSVP">
                                 <i class="la la-calendar-o"></i>
-                            </a>
-                            <a v-else href="#" class="btn btn-sm btn-outline-metal btn-icon btn-icon-md" title="RSVP">
+                            </span>
+                            <span v-else  class="btn btn-sm btn-outline-metal btn-icon btn-icon-md" title="RSVP">
                                 <i class="la la-chevron-right"></i>
-                            </a>
+                            </span>
 
                         </div>
                     </div>

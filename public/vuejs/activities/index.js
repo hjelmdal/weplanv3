@@ -19654,6 +19654,8 @@ new Vue({
   data: {
     activities: [],
     url: '/api/v1/activities/get/' + moment__WEBPACK_IMPORTED_MODULE_1___default()().format("YYYY-MM-DD"),
+    uri: '/api/v1/activities/get/',
+    meta: document.querySelector('meta[name="start-date"]').getAttribute('content'),
     next: 0,
     prev: 0,
     start_date: 0,
@@ -19710,16 +19712,26 @@ new Vue({
       }
 
       if (string == "next") {
+        this.reload = 0;
         this.url = this.next;
         btn = "btnNext";
       } else if (string == "prev") {
+        this.reload = 0;
         this.url = this.prev;
         btn = "btnPrev";
       } else if (string == "reload") {
-        console.log("Reloading");
+        this.reload = 1;
+        var newDate = moment__WEBPACK_IMPORTED_MODULE_1___default()(this.meta);
+
+        if (newDate.isValid()) {
+          this.url = this.uri + this.meta;
+        }
+
+        console.log(this.url);
         btn = "btnNext";
       }
 
+      console.log(this.url);
       this.setLoadingSpinner(true, btn);
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
         method: 'get',
@@ -19762,7 +19774,10 @@ new Vue({
 
         _this.next = response.data.next_week_url;
         _this.prev = response.data.prev_week_url;
-        console.log("to: " + _this.to + ", total: " + _this.total);
+
+        if (_this.reload === 0) {
+          history.pushState(null, "", "/activities/date/" + _this.start_date);
+        }
 
         _this.setLoadingSpinner(false, btn);
       });

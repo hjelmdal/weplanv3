@@ -16,11 +16,11 @@ class ActivitiesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($date = null)
     {
         //$activities = new WeActivitiesAPI();
         //$activities = $activities->index();
-        return view("app.activities.index");
+        return view("app.activities.index",["date" => $date]);
     }
 
     public function admin($date = null) {

@@ -43,6 +43,7 @@ Route::middleware(['auth'])->prefix('user')->name("user.")->group(function () {
 Route::get("/user/pending","UserController@index")->middleware("auth")->name("verification.notice");
 
 Route::get("/activities","WePlan\ActivitiesController@index")->middleware("auth")->name("activities.index");
+Route::get("/activities/date/{date?}","WePlan\ActivitiesController@index")->middleware("auth")->name("activities.index")->where(['date' => '[0-9]{4}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}']);
 Route::get("/activities/admin/{date?}","WePlan\ActivitiesController@admin")->middleware("auth")->name("activities.admin")->where(['date' => '[0-9]{4}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}']);
 Route::get("/activities/{id}","WePlan\ActivitiesController@show")->middleware("auth")->name("activities.show")->where('id', '[0-9]+');
 Route::get("/activities/create","WePlan\ActivitiesController@create")->middleware("auth")->name("activities.create");

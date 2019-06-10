@@ -188,15 +188,18 @@ body::before {
 }
 
 .activities-confirmed-bg {
+  background-color: #fff !important;
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIklEQVQYV2NkQAJSp3b6MsL4IM4zM/fNYAEYB8RmROaABACYGA3vz7LhYwAAAABJRU5ErkJggg==) repeat;
 }
 
 .activities-declined-bg {
+  background-color: #fff !important;
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIUlEQVQYV2NkQAL/Lap9GWF8MOdE62awAIwDYjMic0ACAJ6lDgQiZfGFAAAAAElFTkSuQmCC) repeat;
 }
 
 .activities-subscribed-bg {
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIklEQVQYV2NkQAIWka99GWF8EOfEctHNYAEYB8RmROaABACPgg3ONCaHLgAAAABJRU5ErkJggg==) repeat;
+  background-color: #fff !important;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIUlEQVQYV2NkQAIWUa8bGGF8EOfEMlGIAIwDYjMic0ACAJyEDgJtFVQzAAAAAElFTkSuQmCC) repeat;
 }
 
 .flex-left {
@@ -350,6 +353,38 @@ body::before {
 }
 
 .overlay-text {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay1-container {
+  position: relative;
+}
+
+.overlay1 {
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  left: 100%;
+  overflow: hidden;
+  width: 100%;
+  height:100%;
+  transition: .5s ease;
+  z-index: 10;
+  padding: 0.5rem;
+}
+
+.overlay1-container:hover .overlay1 {
+  left:3px;
+  background: rgba(40, 40, 40, 0.6);
+  transition: .5s ease;
+  color: #fff;
+
+}
+
+.overlay1-text {
   height: 100%;
   display: flex;
   justify-content: center;

@@ -19,6 +19,8 @@ new Vue({
     data:  {
         activities: [],
         url : '/api/v1/activities/get/' + moment().format("YYYY-MM-DD"),
+        uri: '/api/v1/activities/get/',
+        meta: document.querySelector('meta[name="start-date"]').getAttribute('content'),
         next: 0,
         prev: 0,
         start_date: 0,
@@ -66,19 +68,30 @@ new Vue({
         },
         activitiesLoad(string) {
             let btn = "null";
+
             if(!document.querySelector('meta[name="api-token"]').getAttribute('content')) {
                 location.reload();
             }
             if(string == "next") {
+                this.reload = 0;
                 this.url = this.next;
-                 btn = "btnNext";
+                btn = "btnNext";
             } else if(string == "prev") {
+                this.reload = 0;
                 this.url = this.prev;
                 btn = "btnPrev";
             } else if(string == "reload") {
-                console.log("Reloading");
+                this.reload = 1;
+
+                let newDate = moment(this.meta);
+                if(newDate.isValid()) {
+                    this.url = this.uri + this.meta;
+                }
+                console.log(this.url);
                 btn = "btnNext";
+
             }
+            console.log(this.url);
             this.setLoadingSpinner(true,btn);
 
             axios({
@@ -121,7 +134,9 @@ new Vue({
 
                 this.next = response.data.next_week_url;
                 this.prev = response.data.prev_week_url;
-                console.log("to: " + this.to + ", total: " + this.total);
+                if(this.reload === 0) {
+                    history.pushState(null, "", "/activities/date/" + this.start_date);
+                }
                 this.setLoadingSpinner(false,btn);
             })
 
