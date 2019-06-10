@@ -133,6 +133,7 @@
                         <div v-if="activity.my_activity" class="overlay1">
                             <button type="button" class="btn btn-success btn-sm kt-margin-r-10 kt-margin-l-10"><i class="fa fa-user-check"></i> Tilmeld</button>
                             <button type="button" class="btn btn-danger btn-sm kt-margin-r-10 kt-margin-l-10"><i class="fa fa-user-slash"></i> Afbud</button>
+                            <span v-if="activity.my_status == 1 || activity.my_status == 2" title="RSVP" class="btn btn-sm btn-outline-metal btn-icon btn-icon-md float-right"><i class="la la-chevron-right"></i></span>
                         </div>
                         <div class="row-column" v-bind:class="{'bef-success':(activity.type_id == 1), 'bef-warning':(activity.type_id == 5), 'bef-danger':(activity.type_id == 2), 'bef-brand':(activity.type_id == 3), 'bef-metal':(activity.type_id == 4)}">
                             <span class="div-text" style="font-size: 1.5rem;">@{{ activity.title }}</span>
