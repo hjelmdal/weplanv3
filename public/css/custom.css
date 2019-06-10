@@ -204,6 +204,18 @@ body::before {
   background-color: #eee;
 }
 
+.activities-confirmed-bg {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIklEQVQYV2NkQAJSp3b6MsL4IM4zM/fNYAEYB8RmROaABACYGA3vz7LhYwAAAABJRU5ErkJggg==) repeat;
+}
+
+.activities-declined-bg {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIUlEQVQYV2NkQAL/Lap9GWF8MOdE62awAIwDYjMic0ACAJ6lDgQiZfGFAAAAAElFTkSuQmCC) repeat;
+}
+
+.activities-subscribed-bg {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIklEQVQYV2NkQAIWka99GWF8EOfEctHNYAEYB8RmROaABACPgg3ONCaHLgAAAABJRU5ErkJggg==) repeat;
+}
+
 .flex-left {
   position: relative;
   display: inline;

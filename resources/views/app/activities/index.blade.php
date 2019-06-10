@@ -125,7 +125,7 @@
             </div>
             <div class="flex-center" style="width: calc(100% - 90px);">
                 <template v-for="activity in day.events">
-                    <div class="div-row">
+                    <div class="div-row" v-bind:class="{'activities-confirmed-bg':(activity.my_status == 2), 'activities-declined-bg':(activity.my_status == 0), 'activities-subscribed-bg':(activity.my_status == 1)}">
                         <div class="row-column" v-bind:class="{'bef-success':(activity.type_id == 1), 'bef-warning':(activity.type_id == 5), 'bef-danger':(activity.type_id == 2), 'bef-brand':(activity.type_id == 3), 'bef-metal':(activity.type_id == 4)}">
                             <span class="div-text" style="font-size: 1.5rem;">@{{ activity.title }}</span>
                             <div class="div-time"><i class="la la-clock-o"></i> @{{ activity.start | formatTime("HH:mm") }} - @{{ activity.end | formatTime("HH:mm") }} <span class="btn btn-outline-metal btn-xs"><i class="la la-users"></i><span class="kt-font-brand">@{{ activity.enrolled }}</span> <span class="kt-font-success">@{{ activity.confirmed }}</span> <span class="kt-font-danger">@{{ activity.declined }}</span></span> </div>

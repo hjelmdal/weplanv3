@@ -63,6 +63,13 @@ class WeActivitiesAPI extends Controller
                 foreach ($activity->players as $player) {
                     if ($player->id === $request->get('user')->id) {
                         $activity->my_activity = true;
+                        if($player->pivot->confirmed_at) {
+                            $activity->my_status = 2;
+                        } elseif($player->pivot->declined_at) {
+                            $activity->my_status = 0;
+                        } else {
+                            $activity->my_status = 1;
+                        }
 
                     }
                     if($player->pivot->confirmed_at) {
