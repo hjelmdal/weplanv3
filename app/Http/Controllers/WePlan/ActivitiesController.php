@@ -24,7 +24,7 @@ class ActivitiesController extends Controller
     }
 
     public function admin($date = null) {
-        return view("app.activities.admin");
+        return view("app.activities.admin",["date" => $date]);
     }
 
     /**

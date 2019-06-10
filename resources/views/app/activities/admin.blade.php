@@ -21,6 +21,9 @@
 
     </style>
 @endsection
+@section("meta")
+    <meta name="start-date" content="{{ $date }}">
+@endsection
 @section("content")
 
     <div class="row">
