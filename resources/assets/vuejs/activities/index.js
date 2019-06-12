@@ -20,6 +20,8 @@ new Vue({
         activities: [],
         url : '/api/v1/activities/get/' + moment().format("YYYY-MM-DD"),
         uri: '/api/v1/activities/get/',
+        confirmUrl: '/api/v1/activities/confirm',
+        declineUrl: '/api/v1/activities/decline',
         meta: document.querySelector('meta[name="start-date"]').getAttribute('content'),
         next: 0,
         prev: 0,
@@ -32,6 +34,9 @@ new Vue({
         total: 0,
         next_week: 0,
         prev_week: 0,
+        decline_activity: "test",
+        decline_start_date: "",
+        hover: false,
         authStr: document.querySelector('meta[name="api-token"]').getAttribute('content')
     },
 
@@ -143,7 +148,70 @@ new Vue({
 
 
         },
+
+        confirmActivity(event,activity) {
+            let btn = event.target;
+            btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+            let postData = [];
+            postData = {
+                "activity_id" : activity.id,
+                "start_date" : activity.start_date,
+                "players" : activity.players,
+            },
+            axios({
+                method: 'post',
+                url: this.confirmUrl,
+                headers: {Authorization: document.querySelector('meta[name="api-token"]').getAttribute('content')},
+                data: postData
+            }).catch(error => {
+                if(error.response) {
+                    console.log("Error code: " + error.response.status);
+                    if(error.response.status == 401) {
+                        location.reload();
+                    }
+                    btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+                }
+            }).then((response) => {
+                console.log(response.data);
+                this.activitiesLoad("reload");
+            });
+
+        },
+        declineActivity(event,activity) {
+            let btn = event.target;
+            btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+            let postData = [];
+            postData = {
+                "activity_id" : activity.id,
+                "start_date" : activity.start_date,
+                "players" : activity.players,
+            },
+            axios({
+                method: 'post',
+                url: this.declineUrl,
+                headers: {Authorization: document.querySelector('meta[name="api-token"]').getAttribute('content')},
+                data: postData
+            }).catch(error => {
+                if(error.response) {
+                    console.log("Error code: " + error.response.status);
+                    if(error.response.status == 401) {
+                        location.reload();
+                    }
+                    btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+                }
+            }).then((response) => {
+                console.log(response.data);
+                this.activitiesLoad("reload");
+            });
+        },
+        showDeclineModal(event,activity) {
+            this.decline_activity = activity.id;
+            this.decline_start_date = activity.start_date;
+            console.log("Decline modal!");
+        },
     },
+
+
 
     mounted: function () {
         this.activitiesLoad("reload");

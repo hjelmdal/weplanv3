@@ -376,7 +376,15 @@ body::before {
   padding: 0.5rem;
 }
 
-.overlay1-container:hover .overlay1 {
+.overlay1-containerhover .overlay1 {
+  left:3px;
+  background: rgba(40, 40, 40, 0.6);
+  transition: .5s ease;
+  color: #fff;
+
+}
+
+.overlay1-container.active .overlay1 {
   left:3px;
   background: rgba(40, 40, 40, 0.6);
   transition: .5s ease;

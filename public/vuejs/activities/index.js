@@ -19655,6 +19655,8 @@ new Vue({
     activities: [],
     url: '/api/v1/activities/get/' + moment__WEBPACK_IMPORTED_MODULE_1___default()().format("YYYY-MM-DD"),
     uri: '/api/v1/activities/get/',
+    confirmUrl: '/api/v1/activities/confirm',
+    declineUrl: '/api/v1/activities/decline',
     meta: document.querySelector('meta[name="start-date"]').getAttribute('content'),
     next: 0,
     prev: 0,
@@ -19667,6 +19669,9 @@ new Vue({
     total: 0,
     next_week: 0,
     prev_week: 0,
+    decline_activity: "test",
+    decline_start_date: "",
+    hover: false,
     authStr: document.querySelector('meta[name="api-token"]').getAttribute('content')
   },
   methods: {
@@ -19781,6 +19786,77 @@ new Vue({
 
         _this.setLoadingSpinner(false, btn);
       });
+    },
+    confirmActivity: function confirmActivity(event, activity) {
+      var _this2 = this;
+
+      var btn = event.target;
+      btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+      var postData = [];
+      postData = {
+        "activity_id": activity.id,
+        "start_date": activity.start_date,
+        "players": activity.players
+      }, axios__WEBPACK_IMPORTED_MODULE_0___default()({
+        method: 'post',
+        url: this.confirmUrl,
+        headers: {
+          Authorization: document.querySelector('meta[name="api-token"]').getAttribute('content')
+        },
+        data: postData
+      }).catch(function (error) {
+        if (error.response) {
+          console.log("Error code: " + error.response.status);
+
+          if (error.response.status == 401) {
+            location.reload();
+          }
+
+          btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+        }
+      }).then(function (response) {
+        console.log(response.data);
+
+        _this2.activitiesLoad("reload");
+      });
+    },
+    declineActivity: function declineActivity(event, activity) {
+      var _this3 = this;
+
+      var btn = event.target;
+      btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+      var postData = [];
+      postData = {
+        "activity_id": activity.id,
+        "start_date": activity.start_date,
+        "players": activity.players
+      }, axios__WEBPACK_IMPORTED_MODULE_0___default()({
+        method: 'post',
+        url: this.declineUrl,
+        headers: {
+          Authorization: document.querySelector('meta[name="api-token"]').getAttribute('content')
+        },
+        data: postData
+      }).catch(function (error) {
+        if (error.response) {
+          console.log("Error code: " + error.response.status);
+
+          if (error.response.status == 401) {
+            location.reload();
+          }
+
+          btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+        }
+      }).then(function (response) {
+        console.log(response.data);
+
+        _this3.activitiesLoad("reload");
+      });
+    },
+    showDeclineModal: function showDeclineModal(event, activity) {
+      this.decline_activity = activity.id;
+      this.decline_start_date = activity.start_date;
+      console.log("Decline modal!");
     }
   },
   mounted: function mounted() {

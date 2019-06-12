@@ -26,7 +26,7 @@
 @endsection
 
 @section("content")
-
+    <!-- begin: header tools -->
     <div class="row">
         <div class="col-12">
             <div class="kt-portlet">
@@ -54,7 +54,8 @@
             </div>
         </div>
     </div>
-
+    <!-- end: header tools -->
+    <!-- begin: Filters -->
     <div class="row">
         <div class="col-12">
             <div class="kt-portlet">
@@ -72,7 +73,8 @@
             </div>
         </div>
     </div>
-
+    <!-- end: Filters -->
+    <!-- begin: Activity table -->
     <template v-if="days.length == 0">
         <div class="col-12 card1  kt-margin-b-20">
             <div class="flex-left"></div>
@@ -83,57 +85,24 @@
     </template>
 
     <template v-for="day in days">
-        <div class="col-12 card1  kt-margin-b-20 overlay-container">
-            <!--div class="overlay">
-                <div class="overlay-text">
-                    <div class="kt-iconbox kt-iconbox--success kt-iconbox-xs">
-                        <div class="kt-iconbox__icon">
-                            <div class="kt-iconbox__icon-bg"></div>
-
-                            <svg class="svg-overlay-icon-x3" viewBox="1 -50 511.99975 511" xmlns="http://www.w3.org/2000/svg"><path d="m405.8125 10.5-198.125 198.125-101.5-101.5-96.1875 96.1875 197.6875 197.6875 294.3125-294.3125zm0 0" fill="#1dc9b7"/><path d="m207.6875 411c-2.652344 0-5.195312-1.054688-7.070312-2.929688l-197.6875-197.6875c-1.875-1.875-2.929688-4.417968-2.929688-7.070312 0-2.65625 1.054688-5.195312 2.929688-7.074219l96.1875-96.183593c3.90625-3.90625 10.238281-3.90625 14.140624 0l94.429688 94.429687 191.054688-191.054687c1.875-1.875 4.417968-2.929688 7.070312-2.929688s5.195312 1.054688 7.070312 2.929688l96.1875 96.1875c3.90625 3.90625 3.90625 10.238281 0 14.144531l-128.136718 128.136719c-3.90625 3.902343-10.238282 3.902343-14.144532 0-3.90625-3.90625-3.90625-10.238282 0-14.144532l121.066407-121.066406-82.042969-82.046875-191.054688 191.054687c-1.875 1.875-4.417968 2.929688-7.070312 2.929688s-5.195312-1.054688-7.070312-2.929688l-94.429688-94.429687-82.042969 82.046875 183.542969 183.542969 102.535156-102.53125c3.902344-3.90625 10.234375-3.90625 14.140625 0s3.90625 10.238281 0 14.144531l-109.605469 109.601562c-1.875 1.875-4.417968 2.929688-7.070312 2.929688zm0 0"/><path d="m345.660156 273.1875c-2.640625 0-5.210937-1.066406-7.070312-2.929688-1.871094-1.859374-2.929688-4.4375-2.929688-7.070312 0-2.628906 1.058594-5.207031 2.929688-7.066406 1.859375-1.859375 4.429687-2.933594 7.070312-2.933594 2.628906 0 5.210938 1.070312 7.070313 2.933594 1.859375 1.859375 2.929687 4.4375 2.929687 7.066406 0 2.632812-1.070312 5.210938-2.929687 7.070312-1.859375 1.863282-4.441407 2.929688-7.070313 2.929688zm0 0"/></svg>
-                        </div>
-                        <div class="kt-iconbox__title kt-font-dark">
-                            Ja!
-                        </div>
-                    </div>
-                    <div class="kt-iconbox kt-iconbox--danger kt-iconbox-xs">
-                        <div class="kt-iconbox__icon">
-                            <div class="kt-iconbox__icon-bg"></div>
-
-                            <svg class="svg-overlay-icon-x25" viewBox="1 1 511.9995 511" xmlns="http://www.w3.org/2000/svg"><path d="m502 106.65625-96.160156-96.160156-149.839844 149.84375-149.84375-149.84375-96.15625 96.160156 149.839844 149.84375-149.839844 149.839844 96.15625 96.160156 149.84375-149.84375 149.839844 149.84375 96.160156-96.160156-149.84375-149.839844zm0 0" fill="#fd397a"/><path d="m405.839844 512.496094c-2.558594 0-5.117188-.976563-7.070313-2.925782l-56.613281-56.617187c-3.90625-3.902344-3.90625-10.234375 0-14.140625s10.234375-3.90625 14.140625 0l49.546875 49.542969 82.015625-82.015625-142.773437-142.769532c-3.902344-3.90625-3.902344-10.238281 0-14.144531l142.773437-142.769531-82.019531-82.015625-142.769532 142.769531c-3.90625 3.902344-10.234374 3.902344-14.140624 0l-142.773438-142.769531-82.015625 82.015625 142.769531 142.769531c3.90625 3.90625 3.90625 10.238281 0 14.144531l-142.769531 142.769532 82.015625 82.015625 142.773438-142.769531c1.875-1.875 4.417968-2.929688 7.070312-2.929688s5.195312 1.054688 7.070312 2.929688l36.539063 36.539062c3.90625 3.90625 3.90625 10.238281 0 14.144531-3.90625 3.902344-10.234375 3.902344-14.140625 0l-29.472656-29.472656-142.769532 142.773437c-3.902343 3.902344-10.234374 3.902344-14.140624 0l-96.15625-96.160156c-3.90625-3.902344-3.90625-10.234375 0-14.140625l142.769531-142.773437-142.769531-142.769532c-3.90625-3.90625-3.90625-10.234374 0-14.140624l96.15625-96.160157c3.90625-3.902343 10.234374-3.902343 14.140624 0l142.773438 142.773438 142.769531-142.773438c3.910157-3.902343 10.238281-3.902343 14.144531 0l96.15625 96.160157c3.90625 3.90625 3.90625 10.234374 0 14.140624l-142.773437 142.773438 142.773437 142.769531c3.90625 3.90625 3.90625 10.238281 0 14.140625l-96.160156 96.160156c-1.949218 1.949219-4.507812 2.925782-7.070312 2.925782zm0 0"/><path d="m320.953125 427.582031c-2.640625 0-5.207031-1.066406-7.066406-2.929687-1.871094-1.859375-2.929688-4.4375-2.929688-7.066406 0-2.632813 1.058594-5.210938 2.929688-7.070313 1.859375-1.859375 4.4375-2.929687 7.066406-2.929687 2.621094 0 5.199219 1.070312 7.070313 2.929687 1.859374 1.859375 2.929687 4.4375 2.929687 7.070313 0 2.628906-1.070313 5.207031-2.929687 7.066406-1.871094 1.863281-4.4375 2.929687-7.070313 2.929687zm0 0"/></svg>
-                        </div>
-                        <div class="kt-iconbox__title kt-font-dark">
-                            Nej!
-                        </div>
-                    </div>
-                    <div class="kt-iconbox kt-iconbox--danger kt-iconbox-xs">
-                        <div class="kt-iconbox__icon">
-                            <div class="kt-iconbox__icon-bg"></div>
-                            <svg  class="svg-overlay-icon-x25" fill="#5578eb" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 76 76" style="enable-background:new 0 0 76 76;" xml:space="preserve"><g id="_x37_7_Essential_Icons_38_"><path id="More_Details__x28_3_x29_" d="M38,0C17,0,0,17,0,38s17,38,38,38s38-17,38-38S59,0,38,0z M38,72C19.2,72,4,56.8,4,38S19.2,4,38,4s34,15.2,34,34S56.8,72,38,72z M38,31c-3.9,0-7,3.1-7,7s3.1,7,7,7s7-3.1,7-7S41.9,31,38,31z M38,41c-1.7,0-3-1.4-3-3c0-1.7,1.3-3,3-3s3,1.3,3,3C41,39.6,39.7,41,38,41z M58,31c-3.9,0-7,3.1-7,7s3.1,7,7,7s7-3.1,7-7S61.9,31,58,31z M58,41c-1.7,0-3-1.4-3-3c0-1.7,1.3-3,3-3s3,1.3,3,3C61,39.6,59.7,41,58,41z M18,31c-3.9,0-7,3.1-7,7s3.1,7,7,7s7-3.1,7-7S21.9,31,18,31z M18,41c-1.7,0-3-1.4-3-3c0-1.7,1.3-3,3-3s3,1.3,3,3C21,39.6,19.7,41,18,41z"/></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
-                        </div>
-                        <div class="kt-iconbox__title kt-font-dark">
-                            Info!
-                        </div>
-                    </div>
-                </div>
-            </div-->
-        <div class="flex-left">
-            <div class="div-date">
-                <div class="p8-date">
-                    <div class="p8-date-mon">@{{day.date | formatDate("MMM")}}</div>
-                    <div class="p8-date-num">@{{day.date | formatDate("DD")}}</div>
-                    <div class="p8-date-day">@{{day.date | formatDate("ddd")}}</div>
+        <div class="col-12 card1  kt-margin-b-20">
+            <div class="flex-left">
+                <div class="div-date">
+                    <div class="p8-date">
+                        <div class="p8-date-mon">@{{day.date | formatDate("MMM")}}</div>
+                        <div class="p8-date-num">@{{day.date | formatDate("DD")}}</div>
+                        <div class="p8-date-day">@{{day.date | formatDate("ddd")}}</div>
 
                     </div>
                 </div>
             </div>
             <div class="flex-center" style="width: calc(100% - 90px);">
                 <template v-for="activity in day.events">
-                    <div class="div-row" v-bind:class="{'activities-confirmed-bg overlay1-container':(activity.my_status == 2), 'activities-declined-bg overlay1-container':(activity.my_status == 0), 'activities-subscribed-bg overlay1-container':(activity.my_status == 1)}">
+                    <div class="div-row" @mouseover="hover = activity.id" v-bind:class="{'activities-confirmed-bg overlay1-container':(activity.my_status == 2), 'activities-declined-bg overlay1-container':(activity.my_status == 0), 'activities-subscribed-bg overlay1-container':(activity.my_status == 1), 'active':(hover == activity.id && activity.my_status)}">
                         <div v-if="activity.my_activity" class="overlay1">
-                            <button type="button" class="btn btn-success btn-sm kt-margin-r-10 kt-margin-l-10"><i class="fa fa-user-check"></i> Tilmeld</button>
-                            <button type="button" class="btn btn-danger btn-sm kt-margin-r-10 kt-margin-l-10"><i class="fa fa-user-slash"></i> Afbud</button>
-                            <span v-if="activity.my_status == 1 || activity.my_status == 2" title="RSVP" class="btn btn-sm btn-outline-metal btn-icon btn-icon-md float-right"><i class="la la-chevron-right"></i></span>
+                            <button v-on:click="confirmActivity($event,activity)" type="button" class="btn btn-success btn-sm kt-margin-r-10 kt-margin-l-10"><i class="fa fa-user-check"></i> Tilmeld</button>
+                            <button  v-on:click="showDeclineModal($event,activity)" data-toggle="modal" data-target="#modal1" type="button" class="btn btn-danger btn-sm kt-margin-r-10 kt-margin-l-10"><i class="fa fa-user-slash"></i> Afbud</button>
+                            <span v-if="activity.my_status == 0 || activity.my_status == 2" title="RSVP" class="btn btn-sm btn-outline-metal btn-icon btn-icon-md float-right"><i class="la la-chevron-right"></i></span>
                         </div>
                         <div class="row-column" v-bind:class="{'bef-success':(activity.type_id == 1), 'bef-warning':(activity.type_id == 5), 'bef-danger':(activity.type_id == 2), 'bef-brand':(activity.type_id == 3), 'bef-metal':(activity.type_id == 4)}">
                             <span class="div-text" style="font-size: 1.5rem;">@{{ activity.title }}</span>
@@ -153,26 +122,40 @@
 
                 </template>
             </div>
-            <!--div class="flex-right">
-                <div class="p8-vertical-container">
-                    <div class="p8-vertical-center">
-                        <a :href="'{{ route("activities.plan") }}/'+day.date" class="btn btn-success btn-icon"><i class="fa fa-calendar-alt"></i></a>
-                    </div>
-                </div>
-            </div-->
-
-
-
         </div>
-
         <div class="clearfix"></div>
     </template>
-
-
+    <!-- end: Activity table -->
+    <!-- Small Modal -->
+    <div id="modal1" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Email address</label>
+                        <input v-model="decline_activity" type="text" class="form-control" placeholder="Enter email">
+                        <input v-model="decline_start_date" type="text" class="form-control" placeholder="Enter email">
+                        <input v-model="decline_activity" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+                        <span class="form-text text-muted">We'll never share your email with anyone else.</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-brand" data-dismiss="modal">Fortryd</button>
+                    <button type="button" class="btn btn-danger">Meld afbud</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 @endsection
 @section("modal")
-    @include("layouts.theme.blocks.modal1")
+
 @endsection
 

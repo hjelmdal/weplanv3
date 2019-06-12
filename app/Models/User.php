@@ -57,7 +57,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function WePlayer() {
-        return $this->hasOne(WePlayer::class,'user_id','id');
+        return $this->belongsTo(WePlayer::class,'player_id','id');
     }
 
     public function revoke() {

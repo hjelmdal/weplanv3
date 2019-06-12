@@ -5,6 +5,9 @@ namespace App\Http\Controllers\API\WePlan;
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Models\WePlan\WeActivity;
 use App\Models\WePlan\WeActivityType;
+use App\Models\WePlan\WeDecline;
+use Carbon\Carbon;
+use http\Env\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -36,6 +39,12 @@ class WeActivitiesAPI extends Controller
      */
     public function get($date = null, Request $request)
     {
+        $user = $request->get('user');
+        if($user->WePlayer) {
+            $player_id = $user->WePlayer->id;
+        } else {
+            $player_id = false;
+        }
         if($date == null) {
             $date = date("Y-m-d");
         }
@@ -61,7 +70,7 @@ class WeActivitiesAPI extends Controller
                 $activity->enrolled = count($activity->players);
                 if($activity->enrolled > 0) {
                 foreach ($activity->players as $player) {
-                    if ($player->id === $request->get('user')->id) {
+                    if ($player->id === $player_id) {
                         $activity->my_activity = true;
                         if($player->pivot->confirmed_at) {
                             $activity->my_status = 2;
@@ -125,6 +134,117 @@ class WeActivitiesAPI extends Controller
         }
         $activity->save();
         return response()->json("Player is " . $action . " OK", 200);
+    }
+    /**
+     * Confirm the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function confirm(Request $request)
+    {
+        $user = $request->get('user'); // Get user from Middleware
+        if($user->WePlayer) {
+            $player_id = $user->WePlayer->id;
+        } else {
+            return response()->json("Ingen spiller associeret", 404);
+        }
+        $my_activity = false;
+        foreach ($request->players as $p) {
+            if ($p["id"] === $player_id) {
+                $my_activity = true;
+            }
+        }
+        if ($my_activity) {
+            try {
+                $activity = WeActivity::findOrFail($request->activity_id);
+
+            } catch (ModelNotFoundException $e) {
+                $activity = false;
+                return response()->json(array("error" => "Activity not found!"), 404);
+            }
+            if ($activity) {
+                $player_id = $user->WePlayer->id;
+                $activity->players()->sync([
+                    $player_id => ['confirmed_at' => Carbon::now(), 'deleted_at' => NULL]
+                ],false);
+                $code = 201;
+                $activity->save();
+//                if ($input["delete_decline"]) {
+//                    try {
+//                        $decline = Decline::where('date', $activity->start_date)->firstOrFail();
+//                        $decline->delete();
+//                        $code = 204;
+//                    } catch (ModelNotFoundException $e) {
+//                        $code = 200;
+//                    }
+//                }
+                //Logging::insert("confirmTraining",$input);
+
+
+                return response()->json($request, $code);
+
+            }
+
+
+        }
+
+    }
+
+    /**
+     * Decline the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function decline(Request $request) {
+        $user = $request->get('user'); // Get user from Middleware
+        if($user->WePlayer) {
+            $player_id = $user->WePlayer->id;
+        } else {
+            return response()->json("Ingen spiller associeret", 404);
+        }
+        $my_activity = false;
+        foreach ($request->players as $p) {
+            if ($p["id"] === $player_id) {
+                $my_activity = true;
+            }
+        }
+        if ($my_activity) {
+            try {
+                $activity = WeActivity::findOrFail($request->activity_id);
+
+            } catch (ModelNotFoundException $e) {
+                $activity = false;
+                return response()->json(array("error" => "Activity not found!"), 404);
+            }
+            if ($activity) {
+                $decline = WeDecline::firstOrNew(array('start_date' => $request->start_date,'player_id' => $player_id));
+                if ($decline->exists) {
+                    $statusCode = 200;
+                } else {
+                    $statusCode = 201;
+                }
+                $decline->start_date = $activity->start_date;
+                $decline->training_id = $activity->id;
+                $decline->decline_category = $request->category;
+                $decline->description = $request->description;
+                $decline->player_id = $player_id;
+                $decline->save();
+                //$input["decline_id"] = $decline->id;
+                //Training update
+                $activity->players()->sync([
+                    $player_id => ['declined_at' => Carbon::now(), 'confirmed_at' => NULL]
+                ],false);
+                $activity->save();
+                //Logging::insert("declineTraining",$input);
+                return response()->json($request, $statusCode);
+
+            }
+
+        }
+        return Response::json(array("error" => "Bad request!"), 400, array("header" => "Bad Request"));
+
     }
 
     /**
