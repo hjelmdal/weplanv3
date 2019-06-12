@@ -34,10 +34,7 @@
                     <div class="kt-section__content kt-section__content--border">
                         <div class="row">
                             <div class="col-3">
-                                <a href="{{ route("activities.create") }}" data-target="#modal1" data-toggle="modal" class="btn btn-success kt-btn--icon">
-                                    <span class="d-inline d-sm-none">&nbsp;&nbsp;</span><span><i class="fa fa-plus"></i><span class="d-none d-sm-inline">Tilføj</span>
-                        </span>
-                                </a>
+
                             </div>
                             <div class="col-5 kt-align-center">
                                 <h3><span id="headline" class="d-none d-sm-inline">Aktiviteter i </span>Uge @{{start_date | formatDate("ww")}}</h3>
@@ -98,8 +95,8 @@
             </div>
             <div class="flex-center" style="width: calc(100% - 90px);">
                 <template v-for="activity in day.events">
-                    <div v-bind:id="'elem-' + activity.id" class="div-row" @mouseover="hover = activity.id" v-bind:class="{'activities-confirmed-bg overlay1-container':(activity.my_status == 2), 'activities-declined-bg overlay1-container':(activity.my_status == 0), 'activities-subscribed-bg overlay1-container':(activity.my_status == 1), 'active':(hover == activity.id && activity.my_activity)}">
-                        <div v-if="activity.my_activity" class="overlay1">
+                    <div v-bind:id="'elem-' + activity.id" class="div-row" @mouseover="hover = activity.id" @mouseleave="hideMouseOver()" v-bind:class="{'activities-confirmed-bg overlay1-container':(activity.my_status == 2), 'activities-declined-bg overlay1-container':(activity.my_status == 0), 'activities-subscribed-bg overlay1-container':(activity.my_status == 1), 'active':(hover == activity.id && activity.my_activity)}">
+                        <div v-if="activity.my_activity && now < activity.response_timestamp" class="overlay1">
                             <button v-on:click="confirmActivity($event,activity)" type="button" class="btn btn-success btn-sm kt-margin-r-10 kt-margin-l-10"><i class="fa fa-user-check"></i> Tilmeld</button>
                             <button  v-on:click="showDeclineModal($event,activity)" data-toggle="modal" data-target="#modal1" type="button" class="btn btn-danger btn-sm kt-margin-r-10 kt-margin-l-10"><i class="fa fa-user-slash"></i> Afbud</button>
                             <span v-if="activity.my_status == 0 || activity.my_status == 2" title="RSVP" class="btn btn-sm btn-outline-metal btn-icon btn-icon-md float-right"><i class="la la-chevron-right"></i></span>
@@ -109,10 +106,10 @@
                             <div class="div-time"><i class="la la-clock-o"></i> @{{ activity.start | formatTime("HH:mm") }} - @{{ activity.end | formatTime("HH:mm") }} <span class="btn btn-outline-metal btn-xs"><i class="la la-users"></i><span class="kt-font-brand">@{{ activity.enrolled }}</span> <span class="kt-font-success">@{{ activity.confirmed }}</span> <span class="kt-font-danger">@{{ activity.declined }}</span></span> </div>
                         </div>
                         <div class="div-right" style="align-self: center; width: 40px; text-align: right;">
-                            <span v-if="activity.my_activity === true"  class="btn btn-sm btn-outline-success btn-icon btn-icon-md" title="RSVP">
+                            <span v-if="activity.my_activity === true && now < activity.response_timestamp"  class="btn btn-sm btn-outline-success btn-icon btn-icon-md" title="RSVP">
                                 <i class="la la-calendar-o"></i>
                             </span>
-                            <span v-else  class="btn btn-sm btn-outline-metal btn-icon btn-icon-md" title="RSVP">
+                            <span v-else class="btn btn-font-dark btn-outline-hover-brand btn-icon btn-icon-md" title="RSVP">
                                 <i class="la la-chevron-right"></i>
                             </span>
 

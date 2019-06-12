@@ -40,11 +40,7 @@ class WeActivitiesAPI extends Controller
     public function get($date = null, Request $request)
     {
         $user = $request->get('user');
-        if($user->WePlayer) {
-            $player_id = $user->WePlayer->id;
-        } else {
-            $player_id = false;
-        }
+
         if($date == null) {
             $date = date("Y-m-d");
         }
@@ -60,11 +56,19 @@ class WeActivitiesAPI extends Controller
         $weektime = strtotime($date);
         $greater = date("Y-m-d",$weektime);
         $less = date("Y-m-d",$weektime + 604800);
+
+        if($user->WePlayer) {
+            $player_id = $user->WePlayer->id;
+            $user->WePlayer->declines = WeDecline::where("start_date",">=",$greater)->where("start_date","<=",$less)->orderBy("start_date","ASC")->get();
+        } else {
+            $player_id = false;
+        }
         try {
             $activities = WeActivity::where("start_date", ">=", $greater)->where("start_date", "<", $less)->orderBy("start_date","ASC")->orderBy("start","ASC")->get();
             $activities->load("type","players");
             foreach ($activities as $activity) {
                 $activity->my_activity = false;
+                $activity->response_timestamp = strtotime($activity->response_date . " " . $activity->response_time);
                 $activity->confirmed = 0;
                 $activity->declined = 0;
                 $activity->enrolled = count($activity->players);
@@ -104,7 +108,7 @@ class WeActivitiesAPI extends Controller
 
         $start_date = $dateObj->format("Y-m-d");
         $end_date = $dateObj->modify("+6 days")->format("Y-m-d");
-        return response()->json(array("user" => $this->user,"types" => $types, "data" => $data, "total" => 100, "to" => 4, "from" => 0,"this_week_url" => $this_week_url, "next_week_url" => $next_week_url, "prev_week_url" => $prev_week_url, "start_date" => $start_date, "end_date" => $end_date, "next_week" => $next_week, "prev_week" => $prev_week));
+        return response()->json(array("user" => $user,"types" => $types, "data" => $data, "total" => 100, "to" => 4, "from" => 0,"this_week_url" => $this_week_url, "next_week_url" => $next_week_url, "prev_week_url" => $prev_week_url, "start_date" => $start_date, "end_date" => $end_date, "next_week" => $next_week, "prev_week" => $prev_week));
         //$activities = WeActivity::paginate(4);
         //$activities->load("");
 

@@ -39,6 +39,7 @@ new Vue({
         decline_end_date: "",
         decline_players: [],
         hover: false,
+        now: (new Date).getTime(),
         authStr: document.querySelector('meta[name="api-token"]').getAttribute('content')
     },
 
@@ -242,6 +243,10 @@ new Vue({
 
         },
 
+        hideMouseOver() {
+          this.hover = 0;
+        },
+
         toastr(message,type = false) {
             toastr.options = {
                 "closeButton": true,
@@ -253,7 +258,7 @@ new Vue({
                 "onclick": null,
                 "showDuration": "300",
                 "hideDuration": "1000",
-                "timeOut": "5000",
+                "timeOut": "3000",
                 "extendedTimeOut": "1000",
                 "showEasing": "swing",
                 "hideEasing": "linear",
@@ -280,11 +285,9 @@ new Vue({
     mounted: function () {
         this.activitiesLoad("reload");
 
-
-
-
-
-
+    },
+    created () {
+        setInterval(() => this.now = Math.floor((new Date).getTime() / 1000), 1000 * 1)
     }
 
 });

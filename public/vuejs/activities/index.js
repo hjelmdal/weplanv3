@@ -19674,6 +19674,7 @@ new Vue({
     decline_end_date: "",
     decline_players: [],
     hover: false,
+    now: new Date().getTime(),
     authStr: document.querySelector('meta[name="api-token"]').getAttribute('content')
   },
   methods: {
@@ -19892,6 +19893,9 @@ new Vue({
         item.classList.remove("active"); //this.hover = false;
       }, timeout1);
     },
+    hideMouseOver: function hideMouseOver() {
+      this.hover = 0;
+    },
     toastr: function (_toastr) {
       function toastr(_x) {
         return _toastr.apply(this, arguments);
@@ -19914,7 +19918,7 @@ new Vue({
         "onclick": null,
         "showDuration": "300",
         "hideDuration": "1000",
-        "timeOut": "5000",
+        "timeOut": "3000",
         "extendedTimeOut": "1000",
         "showEasing": "swing",
         "hideEasing": "linear",
@@ -19937,6 +19941,13 @@ new Vue({
   },
   mounted: function mounted() {
     this.activitiesLoad("reload");
+  },
+  created: function created() {
+    var _this4 = this;
+
+    setInterval(function () {
+      return _this4.now = Math.floor(new Date().getTime() / 1000);
+    }, 1000 * 1);
   }
 });
 
