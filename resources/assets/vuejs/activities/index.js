@@ -197,7 +197,7 @@ new Vue({
                     if(error.response.status == 401) {
                         location.reload();
                     }
-                    btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+                    btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
                 }
             }).then((response) => {
                 console.log(response.data);
@@ -208,6 +208,16 @@ new Vue({
             this.decline_activity = activity.id;
             this.decline_start_date = activity.start_date;
             console.log("Decline modal!");
+        },
+
+        hideDeclineModal(id) {
+            //this.hover = false;
+            let item = document.getElementById("elem-" + id);
+            setTimeout(function() {
+                item.classList.remove("active");
+                //this.hover = false;
+            }, 500);
+
         },
     },
 

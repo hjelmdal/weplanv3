@@ -40,7 +40,7 @@
                                 </a>
                             </div>
                             <div class="col-5 kt-align-center">
-                                <h3><span class="d-none d-sm-inline">Aktiviteter i </span>Uge @{{start_date | formatDate("ww")}}</h3>
+                                <h3><span id="headline" class="d-none d-sm-inline">Aktiviteter i </span>Uge @{{start_date | formatDate("ww")}}</h3>
                             </div>
                             <div class="col-4">
                                 <div class="float-right">
@@ -98,7 +98,7 @@
             </div>
             <div class="flex-center" style="width: calc(100% - 90px);">
                 <template v-for="activity in day.events">
-                    <div class="div-row" @mouseover="hover = activity.id" v-bind:class="{'activities-confirmed-bg overlay1-container':(activity.my_status == 2), 'activities-declined-bg overlay1-container':(activity.my_status == 0), 'activities-subscribed-bg overlay1-container':(activity.my_status == 1), 'active':(hover == activity.id && activity.my_status)}">
+                    <div v-bind:id="'elem-' + activity.id" class="div-row" @mouseover="hover = activity.id" v-bind:class="{'activities-confirmed-bg overlay1-container':(activity.my_status == 2), 'activities-declined-bg overlay1-container':(activity.my_status == 0), 'activities-subscribed-bg overlay1-container':(activity.my_status == 1), 'active':(hover == activity.id && activity.my_status)}">
                         <div v-if="activity.my_activity" class="overlay1">
                             <button v-on:click="confirmActivity($event,activity)" type="button" class="btn btn-success btn-sm kt-margin-r-10 kt-margin-l-10"><i class="fa fa-user-check"></i> Tilmeld</button>
                             <button  v-on:click="showDeclineModal($event,activity)" data-toggle="modal" data-target="#modal1" type="button" class="btn btn-danger btn-sm kt-margin-r-10 kt-margin-l-10"><i class="fa fa-user-slash"></i> Afbud</button>
@@ -146,7 +146,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-brand" data-dismiss="modal">Fortryd</button>
+                    <button v-on:click="hideDeclineModal(decline_activity)" type="button" class="btn btn-outline-brand" data-dismiss="modal">Fortryd</button>
                     <button type="button" class="btn btn-danger">Meld afbud</button>
                 </div>
             </div>
