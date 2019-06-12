@@ -166,19 +166,19 @@ class WeActivitiesAPI extends Controller
             if ($activity) {
                 $player_id = $user->WePlayer->id;
                 $activity->players()->sync([
-                    $player_id => ['confirmed_at' => Carbon::now(), 'deleted_at' => NULL]
+                    $player_id => ['confirmed_at' => Carbon::now(), 'declined_at' => NULL]
                 ],false);
                 $code = 201;
                 $activity->save();
-//                if ($input["delete_decline"]) {
-//                    try {
-//                        $decline = Decline::where('date', $activity->start_date)->firstOrFail();
-//                        $decline->delete();
-//                        $code = 204;
-//                    } catch (ModelNotFoundException $e) {
-//                        $code = 200;
-//                    }
-//                }
+                if (1 == 1) {
+                    try {
+                        $decline = WeDecline::where('training_id', $request->activity_id)->firstOrFail();
+                        $decline->delete();
+                        $code = 204;
+                    } catch (ModelNotFoundException $e) {
+                        $code = 200;
+                    }
+                }
                 //Logging::insert("confirmTraining",$input);
 
 
@@ -205,7 +205,7 @@ class WeActivitiesAPI extends Controller
             return response()->json("Ingen spiller associeret", 404);
         }
         $my_activity = false;
-        foreach ($request->players as $p) {
+        foreach ($request["players"] as $p) {
             if ($p["id"] === $player_id) {
                 $my_activity = true;
             }
@@ -219,15 +219,16 @@ class WeActivitiesAPI extends Controller
                 return response()->json(array("error" => "Activity not found!"), 404);
             }
             if ($activity) {
-                $decline = WeDecline::firstOrNew(array('start_date' => $request->start_date,'player_id' => $player_id));
+                $decline = WeDecline::firstOrNew(array('training_id' => $request->activity_id,'player_id' => $player_id));
                 if ($decline->exists) {
                     $statusCode = 200;
                 } else {
                     $statusCode = 201;
                 }
                 $decline->start_date = $activity->start_date;
+                $decline->end_date = $activity->end_date;
                 $decline->training_id = $activity->id;
-                $decline->decline_category = $request->category;
+                $decline->category_id = $request->category;
                 $decline->description = $request->description;
                 $decline->player_id = $player_id;
                 $decline->save();

@@ -130,25 +130,30 @@
     <div id="modal1" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Email address</label>
-                        <input v-model="decline_activity" type="text" class="form-control" placeholder="Enter email">
-                        <input v-model="decline_start_date" type="text" class="form-control" placeholder="Enter email">
-                        <input v-model="decline_activity" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
-                        <span class="form-text text-muted">We'll never share your email with anyone else.</span>
+                <form method="POST" @submit.prevent="declineActivity">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button v-on:click="hideDeclineModal(decline_activity)" type="button" class="btn btn-outline-brand" data-dismiss="modal">Fortryd</button>
-                    <button type="button" class="btn btn-danger">Meld afbud</button>
-                </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Email address</label>
+                            <input v-model="decline_activity" type="hidden">
+                            <input v-model="decline_start_date" type="hidden">
+                            <input v-model="decline_end_date" type="hidden">
+
+                            <input v-model="decline_start_date" type="text" class="form-control" placeholder="Enter email">
+                            <input v-model="decline_activity" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+                            <span class="form-text text-muted">We'll never share your email with anyone else.</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button v-on:click="hideDeclineModal(decline_activity)" type="button" class="btn btn-outline-brand" data-dismiss="modal">Fortryd</button>
+                        <button id="declineSubmit" type="submit" class="btn btn-danger">Meld afbud</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

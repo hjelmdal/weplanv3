@@ -36,11 +36,14 @@ new Vue({
         prev_week: 0,
         decline_activity: "test",
         decline_start_date: "",
+        decline_end_date: "",
+        decline_players: [],
         hover: false,
         authStr: document.querySelector('meta[name="api-token"]').getAttribute('content')
     },
 
     methods : {
+
         setLoadingSpinner(bool,string) {
             let elem = document.getElementById(string);
             if(bool) {
@@ -153,6 +156,7 @@ new Vue({
             let btn = event.target;
             btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
             let postData = [];
+            console.log("activity: " + activity.id);
             postData = {
                 "activity_id" : activity.id,
                 "start_date" : activity.start_date,
@@ -169,22 +173,27 @@ new Vue({
                     if(error.response.status == 401) {
                         location.reload();
                     }
-                    btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+                    btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
                 }
             }).then((response) => {
                 console.log(response.data);
                 this.activitiesLoad("reload");
+                btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+                this.toastr("Du er nu tilmeldt aktiviteten", "success");
+                this.hideDeclineModal(activity.id);
+
             });
 
         },
         declineActivity(event,activity) {
-            let btn = event.target;
+            let btn = document.getElementById("declineSubmit");
             btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
             let postData = [];
             postData = {
-                "activity_id" : activity.id,
-                "start_date" : activity.start_date,
-                "players" : activity.players,
+                "activity_id" : this.decline_activity,
+                "start_date" : this.decline_start_date,
+                "end_date" : this.decline_end_date,
+                "players" : this.decline_players,
             },
             axios({
                 method: 'post',
@@ -201,24 +210,69 @@ new Vue({
                 }
             }).then((response) => {
                 console.log(response.data);
+                btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
                 this.activitiesLoad("reload");
+                this.toastr("Dit afbud er registreret!", "error");
+                $('#modal1').hide();
+                $('.modal-backdrop').hide();
+                this.hideDeclineModal(this.decline_activity);
             });
         },
+
+
         showDeclineModal(event,activity) {
             this.decline_activity = activity.id;
             this.decline_start_date = activity.start_date;
-            console.log("Decline modal!");
+            this.decline_end_date = activity.end_date;
+            this.decline_players = activity.players;
         },
 
-        hideDeclineModal(id) {
+        hideDeclineModal(id,timeout = false) {
             //this.hover = false;
+            let timeout1 = timeout;
+            if(!timeout1) {
+                timeout1 = 500;
+            }
+            console.log("hide modal id: " + id);
             let item = document.getElementById("elem-" + id);
             setTimeout(function() {
                 item.classList.remove("active");
                 //this.hover = false;
-            }, 500);
+            }, timeout1);
 
         },
+
+        toastr(message,type = false) {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": true,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": true,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+            if(type == "info") {
+                toastr.info(message);
+            } else if(type == "warning") {
+                toastr.warning(message);
+            } else if(type == "error") {
+                toastr.error(message);
+            } else if(type == "success") {
+                toastr.success(message);
+            } else {
+                toastr.info(message);
+            }
+        },
+
     },
 
 

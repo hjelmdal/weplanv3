@@ -19671,6 +19671,8 @@ new Vue({
     prev_week: 0,
     decline_activity: "test",
     decline_start_date: "",
+    decline_end_date: "",
+    decline_players: [],
     hover: false,
     authStr: document.querySelector('meta[name="api-token"]').getAttribute('content')
   },
@@ -19793,6 +19795,7 @@ new Vue({
       var btn = event.target;
       btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
       var postData = [];
+      console.log("activity: " + activity.id);
       postData = {
         "activity_id": activity.id,
         "start_date": activity.start_date,
@@ -19812,24 +19815,31 @@ new Vue({
             location.reload();
           }
 
-          btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+          btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
         }
       }).then(function (response) {
         console.log(response.data);
 
         _this2.activitiesLoad("reload");
+
+        btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+
+        _this2.toastr("Du er nu tilmeldt aktiviteten", "success");
+
+        _this2.hideDeclineModal(activity.id);
       });
     },
     declineActivity: function declineActivity(event, activity) {
       var _this3 = this;
 
-      var btn = event.target;
+      var btn = document.getElementById("declineSubmit");
       btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
       var postData = [];
       postData = {
-        "activity_id": activity.id,
-        "start_date": activity.start_date,
-        "players": activity.players
+        "activity_id": this.decline_activity,
+        "start_date": this.decline_start_date,
+        "end_date": this.decline_end_date,
+        "players": this.decline_players
       }, axios__WEBPACK_IMPORTED_MODULE_0___default()({
         method: 'post',
         url: this.declineUrl,
@@ -19849,22 +19859,81 @@ new Vue({
         }
       }).then(function (response) {
         console.log(response.data);
+        btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
 
         _this3.activitiesLoad("reload");
+
+        _this3.toastr("Dit afbud er registreret!", "error");
+
+        $('#modal1').hide();
+        $('.modal-backdrop').hide();
+
+        _this3.hideDeclineModal(_this3.decline_activity);
       });
     },
     showDeclineModal: function showDeclineModal(event, activity) {
       this.decline_activity = activity.id;
       this.decline_start_date = activity.start_date;
-      console.log("Decline modal!");
+      this.decline_end_date = activity.end_date;
+      this.decline_players = activity.players;
     },
     hideDeclineModal: function hideDeclineModal(id) {
+      var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       //this.hover = false;
+      var timeout1 = timeout;
+
+      if (!timeout1) {
+        timeout1 = 500;
+      }
+
+      console.log("hide modal id: " + id);
       var item = document.getElementById("elem-" + id);
       setTimeout(function () {
         item.classList.remove("active"); //this.hover = false;
-      }, 500);
-    }
+      }, timeout1);
+    },
+    toastr: function (_toastr) {
+      function toastr(_x) {
+        return _toastr.apply(this, arguments);
+      }
+
+      toastr.toString = function () {
+        return _toastr.toString();
+      };
+
+      return toastr;
+    }(function (message) {
+      var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toast-top-center",
+        "preventDuplicates": true,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      };
+
+      if (type == "info") {
+        toastr.info(message);
+      } else if (type == "warning") {
+        toastr.warning(message);
+      } else if (type == "error") {
+        toastr.error(message);
+      } else if (type == "success") {
+        toastr.success(message);
+      } else {
+        toastr.info(message);
+      }
+    })
   },
   mounted: function mounted() {
     this.activitiesLoad("reload");
