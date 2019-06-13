@@ -34,7 +34,10 @@
                     <div class="kt-section__content kt-section__content--border">
                         <div class="row">
                             <div class="col-3">
-
+                                <a href="{{ route("activities.index") }}" class="btn btn-success kt-btn--icon">
+                                    <span class="d-inline d-sm-none">&nbsp;&nbsp;</span><span><i class="fa fa-calendar"></i><span class="d-none d-sm-inline">Denne uge</span>
+                        </span>
+                                </a>
                             </div>
                             <div class="col-5 kt-align-center">
                                 <h3><span id="headline" class="d-none d-sm-inline">Aktiviteter i </span>Uge @{{start_date | formatDate("ww")}}</h3>
@@ -90,6 +93,14 @@
                         <div class="p8-date-num">@{{day.date | formatDate("DD")}}</div>
                         <div class="p8-date-day">@{{day.date | formatDate("ddd")}}</div>
 
+                    </div>
+                </div>
+                <div class="div-date">
+                    <div v-if="day.events.length > 1" class="p8-date kt-align-center">
+                    @include("app.activities.palm_svg")
+                    </div>
+                    <div v-else class="p8-date kt-align-center">
+                        @include("app.activities.injury_svg")
                     </div>
                 </div>
             </div>
