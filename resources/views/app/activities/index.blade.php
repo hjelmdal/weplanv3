@@ -106,7 +106,7 @@
             </div>
             <div class="flex-center" style="width: calc(100% - 90px);">
                 <template v-for="activity in day.events">
-                    <div v-bind:id="'elem-' + activity.id" class="div-row" @mouseover="hover = activity.id" @mouse="hover = 0" v-bind:class="{ 'overlay1-container':(activity.type && activity.type.signup == 1), 'active':(hover == activity.id && (activity.my_activity || activity.type && activity.type.signup == 1))}">
+                    <div v-bind:id="'elem-' + activity.id" class="div-row" @mouseover="hover = activity.id" @mouse="hover = 0" v-bind:class="{ 'overlay1-container':(activity.type && activity.type.signup == 1 || activity.my_activity), 'active':(hover == activity.id && (activity.my_activity || activity.type && activity.type.signup == 1))}">
                         <div v-if="activity.my_activity && now < activity.response_timestamp || activity.type && activity.type.signup == 1 && now < activity.response_timestamp" class="overlay1">
                             <span v-if="1 == 1">
                             <button v-on:click="confirmActivity($event,activity)" type="button" class="btn btn-success btn-sm kt-margin-r-10 kt-margin-l-10"><i class="fa fa-user-check"></i> Tilmeld</button>

@@ -54,6 +54,7 @@ class CreateWePlayersAndWeActivitiesTable extends Migration
             $table->integer('activity_id')->unsigned();
             $table->timestamp('confirmed_at')->nullable();
             $table->timestamp('declined_at')->nullable();
+            $table->timestamp('signed_up_at')->nullable();
             $table->nullableTimestamps();
             $table->softDeletes();
 
