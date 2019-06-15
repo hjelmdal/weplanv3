@@ -4,5 +4,6 @@
     "/js/fullscreen.js": "/js/fullscreen.js",
     "/vuejs/activities/index.js": "/vuejs/activities/index.js",
     "/vuejs/activities/plan.js": "/vuejs/activities/plan.js",
-    "/vuejs/teams/index.js": "/vuejs/teams/index.js"
+    "/vuejs/teams/index.js": "/vuejs/teams/index.js",
+    "/vuejs/test/app.js": "/vuejs/test/app.js"
 }

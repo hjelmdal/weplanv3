@@ -19649,6 +19649,15 @@ Vue.filter('formatDate', function (value) {
     return moment__WEBPACK_IMPORTED_MODULE_1___default()(String(value), "YYYY-MM-DD").format(format);
   }
 });
+Vue.filter('dateString', function (value) {
+  var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "to";
+
+  if (type === "to") {
+    return moment__WEBPACK_IMPORTED_MODULE_1___default()().to(value);
+  } else if (type === "from") {
+    return moment__WEBPACK_IMPORTED_MODULE_1___default()().from(value);
+  }
+});
 new Vue({
   el: '#kt_body',
   data: {
@@ -19675,9 +19684,17 @@ new Vue({
     decline_players: [],
     hover: false,
     now: new Date().getTime(),
+    today: moment__WEBPACK_IMPORTED_MODULE_1___default()().format("YYYY-MM-DD"),
     authStr: document.querySelector('meta[name="api-token"]').getAttribute('content')
   },
   methods: {
+    nullCheck: function nullCheck(prop) {
+      if (prop === null) {
+        return 0;
+      } else {
+        return prop;
+      }
+    },
     setLoadingSpinner: function setLoadingSpinner(bool, string) {
       var elem = document.getElementById(string);
 
@@ -19729,13 +19746,18 @@ new Vue({
         btn = "btnPrev";
       } else if (string == "reload") {
         this.reload = 1;
-        var newDate = moment__WEBPACK_IMPORTED_MODULE_1___default()(this.meta);
 
-        if (newDate.isValid()) {
-          this.url = this.uri + this.meta;
-        }
+        if (this.start_date) {
+          this.url = this.uri + this.start_date;
+        } else {
+          var newDate = moment__WEBPACK_IMPORTED_MODULE_1___default()(this.meta);
 
-        console.log(this.url);
+          if (newDate.isValid()) {
+            this.url = this.uri + this.meta;
+          }
+        } //console.log(this.url);
+
+
         btn = "btnNext";
       }
 
@@ -19767,6 +19789,7 @@ new Vue({
         _this.next_week = response.data.next_week;
         _this.prev_week = response.data.prev_week;
         var last_start_date;
+        var status;
         response.data.data.forEach(function (event) {
           if (event.start_date === last_start_date) {
             _this.days[_this.days.length - 1].events.push(event);
@@ -19889,9 +19912,9 @@ new Vue({
 
       console.log("hide modal id: " + id);
       var item = document.getElementById("elem-" + id);
-      setTimeout(function () {
-        item.classList.remove("active"); //this.hover = false;
-      }, timeout1);
+      this.hover = 0;
+      this.hover = id;
+      item.classList.add("active");
     },
     hideMouseOver: function hideMouseOver() {
       this.hover = 0;

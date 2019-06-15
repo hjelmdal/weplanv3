@@ -232,6 +232,9 @@ body::before {
 .div-row:nth-child(even)  {
   background-color: #eee;
 }
+.div-row:nth-child(odd)  {
+  background-color: #fff;
+}
 .div-test {
   flex: 1 1 auto;
 }
@@ -301,10 +304,43 @@ body::before {
 }
 
 
+
+.p8-fill-brand {
+  fill: #385aeb;
+}
+
+.p8-fill-metal {
+  fill: #c4c5d6;
+}
+.p8-fill-light {
+  fill: #ffffff;
+}
+.p8-fill-accent {
+  fill: #00c5dc;
+}
+.p8-fill-primary {
+  fill: #5867dd;
+}
+.p8-fill-success {
+  fill: #34bfa3;
+}
+.p8-fill-info {
+  fill: #36a3f7;
+}
+.p8-fill-warning {
+  fill: #ffb822;
+}
+.p8-fill-danger {
+  fill: #fd3995;
+}
+.p8-fill-focus {
+  fill: #9816f4;
+}
+
 .div-time {
   font-weight: 500;
   font-size: 0.9rem;
-  color: #a1a8c3;
+  color: #6c757d;
   margin: 0 0 0 0.5rem;
   padding: 0 0 0 0.5rem;
 }
@@ -374,6 +410,13 @@ body::before {
   transition: .5s ease;
   z-index: 10;
   padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.overlay1-right {
+  position: absolute;
+  right:4px;
 }
 
 .overlay1-containerhover .overlay1 {
@@ -397,6 +440,10 @@ body::before {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.activity-done-bg {
+  background: #fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAJElEQVQYV2NkwATGjGhixgwMDGeRBcECIEUwQbgATBBFACQIAK/DBDnJPrkGAAAAAElFTkSuQmCC) repeat;
 }
 
 

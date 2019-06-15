@@ -106,26 +106,17 @@
             </div>
             <div class="flex-center" style="width: calc(100% - 90px);">
                 <template v-for="activity in day.events">
-                    <div v-bind:id="'elem-' + activity.id" class="div-row" @mouseover="hover = activity.id" @mouse="hover = 0" v-bind:class="{ 'overlay1-container':(activity.type && activity.type.signup == 1), 'active':(hover == activity.id && (activity.my_activity || activity.type && activity.type.signup == 1))}">
+                    <div v-bind:id="'elem-' + activity.id" class="div-row" @mouseover="hover = activity.id" @mouse="hover = 0" v-bind:class="{'activities-confirmed-bg overlay1-container':(activity.my_status == 2), 'activities-declined-bg overlay1-container':(activity.my_status == 0), 'activities-subscribed-bg overlay1-container':(activity.my_status == 1), 'overlay1-container':(activity.type && activity.type.signup == 1), 'active':(hover == activity.id && (activity.my_activity || activity.type && activity.type.signup == 1))}">
                         <div v-if="activity.my_activity && now < activity.response_timestamp || activity.type && activity.type.signup == 1 && now < activity.response_timestamp" class="overlay1">
                             <span v-if="1 == 1">
                             <button v-on:click="confirmActivity($event,activity)" type="button" class="btn btn-success btn-sm kt-margin-r-10 kt-margin-l-10"><i class="fa fa-user-check"></i> Tilmeld</button>
                             <button  v-on:click="showDeclineModal($event,activity)" data-toggle="modal" data-target="#modal1" type="button" class="btn btn-danger btn-sm kt-margin-r-10 kt-margin-l-10"><i class="fa fa-user-slash"></i> Afbud</button>
                                 </span>
-                            <span v-if="activity.my_status == 0 || activity.my_status == 2" title="RSVP" class="btn btn-sm btn-outline-metal btn-icon btn-icon-md overlay1-right"><i class="la la-chevron-right"></i></span>
+                            <span v-if="activity.my_status == 0 || activity.my_status == 2" title="RSVP" class="btn btn-sm btn-outline-metal btn-icon btn-icon-md float-right"><i class="la la-chevron-right"></i></span>
                         </div>
-                        <div class="row-column" v-bind:class="{'bef-brand':(activity.type.signup == 1), 'bef-warning':(activity.my_activity && activity.my_status == 1), 'bef-danger':(activity.my_activity && activity.my_status == 0), 'bef-success':(activity.my_activity && activity.my_status == 2), 'bef-metal':(activity.type.decline == 1 && activity.my_activity == false)}">
+                        <div class="row-column" v-bind:class="{'bef-success':(activity.type_id == 1), 'bef-warning':(activity.type_id == 5), 'bef-danger':(activity.type_id == 2), 'bef-brand':(activity.type_id == 3), 'bef-metal':(activity.type_id == 4)}">
                             <span class="div-text" style="font-size: 1.5rem;">@{{ activity.title }}</span>
-                            <div class="div-time">
-                                <i class="la la-clock-o" style="font-size: 14px;"></i> @{{ activity.start | formatTime("HH:mm") }} - @{{ activity.end | formatTime("HH:mm") }}
-                                <span v-if="activity.my_activity || activity.type.signup">@include("app.activities.icons.alarm_clock_svg",["class" => "p8-fill-warning"]) @{{ activity.response_date + " " + activity.response_time | dateString("to") }}</span>
-
-                            </div>
-                            <div class="div-time">
-                                <span class="badge kt-font-white btn-xs" v-bind:class="{'badge-success':(activity.type_id == 1), 'badge-danger':(activity.type_id == 2), 'badge-primary':(activity.type_id == 3), 'badge-warning':(activity.type_id == 4)}">@{{ activity.type.name }}</span>
-
-                                <span class="badge badge-light btn-xs"><i class="la la-users" style="font-size: 10px;"></i><span class="kt-font-brand">@{{ activity.enrolled }}</span> <span class="kt-font-success">@{{ activity.confirmed }}</span> <span class="kt-font-danger">@{{ activity.declined }}</span></span>
-                            </div>
+                            <div class="div-time"><i class="la la-clock-o"></i> @{{ activity.start | formatTime("HH:mm") }} - @{{ activity.end | formatTime("HH:mm") }} <span class="btn btn-outline-metal btn-xs"><i class="la la-users"></i><span class="kt-font-brand">@{{ activity.enrolled }}</span> <span class="kt-font-success">@{{ activity.confirmed }}</span> <span class="kt-font-danger">@{{ activity.declined }}</span></span> <span v-if="activity.my_activity">@include("app.activities.icons.alarm_clock_svg",["class" => "p8-fill-warning"]) @{{ activity.response_date + " " + activity.response_time | dateString("to") }}</span></div>
                         </div>
                         <div class="div-right" style="align-self: center; width: 40px; text-align: right;">
                             <span v-if="activity.my_activity === true && now < activity.response_timestamp"  class="btn btn-sm btn-outline-success btn-icon btn-icon-md" title="RSVP">

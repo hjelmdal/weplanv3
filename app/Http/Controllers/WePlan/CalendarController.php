@@ -22,7 +22,7 @@ class CalendarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list($date)
+    public function list($date = false)
     {
         return view("app.calendar.list",["date" => $date]);
     }

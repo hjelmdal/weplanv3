@@ -12,6 +12,14 @@ Vue.filter('formatDate', function(value,format = "YYYY-MM-DD") {
     }
 });
 
+Vue.filter('dateString', function (value,type = "to") {
+    if(type === "to") {
+        return moment().to(value);
+    } else if(type === "from") {
+        return moment().from(value);
+    }
+});
+
 new Vue({
     el: '#kt_body',
 
@@ -40,11 +48,20 @@ new Vue({
         decline_players: [],
         hover: false,
         now: (new Date).getTime(),
+        today: moment().format("YYYY-MM-DD"),
         authStr: document.querySelector('meta[name="api-token"]').getAttribute('content')
     },
 
-    methods : {
 
+
+    methods : {
+        nullCheck(prop) {
+            if(prop === null) {
+                return 0;
+            } else {
+                return prop;
+            }
+        },
         setLoadingSpinner(bool,string) {
             let elem = document.getElementById(string);
             if(bool) {
@@ -91,12 +108,15 @@ new Vue({
                 btn = "btnPrev";
             } else if(string == "reload") {
                 this.reload = 1;
-
-                let newDate = moment(this.meta);
-                if(newDate.isValid()) {
-                    this.url = this.uri + this.meta;
+                if(this.start_date) {
+                    this.url = this.uri + this.start_date;
+                } else {
+                    let newDate = moment(this.meta);
+                    if (newDate.isValid()) {
+                        this.url = this.uri + this.meta;
+                    }
                 }
-                console.log(this.url);
+                //console.log(this.url);
                 btn = "btnNext";
 
             }
@@ -127,6 +147,7 @@ new Vue({
                 this.prev_week = response.data.prev_week;
 
                 let last_start_date;
+                let status;
                 response.data.data.forEach(event => {
                     if(event.start_date === last_start_date) {
                         this.days[this.days.length-1].events.push(event);
@@ -137,6 +158,7 @@ new Vue({
                         });
                     }
                     last_start_date = event.start_date;
+
                 });
 
                 //console.log(this.days);
@@ -236,10 +258,10 @@ new Vue({
             }
             console.log("hide modal id: " + id);
             let item = document.getElementById("elem-" + id);
-            setTimeout(function() {
-                item.classList.remove("active");
-                //this.hover = false;
-            }, timeout1);
+                this.hover = 0;
+                this.hover = id;
+                item.classList.add("active");
+
 
         },
 

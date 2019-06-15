@@ -153,46 +153,50 @@ class WeActivitiesAPI extends Controller
         } else {
             return response()->json("Ingen spiller associeret", 404);
         }
+
+        try {
+            $activity = WeActivity::findOrFail($request->activity_id);
+            $activity->load("type","players");
+
+        } catch (ModelNotFoundException $e) {
+            $activity = false;
+            return response()->json(array("error" => "Activity not found!"), 404);
+        }
+
         $my_activity = false;
-        foreach ($request->players as $p) {
-            if ($p["id"] === $player_id) {
+        $code = false;
+        foreach ($activity->players as $player) {
+            if($player->id == $player_id) {
                 $my_activity = true;
+                break;
             }
         }
-        if ($my_activity) {
+        if($activity->type->signup == 1) {
+            $activity->players()->sync([
+                $player_id => ['confirmed_at' => Carbon::now(), 'signed_up_at' => Carbon::now(), 'declined_at' => NULL]
+            ],false);
+            $code = 201;
+        } elseif($my_activity == true && $activity->type->decline == 1) {
+            $activity->players()->sync([
+                $player_id => ['confirmed_at' => Carbon::now(), 'signed_up_at' => NULL, 'declined_at' => NULL]
+            ], false);
+            $code = 200;
+        }
+
+        if($code) {
+            $activity->save();
             try {
-                $activity = WeActivity::findOrFail($request->activity_id);
-
+                $decline = WeDecline::where('training_id', $request->activity_id)->firstOrFail();
+                $decline->delete();
+                $code = 204;
             } catch (ModelNotFoundException $e) {
-                $activity = false;
-                return response()->json(array("error" => "Activity not found!"), 404);
+                $code = 200;
             }
-            if ($activity) {
-                $player_id = $user->WePlayer->id;
-                $activity->players()->sync([
-                    $player_id => ['confirmed_at' => Carbon::now(), 'declined_at' => NULL]
-                ],false);
-                $code = 201;
-                $activity->save();
-                if (1 == 1) {
-                    try {
-                        $decline = WeDecline::where('training_id', $request->activity_id)->firstOrFail();
-                        $decline->delete();
-                        $code = 204;
-                    } catch (ModelNotFoundException $e) {
-                        $code = 200;
-                    }
-                }
-                //Logging::insert("confirmTraining",$input);
-
-
-                return response()->json($request, $code);
-
-            }
-
-
+            return response()->json("success", $code);
         }
-
+        $code = 400;
+        return response()->json("Bad request", $code);
+            //Logging::insert("confirmTraining",$input);
     }
 
     /**
@@ -214,15 +218,22 @@ class WeActivitiesAPI extends Controller
                 $my_activity = true;
             }
         }
-        if ($my_activity) {
+        $my_activity = false;
             try {
+
                 $activity = WeActivity::findOrFail($request->activity_id);
+                $activity->load("players","type");
+                foreach ($activity->players as $p) {
+                    if ($p->id === $player_id) {
+                        $my_activity = true;
+                    }
+                }
 
             } catch (ModelNotFoundException $e) {
                 $activity = false;
                 return response()->json(array("error" => "Activity not found!"), 404);
             }
-            if ($activity) {
+            if ($my_activity || ($activity->type && $activity->type->signup == 1)) {
                 $decline = WeDecline::firstOrNew(array('training_id' => $request->activity_id,'player_id' => $player_id));
                 if ($decline->exists) {
                     $statusCode = 200;
@@ -239,7 +250,7 @@ class WeActivitiesAPI extends Controller
                 //$input["decline_id"] = $decline->id;
                 //Training update
                 $activity->players()->sync([
-                    $player_id => ['declined_at' => Carbon::now(), 'confirmed_at' => NULL]
+                    $player_id => ['declined_at' => Carbon::now(), 'confirmed_at' => NULL, 'signed_up_at' => NULL]
                 ],false);
                 $activity->save();
                 //Logging::insert("declineTraining",$input);
@@ -247,8 +258,8 @@ class WeActivitiesAPI extends Controller
 
             }
 
-        }
-        return Response::json(array("error" => "Bad request!"), 400, array("header" => "Bad Request"));
+
+        return response()->json(array("error" => "Bad request!"), 400, array("header" => "Bad Request"));
 
     }
 

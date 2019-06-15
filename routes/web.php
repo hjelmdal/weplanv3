@@ -40,8 +40,11 @@ Route::middleware(['auth'])->prefix('user')->name("user.")->group(function () {
     Route::get('/profile','UserController@index')->name("profile");
 });
 
+// User pending
 Route::get("/user/pending","UserController@index")->middleware("auth")->name("verification.notice");
 
+
+// Activities routes
 Route::get("/activities","WePlan\ActivitiesController@index")->middleware("auth")->name("activities.index");
 Route::get("/activities/date/{date?}","WePlan\ActivitiesController@index")->middleware("auth")->name("activities.index")->where(['date' => '[0-9]{4}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}']);
 Route::get("/activities/admin/{date?}","WePlan\ActivitiesController@admin")->middleware("auth")->name("activities.admin")->where(['date' => '[0-9]{4}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}']);
@@ -51,6 +54,7 @@ Route::post("/activities/create","WePlan\ActivitiesController@store")->middlewar
 Route::get("/activities/plan/{date?}","WePlan\ActivitiesController@plan")->middleware("auth")->name("activities.plan")->where(['date' => '[0-9]{4}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}']);
 
 
+// Player routs
 Route::middleware(['auth'])->prefix('players')->name("players.")->group(function () {
     Route::get("/", "WePlan\PlayerController@index")->name("index");
     Route::get("/import", "WePlan\PlayerController@import")->name("import");
@@ -59,7 +63,7 @@ Route::middleware(['auth'])->prefix('players')->name("players.")->group(function
 
 
 
-
+// Team routes
 Route::middleware(['auth'])->namespace('WePlan')->group(function () {
     Route::get("/teams/{id}/players","TeamController@players")->name("teams.players")->where('id', '[0-9]+');
     Route::get("/teams/{id}/add","TeamController@add")->name("teams.add")->where('id', '[0-9]+');
@@ -67,9 +71,8 @@ Route::middleware(['auth'])->namespace('WePlan')->group(function () {
 
 
 
-    // Calendar
-
-    Route::get("/calendar/list","CalendarController@list")->name("calendar.list");
+// Calendar routes
+Route::get("/calendar/list","CalendarController@list")->name("calendar.list");
 
 
 });
