@@ -160,20 +160,22 @@ new Vue({
                 this.prev_week = response.data.prev_week;
 
                 let last_start_date;
-                let status;
-                this.activities.forEach(event => {
-                    if(event.start_date === last_start_date) {
-                        this.days[this.days.length-1].events.push(event);
-                    } else {
-                        this.days.push({
-                            date: event.start_date,
-                            events: [event]
-                        });
-                    }
-                    last_start_date = event.start_date;
+                if(this.activities) {
+                    this.activities.forEach(event => {
+                        if (event.start_date === last_start_date) {
+                            this.days[this.days.length - 1].events.push(event);
+                        } else {
+                            this.days.push({
+                                date: event.start_date,
+                                events: [event]
+                            });
+                        }
+                        last_start_date = event.start_date;
 
-                });
+                    });
+                }
                 if(firstLoad || this.filters.indexOf(true) == -1) {
+                    this.filters[0] = (false);
                     this.types.forEach(type => {
                        this.filters[type.id] = (true);
                     });

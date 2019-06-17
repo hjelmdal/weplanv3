@@ -568,3 +568,9 @@ body::before {
   }
 }
 
+@media (max-width: 768px) {
+  .kt-subheader .kt-subheader__toolbar {
+    padding-bottom: 0;
+  }
+}
+

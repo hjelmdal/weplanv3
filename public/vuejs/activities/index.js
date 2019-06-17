@@ -19803,22 +19803,25 @@ new Vue({
         _this.next_week = response.data.next_week;
         _this.prev_week = response.data.prev_week;
         var last_start_date;
-        var status;
 
-        _this.activities.forEach(function (event) {
-          if (event.start_date === last_start_date) {
-            _this.days[_this.days.length - 1].events.push(event);
-          } else {
-            _this.days.push({
-              date: event.start_date,
-              events: [event]
-            });
-          }
+        if (_this.activities) {
+          _this.activities.forEach(function (event) {
+            if (event.start_date === last_start_date) {
+              _this.days[_this.days.length - 1].events.push(event);
+            } else {
+              _this.days.push({
+                date: event.start_date,
+                events: [event]
+              });
+            }
 
-          last_start_date = event.start_date;
-        });
+            last_start_date = event.start_date;
+          });
+        }
 
         if (firstLoad || _this.filters.indexOf(true) == -1) {
+          _this.filters[0] = false;
+
           _this.types.forEach(function (type) {
             _this.filters[type.id] = true;
           });

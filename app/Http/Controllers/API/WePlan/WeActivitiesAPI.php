@@ -40,10 +40,15 @@ class WeActivitiesAPI extends Controller
     public function get($date = null, $filter = null, Request $request)
     {
         $filter = false;
+        $my_filter = false;
         if($request->filters) {
             foreach ($request->filters as $key => $value) {
                 if($value == "true") {
-                    $filter[] = $key;
+                    if($key == 0) {
+                        $my_filter = true;
+                    } else {
+                        $filter[] = $key;
+                    }
                 }
             }
         }
@@ -107,14 +112,14 @@ class WeActivitiesAPI extends Controller
                     }
                 }
                 }
-                if($filter == "my" && $activity->my_activity) {
+                if($my_filter && $activity->my_activity) {
                     $filterArray[] = $activity;
                 }
             }
         } catch (ModelNotFoundException $e) {
             return response()->json("No activities found", 404);
         }
-        if($filter == "my") {
+        if($my_filter) {
             $activities = $filterArray;
         }
         $data = $activities;
