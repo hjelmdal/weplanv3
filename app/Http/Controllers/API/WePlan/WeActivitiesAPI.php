@@ -37,8 +37,17 @@ class WeActivitiesAPI extends Controller
      * @param string
      * @return \Illuminate\Http\Response
      */
-    public function get($date = null, Request $request)
+    public function get($date = null, $filter = null, Request $request)
     {
+        $filter = false;
+        if($request->filters) {
+            foreach ($request->filters as $key => $value) {
+                if($value == "true") {
+                    $filter[] = $key;
+                }
+            }
+        }
+
         $user = $request->get('user');
 
         if($date == null) {
@@ -64,7 +73,12 @@ class WeActivitiesAPI extends Controller
             $player_id = false;
         }
         try {
-            $activities = WeActivity::where("start_date", ">=", $greater)->where("start_date", "<", $less)->orderBy("start_date","ASC")->orderBy("start","ASC")->get();
+            $filterArray = null;
+            if($filter) {
+                $activities = WeActivity::whereIn("type_id",$filter)->where("start_date", ">=", $greater)->where("start_date", "<", $less)->orderBy("start_date","ASC")->orderBy("start","ASC")->get();
+            } else {
+                $activities = WeActivity::where("start_date", ">=", $greater)->where("start_date", "<", $less)->orderBy("start_date", "ASC")->orderBy("start", "ASC")->get();
+            }
             $activities->load("type","players");
             foreach ($activities as $activity) {
                 $activity->my_activity = false;
@@ -93,9 +107,15 @@ class WeActivitiesAPI extends Controller
                     }
                 }
                 }
+                if($filter == "my" && $activity->my_activity) {
+                    $filterArray[] = $activity;
+                }
             }
         } catch (ModelNotFoundException $e) {
             return response()->json("No activities found", 404);
+        }
+        if($filter == "my") {
+            $activities = $filterArray;
         }
         $data = $activities;
         $types = WeActivityType::all();

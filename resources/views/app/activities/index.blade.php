@@ -64,7 +64,11 @@
                         <div class="row">
                             <div class="col-12">
                                 <template v-for="type in types">
-                                    <span class="badge" v-bind:class="{'badge-success':(type.id == 1), 'badge-warning':(type.id == 5), 'badge-danger':(type.id == 2), 'badge-primary':(type.id == 3), 'badge-light':(type.id == 4)}">&nbsp;</span> @{{ type.name }}
+                                    <label class="kt-checkbox kt-checkbox--solid kt-padding-r-5 kt-padding-l-20" v-bind:class="{'kt-checkbox--success':(type.id == 1), 'kt-checkbox--warning':(type.id == 5), 'kt-checkbox--danger':(type.id == 2), 'kt-checkbox--primary':(type.id == 3), 'kt-checkbox--warning':(type.id == 4)}">
+                                        <input v-model="filters[type.id]" type="checkbox" @change="activitiesLoad('reload')"> @{{ type.name }}
+                                        <span></span>
+                                    </label>
+
                                 </template>
                             </div>
                         </div>
@@ -106,7 +110,7 @@
             </div>
             <div class="flex-center" style="width: calc(100% - 90px);">
                 <template v-for="activity in day.events">
-                    <div v-bind:id="'elem-' + activity.id" class="div-row" @mouseover="hover = activity.id" @mouse="hover = 0" v-bind:class="{ 'overlay1-container':(activity.type && activity.type.signup == 1 || activity.my_activity), 'active':(hover == activity.id && (activity.my_activity || activity.type && activity.type.signup == 1))}">
+                    <div v-bind:id="'elem-' + activity.id" class="div-row" @mouseover="hover = activity.id" @mouseleave="hover = 0" v-bind:class="{ 'overlay1-container':(activity.type && activity.type.signup == 1 || activity.my_activity), 'active':(hover == activity.id && (activity.my_activity || activity.type && activity.type.signup == 1))}">
                         <div v-if="activity.my_activity && now < activity.response_timestamp || activity.type && activity.type.signup == 1 && now < activity.response_timestamp" class="overlay1">
                             <span v-if="1 == 1">
                             <button v-on:click="confirmActivity($event,activity)" type="button" class="btn btn-success btn-sm kt-margin-r-10 kt-margin-l-10"><i class="fa fa-user-check"></i> Tilmeld</button>

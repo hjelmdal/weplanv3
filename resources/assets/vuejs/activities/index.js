@@ -46,15 +46,20 @@ new Vue({
         decline_start_date: "",
         decline_end_date: "",
         decline_players: [],
+        filters: [],
+        filter_my: false,
         hover: false,
         now: (new Date).getTime(),
         today: moment().format("YYYY-MM-DD"),
         authStr: document.querySelector('meta[name="api-token"]').getAttribute('content')
     },
 
-
-
     methods : {
+        myActivities(events) {
+            return events.filter(item => {
+                return item.my_activity == true;
+            })
+        },
         nullCheck(prop) {
             if(prop === null) {
                 return 0;
@@ -94,7 +99,7 @@ new Vue({
         },
         activitiesLoad(string) {
             let btn = "null";
-
+            let firstLoad = false;
             if(!document.querySelector('meta[name="api-token"]').getAttribute('content')) {
                 location.reload();
             }
@@ -109,8 +114,10 @@ new Vue({
             } else if(string == "reload") {
                 this.reload = 1;
                 if(this.start_date) {
+                    firstLoad = false;
                     this.url = this.uri + this.start_date;
                 } else {
+                    firstLoad = true;
                     let newDate = moment(this.meta);
                     if (newDate.isValid()) {
                         this.url = this.uri + this.meta;
@@ -122,11 +129,17 @@ new Vue({
             }
             console.log(this.url);
             this.setLoadingSpinner(true,btn);
+            let postData = [];
+            postData = {
+                "filters" : this.filters,
+            },
 
             axios({
-                method: 'get',
+                method: 'post',
+                data: postData,
                 url: this.url,
                 headers: { Authorization: document.querySelector('meta[name="api-token"]').getAttribute('content') },
+
             }).catch(error => {
                 if(error.response) {
                     console.log("Error code: " + error.response.status);
@@ -148,7 +161,7 @@ new Vue({
 
                 let last_start_date;
                 let status;
-                response.data.data.forEach(event => {
+                this.activities.forEach(event => {
                     if(event.start_date === last_start_date) {
                         this.days[this.days.length-1].events.push(event);
                     } else {
@@ -160,6 +173,11 @@ new Vue({
                     last_start_date = event.start_date;
 
                 });
+                if(firstLoad || this.filters.indexOf(true) == -1) {
+                    this.types.forEach(type => {
+                       this.filters[type.id] = (true);
+                    });
+                }
 
                 //console.log(this.days);
 

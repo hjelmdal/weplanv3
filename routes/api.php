@@ -32,7 +32,7 @@ Route::name('api.')->group(function () {
 
         Route::namespace('WePlan')->middleware("api.token")->group(function () {
             Route::apiResource('activities','WeActivitiesAPI');
-            Route::get('/activities/get/{date?}','WeActivitiesAPI@get')->name("activities.get");
+            Route::post('/activities/get/{date?}/{filter?}','WeActivitiesAPI@get')->name("activities.get");
             Route::post('/activities/enroll','WeActivitiesAPI@enroll')->name("activities.enroll");
             Route::post('/activities/confirm','WeActivitiesAPI@confirm')->name("activities.confirm");
             Route::post('/activities/decline','WeActivitiesAPI@decline')->name("activities.decline");

@@ -19682,12 +19682,19 @@ new Vue({
     decline_start_date: "",
     decline_end_date: "",
     decline_players: [],
+    filters: [],
+    filter_my: false,
     hover: false,
     now: new Date().getTime(),
     today: moment__WEBPACK_IMPORTED_MODULE_1___default()().format("YYYY-MM-DD"),
     authStr: document.querySelector('meta[name="api-token"]').getAttribute('content')
   },
   methods: {
+    myActivities: function myActivities(events) {
+      return events.filter(function (item) {
+        return item.my_activity == true;
+      });
+    },
     nullCheck: function nullCheck(prop) {
       if (prop === null) {
         return 0;
@@ -19731,6 +19738,7 @@ new Vue({
       var _this = this;
 
       var btn = "null";
+      var firstLoad = false;
 
       if (!document.querySelector('meta[name="api-token"]').getAttribute('content')) {
         location.reload();
@@ -19748,8 +19756,10 @@ new Vue({
         this.reload = 1;
 
         if (this.start_date) {
+          firstLoad = false;
           this.url = this.uri + this.start_date;
         } else {
+          firstLoad = true;
           var newDate = moment__WEBPACK_IMPORTED_MODULE_1___default()(this.meta);
 
           if (newDate.isValid()) {
@@ -19763,8 +19773,12 @@ new Vue({
 
       console.log(this.url);
       this.setLoadingSpinner(true, btn);
-      axios__WEBPACK_IMPORTED_MODULE_0___default()({
-        method: 'get',
+      var postData = [];
+      postData = {
+        "filters": this.filters
+      }, axios__WEBPACK_IMPORTED_MODULE_0___default()({
+        method: 'post',
+        data: postData,
         url: this.url,
         headers: {
           Authorization: document.querySelector('meta[name="api-token"]').getAttribute('content')
@@ -19790,7 +19804,8 @@ new Vue({
         _this.prev_week = response.data.prev_week;
         var last_start_date;
         var status;
-        response.data.data.forEach(function (event) {
+
+        _this.activities.forEach(function (event) {
           if (event.start_date === last_start_date) {
             _this.days[_this.days.length - 1].events.push(event);
           } else {
@@ -19801,7 +19816,14 @@ new Vue({
           }
 
           last_start_date = event.start_date;
-        }); //console.log(this.days);
+        });
+
+        if (firstLoad || _this.filters.indexOf(true) == -1) {
+          _this.types.forEach(function (type) {
+            _this.filters[type.id] = true;
+          });
+        } //console.log(this.days);
+
 
         _this.next = response.data.next_week_url;
         _this.prev = response.data.prev_week_url;
