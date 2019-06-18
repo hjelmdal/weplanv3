@@ -19658,6 +19658,13 @@ Vue.filter('dateString', function (value) {
     return moment__WEBPACK_IMPORTED_MODULE_1___default()().from(value);
   }
 });
+Vue.directive('tooltip', function (el, binding) {
+  $(el).tooltip({
+    title: binding.value,
+    placement: binding.arg,
+    trigger: 'hover'
+  });
+});
 new Vue({
   el: '#kt_body',
   data: {
@@ -19682,6 +19689,8 @@ new Vue({
     decline_start_date: "",
     decline_end_date: "",
     decline_players: [],
+    user: 0,
+    user_role: 0,
     filters: [],
     filter_my: false,
     hover: false,
@@ -19806,6 +19815,12 @@ new Vue({
         _this.end_date = response.data.end_date;
         _this.next_week = response.data.next_week;
         _this.prev_week = response.data.prev_week;
+        _this.user = response.data.user;
+
+        if (_this.user.roles) {
+          _this.user_role = _this.user.roles[0].id;
+        }
+
         var last_start_date;
 
         if (_this.activities) {

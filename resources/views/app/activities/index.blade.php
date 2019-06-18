@@ -100,10 +100,10 @@
                     </div>
                 </div>
                 <div class="div-date">
-                    <div v-if="day.events.length > 1" class="p8-date kt-align-center">
+                    <div v-if="day.events.length > 1" class="p8-date kt-align-center" style="border:0px">
                     @include("app.activities.icons.palm_svg")
                     </div>
-                    <div v-else class="p8-date kt-align-center">
+                    <div v-else class="p8-date kt-align-center" style="border:0px">
                         @include("app.activities.icons.injury_svg")
                     </div>
                 </div>
@@ -120,13 +120,15 @@
                         </div>
                         <div class="row-column" v-bind:class="{'bef-brand':(activity.type.signup == 1), 'bef-warning':(activity.my_activity && activity.my_status == 1), 'bef-danger':(activity.my_activity && activity.my_status == 0), 'bef-success':(activity.my_activity && activity.my_status == 2), 'bef-metal':(activity.type.decline == 1 && activity.my_activity == false)}">
                             <span class="div-text" style="font-size: 1.5rem;">@{{ activity.title }}</span>
-                            <div class="div-time">
+                            <div class="div-time" style="display: flex;">
+                                <span data-toggle="kt-tooltip" :title="activity.type.name" v-tooltip:top="''" class="badge kt-font-white btn-xs" v-bind:class="{'badge-success':(activity.type_id == 1), 'badge-danger':(activity.type_id == 2), 'badge-primary':(activity.type_id == 3), 'badge-warning':(activity.type_id == 4)}">@{{ activity.type.name.substr(0,1) }}</span>
                                 <i class="la la-clock-o" style="font-size: 14px;"></i> @{{ activity.start | formatTime("HH:mm") }} - @{{ activity.end | formatTime("HH:mm") }}
                                 <span v-if="activity.my_activity || activity.type.signup">@include("app.activities.icons.alarm_clock_svg",["class" => "p8-fill-warning"]) @{{ activity.response_date + " " + activity.response_time | dateString("to") }}</span>
 
+
                             </div>
-                            <div class="div-time">
-                                <span class="badge kt-font-white btn-xs" v-bind:class="{'badge-success':(activity.type_id == 1), 'badge-danger':(activity.type_id == 2), 'badge-primary':(activity.type_id == 3), 'badge-warning':(activity.type_id == 4)}">@{{ activity.type.name }}</span>
+                            <div class="div-time" v-if="user_role > 1">
+
 
                                 <span class="badge badge-light btn-xs"><i class="la la-users" style="font-size: 10px;"></i><span class="kt-font-brand">@{{ activity.enrolled }}</span> <span class="kt-font-success">@{{ activity.confirmed }}</span> <span class="kt-font-danger">@{{ activity.declined }}</span></span>
                             </div>

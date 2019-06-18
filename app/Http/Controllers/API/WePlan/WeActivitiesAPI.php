@@ -54,6 +54,7 @@ class WeActivitiesAPI extends Controller
         }
 
         $user = $request->get('user');
+        $user->load("roles");
 
         if($date == null) {
             $date = date("Y-m-d");
