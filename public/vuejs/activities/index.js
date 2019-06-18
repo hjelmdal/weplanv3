@@ -19752,7 +19752,11 @@ new Vue({
         this.reload = 0;
         this.url = this.prev;
         btn = "btnPrev";
-      } else if (string == "reload") {
+      } else if (string == "reload" || string == "today") {
+        if (string == "today") {
+          this.start_date = this.today;
+        }
+
         this.reload = 1;
 
         if (this.start_date) {

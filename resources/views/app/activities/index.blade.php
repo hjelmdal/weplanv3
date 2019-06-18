@@ -34,10 +34,10 @@
                     <div class="kt-section__content kt-section__content--border">
                         <div class="row">
                             <div class="col-3">
-                                <a href="{{ route("activities.index") }}" class="btn btn-success kt-btn--icon">
+                                <button @click="activitiesLoad('today')" class="btn btn-success kt-btn--icon">
                                     <span class="d-inline d-sm-none">&nbsp;&nbsp;</span><span><i class="fa fa-calendar"></i><span class="d-none d-sm-inline">Denne uge</span>
                         </span>
-                                </a>
+                                </button>
                             </div>
                             <div class="col-5 kt-align-center">
                                 <h3><span id="headline" class="d-none d-sm-inline">Aktiviteter i </span>Uge @{{start_date | formatDate("ww")}}</h3>
