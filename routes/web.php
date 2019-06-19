@@ -46,12 +46,14 @@ Route::get("/user/pending","UserController@index")->middleware("auth")->name("ve
 
 // Activities routes
 Route::get("/activities","WePlan\ActivitiesController@index")->middleware("auth")->name("activities.index");
-Route::get("/activities/date/{date?}","WePlan\ActivitiesController@index")->middleware("auth")->name("activities.index")->where(['date' => '[0-9]{4}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}']);
+Route::get("/activities/date/{date?}","WePlan\ActivitiesController@index")->middleware("auth")->name("activities.date")->where(['date' => '[0-9]{4}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}']);
 Route::get("/activities/admin/{date?}","WePlan\ActivitiesController@admin")->middleware("auth")->name("activities.admin")->where(['date' => '[0-9]{4}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}']);
 Route::get("/activities/{id}","WePlan\ActivitiesController@show")->middleware("auth")->name("activities.show")->where('id', '[0-9]+');
 Route::get("/activities/create","WePlan\ActivitiesController@create")->middleware("auth")->name("activities.create");
+
 Route::post("/activities/create","WePlan\ActivitiesController@store")->middleware("auth")->name("activities.store");
 Route::get("/activities/plan/{date?}","WePlan\ActivitiesController@plan")->middleware("auth")->name("activities.plan")->where(['date' => '[0-9]{4}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}']);
+Route::resource('activities', 'WePlan\ActivitiesController');
 
 
 // Player routs

@@ -79,10 +79,10 @@
             <template v-for="activity in day.events">
             <div class="div-row">
                 <div class="row-column" v-bind:class="{'bef-success':(activity.type_id == 1), 'bef-warning':(activity.type_id == 5), 'bef-danger':(activity.type_id == 2), 'bef-info':(activity.type_id == 3), 'bef-dark':(activity.type_id == 4)}">
-                    <a data-toggle="modal" data-target="#modal1" :href="'{{ route("activities.index") }}/'+activity.id" class="div-text">@{{ activity.title }}</a>
+                    <a data-toggle="modal" data-target="#modal1" :href="'{{ route("activities.index") }}/'+activity.id+'/edit'" class="div-text">@{{ activity.title }}</a>
                     <div class="div-time">@{{ activity.start | formatTime("HH:mm") }} - @{{ activity.end | formatTime("HH:mm") }}</div>
                 </div>
-                <div class="div-right"><a data-toggle="modal" data-target="#modal1" :href="'{{ route("activities.index") }}/'+activity.id" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">
+                <div class="div-right"><a data-toggle="modal" data-target="#modal1" :href="'{{ route("activities.index") }}/'+activity.id+'/edit'" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">
                         <i class="la la-edit"></i>
                     </a>
                     <a href="#" v-on:click="loadOffCanvas(true)" class="btn btn-sm btn-clean btn-icon btn-icon-md kt_offcanvas_01" title="Delete">

@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 //console.log(xhr);
                 //console.log("response " + response);
                 //console.log("status " + status);
-                if(response.startsWith("<!DOCTYPE html")) {
+                if(response.startsWith("<!DOCTYPE html") || xhr.status == 401) {
                     $(ref + ' .modal-content').empty();
                     swal({
                         position: 'top',

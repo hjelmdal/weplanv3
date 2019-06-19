@@ -6,6 +6,7 @@ use App\Helpers\UUID;
 use App\Http\Controllers\API\WePlan\WeActivitiesAPI;
 use App\Models\WePlan\WeActivity;
 use App\Models\WePlan\WeActivityType;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -35,7 +36,7 @@ class ActivitiesController extends Controller
     public function create()
     {
         $types = WeActivityType::all();
-        return view("app.activities.create",["types" => $types]);
+        return view("app.activities.create",["activity" => null,"types" => $types]);
     }
 
     /**
@@ -44,14 +45,22 @@ class ActivitiesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id = null)
     {
         $validatedData = $request->validate([
             'title' => 'required|max:255',
             'info' => 'required',
         ]);
 
-        $activity = new WeActivity();
+        if($id) {
+            try {
+                $activity = WeActivity::findOrFail($id);
+            } catch (ModelNotFoundException $e) {
+                return response()->json("Aktiviteten blev ikke fundet", 404);
+            }
+        } else {
+            $activity = new WeActivity();
+        }
         $activity->title = $request->title;
         $activity->info = $request->info;
         $activity->type_id = $request->type_id;
@@ -113,7 +122,7 @@ class ActivitiesController extends Controller
         $activity->save();
 
         //return redirect()->route("coach.activities.create")->with("message", "Aktiviteten er oprettet korrekt!")->with("title","Succes!");
-        return response()->json($start_date);
+        return response()->json("YAY",201);
     }
 
     /**
@@ -137,7 +146,13 @@ class ActivitiesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $types = WeActivityType::all();
+        try {
+            $activity = WeActivity::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return "Model not found";
+        }
+        return view("app.activities.create",["activity" => $activity,"types" => $types]);
     }
 
     /**
@@ -149,7 +164,8 @@ class ActivitiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return $this->store($request,$id);
+
     }
 
     /**

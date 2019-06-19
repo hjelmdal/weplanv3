@@ -12,10 +12,48 @@
 
 @section('meta.title','Activities')
 
+<?php
 
+$opt_type = old("type");
+
+$title = null;
+$description = null;
+$address = null;
+$start_d = null;
+$start_t = null;
+$end_d = null;
+$end_t = null;
+$resp_d = null;
+$resp_t = null;
+$recur = false;
+$weekdays = [];
+
+if($activity) {
+    $opt_type = $activity->type_id;
+    $title = $activity->title;
+    $description = $activity->info;
+    $address = $activity->address;
+    $start_d = $activity->start_date;
+    $start_t = date("H:i",strtotime($activity->start));
+    $end_d = $activity->end_date;
+    if(!$end_d) { $end_d = $activity->start_date; }
+    $end_t = date("H:i",strtotime($activity->end));
+    $resp_d = $activity->response_date;
+    $resp_t = date("H:i",strtotime($activity->response_time));
+    ?>
+@section('title','Ret ' . $activity->title)
+@section("form-action", route("activities.update", ["id" => $activity->id]))
+<?php
+} else {
+?>
 @section('title','Ny Aktivitet')
+<?php
+}
 
-@section("form-action", route("activities.store"))
+?>
+
+
+
 @section("callback",route("activities.index"))
 
 
@@ -481,11 +519,10 @@
 @endsection
 @section("content")
 
-    <?php
 
-    $opt_type = old("type");
-    ?>
-
+@if($activity)
+    @method("put")
+    @endif
 
 
 
@@ -502,7 +539,7 @@
                 <label class="col-form-label col-lg-3 col-sm-12">Aktivitetstype</label>
                 <div class="col-lg-6 col-md-9 col-sm-12">
                     <select class="form-control kt-bootstrap-select kt_selectpicker" name="type_id" required>
-                        <option value="" <?php if (empty($opt_type)) echo 'selected'; ?>>
+                        <option value="" <?php if (empty($type)) echo 'selected'; ?>>
                             - <?= __('Vælg en type'); ?> -
                         </option>
                         <?php
@@ -518,7 +555,7 @@
             <div class="form-group kt-form__group row">
                 <label class="col-lg-3 col-form-label">Titel</label>
                 <div class="col-lg-6 col-md-9 col-sm-12">
-                    <input name="title" type="text" class="form-control kt-input" placeholder="Aktivitetens titel" required>
+                    <input name="title" type="text" class="form-control kt-input" placeholder="Aktivitetens titel" required value="{{ $title }}">
                     <span class="kt-form__help">Skriv en titel til aktiviteten</span>
                 </div>
             </div>
@@ -526,7 +563,7 @@
             <div class="form-group kt-form__group row">
                 <label class="col-lg-3 col-form-label">Beskrivelse</label>
                 <div class="col-lg-6 col-md-9 col-sm-12">
-                    <textarea name="info" class="form-control kt-input" placeholder="Aktivitetens beskrivelse" rows="3"></textarea>
+                    <textarea name="info" class="form-control kt-input" placeholder="Aktivitetens beskrivelse" rows="3">{{ $description }}</textarea>
                     <span class="kt-form__help">Skriv en beskrivelse til aktiviteten</span>
                 </div>
             </div>
@@ -537,7 +574,7 @@
             <label class="col-form-label col-lg-3 col-sm-12">Sted</label>
 
             <div class="col-lg-6 col-md-9 col-sm-12">
-                <input name="address" class="form-control kt-input" id="pac-input" autocomplete="true" type="text" placeholder="Skovbakken Badminton">
+                <input name="address" class="form-control kt-input" id="pac-input" autocomplete="true" type="text" placeholder="Skovbakken Badminton" value="{{ $address }}">
                 <span class="kt-form__help">Skriv adresse på eventen</span>
 
                 </div>
@@ -567,7 +604,7 @@
                 <label>Startdato</label>
 
                 <div class="kt-input-icon kt-input-icon--right kt--margin-bottom-10">
-                    <input name="start_date" id="startD" type="text" class="form-control kt-input dateonly" autocomplete="off" placeholder="Dato" required >
+                    <input name="start_date" id="startD" type="text" class="form-control kt-input dateonly" autocomplete="off" placeholder="Dato" required value="{{ $start_d }}">
                     <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-calendar glyphicon-th"></i>
@@ -576,7 +613,7 @@
                 </div>
 
                 <div class="kt-input-icon kt-input-icon--right">
-                    <input name="start" id="startT" type="text" class="form-control kt-input timeonly" autocomplete="off" placeholder="Tid" required>
+                    <input name="start" id="startT" type="text" class="form-control kt-input timeonly" autocomplete="off" placeholder="Tid" required value="{{ $start_t }}">
                     <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-clock-o glyphicon-th"></i>
@@ -588,7 +625,7 @@
             <div class="col-sm-4 col-md-3 col-lg-2" style="border-right: 1px dashed #ebedf2;">
                 <label>Slutdato</label>
                 <div class="kt-input-icon kt-input-icon--right kt--margin-bottom-10">
-                    <input name="end_date" id="endD" type="text" class="form-control kt-input dateonly" autocomplete="off" placeholder="Dato" required>
+                    <input name="end_date" id="endD" type="text" class="form-control kt-input dateonly" autocomplete="off" placeholder="Dato" required value="{{ $end_d }}">
                     <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-calendar glyphicon-th"></i>
@@ -597,7 +634,7 @@
                 </div>
 
                 <div class="kt-input-icon kt-input-icon--right">
-                    <input name="end" id="endT" type="text" class="form-control kt-input timeonly" autocomplete="off" placeholder="Tid" required>
+                    <input name="end" id="endT" type="text" class="form-control kt-input timeonly" autocomplete="off" placeholder="Tid" required value="{{ $end_t }}">
                     <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-clock-o glyphicon-th"></i>
@@ -608,7 +645,7 @@
             <div class="col-sm-4 col-md-3 col-lg-2">
                 <label>Responstid</label>
                 <div class="kt-input-icon kt-input-icon--right kt--margin-bottom-10">
-                    <input name="response_date" id="respD" type="text" class="form-control kt-input dateonly" autocomplete="off" placeholder="Dato" required>
+                    <input name="response_date" id="respD" type="text" class="form-control kt-input dateonly" autocomplete="off" placeholder="Dato" required value="{{ $resp_d }}">
                     <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-calendar glyphicon-th"></i>
@@ -616,7 +653,7 @@
                                     </span>
                 </div>
                 <div class="kt-input-icon kt-input-icon--right">
-                    <input name="response_time" id="respT" type="text" class="form-control kt-input timeonly" autocomplete="off" placeholder="Tid" required>
+                    <input name="response_time" id="respT" type="text" class="form-control kt-input timeonly" autocomplete="off" placeholder="Tid" required value="{{ $resp_t }}">
                     <span class="kt-input-icon__icon kt-input-icon__icon--right">
                                         <span>
                                             <i class="la la-clock-o glyphicon-th"></i>
@@ -626,6 +663,7 @@
             </div>
         </div>
         <div class="kt-form__seperator kt-form__seperator--dashed"></div>
+        @if(!$activity)
         <div class="form-group kt-form__group row">
             <label class="col-form-label col-lg-3 col-sm-12">Gentag aktivitet?</label>
             <div class="col-lg-6 col-md-9 col-sm-12">
@@ -697,6 +735,8 @@
 
 
         </div>
+    @endif
+
 
 
 
