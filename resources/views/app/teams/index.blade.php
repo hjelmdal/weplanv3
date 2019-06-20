@@ -17,7 +17,7 @@ $img_url = "https://keenthemes.com/keen/preview/assets/media/users/100_";
         z-index: 1051 !important;
     }
     .modal-backdrop.show:nth-of-type(even) {
-        z-index: 1050 !important;
+        z-index: 1049 !important;
     }
     .modal-backdrop.show:nth-of-type(odd) {
         z-index: 1049 !important;

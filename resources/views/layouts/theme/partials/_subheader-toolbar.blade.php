@@ -1,6 +1,6 @@
 <!-- begin:: Sub-header toolbar -->
 <div class="kt-subheader__toolbar">
-	@if (\Request::is('activities/*'))
+	@if ((\Request::is('activities/*') || \Request::is('/')) && !\Request::is('activities/plan/*'))
     <label class="col-form-label">Kun mine?&nbsp;</label>
     <span class="kt-switch kt-switch--sm kt-switch--icon" style="display: flex;align-self: flex-end;">
 
