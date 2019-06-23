@@ -19,7 +19,6 @@ class APIToken
      */
     public function handle($request, Closure $next)
     {
-        Log::info("Token: " . $request->header('Authorization'));
         if($request->header('Authorization')) {
             try {
                 $token = $request->header("Authorization");
@@ -31,8 +30,7 @@ class APIToken
             }
             $request->attributes->add(['user' => $user]);
 
-            Log::info($token);
-            Log::info("User". $user->id);
+
 
             return $next($request);
         } else {
