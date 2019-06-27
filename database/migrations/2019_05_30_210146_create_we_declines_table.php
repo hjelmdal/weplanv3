@@ -15,16 +15,26 @@ class CreateWeDeclinesTable extends Migration
     {
         Schema::create('we_declines', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer("player_id");
+            $table->integer("player_id")->unsigned();
             $table->integer("training_id")->nullable();
             $table->date("start_date");
             $table->date("end_date")->nullable();
             $table->string("description")->nullable();
-            $table->integer("type_id")->nullable();
-            $table->integer("category_id")->nullable();
+            $table->bigInteger("type_id")->unsigned()->nullable();
+            $table->bigInteger("category_id")->nullable()->unsigned();
             $table->nullableTimestamps();
             $table->softDeletes();
+            $table->foreign('player_id')->references('id')->on('we_players');
+            $table->foreign('category_id')->references('id')->on('we_decline_categories');
+            $table->foreign('type_id')->references('id')->on('we_activity_types');
         });
+
+        // Schema::table('we_declines', function(Blueprint $table) {
+        //     $table->foreign('player_id')
+        //         ->references('id')
+        //         ->on('we_players');
+                
+        // });
     }
 
     /**
