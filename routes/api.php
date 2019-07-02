@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 Route::name('api.')->group(function () {
     Route::prefix('v1')->namespace('API')->name("v1.")->group(function () {
+        Route::post('/test','TestAPI@test');
         // Login
         Route::post('/login','Auth\AuthController@postLogin');
         // Register

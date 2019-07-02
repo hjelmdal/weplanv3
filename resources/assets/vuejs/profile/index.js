@@ -1,10 +1,10 @@
 import Vue from "vue";
-import Wizzard from "../../../views/user/wizzard";
+import Wizard from "../../../views/user/wizard";
 
 
 new Vue({
     components: {
-        Wizzard
+        Wizard
     },
     el: "#kt_body",
 

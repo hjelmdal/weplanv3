@@ -117,7 +117,7 @@
 @endsection
 @section("content")
     @if(!$user->email_verified_at)
-        <wizzard></wizzard>
+        <wizard></wizard>
    @endif
     <!--begin::Portlet-->
     <div class="kt-portlet kt-profile">
