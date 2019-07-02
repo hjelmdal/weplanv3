@@ -8,7 +8,7 @@ export const stepData = [
             text: "Færdiggør venligst din profil og udfyld dit BadmintonDanmark ID, så du kan blive tilknyttet træninger mv.",
             svg: "/base/media/wizard/undraw_checklist_7q37.svg"
         },
-        contentComponent: "step1Content"
+        contentComponent: "setPassword"
     },
     {
         step: 2,

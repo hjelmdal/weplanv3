@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Wizard from "../../../views/user/wizard";
+import Wizard from "./components/wizard";
 
 
 new Vue({

@@ -97,8 +97,8 @@ export default class Form {
                     resolve(response.data);
                 })
                 .catch(error => {
-                    this.onFail(error.response.data);
-
+                    this.onFail(error.response.data.errors);
+                    console.log(error.response.data);
                     reject(error.response.data);
                 });
         });
@@ -111,9 +111,9 @@ export default class Form {
      * @param {object} data
      */
     onSuccess(data) {
-        console.log(data.message); // temporary
 
-        //this.reset();
+
+        this.reset();
     }
 
 

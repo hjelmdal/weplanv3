@@ -1,5 +1,5 @@
 <script>
-    import Form from "../../../resources/assets/vuejs/Form"
+    import Form from "../../Form"
     export default {
         name: "step1Content",
         props: ["step"],

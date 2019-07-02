@@ -1,6 +1,6 @@
 <script>
     import stepInfo from "./stepInfo";
-    import step1Content from "./step1Content";
+    import setPassword from "./setPassword";
     import step2Content from "./step2Content";
     import step3Content from "./step3Content";
     import step4Content from "./step4Content";
@@ -9,7 +9,7 @@
         name: "Wizard",
         components: {
             stepInfo,
-            step1Content,
+            setPassword,
             step2Content,
             step3Content,
             step4Content
