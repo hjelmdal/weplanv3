@@ -5,6 +5,9 @@
         methods: {
             next() {
                 this.$emit("next");
+            },
+            prev() {
+                this.$emit("prev");
             }
         }
     }
@@ -77,7 +80,7 @@
         <div data-ktwizard-type="step-content" :data-ktwizard-state="step.state">
             <!--begin: Form Actions -->
             <div class="kt-form__actions">
-                <div class="btn btn-outline-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-prev">
+                <div @click="prev" style="display: block;" class="btn btn-outline-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-prev">
                     Previous
                 </div>
                 <div class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-submit">

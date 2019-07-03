@@ -45,9 +45,9 @@ class APIRole
     }
 
     private function _401() {
-        return response()->json(["message => Unauthorized!"],401);
+        return response()->json(["message => Unauthorized!", "errors => Unauthorized!"],401);
     }
     private function _403() {
-        return response()->json(["message => Forbidden!"],403);
+        return response()->json(["message => Forbidden!","errors => Forbidden!"],403);
     }
 }

@@ -90,6 +90,9 @@ export default class Form {
      */
     submit(requestType, url) {
         return new Promise((resolve, reject) => {
+            const instance = axios.create({
+            });
+            instance.defaults.headers.common['Authorization'] = document.querySelector('meta[name="api-token"]').getAttribute('content');
             axios[requestType](url, this.data())
                 .then(response => {
                     this.onSuccess(response.data);

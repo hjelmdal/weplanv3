@@ -17,7 +17,12 @@
                 this.$emit("next");
             },
             submitForm() {
-                this.form.post("/api/v1/test");
+                this.form.patch("/api/v1/user/patch")
+                    .then(data => {
+                        this.next()
+                        }
+                    );
+
             }
         },
     }
@@ -32,15 +37,15 @@
     <div>
         <!--begin: Form Wizard Step 1-->
         <div class="kt-wizard-v1__content" data-ktwizard-type="step-content" :data-ktwizard-state="step.state">
-            <div class="kt-heading kt-heading--md">Vi har brug for dit samtykke!</div>
+            <div class="kt-heading kt-heading--md">Sæt din nye adgangskode</div>
             <div class="kt-separator kt-separator--height-xs"></div>
             <div class="kt-form__section kt-form__section--first">
                 <p>Tillykke med din nye konto hos os. For at kunne logge ind på vores site uden om Facebook / Google, skal du sætte et personligt password.</p>
                 <div class="form-group">
                     <label for="password">Dit nye password</label>
-                    <input type="password" class="form-control" :class="{'is-invalid': (form.errors.has('password'))}" id="password" placeholder="Password" v-model="form.password" @keyup="form.errors.clear()" autocomplete="new-password">
-                    <div v-if="form.errors.has('password')" class="invalid-feedback" v-text="form.errors.get('password')"></div>
-                    <input type="password" class="form-control" :class="{'is-invalid': (form.errors.has('password'))}" id="password_confirm" placeholder="Password" v-model="form.password_confirmation">
+                    <input type="password" class="form-control" :class="{'is-invalid': (form.errors.has('password'))}" id="password" placeholder="Adgangskode" v-model="form.password" @keyup="form.errors.clear()" autocomplete="new-password"><br>
+                    <input type="password" class="form-control" :class="{'is-invalid': (form.errors.has('password'))}" id="password_confirm" placeholder="Bekræft adgangskode" v-model="form.password_confirmation">
+                    <div v-if="form.errors.has('password')" class="invalid-feedback" style="text-transform: capitalize" v-text="form.errors.get('password')"></div>
                 </div>
 
             </div>

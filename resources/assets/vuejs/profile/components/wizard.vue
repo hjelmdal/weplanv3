@@ -159,7 +159,7 @@
                             <form class="kt-form" id="kt_form" novalidate="novalidate">
 
                                 <template v-for="step in steps">
-                                    <component @next="setStep(step.step + 1)" :is="step.contentComponent" :step="step"></component>
+                                    <component @next="setStep(step.step + 1)" @prev="setStep(step.step - 1)" :is="step.contentComponent" :step="step"></component>
                                 </template>
 
 

@@ -1781,7 +1781,11 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit("next");
     },
     submitForm: function submitForm() {
-      this.form.post("/api/v1/test");
+      var _this = this;
+
+      this.form.patch("/api/v1/user/patch").then(function (data) {
+        _this.next();
+      });
     }
   }
 });
@@ -1803,6 +1807,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     next: function next() {
       this.$emit("next");
+    },
+    prev: function prev() {
+      this.$emit("prev");
     }
   }
 });
@@ -3106,7 +3113,7 @@ var render = function() {
       },
       [
         _c("div", { staticClass: "kt-heading kt-heading--md" }, [
-          _vm._v("Vi har brug for dit samtykke!")
+          _vm._v("Sæt din nye adgangskode")
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "kt-separator kt-separator--height-xs" }),
@@ -3137,7 +3144,7 @@ var render = function() {
               attrs: {
                 type: "password",
                 id: "password",
-                placeholder: "Password",
+                placeholder: "Adgangskode",
                 autocomplete: "new-password"
               },
               domProps: { value: _vm.form.password },
@@ -3153,15 +3160,7 @@ var render = function() {
                 }
               }
             }),
-            _vm._v(" "),
-            _vm.form.errors.has("password")
-              ? _c("div", {
-                  staticClass: "invalid-feedback",
-                  domProps: {
-                    textContent: _vm._s(_vm.form.errors.get("password"))
-                  }
-                })
-              : _vm._e(),
+            _c("br"),
             _vm._v(" "),
             _c("input", {
               directives: [
@@ -3177,7 +3176,7 @@ var render = function() {
               attrs: {
                 type: "password",
                 id: "password_confirm",
-                placeholder: "Password"
+                placeholder: "Bekræft adgangskode"
               },
               domProps: { value: _vm.form.password_confirmation },
               on: {
@@ -3192,7 +3191,17 @@ var render = function() {
                   )
                 }
               }
-            })
+            }),
+            _vm._v(" "),
+            _vm.form.errors.has("password")
+              ? _c("div", {
+                  staticClass: "invalid-feedback",
+                  staticStyle: { "text-transform": "capitalize" },
+                  domProps: {
+                    textContent: _vm._s(_vm.form.errors.get("password"))
+                  }
+                })
+              : _vm._e()
           ])
         ])
       ]
@@ -3301,7 +3310,9 @@ var render = function() {
             {
               staticClass:
                 "btn btn-outline-brand btn-md btn-tall btn-wide btn-bold btn-upper",
-              attrs: { "data-ktwizard-type": "action-prev" }
+              staticStyle: { display: "block" },
+              attrs: { "data-ktwizard-type": "action-prev" },
+              on: { click: _vm.prev }
             },
             [_vm._v("\n                Previous\n            ")]
           ),
@@ -4116,6 +4127,9 @@ var render = function() {
                                   on: {
                                     next: function($event) {
                                       return _vm.setStep(step.step + 1)
+                                    },
+                                    prev: function($event) {
+                                      return _vm.setStep(step.step - 1)
                                     }
                                   }
                                 })
@@ -16371,6 +16385,8 @@ function () {
       var _this = this;
 
       return new Promise(function (resolve, reject) {
+        var instance = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({});
+        instance.defaults.headers.common['Authorization'] = document.querySelector('meta[name="api-token"]').getAttribute('content');
         axios__WEBPACK_IMPORTED_MODULE_0___default.a[requestType](url, _this.data()).then(function (response) {
           _this.onSuccess(response.data);
 
