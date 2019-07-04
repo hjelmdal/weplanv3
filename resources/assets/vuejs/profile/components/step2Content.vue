@@ -1,20 +1,78 @@
 <script>
+    import AvatarCropper from "vue-avatar-cropper";
     export default {
+        components: {
+            AvatarCropper
+        },
         name: "step2Content",
         props: ["step"],
+        data() {
+            return {
+                message: "ready",
+                user: {
+                    id: 1,
+                    nickname: "安正超",
+                    username: "overtrue",
+                    avatar: "https://avatars0.githubusercontent.com/u/1472352?s=460&v=4"
+                }
+            };
+        },
         methods: {
             next() {
                 this.$emit("next");
             },
             prev() {
                 this.$emit("prev");
+            },
+            handleUploading(form, xhr) {
+                this.message = "uploading...";
+            },
+            handleUploaded(response) {
+                if (response.status == "success") {
+                    this.user.avatar = response.url;
+                    // Maybe you need call vuex action to
+                    // update user avatar, for example:
+                    // this.$dispatch('updateUser', {avatar: response.url})
+                    this.message = "user avatar updated.";
+                }
+            },
+            handleCompleted(response, form, xhr) {
+                this.message = "upload completed.";
+            },
+            handlerError(message, type, xhr) {
+                this.message = "Oops! Something went wrong...";
             }
+
         }
     }
 </script>
 
 <style scoped>
+    .vue-avatar-cropper-demo {
+        max-width: 18em;
+        margin: 0 auto;
+    }
+    .avatar {
+        width: 160px;
+        border-radius: 6px;
+        display: block;
+        margin: 20px auto;
+    }
+    .card-img-overlay {
+        display: none;
+        transition: all 0.5s;
+        background: #fff;
+    }
+    .card-img-overlay button {
+        margin-top: 20vh;
+    }
+    .card:hover .card-img-overlay {
+        display: block;
+    }
 
+    .avatar-cropper .avatar-cropper-overlay {
+        opacity: 0.8;
+    }
 </style>
 
 <template>
@@ -25,53 +83,23 @@
         <div class="kt-separator kt-separator--height-sm"></div>
         <div class="kt-form__section kt-form__section--first">
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label>Name:</label>
-                        <input type="text" class="form-control" name="name" placeholder="Enter your name" value="Nick Strong">
-                        <span class="form-text text-muted">Please enter your full name</span>
+                <div class="card vue-avatar-cropper-demo text-center">
+                    <div class="card-body">
+                        <img :src="user.avatar" class="card-img avatar" />
+                        <div class="card-img-overlay">
+                            <button class="btn btn-primary btn-sm" id="pick-avatar">Select an new image</button>
+                        </div>
+                        <h5 class="card-title mb-0">{{ user.nickname }}</h5>
+                        <div class="text-muted">{{ user.username }}</div>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label>Contact:</label>
-                        <input type="text" class="form-control" name="phone" placeholder="Enter your phone number" value="1-541-754-3010">
-                        <span class="form-text text-muted">Enter your contact number</span>
-                    </div>
-                </div>
-            </div>
-            <div class="kt-heading kt-heading--md">Mailing Address</div>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label>Address Line 1:</label>
-                        <input type="text" class="form-control" name="address1" placeholder="" value="Headquarters 1120 N Street Sacramento 916-654-5266">
-                    </div>
-                    <div class="form-group">
-                        <label>City:</label>
-                        <input type="text" class="form-control" name="city" placeholder="" value="Polo Alto">
-                    </div>
-                    <div class="form-group">
-                        <label>State:</label>
-                        <input type="text" class="form-control" name="state" placeholder="" value="California">
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label>Address Line 2:</label>
-                        <input type="text" class="form-control" name="address2" placeholder="" value="P.O. Box 942873 Sacramento, CA 94273-0001">
-                    </div>
-                    <div class="form-group">
-                        <label>Zip Code:</label>
-                        <input type="number" class="form-control" name="zip" placeholder="" value="942873">
-                    </div>
-                    <div class="form-group">
-                        <label>Country:</label>
-                        <select name="country" class="form-control">
-                            <option value="">Select</option>
-
-                        </select>
-                    </div>
+                    <div class="card-footer text-muted" v-html="message"></div>
+                    <avatar-cropper
+                            @uploading="handleUploading"
+                            @uploaded="handleUploaded"
+                            @completed="handleCompleted"
+                            @error="handlerError"
+                            trigger="#pick-avatar"
+                            upload-url="https://demo.overtrue.me/upload.php" />
                 </div>
             </div>
         </div>

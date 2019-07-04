@@ -1,6 +1,7 @@
 <script>
     import stepInfo from "./stepInfo";
     import setPassword from "./setPassword";
+    import step1Content from "./step1Content";
     import step2Content from "./step2Content";
     import step3Content from "./step3Content";
     import step4Content from "./step4Content";
@@ -10,6 +11,7 @@
         components: {
             stepInfo,
             setPassword,
+            step1Content,
             step2Content,
             step3Content,
             step4Content
@@ -138,7 +140,7 @@
                             <div class="kt-wizard-v1__nav">
                                 <div class="kt-wizard-v1__nav-items">
                                     <template v-for="step in steps">
-                                    <a class="kt-wizard-v1__nav-item" href="#" data-ktwizard-type="step" :data-ktwizard-state="step.state" v-on:click="setStep(step.step)">
+                                    <a class="kt-wizard-v1__nav-item" href="#" data-ktwizard-type="step" :data-ktwizard-state="step.state" v-on:click="step.state != 'current' ? setStep(step.step): false">
                                         <span v-if="step.state == 'done'" v-html="step.icon"></span>
                                         <span v-else v-text="step.step"></span>
                                     </a>

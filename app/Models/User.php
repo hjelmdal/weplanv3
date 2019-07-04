@@ -65,6 +65,10 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->save();
     }
 
+    public function UserStatus() {
+        return $this->hasOne(UserStatus::class,"user_id","id");
+    }
+
     /**
      * Route notifications for the Slack channel.
      *

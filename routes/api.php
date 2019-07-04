@@ -32,7 +32,7 @@ Route::name('api.')->group(function () {
         });
 
         Route::namespace('Auth')->middleware("api.token")->group(function () {
-           Route::patch('user/patch',"UserAPI@patch");
+           Route::patch('user',"UserAPI@patch");
 
         });
 

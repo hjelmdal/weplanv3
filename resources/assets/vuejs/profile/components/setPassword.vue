@@ -17,11 +17,14 @@
                 this.$emit("next");
             },
             submitForm() {
-                this.form.patch("/api/v1/user/patch")
+                this.form.patch("/api/v1/user")
                     .then(data => {
                         this.next()
                         }
-                    );
+                    ).catch(e => {
+
+                    //I dontø care about this
+                })
 
             }
         },
@@ -43,9 +46,14 @@
                 <p>Tillykke med din nye konto hos os. For at kunne logge ind på vores site uden om Facebook / Google, skal du sætte et personligt password.</p>
                 <div class="form-group">
                     <label for="password">Dit nye password</label>
-                    <input type="password" class="form-control" :class="{'is-invalid': (form.errors.has('password'))}" id="password" placeholder="Adgangskode" v-model="form.password" @keyup="form.errors.clear()" autocomplete="new-password"><br>
-                    <input type="password" class="form-control" :class="{'is-invalid': (form.errors.has('password'))}" id="password_confirm" placeholder="Bekræft adgangskode" v-model="form.password_confirmation">
-                    <div v-if="form.errors.has('password')" class="invalid-feedback" style="text-transform: capitalize" v-text="form.errors.get('password')"></div>
+                    <input type="password" class="form-control" :class="{'is-invalid': (form.errors && form.errors.has('password'))}" id="password" placeholder="Adgangskode" v-model="form.password" @keyup="form.errors.clear()" autocomplete="new-password"><br>
+                    <input type="password" class="form-control" :class="{'is-invalid': (form.errors && form.errors.has('password'))}" id="password_confirm" placeholder="Bekræft adgangskode" v-model="form.password_confirmation">
+                    <ul v-if="form.errors && form.errors.has('password')">
+
+
+                            <li v-for="error in form.errors.get('password',true)" class="invalid-feedback" style="text-transform: capitalize; display: list-item;" v-text="error"></li>
+
+                    </ul>
                 </div>
 
             </div>

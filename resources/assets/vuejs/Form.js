@@ -145,7 +145,11 @@ class Errors {
      * @param {string} field
      */
     has(field) {
-        return this.errors.hasOwnProperty(field);
+        if(this.errors) {
+            return this.errors.hasOwnProperty(field);
+        } else {
+            return false;
+        }
     }
 
 
@@ -162,11 +166,26 @@ class Errors {
      *
      * @param {string} field
      */
-    get(field) {
+    get(field,array = false) {
         if (this.errors[field]) {
+            if(array == true) {
+                return this.errors[field];
+            }
             return this.errors[field][0];
         }
     }
+    /**
+     * Return the error messages for the entire object.
+     *
+     * @return {array} errors
+     */
+    getAll() {
+        if(this.errors) {
+            return this.errors;
+        }
+        return false;
+    }
+
 
 
     /**

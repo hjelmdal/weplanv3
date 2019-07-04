@@ -15,11 +15,11 @@ export const stepData = [
         state: "pending",
         icon: "",
         stepInfo: {
-            title: "Opsætning af brugerkonto!",
-            text: "To start off, please enter your username, email address and password.",
+            title: "Vi bekymrer os om dine data!",
+            text: "I forhold til GDPR skal vi bede dig bekræfte at vi må behandle dine data",
             svg: "/base/media/wizard/undraw_resume_folder_2_arse.svg"
         },
-        contentComponent: "step2Content"
+        contentComponent: "step1Content"
     },
     {
         step: 3,
@@ -30,7 +30,7 @@ export const stepData = [
             text: "To start off, please enter your username, email address and password.",
             svg: "/base/media/wizard/undraw_live_collaboration_2r4y.svg"
         },
-        contentComponent: "step3Content"
+        contentComponent: "step2Content"
     },
     {
         step: 4,
