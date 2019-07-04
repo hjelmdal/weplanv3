@@ -25,17 +25,17 @@
         methods: {
             setStep(index = false) {
                 console.log(index);
-                if(typeof this.steps[index-1] != 'undefined') {
+                if (typeof this.steps[index - 1] != 'undefined') {
                     this.steps.forEach(step => {
                         step.state = "pending";
                         step.icon = "";
-                       if(step.step < index) {
-                           step.state = "done";
-                           step.icon = '<i class="la la-check kt-font-success"></i>';
-                       } else if(step.step == index) {
-                           step.state = "current";
-                       }
-                       console.log("step:" + step.state);
+                        if (step.step < index) {
+                            step.state = "done";
+                            step.icon = '<i class="la la-check kt-font-success"></i>';
+                        } else if (step.step == index) {
+                            step.state = "current";
+                        }
+                        console.log("step:" + step.state);
                     });
 
                 }
@@ -163,13 +163,6 @@
                                 <template v-for="step in steps">
                                     <component @next="setStep(step.step + 1)" @prev="setStep(step.step - 1)" :is="step.contentComponent" :step="step"></component>
                                 </template>
-
-
-
-
-
-
-
 
 
                             </form>

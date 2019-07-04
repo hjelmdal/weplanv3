@@ -15,15 +15,25 @@ class UserAPI extends Controller
 {
     private $user;
 
-    private function userFromApiToken($request) {
-        if($request->header('Authorization')){
+    private function userFromApiToken(Request $request)
+    {
+        if ($request->header('Authorization')) {
             $this->user = User::where('api_token', $request->header("Authorization"))->first();
-            if(!$this->user) {
-                return response()->json(["message" => 'Unauthorized'],401);
+            if (!$this->user) {
+                return response()->json(["message" => 'Unauthorized'], 401);
             }
             //$user = Auth::loginUsingId($user->id);
         }
         return $this->user;
+    }
+
+    public function getMyUser(Request $request) {
+        $user = $this->userFromApiToken($request);
+
+        if(!$user->avatar) {
+            $user->avatar = "/img/profile.png";
+        }
+        return response()->json(["message" => "OK", "user" => $user]);
     }
 
     public function patch(Request $request)

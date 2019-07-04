@@ -1,5 +1,6 @@
 <script>
     import AvatarCropper from "vue-avatar-cropper";
+    import axios from "axios";
     export default {
         components: {
             AvatarCropper
@@ -8,16 +9,32 @@
         props: ["step"],
         data() {
             return {
-                message: "ready",
+                message: "Upload",
                 user: {
                     id: 1,
-                    nickname: "安正超",
-                    username: "overtrue",
+                    name: "Hjelmdal",
+                    email: "",
                     avatar: "https://avatars0.githubusercontent.com/u/1472352?s=460&v=4"
                 }
             };
         },
         methods: {
+            getUser() {
+                axios({
+                    method: 'get',
+                    url: getUserUrl,
+                    headers: { Authorization: apiToken },
+                }).catch(error => {
+                    if(error.response) {
+                        console.log("Error code: " + error.response.status);
+                        if(error.response.status == 401) {
+                            //location.reload();
+                        }
+                    }
+                }).then((response) => {
+                    this.user = response.data.user;
+                });
+            },
             next() {
                 this.$emit("next");
             },
@@ -43,6 +60,9 @@
                 this.message = "Oops! Something went wrong...";
             }
 
+        },
+        mounted() {
+            this.getUser();
         }
     }
 </script>
@@ -60,14 +80,19 @@
     }
     .card-img-overlay {
         display: none;
-        transition: all 0.5s;
-        background: #fff;
+        background-color:transparent;
     }
     .card-img-overlay button {
         margin-top: 20vh;
     }
     .card:hover .card-img-overlay {
         display: block;
+        background-color:rgba(0, 0, 0, 0.5);
+        -webkit-transition: background-color 2s ease-out;
+        -moz-transition: background-color 2s ease-out;
+        -o-transition: background-color 2s ease-out;
+        transition: background-color 2s ease-out;
+
     }
 
     .avatar-cropper .avatar-cropper-overlay {
@@ -89,8 +114,8 @@
                         <div class="card-img-overlay">
                             <button class="btn btn-primary btn-sm" id="pick-avatar">Select an new image</button>
                         </div>
-                        <h5 class="card-title mb-0">{{ user.nickname }}</h5>
-                        <div class="text-muted">{{ user.username }}</div>
+                        <h5 class="card-title mb-0">{{ user.name }}</h5>
+                        <div class="text-muted">{{ user.email }}</div>
                     </div>
                     <div class="card-footer text-muted" v-html="message"></div>
                     <avatar-cropper

@@ -1844,6 +1844,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_avatar_cropper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-avatar-cropper */ "./node_modules/vue-avatar-cropper/dist/index.js");
 /* harmony import */ var vue_avatar_cropper__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_avatar_cropper__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1853,16 +1856,36 @@ __webpack_require__.r(__webpack_exports__);
   props: ["step"],
   data: function data() {
     return {
-      message: "ready",
+      message: "Upload",
       user: {
         id: 1,
-        nickname: "安正超",
-        username: "overtrue",
+        name: "Hjelmdal",
+        email: "",
         avatar: "https://avatars0.githubusercontent.com/u/1472352?s=460&v=4"
       }
     };
   },
   methods: {
+    getUser: function getUser() {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: 'get',
+        url: getUserUrl,
+        headers: {
+          Authorization: apiToken
+        }
+      }).catch(function (error) {
+        if (error.response) {
+          console.log("Error code: " + error.response.status);
+
+          if (error.response.status == 401) {//location.reload();
+          }
+        }
+      }).then(function (response) {
+        _this.user = response.data.user;
+      });
+    },
     next: function next() {
       this.$emit("next");
     },
@@ -1887,6 +1910,9 @@ __webpack_require__.r(__webpack_exports__);
     handlerError: function handlerError(message, type, xhr) {
       this.message = "Oops! Something went wrong...";
     }
+  },
+  mounted: function mounted() {
+    this.getUser();
   }
 });
 
@@ -2032,7 +2058,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.vue-avatar-cropper-demo[data-v-4ef61912] {\n    max-width: 18em;\n    margin: 0 auto;\n}\n.avatar[data-v-4ef61912] {\n    width: 160px;\n    border-radius: 6px;\n    display: block;\n    margin: 20px auto;\n}\n.card-img-overlay[data-v-4ef61912] {\n    display: none;\n    transition: all 0.5s;\n    background: #fff;\n}\n.card-img-overlay button[data-v-4ef61912] {\n    margin-top: 20vh;\n}\n.card:hover .card-img-overlay[data-v-4ef61912] {\n    display: block;\n}\n.avatar-cropper .avatar-cropper-overlay[data-v-4ef61912] {\n    opacity: 0.8;\n}\n", ""]);
+exports.push([module.i, "\n.vue-avatar-cropper-demo[data-v-4ef61912] {\n    max-width: 18em;\n    margin: 0 auto;\n}\n.avatar[data-v-4ef61912] {\n    width: 160px;\n    border-radius: 6px;\n    display: block;\n    margin: 20px auto;\n}\n.card-img-overlay[data-v-4ef61912] {\n    display: none;\n    background-color:transparent;\n}\n.card-img-overlay button[data-v-4ef61912] {\n    margin-top: 20vh;\n}\n.card:hover .card-img-overlay[data-v-4ef61912] {\n    display: block;\n    background-color:rgba(0, 0, 0, 0.5);\n    transition: background-color 2s ease-out;\n}\n.avatar-cropper .avatar-cropper-overlay[data-v-4ef61912] {\n    opacity: 0.8;\n}\n", ""]);
 
 // exports
 
@@ -3608,11 +3634,11 @@ var render = function() {
                   _vm._m(0),
                   _vm._v(" "),
                   _c("h5", { staticClass: "card-title mb-0" }, [
-                    _vm._v(_vm._s(_vm.user.nickname))
+                    _vm._v(_vm._s(_vm.user.name))
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "text-muted" }, [
-                    _vm._v(_vm._s(_vm.user.username))
+                    _vm._v(_vm._s(_vm.user.email))
                   ])
                 ]),
                 _vm._v(" "),

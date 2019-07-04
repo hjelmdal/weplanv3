@@ -56,7 +56,7 @@
         <div class="kt-header__topbar-welcome">{{ __("Hi") }},</div>
         <div class="kt-header__topbar-username">{{ $firstname }}</div>
         <div class="kt-header__topbar-wrapper" >
-            <img alt="Pic" src="@if(!$user->avatar)/img/profile.png @else{{asset('storage/'.$user->avatar)}}@endif"/>
+            <img alt="Pic" src="@if(!$user->avatar)/img/profile.png @else{{$user->avatar}}@endif"/>
         </div>
     </div>
     @endif
