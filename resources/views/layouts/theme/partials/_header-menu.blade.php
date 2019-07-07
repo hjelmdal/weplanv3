@@ -3,6 +3,9 @@
 <div class="kt-header-menu-wrapper kt-grid__item" id="kt_header_menu_wrapper">
     <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile " >
         <ul class="kt-menu__nav ">
+            <li class="kt-menu__item kt-menu__item--open kt-menu__item--here kt-menu__item--rel kt-menu__item--open kt-menu__item--here">
+                <a href="{{ route("activities.index") }}" class="kt-menu__link"><span class="kt-menu__link-text">Aktivititer</span></a>
+            </li>
             <li class="kt-menu__item kt-menu__item--open kt-menu__item--here kt-menu__item--submenu kt-menu__item--rel kt-menu__item--open kt-menu__item--here" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
                 <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">Dashboard</span><i class="kt-menu__hor-arrow la la-angle-down"></i><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
                 <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
