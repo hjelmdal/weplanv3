@@ -19817,7 +19817,7 @@ new Vue({
         _this.prev_week = response.data.prev_week;
         _this.user = response.data.user;
 
-        if (_this.user.roles) {
+        if (_this.user.roles && _this.user.roles.length) {
           _this.user_role = _this.user.roles[0].id;
         }
 

@@ -135,7 +135,7 @@ class LoginController extends Controller
                 'name' => $user->getName(),
                 'email' => $user->getEmail(),
                 'password' => bcrypt(uniqid()),
-                'avatar' => $file
+                'avatar' => "/storage/". $file
             ]);
             $google = new Google([
                 'token' => $user->token,
@@ -169,6 +169,7 @@ class LoginController extends Controller
         /** @var User $user */
         $user = Socialite::driver('facebook')->user();
 
+
         $userObj = \App\Models\User::where('email', $user->getEmail())->whereHas('facebook', function (Builder $query) use ($user) {
             $query->where('facebook_id', $user->getId());
         })->first();
@@ -184,13 +185,22 @@ class LoginController extends Controller
 
         $userObj = \App\Models\User::where('email', $user->getEmail())->first();
         if ($userObj != null) {
-            $request->session()->flash('message', 'Email already exist');
-            return redirect()->route('login');
+            $facebook = new Facebook([
+                'token' => $user->token,
+                'refresh_token' => $user->refreshToken,
+                'expires_in' => $user->expiresIn,
+                'facebook_id' => $user->getId()
+            ]);
+            $userObj->facebook()->save($facebook);
+            Auth::login($userObj,true);
+
+            return $this->redirectToPage(["message" => "Din Facebook account er nu tilknyttet din WePlan bruger"]);
+
         }
 
         if ($request->session()->get('fb-intent') == 'create') {
             $fileName = tempnam(sys_get_temp_dir(), 'profile-pic');
-            copy($user->getAvatar(), $fileName);
+            copy($user->getAvatar()."&width=500&height=500", $fileName);
             /** @var Filesystem $disk */
             $file = Storage::disk('public')->putFile('profile', new File($fileName));
 
@@ -199,7 +209,7 @@ class LoginController extends Controller
                 'name' => $user->getName(),
                 'email' => $user->getEmail(),
                 'password' => bcrypt(uniqid()),
-                'avatar' => $file
+                'avatar' => "/storage/". $file
             ]);
             $facebook = new Facebook([
                 'token' => $user->token,
