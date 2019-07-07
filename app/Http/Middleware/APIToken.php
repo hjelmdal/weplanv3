@@ -34,7 +34,7 @@ class APIToken
 
             return $next($request);
         } else {
-            return response()->json(["message => Unauthorized - Missing Token"],401);
+            return response()->json(["message => Unauthorized - Missing Token", "errors" => "Unauthorized - Missing Token"],401);
         }
 
 

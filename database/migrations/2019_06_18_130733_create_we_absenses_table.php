@@ -21,7 +21,7 @@ class CreateWeAbsensesTable extends Migration
             $table->integer("absense_type");
             $table->nullableTimestamps();
             $table->softDeletes();
-            $table->foreign('player_id')->references('id')->on('we_players');
+            $table->foreign('player_id')->references('id')->on('we_players')->onUpdate("cascade");
         });
 
 

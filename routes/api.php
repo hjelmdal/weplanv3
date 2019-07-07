@@ -14,12 +14,14 @@ use Illuminate\Http\Request;
 */
 Route::name('api.')->group(function () {
     Route::prefix('v1')->namespace('API')->name("v1.")->group(function () {
+
         // Login
         Route::post('/login','Auth\AuthController@postLogin');
         // Register
         Route::post('/register','Auth\AuthController@postRegister');
         // Protected with APIToken Middleware
         Route::middleware('api.token')->group(function () {
+            Route::post('/test','TestAPI@test');
             // Logout
             Route::post('/logout','Auth\AuthController@postLogout');
         });
@@ -27,6 +29,12 @@ Route::name('api.')->group(function () {
         Route::middleware('api.role:super-admin')->get('/user', function (Request $request) {
             $user = \App\Models\User::first();
             $user->revoke();
+        });
+
+        Route::namespace('Auth')->middleware("api.token")->group(function () {
+            Route::get('user',"UserAPI@getMyUser")->name("my-user");
+            Route::patch('user',"UserAPI@patch");
+
         });
 
 

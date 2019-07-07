@@ -10,7 +10,7 @@
     <div class="kt-offcanvas-panel__body">
         <div class="kt-user-card-v3 kt-margin-b-30">
             <div class="kt-user-card-v3__avatar">
-                <img src="@if(!$user->avatar)/img/profile.png @else{{asset('storage/'.$user->avatar)}}@endif" alt="" />
+                <img src="@if(!$user->avatar)/img/profile.png @else{{$user->avatar}}@endif" alt="" />
             </div>
             <div class="kt-user-card-v3__detalis">
                 <a href="#" class="kt-user-card-v3__name">{{ $user->name }}</a>

@@ -173,7 +173,7 @@ new Vue({
                 this.prev_week = response.data.prev_week;
                 this.user = response.data.user;
 
-                if(this.user.roles) {
+                if(this.user.roles && this.user.roles.length) {
                     this.user_role = this.user.roles[0].id;
                 }
                 let last_start_date;

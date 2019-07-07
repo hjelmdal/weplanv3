@@ -40,7 +40,7 @@ class DownloadXML extends Command
         $stream = stream_for($resource);
         $client = new Client([
             // Base URI is used with relative requests
-            'base_uri' => 'http://badmintonpeople.dk',
+            'base_uri' => 'http://badmintonplayer.dk',
             // You can set any number of default request options.
             'timeout'  => 60,
         ]);
