@@ -17,7 +17,7 @@
                 <div class="kt-user-card-v3__desc"> </div>
                 <div class="kt-user-card-v3__info">
                     <a href="#" class="kt-user-card-v3__item"> <i class="flaticon-email-black-circular-button kt-font-brand"></i> <span class="kt-user-card-v3__tag">{{ $user->email }}</span> </a>
-                    <a href="#" class="kt-user-card-v3__item"> <i class="flaticon-facebook-logo-button kt-font-accent"></i> <span class="kt-user-card-v3__tag">@jmdev</span> </a>
+                    <a href="{{ route("verification.notice") }}" class="kt-user-card-v3__item"> <i class="flaticon-facebook-logo-button kt-font-accent"></i> <span class="kt-user-card-v3__tag">@jmdev</span> </a>
                 </div>
             </div>
         </div>
