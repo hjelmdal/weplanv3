@@ -1857,11 +1857,10 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       message: "Upload",
-      user: {
-        id: 1,
-        name: "Hjelmdal",
-        email: "",
-        avatar: "https://avatars0.githubusercontent.com/u/1472352?s=460&v=4"
+      user: [],
+      requestType: "POST",
+      authHeaders: {
+        Authorization: apiToken
       }
     };
   },
@@ -1894,6 +1893,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     handleUploading: function handleUploading(form, xhr) {
       this.message = "uploading...";
+      xhr.open("POST", "/api/v1/user", true);
+      xhr.setRequestHeader("Authorization", apiToken);
     },
     handleUploaded: function handleUploaded(response) {
       if (response.status == "success") {
@@ -1909,6 +1910,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     handlerError: function handlerError(message, type, xhr) {
       this.message = "Oops! Something went wrong...";
+    },
+    getApiToken: function getApiToken() {
+      var header = {
+        Authorization: apiToken
+      };
+      console.log("fired!");
+      return header;
     }
   },
   mounted: function mounted() {
@@ -2058,7 +2066,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.vue-avatar-cropper-demo[data-v-4ef61912] {\n    max-width: 18em;\n    margin: 0 auto;\n}\n.avatar[data-v-4ef61912] {\n    width: 160px;\n    border-radius: 6px;\n    display: block;\n    margin: 20px auto;\n}\n.card-img-overlay[data-v-4ef61912] {\n    display: none;\n    background-color:transparent;\n}\n.card-img-overlay button[data-v-4ef61912] {\n    margin-top: 20vh;\n}\n.card:hover .card-img-overlay[data-v-4ef61912] {\n    display: block;\n    background-color:rgba(0, 0, 0, 0.5);\n    transition: background-color 2s ease-out;\n}\n.avatar-cropper .avatar-cropper-overlay[data-v-4ef61912] {\n    opacity: 0.8;\n}\n", ""]);
+exports.push([module.i, "\n.vue-avatar-cropper[data-v-4ef61912] {\n    max-width: 18em;\n    margin: 0 auto;\n    background-color: #fff;\n    transition: background-color 0.5s ease;\n}\n.avatar[data-v-4ef61912] {\n    width: 160px;\n    border-radius: 6px;\n    display: block;\n    margin: 20px auto;\n}\n.card-img-overlay[data-v-4ef61912] {\n    display: none;\n    transition: all 0.5s;\n}\n.card-img-overlay button[data-v-4ef61912] {\n    margin-top: 20vh;\n}\n.card:hover .card-img-overlay[data-v-4ef61912] {\n    display: block;\n    background-color: rgba(0, 0, 0, 0.5);\n    transition: background-color 0.5s ease;\n}\n.card[data-v-4ef61912] {\n}\n.vue-avatar-cropper1[data-v-4ef61912]:hover {\n    display: block;\n    background-color: rgba(0, 0, 0, 0.5);\n    transition: background-color 0.5s ease;\n}\n.avatar-cropper .avatar-cropper-overlay[data-v-4ef61912] {\n    opacity: 0.8;\n}\n", ""]);
 
 // exports
 
@@ -2077,7 +2085,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n#portlet_block[data-v-4529790a] {\n    z-index: 1010;\n    opacity: 1;\n    filter: alpha(opacity=100); /* For IE8 and earlier */\n    margin:20px;\n    -webkit-animation: fadein-data-v-4529790a 1s; /* Safari, Chrome and Opera > 12.1 */ /* Firefox < 16 */ /* Internet Explorer */ /* Opera < 12.1 */\n    animation: fadein-data-v-4529790a 1s;\n}\n@keyframes fadein-data-v-4529790a {\nfrom { opacity: 0;\n}\nto   { opacity: 1;\n}\n}\n\n/* Firefox < 16 */\n\n/* Safari, Chrome and Opera > 12.1 */\n@-webkit-keyframes fadein-data-v-4529790a {\nfrom { opacity: 0;\n}\nto   { opacity: 1;\n}\n}\n\n/* Internet Explorer */\n\n/* Opera < 12.1 */\n#wizzard_overlay[data-v-4529790a] {\n    position: fixed;\n    top:0px;\n    left: 0px;\n    width:100%;\n    height:100%;\n    background:#000;\n    opacity:0.7;\n    filter: alpha(opacity=70); /* For IE8 and earlier */\n    z-index: 100;\n    -webkit-animation: fadein-data-v-4529790a 1s; /* Safari, Chrome and Opera > 12.1 */ /* Firefox < 16 */ /* Internet Explorer */ /* Opera < 12.1 */\n    animation: fadein-data-v-4529790a 1s;\n}\n#wizzard_container[data-v-4529790a] {\n    position: fixed;\n    margin:40px;\n    top:0px;\n    left: 0px;\n    width: calc(100vw - 80px);\n    height: calc(100vh - 80px);\n    overflow-y: scroll;\n    z-index: 1000;\n    background: #fff;\n}\n@media (max-width: 575px) {\n#wizzard_container[data-v-4529790a] {\n        margin:10px;\n        width: calc(100vw - 20px);\n        height: calc(100vh - 20px);\n}\n#portlet_block[data-v-4529790a] {\n        margin:10px;\n}\n}\n", ""]);
+exports.push([module.i, "\n#portlet_block[data-v-4529790a] {\r\n    z-index: 1010;\r\n    opacity: 1;\r\n    filter: alpha(opacity=100); /* For IE8 and earlier */\r\n    margin:20px;\r\n    -webkit-animation: fadein-data-v-4529790a 1s; /* Safari, Chrome and Opera > 12.1 */ /* Firefox < 16 */ /* Internet Explorer */ /* Opera < 12.1 */\r\n    animation: fadein-data-v-4529790a 1s;\n}\n@keyframes fadein-data-v-4529790a {\nfrom { opacity: 0;\n}\nto   { opacity: 1;\n}\n}\r\n\r\n/* Firefox < 16 */\r\n\r\n/* Safari, Chrome and Opera > 12.1 */\n@-webkit-keyframes fadein-data-v-4529790a {\nfrom { opacity: 0;\n}\nto   { opacity: 1;\n}\n}\r\n\r\n/* Internet Explorer */\r\n\r\n/* Opera < 12.1 */\n#wizzard_overlay[data-v-4529790a] {\r\n    position: fixed;\r\n    top:0px;\r\n    left: 0px;\r\n    width:100%;\r\n    height:100%;\r\n    background:#000;\r\n    opacity:0.7;\r\n    filter: alpha(opacity=70); /* For IE8 and earlier */\r\n    z-index: 100;\r\n    -webkit-animation: fadein-data-v-4529790a 1s; /* Safari, Chrome and Opera > 12.1 */ /* Firefox < 16 */ /* Internet Explorer */ /* Opera < 12.1 */\r\n    animation: fadein-data-v-4529790a 1s;\n}\n#wizzard_container[data-v-4529790a] {\r\n    position: fixed;\r\n    margin:40px;\r\n    top:0px;\r\n    left: 0px;\r\n    width: calc(100vw - 80px);\r\n    height: calc(100vh - 80px);\r\n    overflow-y: scroll;\r\n    z-index: 1000;\r\n    background: #fff;\n}\n@media (max-width: 575px) {\n#wizzard_container[data-v-4529790a] {\r\n        margin:10px;\r\n        width: calc(100vw - 20px);\r\n        height: calc(100vh - 20px);\n}\n#portlet_block[data-v-4529790a] {\r\n        margin:10px;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -3623,7 +3631,7 @@ var render = function() {
           _c("div", { staticClass: "row" }, [
             _c(
               "div",
-              { staticClass: "card vue-avatar-cropper-demo text-center" },
+              { staticClass: "card vue-avatar-cropper text-center" },
               [
                 _c("div", { staticClass: "card-body" }, [
                   _c("img", {
@@ -3649,8 +3657,10 @@ var render = function() {
                 _vm._v(" "),
                 _c("avatar-cropper", {
                   attrs: {
+                    requestMethod: _vm.requestType,
+                    uploadHeaders: _vm.authHeaders,
                     trigger: "#pick-avatar",
-                    "upload-url": "https://demo.overtrue.me/upload.php"
+                    "upload-url": "/api/v1/user"
                   },
                   on: {
                     uploading: _vm.handleUploading,
@@ -17379,7 +17389,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/impact/.web/WePlanV3/resources/assets/vuejs/profile/index.js */"./resources/assets/vuejs/profile/index.js");
+module.exports = __webpack_require__(/*! /Users/hjelmdal/Pixel8/Websites/WePlan/WePlanV4/resources/assets/vuejs/profile/index.js */"./resources/assets/vuejs/profile/index.js");
 
 
 /***/ })

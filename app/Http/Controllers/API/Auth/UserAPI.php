@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
+
 
 class UserAPI extends Controller
 {
@@ -64,13 +68,34 @@ class UserAPI extends Controller
             $this->updateUserStatus("consent_at");
             return response()->json("Tak for dit samtykke!", 200);
         }
+        
 
 
         return response()->json(["errors" => ["Form" => [0 => "Du har ikke udfyldt felterne"]]], 404);
 
 
     }
-
+    
+    public function saveAvatar(Request $request) {
+        $user = $this->userFromApiToken($request);
+        //$file = $request->file->storeAs('logos', $request->file->getClientOriginalName());
+        $fileName = tempnam(sys_get_temp_dir(), 'profile-pic');
+        copy($request->file, $fileName);
+        $file = Storage::disk('public')->putFile('profile', new File($request->file));
+        
+        
+        if($user) {
+            $user->avatar = "/storage/" .$file;
+            $user->save();
+            return response()->json(["status" => "success", "url" =>  "/storage/".$file, "request" => $file]);
+    
+        }
+    
+        return response()->json(["status" => "error", "message" => "Bad request!"],400);
+    
+    }
+    
+    
     private function updateUserStatus($field) {
         try {
             UserStatus::updateOrCreate(["user_id" => $this->user->id], ["user_id" => $this->user->id, $field => now()]);

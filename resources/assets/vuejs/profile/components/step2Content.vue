@@ -10,12 +10,9 @@
         data() {
             return {
                 message: "Upload",
-                user: {
-                    id: 1,
-                    name: "Hjelmdal",
-                    email: "",
-                    avatar: "https://avatars0.githubusercontent.com/u/1472352?s=460&v=4"
-                }
+                user: [],
+                requestType: "POST",
+                authHeaders: { Authorization: apiToken },
             };
         },
         methods: {
@@ -43,6 +40,9 @@
             },
             handleUploading(form, xhr) {
                 this.message = "uploading...";
+                xhr.open("POST","/api/v1/user",true);
+                xhr.setRequestHeader("Authorization", apiToken);
+
             },
             handleUploaded(response) {
                 if (response.status == "success") {
@@ -58,6 +58,11 @@
             },
             handlerError(message, type, xhr) {
                 this.message = "Oops! Something went wrong...";
+            },
+            getApiToken() {
+                var header = { Authorization: apiToken };
+                console.log("fired!");
+                return header;
             }
 
         },
@@ -68,9 +73,11 @@
 </script>
 
 <style scoped>
-    .vue-avatar-cropper-demo {
+    .vue-avatar-cropper {
         max-width: 18em;
         margin: 0 auto;
+        background-color: #fff;
+        transition: background-color 0.5s ease;
     }
     .avatar {
         width: 160px;
@@ -80,19 +87,29 @@
     }
     .card-img-overlay {
         display: none;
-        background-color:transparent;
+        transition: all 0.5s;
     }
     .card-img-overlay button {
         margin-top: 20vh;
     }
     .card:hover .card-img-overlay {
         display: block;
-        background-color:rgba(0, 0, 0, 0.5);
-        -webkit-transition: background-color 2s ease-out;
-        -moz-transition: background-color 2s ease-out;
-        -o-transition: background-color 2s ease-out;
-        transition: background-color 2s ease-out;
+        background-color: rgba(0, 0, 0, 0.5);
+        -webkit-transition: background-color 0.5s ease;
+        -moz-transition: background-color 0.5s ease;
+        -o-transition: background-color 0.5s ease;
+        transition: background-color 0.5s ease;
+    }
+    .card {
 
+    }
+    .vue-avatar-cropper1:hover {
+        display: block;
+        background-color: rgba(0, 0, 0, 0.5);
+        -webkit-transition: background-color 0.5s ease;
+        -moz-transition: background-color 0.5s ease;
+        -o-transition: background-color 0.5s ease;
+        transition: background-color 0.5s ease;
     }
 
     .avatar-cropper .avatar-cropper-overlay {
@@ -108,7 +125,7 @@
         <div class="kt-separator kt-separator--height-sm"></div>
         <div class="kt-form__section kt-form__section--first">
             <div class="row">
-                <div class="card vue-avatar-cropper-demo text-center">
+                <div class="card vue-avatar-cropper text-center">
                     <div class="card-body">
                         <img :src="user.avatar" class="card-img avatar" />
                         <div class="card-img-overlay">
@@ -119,12 +136,15 @@
                     </div>
                     <div class="card-footer text-muted" v-html="message"></div>
                     <avatar-cropper
+                            v-bind:requestMethod="requestType"
+                            v-bind:uploadHeaders="authHeaders"
                             @uploading="handleUploading"
                             @uploaded="handleUploaded"
                             @completed="handleCompleted"
                             @error="handlerError"
                             trigger="#pick-avatar"
-                            upload-url="https://demo.overtrue.me/upload.php" />
+                            upload-url="/api/v1/user"
+                            	/>
                 </div>
             </div>
         </div>
