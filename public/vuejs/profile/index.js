@@ -4311,7 +4311,7 @@ var render = function() {
                                     {
                                       staticClass: "kt-wizard-v1__nav-item",
                                       attrs: {
-                                        href: "#",
+                                        href: "javascript:;",
                                         "data-ktwizard-type": "step",
                                         "data-ktwizard-state": step.state
                                       },

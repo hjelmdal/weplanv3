@@ -140,7 +140,7 @@
                             <div class="kt-wizard-v1__nav">
                                 <div class="kt-wizard-v1__nav-items">
                                     <template v-for="step in steps">
-                                    <a class="kt-wizard-v1__nav-item" href="#" data-ktwizard-type="step" :data-ktwizard-state="step.state" v-on:click="step.state != 'current' ? setStep(step.step): false">
+                                    <a class="kt-wizard-v1__nav-item" href="javascript:;" data-ktwizard-type="step" :data-ktwizard-state="step.state" v-on:click="step.state != 'current' ? setStep(step.step): false">
                                         <span v-if="step.state == 'done'" v-html="step.icon"></span>
                                         <span v-else v-text="step.step"></span>
                                     </a>
