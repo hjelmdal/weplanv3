@@ -40,8 +40,7 @@
             },
             handleUploading(form, xhr) {
                 this.message = "uploading...";
-                xhr.open("POST","/api/v1/user",true);
-                xhr.setRequestHeader("Authorization", apiToken);
+
 
             },
             handleUploaded(response) {
@@ -58,6 +57,7 @@
             },
             handlerError(message, type, xhr) {
                 this.message = "Oops! Something went wrong...";
+
             },
             getApiToken() {
                 var header = { Authorization: apiToken };
@@ -86,35 +86,26 @@
         margin: 20px auto;
     }
     .card-img-overlay {
-        display: none;
-        transition: all 0.5s;
-    }
-    .card-img-overlay button {
-        margin-top: 20vh;
+        display:block;
+        background-color: rgba(0, 0, 0, 0.5);
+        transition: opacity 0.5s ease;
+        -webkit-transition: opacity 0.5s ease;
+        -moz-transition: opacity 0.5s ease;
+        -o-transition: opacity 0.5s ease;
+        opacity:0;
     }
     .card:hover .card-img-overlay {
-        display: block;
-        background-color: rgba(0, 0, 0, 0.5);
-        -webkit-transition: background-color 0.5s ease;
-        -moz-transition: background-color 0.5s ease;
-        -o-transition: background-color 0.5s ease;
-        transition: background-color 0.5s ease;
+        opacity:1;
     }
-    .card {
-
-    }
-    .vue-avatar-cropper1:hover {
-        display: block;
-        background-color: rgba(0, 0, 0, 0.5);
-        -webkit-transition: background-color 0.5s ease;
-        -moz-transition: background-color 0.5s ease;
-        -o-transition: background-color 0.5s ease;
-        transition: background-color 0.5s ease;
+    .card-img-overlay button {
+        position: absolute;
+        bottom: 8px;
+        width: calc(100% - 20px);
+        margin: 0px;
+        left: 10px;
     }
 
-    .avatar-cropper .avatar-cropper-overlay {
-        opacity: 0.8;
-    }
+
 </style>
 
 <template>
@@ -144,7 +135,7 @@
                             @error="handlerError"
                             trigger="#pick-avatar"
                             upload-url="/api/v1/user"
-                            	/>
+                    />
                 </div>
             </div>
         </div>

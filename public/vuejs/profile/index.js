@@ -1893,8 +1893,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     handleUploading: function handleUploading(form, xhr) {
       this.message = "uploading...";
-      xhr.open("POST", "/api/v1/user", true);
-      xhr.setRequestHeader("Authorization", apiToken);
     },
     handleUploaded: function handleUploaded(response) {
       if (response.status == "success") {
@@ -2066,7 +2064,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.vue-avatar-cropper[data-v-4ef61912] {\n    max-width: 18em;\n    margin: 0 auto;\n    background-color: #fff;\n    transition: background-color 0.5s ease;\n}\n.avatar[data-v-4ef61912] {\n    width: 160px;\n    border-radius: 6px;\n    display: block;\n    margin: 20px auto;\n}\n.card-img-overlay[data-v-4ef61912] {\n    display: none;\n    transition: all 0.5s;\n}\n.card-img-overlay button[data-v-4ef61912] {\n    margin-top: 20vh;\n}\n.card:hover .card-img-overlay[data-v-4ef61912] {\n    display: block;\n    background-color: rgba(0, 0, 0, 0.5);\n    transition: background-color 0.5s ease;\n}\n.card[data-v-4ef61912] {\n}\n.vue-avatar-cropper1[data-v-4ef61912]:hover {\n    display: block;\n    background-color: rgba(0, 0, 0, 0.5);\n    transition: background-color 0.5s ease;\n}\n.avatar-cropper .avatar-cropper-overlay[data-v-4ef61912] {\n    opacity: 0.8;\n}\n", ""]);
+exports.push([module.i, "\n.vue-avatar-cropper[data-v-4ef61912] {\n    max-width: 18em;\n    margin: 0 auto;\n    background-color: #fff;\n    transition: background-color 0.5s ease;\n}\n.avatar[data-v-4ef61912] {\n    width: 160px;\n    border-radius: 6px;\n    display: block;\n    margin: 20px auto;\n}\n.card-img-overlay[data-v-4ef61912] {\n    display:block;\n    background-color: rgba(0, 0, 0, 0.5);\n    transition: opacity 0.5s ease;\n    -webkit-transition: opacity 0.5s ease;\n    -moz-transition: opacity 0.5s ease;\n    -o-transition: opacity 0.5s ease;\n    opacity:0;\n}\n.card:hover .card-img-overlay[data-v-4ef61912] {\n    opacity:1;\n}\n.card-img-overlay button[data-v-4ef61912] {\n    position: absolute;\n    bottom: 8px;\n    width: calc(100% - 20px);\n    margin: 0px;\n    left: 10px;\n}\n\n\n", ""]);
 
 // exports
 
@@ -2085,7 +2083,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n#portlet_block[data-v-4529790a] {\r\n    z-index: 1010;\r\n    opacity: 1;\r\n    filter: alpha(opacity=100); /* For IE8 and earlier */\r\n    margin:20px;\r\n    -webkit-animation: fadein-data-v-4529790a 1s; /* Safari, Chrome and Opera > 12.1 */ /* Firefox < 16 */ /* Internet Explorer */ /* Opera < 12.1 */\r\n    animation: fadein-data-v-4529790a 1s;\n}\n@keyframes fadein-data-v-4529790a {\nfrom { opacity: 0;\n}\nto   { opacity: 1;\n}\n}\r\n\r\n/* Firefox < 16 */\r\n\r\n/* Safari, Chrome and Opera > 12.1 */\n@-webkit-keyframes fadein-data-v-4529790a {\nfrom { opacity: 0;\n}\nto   { opacity: 1;\n}\n}\r\n\r\n/* Internet Explorer */\r\n\r\n/* Opera < 12.1 */\n#wizzard_overlay[data-v-4529790a] {\r\n    position: fixed;\r\n    top:0px;\r\n    left: 0px;\r\n    width:100%;\r\n    height:100%;\r\n    background:#000;\r\n    opacity:0.7;\r\n    filter: alpha(opacity=70); /* For IE8 and earlier */\r\n    z-index: 100;\r\n    -webkit-animation: fadein-data-v-4529790a 1s; /* Safari, Chrome and Opera > 12.1 */ /* Firefox < 16 */ /* Internet Explorer */ /* Opera < 12.1 */\r\n    animation: fadein-data-v-4529790a 1s;\n}\n#wizzard_container[data-v-4529790a] {\r\n    position: fixed;\r\n    margin:40px;\r\n    top:0px;\r\n    left: 0px;\r\n    width: calc(100vw - 80px);\r\n    height: calc(100vh - 80px);\r\n    overflow-y: scroll;\r\n    z-index: 1000;\r\n    background: #fff;\n}\n@media (max-width: 575px) {\n#wizzard_container[data-v-4529790a] {\r\n        margin:10px;\r\n        width: calc(100vw - 20px);\r\n        height: calc(100vh - 20px);\n}\n#portlet_block[data-v-4529790a] {\r\n        margin:10px;\n}\n}\r\n", ""]);
+exports.push([module.i, "\n#portlet_block[data-v-4529790a] {\r\n    z-index: 1010;\r\n    opacity: 1;\r\n    filter: alpha(opacity=100); /* For IE8 and earlier */\r\n    margin:20px;\r\n    -webkit-animation: fadein-data-v-4529790a 1s; /* Safari, Chrome and Opera > 12.1 */ /* Firefox < 16 */ /* Internet Explorer */ /* Opera < 12.1 */\r\n    animation: fadein-data-v-4529790a 1s;\n}\n@keyframes fadein-data-v-4529790a {\nfrom { opacity: 0;\n}\nto   { opacity: 1;\n}\n}\r\n\r\n/* Firefox < 16 */\r\n\r\n/* Safari, Chrome and Opera > 12.1 */\n@-webkit-keyframes fadein-data-v-4529790a {\nfrom { opacity: 0;\n}\nto   { opacity: 1;\n}\n}\r\n\r\n/* Internet Explorer */\r\n\r\n/* Opera < 12.1 */\n#wizzard_overlay[data-v-4529790a] {\r\n    position: fixed;\r\n    top:0px;\r\n    left: 0px;\r\n    width:100%;\r\n    height:100%;\r\n    background:#000;\r\n    opacity:0.7;\r\n    filter: alpha(opacity=70); /* For IE8 and earlier */\r\n    z-index: 100;\r\n    -webkit-animation: fadein-data-v-4529790a 1s; /* Safari, Chrome and Opera > 12.1 */ /* Firefox < 16 */ /* Internet Explorer */ /* Opera < 12.1 */\r\n    animation: fadein-data-v-4529790a 1s;\n}\n#wizzard_container[data-v-4529790a] {\r\n    position: fixed;\r\n    margin:40px;\r\n    top:0px;\r\n    left: 0px;\r\n    width: calc(100vw - 80px);\r\n    height: calc(100vh - 80px);\r\n    overflow-y: scroll;\r\n    z-index: 1000;\r\n    background: #fff;\n}\n@media (max-width: 575px) {\n#wizzard_container[data-v-4529790a] {\r\n        margin:10px;\r\n        width: calc(100vw - 20px);\r\n        height: calc(100vh - 20px);\r\n        scroll-behavior: smooth;\n}\n#portlet_block[data-v-4529790a] {\r\n        margin:10px;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -4274,7 +4272,10 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "container-fluid", attrs: { id: "wizzard_container" } },
+      {
+        staticClass: "container-fluid",
+        attrs: { id: "wizzard_container", "data-scroll": "true" }
+      },
       [
         _c(
           "div",

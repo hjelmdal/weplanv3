@@ -118,6 +118,7 @@
         margin:10px;
         width: calc(100vw - 20px);
         height: calc(100vh - 20px);
+        scroll-behavior: smooth;
     }
     #portlet_block {
         margin:10px;
@@ -130,7 +131,7 @@
 
         </div>
 
-        <div class="container-fluid" id="wizzard_container">
+        <div class="container-fluid" id="wizzard_container" data-scroll="true">
             <div class="kt-portlet" id="portlet_block">
                 <div class="kt-portlet__body kt-portlet__body--fit">
                     <div class="kt-grid kt-grid--desktop-xl kt-grid--ver-desktop-xl kt-wizard-v1 kt-wizard-v1--extend" id="kt_wizard_v4" data-ktwizard-state="first">
