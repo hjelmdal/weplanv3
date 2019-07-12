@@ -1936,6 +1936,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "step3Content",
   props: ["step"],
+  data: function data() {
+    return {
+      radio: false
+    };
+  },
   methods: {
     next: function next() {
       this.$emit("next");
@@ -3774,7 +3779,123 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "kt-separator kt-separator--height-xs" }),
         _vm._v(" "),
-        _vm._m(0)
+        _c("div", { staticClass: "form-group form-group-marginless" }, [
+          _c("label", [_vm._v("Er du spiller eller træner?:")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("label", { staticClass: "kt-option" }, [
+                _c("span", { staticClass: "kt-option__control" }, [
+                  _c(
+                    "span",
+                    {
+                      staticClass:
+                        "kt-radio kt-radio--check-bold kt-radio--success"
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.radio,
+                            expression: "radio"
+                          }
+                        ],
+                        attrs: {
+                          type: "radio",
+                          name: "m_option_1",
+                          value: "1"
+                        },
+                        domProps: { checked: _vm._q(_vm.radio, "1") },
+                        on: {
+                          change: function($event) {
+                            _vm.radio = "1"
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("span")
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(0)
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("label", { staticClass: "kt-option" }, [
+                _c("span", { staticClass: "kt-option__control" }, [
+                  _c(
+                    "span",
+                    {
+                      staticClass:
+                        "kt-radio kt-radio--check-bold kt-radio--brand"
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.radio,
+                            expression: "radio"
+                          }
+                        ],
+                        attrs: {
+                          type: "radio",
+                          name: "m_option_1",
+                          value: "2"
+                        },
+                        domProps: { checked: _vm._q(_vm.radio, "2") },
+                        on: {
+                          change: function($event) {
+                            _vm.radio = "2"
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("span")
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(1)
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.radio === "1",
+                  expression: "radio === '1'"
+                }
+              ]
+            },
+            [_vm._v("Test")]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.radio === "2",
+                  expression: "radio === '2'"
+                }
+              ]
+            },
+            [_vm._v("Test2")]
+          )
+        ])
       ]
     ),
     _vm._v(" "),
@@ -3795,7 +3916,7 @@ var render = function() {
                 "btn btn-outline-brand btn-md btn-tall btn-wide btn-bold btn-upper",
               attrs: { "data-ktwizard-type": "action-prev" }
             },
-            [_vm._v("\n                Previous\n            ")]
+            [_vm._v("\n                    Previous\n                ")]
           ),
           _vm._v(" "),
           _c(
@@ -3805,7 +3926,7 @@ var render = function() {
                 "btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper",
               attrs: { "data-ktwizard-type": "action-submit" }
             },
-            [_vm._v("\n                Submit\n            ")]
+            [_vm._v("\n                    Submit\n                ")]
           ),
           _vm._v(" "),
           _c(
@@ -3816,7 +3937,7 @@ var render = function() {
               attrs: { "data-ktwizard-type": "action-next" },
               on: { click: _vm.next }
             },
-            [_vm._v("\n                Next Step\n            ")]
+            [_vm._v("\n                    Next Step\n                ")]
           )
         ])
       ]
@@ -3828,240 +3949,49 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "kt-form__section kt-form__section--first" },
-      [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-xl-6" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Cardholder Name:")]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  name: "billing_card_name",
-                  placeholder: "",
-                  value: "Nick Stone"
-                }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "form-text text-muted" }, [
-                _vm._v("Please enter the cardholder name")
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-xl-6" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Card number:")]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "number",
-                  name: "billing_card_number",
-                  placeholder: "",
-                  value: "372955886840581"
-                }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "form-text text-muted" }, [
-                _vm._v("Enter the card number")
-              ])
-            ])
-          ])
+    return _c("span", { staticClass: "kt-option__label" }, [
+      _c("span", { staticClass: "kt-option__head" }, [
+        _c("span", { staticClass: "kt-option__title" }, [
+          _vm._v(
+            "\n\t\t\t\t\t\t\t\tJeg er spiller &-/eller spillende træner\n\t\t\t\t\t\t\t\t"
+          )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-xl-4" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Exp Month:")]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  staticClass: "form-control",
-                  attrs: { name: "billing_card_exp_month" }
-                },
-                [
-                  _c("option", { attrs: { value: "" } }, [_vm._v("Select")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "01" } }, [_vm._v("01")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "02" } }, [_vm._v("02")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "03" } }, [_vm._v("03")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "04", selected: "" } }, [
-                    _vm._v("04")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "05" } }, [_vm._v("05")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "06" } }, [_vm._v("06")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "07" } }, [_vm._v("07")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "08" } }, [_vm._v("08")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "09" } }, [_vm._v("09")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "11" } }, [_vm._v("11")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "12" } }, [_vm._v("12")])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-xl-4" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Exp Year:")]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  staticClass: "form-control",
-                  attrs: { name: "billing_card_exp_year" }
-                },
-                [
-                  _c("option", { attrs: { value: "" } }, [_vm._v("Select")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "2018" } }, [_vm._v("2018")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "2019" } }, [_vm._v("2019")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "2020" } }, [_vm._v("2020")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "2021", selected: "" } }, [
-                    _vm._v("2021")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "2022" } }, [_vm._v("2022")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "2023" } }, [_vm._v("2023")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "2024" } }, [_vm._v("2024")])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-xl-4" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("CVV:")]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "password",
-                  name: "billing_card_cvv",
-                  placeholder: "",
-                  value: "450"
-                }
-              })
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "kt-heading kt-heading--md" }, [
-          _vm._v("Billing Address")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-lg-6" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Address Line 1:")]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  name: "billing_address1",
-                  placeholder: "",
-                  value: "Headquarters 1120 N Street Sacramento 916-654-5266"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("City:")]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  name: "billing_city",
-                  placeholder: "",
-                  value: "Polo Alto"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("State:")]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  name: "billing_state",
-                  placeholder: "",
-                  value: "California"
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-6" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Address Line 2:")]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  name: "billing_address2",
-                  placeholder: "",
-                  value: "P.O. Box 942873 Sacramento, CA 94273-0001"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Zip Code:")]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "number",
-                  name: "billing_zip",
-                  placeholder: "",
-                  value: "942873"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Country:")]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  staticClass: "form-control",
-                  attrs: { name: "billing_country" }
-                },
-                [_c("option", { attrs: { value: "" } }, [_vm._v("Select")])]
-              )
-            ])
-          ])
+        _c("span", { staticClass: "kt-option__focus" }, [
+          _vm._v("\n\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t")
         ])
-      ]
-    )
+      ]),
+      _vm._v(" "),
+      _c("span", { staticClass: "kt-option__body" }, [
+        _vm._v(
+          "\n\t\t\t\t\t\t\t\tJeg har et spiller-id ved Badminton Danmark\n\t\t\t\t\t\t\t\t"
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "kt-option__label" }, [
+      _c("span", { staticClass: "kt-option__head" }, [
+        _c("span", { staticClass: "kt-option__title" }, [
+          _vm._v(
+            "\n\t\t\t\t\t\t\t\tJeg er udelukkende træner / leder\n\t\t\t\t\t\t\t\t"
+          )
+        ]),
+        _vm._v(" "),
+        _c("span", { staticClass: "kt-option__focus" }, [
+          _vm._v("\n\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("span", { staticClass: "kt-option__body" }, [
+        _vm._v(
+          "\n\t\t\t\t\t\t\t\tJeg har ikke et spiller-id ved Badminton Danmark\n\t\t\t\t\t\t\t\t"
+        )
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -17185,8 +17115,8 @@ var stepData = [{
   state: "pending",
   icon: "",
   stepInfo: {
-    title: "Opsætning af brugerkonto!",
-    text: "To start off, please enter your username, email address and password.",
+    title: "Indstilling af profilbillede",
+    text: "Vi har behov for at du angiver et tydeligt billede af dit ansigt som profilbillede, for at din træner hurtigt og nemt kan sætte dig på træninger mv.",
     svg: "/base/media/wizard/undraw_live_collaboration_2r4y.svg"
   },
   contentComponent: "step2Content"
@@ -17199,7 +17129,7 @@ var stepData = [{
     text: "To start off, please enter your username, email address and password.",
     svg: "/base/media/wizard/undraw_hiring_cyhs.svg"
   },
-  contentComponent: "step4Content"
+  contentComponent: "step3Content"
 }];
 
 /***/ }),

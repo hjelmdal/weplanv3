@@ -26,8 +26,8 @@ export const stepData = [
         state: "pending",
         icon: "",
         stepInfo: {
-            title: "Opsætning af brugerkonto!",
-            text: "To start off, please enter your username, email address and password.",
+            title: "Indstilling af profilbillede",
+            text: "Vi har behov for at du angiver et tydeligt billede af dit ansigt som profilbillede, for at din træner hurtigt og nemt kan sætte dig på træninger mv.",
             svg: "/base/media/wizard/undraw_live_collaboration_2r4y.svg"
         },
         contentComponent: "step2Content"
@@ -41,6 +41,6 @@ export const stepData = [
             text: "To start off, please enter your username, email address and password.",
             svg: "/base/media/wizard/undraw_hiring_cyhs.svg"
         },
-        contentComponent: "step4Content"
+        contentComponent: "step3Content"
     }
 ];
