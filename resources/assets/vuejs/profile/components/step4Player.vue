@@ -1,16 +1,41 @@
 <script>
+    import Form from "../../Form";
+    import {TheMask} from "vue-the-mask";
     export default {
-        name: "step3Content",
+        name: "step4Player",
+        components: {TheMask},
         props: ["step"],
         data: function() {
             return {
+                player:"",
                 radio: false,
+                form: new Form({
+                    resetOnSuccess:"false",
+                    playerId:""
+                })
             }
         },
         methods: {
             next() {
                 this.$emit("next");
             },
+            checkPlayer(event) {
+                //event.target.classList.remove("is-valid", "is-invalid");
+                if(this.form.playerId.length > 8) {
+                    console.log("YES!");
+                    this.form.post("/api/v1/BP/player/check")
+                        .then(data => {
+                                event.target.classList.add("is-valid");
+                                //this.form.playerId = data.player.dbf_id;
+                                this.player = data.player;
+
+                            }
+                        ).catch(e => {
+
+                        event.target.classList.add("is-invalid");
+                    })
+                }
+            }
 
         }
     }
@@ -24,8 +49,15 @@
     <div>
     <!--begin: Form Wizard Step 3-->
     <div class="kt-wizard-v1__content" data-ktwizard-type="step-content" :data-ktwizard-state="step.state">
-        <div class="kt-heading kt-heading--md">Setup Billing Account</div>
+        <div class="kt-heading kt-heading--md">Spilleropsætning</div>
         <div class="kt-separator kt-separator--height-xs"></div>
+        <div class="form-group">
+            <label>Large Input</label>
+            <TheMask @keyup.native="checkPlayer($event)" mask="######-##" :masked="true" class="form-control form-control-lg" style="font-size: 2rem;" v-model="form.playerId" />
+            <span class="form-text text-muted">Kender du ikke dit spiller id? Find det <a target="_blank" href="https://www.badmintonplayer.dk/DBF/Spiller/VisSpiller/">her</a> </span>
+            <h2 v-show="player" v-text="player.name"></h2>
+        </div>
+
         <div class="form-group form-group-marginless">
             <label>Er du spiller eller træner?:</label>
             <div class="row">
@@ -51,6 +83,7 @@
 								</span>
 								</span>
                     </label>
+
                 </div>
                 <div class="col-md-6">
                     <label class="kt-option">
@@ -91,7 +124,7 @@
                     Submit
                 </div>
                 <div @click="next" class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-next">
-                    Next Step
+                    Færdig
                 </div>
             </div>
             <!--end: Form Actions -->

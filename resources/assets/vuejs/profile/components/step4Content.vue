@@ -35,13 +35,13 @@
             <!--begin: Form Actions -->
             <div class="kt-form__actions">
                 <div class="btn btn-outline-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-state="between" data-ktwizard-type="action-prev">
-                    Previous
+                    Forrige
                 </div>
                 <div class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-submit" data-ktwizard-state="last">
-                    Submit
+                    Færdig
                 </div>
                 <div class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-next">
-                    Next Step
+                    Næste
                 </div>
             </div>
             <!--end: Form Actions -->

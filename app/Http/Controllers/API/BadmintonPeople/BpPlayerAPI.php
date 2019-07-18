@@ -117,4 +117,19 @@ class BpPlayerAPI extends Controller
     {
         //
     }
+    
+    public function checkPlayer(Request $request) {
+        if($request->playerId) {
+            try {
+                $player = BpPlayer::where("dbf_id", $request->playerId)->firstOrFail();
+                $player->load("BpClub");
+            } catch (ModelNotFoundException $e) {
+                return response()->json(["errors" => ["form" => [0 => "Spilleren blev ikke fundet i vores system"]]],404);
+            }
+            
+            return response()->json(["player" => $player],200);
+            
+        }
+        return response()->json(["errors" => "Bad request"],400);
+    }
 }

@@ -64,6 +64,7 @@ Route::name('api.')->group(function () {
             Route::namespace('BadmintonPeople')->prefix("BP")->name("badmintonpeople.")->middleware("api.token")->group(function () {
             Route::get("/players","BpPlayerAPI@index")->name("players.index");
             Route::post("/players/store","BpPlayerAPI@store")->name("players.store");
+            Route::post("/player/check", "BpPlayerAPI@checkPlayer")->name("player.check");
         });
     });
 });

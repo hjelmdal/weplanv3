@@ -7,6 +7,7 @@ export default class Form {
      */
     constructor(data) {
         this.originalData = data;
+        this.resetOnSuccess = "true";
 
         for (let field in data) {
             this[field] = data[field];
@@ -115,8 +116,9 @@ export default class Form {
      */
     onSuccess(data) {
 
-
+        if(this.resetOnSuccess == "true") {
         this.reset();
+        }
     }
 
 

@@ -1,7 +1,7 @@
 <script>
     import Form from "../../Form"
     export default {
-        name: "step1Content",
+        name: "step2GDPR",
         props: ["step"],
         data: function() {
             return {

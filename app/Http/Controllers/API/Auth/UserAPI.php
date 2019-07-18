@@ -71,7 +71,7 @@ class UserAPI extends Controller
         
 
 
-        return response()->json(["errors" => ["Form" => [0 => "Du har ikke udfyldt felterne"]]], 404);
+        return response()->json(["errors" => ["form" => [0 => "Du har ikke udfyldt felterne"]]], 400);
 
 
     }

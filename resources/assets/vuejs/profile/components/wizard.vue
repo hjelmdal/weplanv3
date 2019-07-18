@@ -1,19 +1,19 @@
 <script>
     import stepInfo from "./stepInfo";
-    import setPassword from "./setPassword";
-    import step1Content from "./step1Content";
-    import step2Content from "./step2Content";
-    import step3Content from "./step3Content";
+    import step1Password from "./step1Password";
+    import step2GDPR from "./step2GDPR";
+    import step3Avatar from "./step3Avatar";
+    import step4Player from "./step4Player";
     import step4Content from "./step4Content";
     import {stepData} from "./stepData";
     export default {
         name: "Wizard",
         components: {
             stepInfo,
-            setPassword,
-            step1Content,
-            step2Content,
-            step3Content,
+            step1Password,
+            step2GDPR,
+            step3Avatar,
+            step4Player,
             step4Content
         },
         data: function () {

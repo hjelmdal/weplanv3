@@ -1,7 +1,7 @@
 <script>
     import Form from "../../Form";
     export default {
-        name: "setPassword",
+        name: "step1Password",
         props: ["step"],
         data: function() {
             return {
@@ -23,7 +23,7 @@
                         }
                     ).catch(e => {
 
-                    //I dontø care about this
+                    //I don't care about this
                 })
 
             }
@@ -33,7 +33,9 @@
 </script>
 
 <style scoped>
-
+ .cap1::first-letter {
+     text-transform: uppercase;
+ }
 </style>
 
 <template>
@@ -47,13 +49,23 @@
                 <div class="form-group">
                     <label for="password">Dit nye password</label>
                     <input type="password" class="form-control" :class="{'is-invalid': (form.errors && form.errors.has('password'))}" id="password" placeholder="Adgangskode" v-model="form.password" @keyup="form.errors.clear()" autocomplete="new-password"><br>
-                    <input type="password" class="form-control" :class="{'is-invalid': (form.errors && form.errors.has('password'))}" id="password_confirm" placeholder="Bekræft adgangskode" v-model="form.password_confirmation">
-                    <ul v-if="form.errors && form.errors.has('password')">
+                    <input type="password" class="form-control" :class="{'is-invalid': (form.errors && form.errors.has('password'))}" id="password_confirm" placeholder="Bekræft adgangskode" v-model="form.password_confirmation" autocomplete="new-password">
+                    <div class="kt-section__content kt-section__content--border" v-if="form.errors && (form.errors.has('password') || form.errors.has('form'))">
+                        <hr />
+                        <div class="alert alert-secondary" role="alert">
+                            <div class="alert-icon"><i class="flaticon-warning kt-font-brand"></i></div>
+                            <div class="alert-text">
+                                <ul>
 
 
-                            <li v-for="error in form.errors.get('password',true)" class="invalid-feedback" style="text-transform: capitalize; display: list-item;" v-text="error"></li>
+                                    <li class="cap1" v-for="error in form.errors.get('password',true)" v-text="error"></li>
+                                    <li class="cap1" v-for="error in form.errors.get('form',true)" v-text="error"></li>
 
-                    </ul>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -62,10 +74,10 @@
             <!--begin: Form Actions -->
             <div class="kt-form__actions">
                 <div class="btn btn-outline-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-prev">
-                    Previous
+                    Forrige
                 </div>
                 <div class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-submit">
-                    Submit
+                    Færdig
                 </div>
                 <div @click="submitForm" class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-next">
                     Næste

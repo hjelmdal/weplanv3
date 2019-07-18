@@ -5,7 +5,7 @@
         components: {
             AvatarCropper
         },
-        name: "step2Content",
+        name: "step3Avatar",
         props: ["step"],
         data() {
             return {

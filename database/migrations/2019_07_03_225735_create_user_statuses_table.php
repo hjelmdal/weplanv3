@@ -16,13 +16,7 @@ class CreateUserStatusesTable extends Migration
         Schema::create('user_statuses', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->integer("user_id")->unsigned();
-            $table->timestamp("password_at")->nullable();
-            $table->timestamp("consent_at")->nullable();
-            $table->timestamp("avatar_at")->nullable();
-            $table->timestamp("avatar_approved_at")->nullable();
-            $table->timestamp("player_at")->nullable();
-            $table->timestamp("player_approved_at")->nullable();
-            $table->timestamp("completed_at")->nullable();
+            $table->text("type");
             $table->timestamp("approved_at")->nullable();
             $table->timestamp("rejected_at")->nullable();
             $table->nullableTimestamps();
