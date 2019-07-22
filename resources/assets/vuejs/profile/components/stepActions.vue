@@ -4,11 +4,14 @@
         props: ["states","step"],
         methods: {
             next(step) {
-                Event.$emit("next",step);
+                this.$emit("next",step);
             },
             prev(step) {
-                Event.$emit("prev",step);
+                this.$emit("prev",step);
             },
+            submit() {
+                this.$emit("submit");
+            }
         }
     }
 </script>
@@ -21,15 +24,15 @@
 
     <!--begin: Form Actions -->
     <div class="kt-form__actions">
-        <div @click="prev(step.step - 1)" style="display: block;" class="btn btn-outline-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-prev">
+        <div v-if="states.prev && states.prev.display" @click.prevent="prev(step.step - 1)" class="btn btn-outline-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-prev" :style="{ display: states.prev.display }">
             Forrige
         </div>
-        <div class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-submit">
+        <button @click.prevent="submit" v-if="states.submit && states.submit.display" class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-submit" :style="{ display: states.submit.display }">
             Færdig
-        </div>
-        <div @click="next(step.step + 1)" class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-next">
+        </button>
+        <button v-if="states.next && states.next.display" @click.prevent="next(step.step + 1)" class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-next" style="display: hidden" :style="{ display: states.next.display }" :disabled="states.next.disabled == 1">
            Næste
-        </div>
+        </button>
     </div>
     <!--end: Form Actions -->
     </div>

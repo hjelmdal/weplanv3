@@ -1,9 +1,11 @@
 <script>
     import AvatarCropper from "vue-avatar-cropper";
     import axios from "axios";
+    import stepActions from "./stepActions";
     export default {
         components: {
-            AvatarCropper
+            AvatarCropper,
+            stepActions
         },
         name: "step3Avatar",
         props: ["step"],
@@ -13,7 +15,13 @@
                 user: [],
                 requestType: "POST",
                 authHeaders: { Authorization: apiToken },
-                labels: { submit: "Gem", cancel: "Fortryd"}
+                labels: { submit: "Gem", cancel: "Fortryd"},
+                states: {
+                    next: {
+                        display:"block",
+                        disabled:1
+                    }
+                }
             };
         },
         methods: {
@@ -34,7 +42,7 @@
                 });
             },
             next() {
-                Event.$emit("next");
+                this.$emit("next");
             },
             prev() {
                 this.$emit("prev");
@@ -55,6 +63,8 @@
             },
             handleCompleted(response, form, xhr) {
                 this.message = "upload completed.";
+                this.states.next.disabled = 0;
+
             },
             handlerError(message, type, xhr) {
                 this.message = "Oops! Something went wrong...";
@@ -148,20 +158,6 @@
         </div>
     </div>
     <!--end: Form Wizard Step 2-->
-        <div data-ktwizard-type="step-content" :data-ktwizard-state="step.state">
-            <!--begin: Form Actions -->
-            <div class="kt-form__actions">
-                <div @click="prev" style="display: block;" class="btn btn-outline-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-prev">
-                    Previous
-                </div>
-                <div class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-submit">
-                    Submit
-                </div>
-                <div @click="next" class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-next">
-                    Next Step
-                </div>
-            </div>
-            <!--end: Form Actions -->
-        </div>
+        <step-actions @next="next" :step="step" :states="states"></step-actions>
     </div>
 </template>

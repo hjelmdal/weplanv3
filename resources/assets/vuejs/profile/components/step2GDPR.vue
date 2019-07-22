@@ -1,35 +1,49 @@
 <script>
-    import Form from "../../Form";
+    import Form from "../../Form"
     import stepActions from "./stepActions";
     export default {
-        name: "step2GDPR",
         components: {
             stepActions
         },
-        props: ["step"],
+        name: "step2GDPR",
+        props: ["step",],
         data: function() {
             return {
                 form: new Form({
-                    gdpr: '',
-                    resetOnSuccess: false
-                })
+                    gdpr: ''
+                }),
+                states:{
+                    next: {
+                        display:"block",
+                        disabled:1,
+                    }
+                }
             };
         },
         methods: {
+            next() {
+                this.$emit("next");
+            },
             submitForm() {
-                this.form.patch("/api/v1/user")
-                    .then(data => {
-                        //Event.$emit("next",step.step +1);
-                        }
-                    ).catch(e => {
+                if(this.form.gdpr) {
+                    this.form.patch("/api/v1/user")
+                        .then(data => {
+                                this.next()
+                            }
+                        ).catch(e => {
 
-                    //I don't care about this
-                })
+                        //I don't care about this
+                    })
+                }
+            },
+            change() {
+                if(this.form.gdpr) {
+                    this.states.next.disabled = 0;
+                } else {
+                    this.states.next.disabled = 1;
+                }
             }
         },
-        mounted() {
-            //this.onSubmit();
-        }
     }
 </script>
 
@@ -73,7 +87,7 @@
             <p>For at kunne benytte WePlan, har vi behov for at behandle visse personlige data om dig. Udover navn, email adresse og et billede af dig, vil der i WePlan også benyttes data omkring administration af afbud til træninger, deltagelse på træninger samt kampstatistikker, alt sammen for at din træner kan tilrettelægge den bedst mulige badmintonoplevelse for dig. Vi beder dig derfor bekræfte at vi må registrere og behandle disse data om dig, så længe du har en tilknytning til klubben. Så snart du stopper med at spille badminton eller skifter klub, vil dine personlige data efterfølgende blive slettet fra vores system, samt data til statistik vil blive anonymiseret. </p>
             <div class="form-group">
                 <label class="kt-checkbox kt-checkbox--success">
-                    <input @change="submitForm" v-model="form.gdpr" type="checkbox" value="1"> Jeg giver hermed mit samtykke til, at WePlan må opbevare og behandle data om mig i henhold til ovenstående formål.
+                    <input @change="change" v-model="form.gdpr" type="checkbox" value="1"> Jeg giver hermed mit samtykke til, at WePlan må opbevare og behandle data om mig i henhold til ovenstående formål.
 
                     <span></span>
                 </label>
@@ -82,9 +96,8 @@
 
         </div>
     </div>
-        <step-actions :step="step"></step-actions>
-
-        <!--end: Form Wizard Step 1-->
+        <step-actions @next="submitForm" :step="step" :states="states"></step-actions>
+    <!--end: Form Wizard Step 1-->
 
     </div>
 </template>

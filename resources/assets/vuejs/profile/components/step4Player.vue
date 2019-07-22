@@ -1,9 +1,10 @@
 <script>
     import Form from "../../Form";
     import {TheMask} from "vue-the-mask";
+    import stepActions from "./stepActions";
     export default {
         name: "step4Player",
-        components: {TheMask},
+        components: {TheMask, stepActions},
         props: ["step"],
         data: function() {
             return {
@@ -12,7 +13,13 @@
                 form: new Form({
                     resetOnSuccess:"false",
                     playerId:""
-                })
+                }),
+                states: {
+                    submit: {
+                        display:"block",
+                        disabled:1
+                    }
+                }
             }
         },
         methods: {
@@ -149,21 +156,8 @@
 
         </div>
     </div>
-        <div data-ktwizard-type="step-content" :data-ktwizard-state="step.state">
-            <!--begin: Form Actions -->
-            <div class="kt-form__actions">
-                <div class="btn btn-outline-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-prev">
-                    Previous
-                </div>
-                <div class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-submit">
-                    Submit
-                </div>
-                <div @click="next" class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-next">
-                    Færdig
-                </div>
-            </div>
-            <!--end: Form Actions -->
-        </div>
-    <!--end: Form Wizard Step 3-->
+        <step-actions @submit="next" :step="step" :states="states"></step-actions>
+
+        <!--end: Form Wizard Step 3-->
     </div>
 </template>

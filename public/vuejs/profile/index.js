@@ -1771,11 +1771,23 @@ __webpack_require__.r(__webpack_exports__);
   },
   name: "step0Welcome",
   props: ["step"],
-  created: function created() {
-    Event.$on("next", function (step) {
-      Event.$emit("successNext", step);
-      console.log("yay");
-    });
+  data: function data() {
+    return {
+      states: {
+        next: {
+          display: "block",
+          disabled: 0
+        }
+      }
+    };
+  },
+  methods: {
+    next: function next() {
+      this.$emit("next");
+    }
+  },
+  mounted: function mounted() {
+    this.$set(this.states.next, 'disabled', 0);
   }
 });
 
@@ -1795,37 +1807,47 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "step1Password",
   components: {
     stepActions: _stepActions__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  name: "step1Password",
   props: ["step"],
   data: function data() {
     return {
       form: new _Form__WEBPACK_IMPORTED_MODULE_0__["default"]({
         password: '',
         password_confirmation: ''
-      })
+      }),
+      states: {
+        next: {
+          display: "block",
+          disabled: 1
+        }
+      }
     };
   },
   methods: {
-    next: function next() {//Event.$emit("next",step);
+    next: function next() {
+      // Calls parent component's next method
+      this.$emit("next");
     },
     submitForm: function submitForm() {
       var _this = this;
 
       this.form.patch("/api/v1/user").then(function (data) {
         _this.next();
-      }).catch(function (e) {//I don't care about this
+      }).catch(function (e) {//TODO: add message flash
       });
-    }
-  },
-  created: function created() {
-    var _this2 = this;
+    },
+    checkChars: function checkChars() {
+      this.form.errors.clear();
 
-    Event.$on("submitForm", function (num) {
-      _this2.submitForm();
-    });
+      if (this.form.password.length > 5 && this.form.password_confirmation === this.form.password) {
+        this.states.next.disabled = 0;
+      } else {
+        this.states.next.disabled = 1;
+      }
+    }
   }
 });
 
@@ -1845,27 +1867,45 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "step2GDPR",
   components: {
     stepActions: _stepActions__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  name: "step2GDPR",
   props: ["step"],
   data: function data() {
     return {
       form: new _Form__WEBPACK_IMPORTED_MODULE_0__["default"]({
-        gdpr: '',
-        resetOnSuccess: false
-      })
+        gdpr: ''
+      }),
+      states: {
+        next: {
+          display: "block",
+          disabled: 1
+        }
+      }
     };
   },
   methods: {
+    next: function next() {
+      this.$emit("next");
+    },
     submitForm: function submitForm() {
-      this.form.patch("/api/v1/user").then(function (data) {//Event.$emit("next",step.step +1);
-      }).catch(function (e) {//I don't care about this
-      });
+      var _this = this;
+
+      if (this.form.gdpr) {
+        this.form.patch("/api/v1/user").then(function (data) {
+          _this.next();
+        }).catch(function (e) {//I don't care about this
+        });
+      }
+    },
+    change: function change() {
+      if (this.form.gdpr) {
+        this.states.next.disabled = 0;
+      } else {
+        this.states.next.disabled = 1;
+      }
     }
-  },
-  mounted: function mounted() {//this.onSubmit();
   }
 });
 
@@ -1884,11 +1924,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_avatar_cropper__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_avatar_cropper__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _stepActions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stepActions */ "./resources/assets/vuejs/profile/components/stepActions.vue");
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    AvatarCropper: vue_avatar_cropper__WEBPACK_IMPORTED_MODULE_0___default.a
+    AvatarCropper: vue_avatar_cropper__WEBPACK_IMPORTED_MODULE_0___default.a,
+    stepActions: _stepActions__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   name: "step3Avatar",
   props: ["step"],
@@ -1903,6 +1946,12 @@ __webpack_require__.r(__webpack_exports__);
       labels: {
         submit: "Gem",
         cancel: "Fortryd"
+      },
+      states: {
+        next: {
+          display: "block",
+          disabled: 1
+        }
       }
     };
   },
@@ -1928,7 +1977,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     next: function next() {
-      Event.$emit("next");
+      this.$emit("next");
     },
     prev: function prev() {
       this.$emit("prev");
@@ -1947,6 +1996,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     handleCompleted: function handleCompleted(response, form, xhr) {
       this.message = "upload completed.";
+      this.states.next.disabled = 0;
     },
     handlerError: function handlerError(message, type, xhr) {
       this.message = "Oops! Something went wrong...";
@@ -1994,12 +2044,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Form */ "./resources/assets/vuejs/Form.js");
 /* harmony import */ var vue_the_mask__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-the-mask */ "./node_modules/vue-the-mask/dist/vue-the-mask.js");
 /* harmony import */ var vue_the_mask__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_the_mask__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _stepActions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stepActions */ "./resources/assets/vuejs/profile/components/stepActions.vue");
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "step4Player",
   components: {
-    TheMask: vue_the_mask__WEBPACK_IMPORTED_MODULE_1__["TheMask"]
+    TheMask: vue_the_mask__WEBPACK_IMPORTED_MODULE_1__["TheMask"],
+    stepActions: _stepActions__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: ["step"],
   data: function data() {
@@ -2009,7 +2062,13 @@ __webpack_require__.r(__webpack_exports__);
       form: new _Form__WEBPACK_IMPORTED_MODULE_0__["default"]({
         resetOnSuccess: "false",
         playerId: ""
-      })
+      }),
+      states: {
+        submit: {
+          display: "block",
+          disabled: 1
+        }
+      }
     };
   },
   methods: {
@@ -2054,10 +2113,13 @@ __webpack_require__.r(__webpack_exports__);
   props: ["states", "step"],
   methods: {
     next: function next(step) {
-      Event.$emit("next", step);
+      this.$emit("next", step);
     },
     prev: function prev(step) {
-      Event.$emit("prev", step);
+      this.$emit("prev", step);
+    },
+    submit: function submit() {
+      this.$emit("submit");
     }
   }
 });
@@ -2129,7 +2191,21 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      steps: _stepData__WEBPACK_IMPORTED_MODULE_6__["stepData"]
+      steps: _stepData__WEBPACK_IMPORTED_MODULE_6__["stepData"],
+      states: {
+        submit: {
+          display: "hidden",
+          disabled: 1
+        },
+        prev: {
+          display: "hidden",
+          disabled: 1
+        },
+        next: {
+          display: "block",
+          disabled: 1
+        }
+      }
     };
   },
   methods: {
@@ -3635,7 +3711,10 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("step-actions", { attrs: { step: _vm.step } })
+  return _c("step-actions", {
+    attrs: { step: _vm.step, states: _vm.states },
+    on: { next: _vm.next }
+  })
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -3715,9 +3794,7 @@ var render = function() {
                   },
                   domProps: { value: _vm.form.password },
                   on: {
-                    keyup: function($event) {
-                      return _vm.form.errors.clear()
-                    },
+                    keyup: _vm.checkChars,
                     input: function($event) {
                       if ($event.target.composing) {
                         return
@@ -3750,6 +3827,7 @@ var render = function() {
                   },
                   domProps: { value: _vm.form.password_confirmation },
                   on: {
+                    keyup: _vm.checkChars,
                     input: function($event) {
                       if ($event.target.composing) {
                         return
@@ -3821,7 +3899,10 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("step-actions", { attrs: { step: _vm.step } })
+      _c("step-actions", {
+        attrs: { step: _vm.step, states: _vm.states },
+        on: { next: _vm.submitForm }
+      })
     ],
     1
   )
@@ -3930,7 +4011,7 @@ var render = function() {
                               _vm.$set(_vm.form, "gdpr", $$c)
                             }
                           },
-                          _vm.submitForm
+                          _vm.change
                         ]
                       }
                     }),
@@ -3953,7 +4034,10 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("step-actions", { attrs: { step: _vm.step } })
+      _c("step-actions", {
+        attrs: { step: _vm.step, states: _vm.states },
+        on: { next: _vm.submitForm }
+      })
     ],
     1
   )
@@ -3980,120 +4064,87 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      {
-        staticClass: "kt-wizard-v1__content",
-        attrs: {
-          "data-ktwizard-type": "step-content",
-          "data-ktwizard-state": _vm.step.state
-        }
-      },
-      [
-        _c("div", { staticClass: "kt-heading kt-heading--md" }, [
-          _vm._v("Setup Your Profile")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "kt-separator kt-separator--height-sm" }),
-        _vm._v(" "),
-        _c("div", { staticClass: "kt-form__section kt-form__section--first" }, [
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              { staticClass: "card vue-avatar-cropper text-center" },
-              [
-                _c("div", { staticClass: "card-body" }, [
-                  _c("img", {
-                    staticClass: "card-img avatar",
-                    attrs: { src: _vm.user.avatar }
-                  }),
-                  _vm._v(" "),
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c("h5", { staticClass: "card-title mb-0" }, [
-                    _vm._v(_vm._s(_vm.user.name))
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "text-muted" }, [
-                    _vm._v(_vm._s(_vm.user.email))
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", {
-                  staticClass: "card-footer text-muted",
-                  domProps: { innerHTML: _vm._s(_vm.message) }
-                }),
-                _vm._v(" "),
-                _c("avatar-cropper", {
-                  attrs: {
-                    requestMethod: _vm.requestType,
-                    uploadHeaders: _vm.authHeaders,
-                    labels: _vm.labels,
-                    trigger: "#pick-avatar",
-                    "upload-url": "/api/v1/user"
-                  },
-                  on: {
-                    uploading: _vm.handleUploading,
-                    uploaded: _vm.handleUploaded,
-                    completed: _vm.handleCompleted,
-                    error: _vm.handlerError
-                  }
-                })
-              ],
-              1
-            )
-          ])
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        attrs: {
-          "data-ktwizard-type": "step-content",
-          "data-ktwizard-state": _vm.step.state
-        }
-      },
-      [
-        _c("div", { staticClass: "kt-form__actions" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "btn btn-outline-brand btn-md btn-tall btn-wide btn-bold btn-upper",
-              staticStyle: { display: "block" },
-              attrs: { "data-ktwizard-type": "action-prev" },
-              on: { click: _vm.prev }
-            },
-            [_vm._v("\n                Previous\n            ")]
-          ),
+  return _c(
+    "div",
+    [
+      _c(
+        "div",
+        {
+          staticClass: "kt-wizard-v1__content",
+          attrs: {
+            "data-ktwizard-type": "step-content",
+            "data-ktwizard-state": _vm.step.state
+          }
+        },
+        [
+          _c("div", { staticClass: "kt-heading kt-heading--md" }, [
+            _vm._v("Setup Your Profile")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "kt-separator kt-separator--height-sm" }),
           _vm._v(" "),
           _c(
             "div",
-            {
-              staticClass:
-                "btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper",
-              attrs: { "data-ktwizard-type": "action-submit" }
-            },
-            [_vm._v("\n                Submit\n            ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper",
-              attrs: { "data-ktwizard-type": "action-next" },
-              on: { click: _vm.next }
-            },
-            [_vm._v("\n                Next Step\n            ")]
+            { staticClass: "kt-form__section kt-form__section--first" },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  { staticClass: "card vue-avatar-cropper text-center" },
+                  [
+                    _c("div", { staticClass: "card-body" }, [
+                      _c("img", {
+                        staticClass: "card-img avatar",
+                        attrs: { src: _vm.user.avatar }
+                      }),
+                      _vm._v(" "),
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c("h5", { staticClass: "card-title mb-0" }, [
+                        _vm._v(_vm._s(_vm.user.name))
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "text-muted" }, [
+                        _vm._v(_vm._s(_vm.user.email))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", {
+                      staticClass: "card-footer text-muted",
+                      domProps: { innerHTML: _vm._s(_vm.message) }
+                    }),
+                    _vm._v(" "),
+                    _c("avatar-cropper", {
+                      attrs: {
+                        requestMethod: _vm.requestType,
+                        uploadHeaders: _vm.authHeaders,
+                        labels: _vm.labels,
+                        trigger: "#pick-avatar",
+                        "upload-url": "/api/v1/user"
+                      },
+                      on: {
+                        uploading: _vm.handleUploading,
+                        uploaded: _vm.handleUploaded,
+                        completed: _vm.handleCompleted,
+                        error: _vm.handlerError
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
+            ]
           )
-        ])
-      ]
-    )
-  ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("step-actions", {
+        attrs: { step: _vm.step, states: _vm.states },
+        on: { next: _vm.next }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -4266,51 +4317,182 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      {
-        staticClass: "kt-wizard-v1__content",
-        attrs: {
-          "data-ktwizard-type": "step-content",
-          "data-ktwizard-state": _vm.step.state
-        }
-      },
-      [
-        _c(
-          "div",
-          {
-            staticClass: "kt-heading kt-heading--md",
-            staticStyle: { margin: "0" }
-          },
-          [_vm._v("Badminton ID:")]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "kt-separator kt-separator--height-xs" }),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "form-group" },
-          [
-            _c("TheMask", {
-              staticClass: "form-control form-control-lg",
-              staticStyle: { "font-size": "2rem" },
-              attrs: { mask: "######-##", masked: true },
-              nativeOn: {
-                keyup: function($event) {
-                  return _vm.checkPlayer($event)
-                }
-              },
-              model: {
-                value: _vm.form.playerId,
-                callback: function($$v) {
-                  _vm.$set(_vm.form, "playerId", $$v)
+  return _c(
+    "div",
+    [
+      _c(
+        "div",
+        {
+          staticClass: "kt-wizard-v1__content",
+          attrs: {
+            "data-ktwizard-type": "step-content",
+            "data-ktwizard-state": _vm.step.state
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "kt-heading kt-heading--md",
+              staticStyle: { margin: "0" }
+            },
+            [_vm._v("Badminton ID:")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "kt-separator kt-separator--height-xs" }),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c("TheMask", {
+                staticClass: "form-control form-control-lg",
+                staticStyle: { "font-size": "2rem" },
+                attrs: { mask: "######-##", masked: true },
+                nativeOn: {
+                  keyup: function($event) {
+                    return _vm.checkPlayer($event)
+                  }
                 },
-                expression: "form.playerId"
-              }
-            }),
+                model: {
+                  value: _vm.form.playerId,
+                  callback: function($$v) {
+                    _vm.$set(_vm.form, "playerId", $$v)
+                  },
+                  expression: "form.playerId"
+                }
+              }),
+              _vm._v(" "),
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.player,
+                      expression: "player"
+                    }
+                  ],
+                  staticClass: "kt-widget-15 kt-option"
+                },
+                [
+                  _c("div", { staticClass: "kt-widget-15__body" }, [
+                    _c("div", { staticClass: "kt-widget-15__author" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "kt-widget-15__detail" }, [
+                        _c("a", {
+                          staticClass: "kt-widget-15__name",
+                          attrs: { href: "#" },
+                          domProps: { textContent: _vm._s(_vm.player.name) }
+                        }),
+                        _vm._v(" "),
+                        _vm.player && _vm.player.bp_club
+                          ? _c("div", {
+                              staticClass: "kt-widget-15__desc",
+                              domProps: {
+                                textContent: _vm._s(_vm.player.bp_club.name)
+                              }
+                            })
+                          : _vm._e()
+                      ])
+                    ])
+                  ])
+                ]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group form-group-marginless" }, [
+            _c("label", [_vm._v("Er du spiller eller træner?:")]),
             _vm._v(" "),
-            _vm._m(0),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("label", { staticClass: "kt-option" }, [
+                  _c("span", { staticClass: "kt-option__control" }, [
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "kt-radio kt-radio--check-bold kt-radio--success"
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.radio,
+                              expression: "radio"
+                            }
+                          ],
+                          attrs: {
+                            type: "radio",
+                            name: "m_option_1",
+                            value: "1"
+                          },
+                          domProps: { checked: _vm._q(_vm.radio, "1") },
+                          on: {
+                            change: function($event) {
+                              _vm.radio = "1"
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span")
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(2)
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("label", { staticClass: "kt-option" }, [
+                  _c("span", { staticClass: "kt-option__control" }, [
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "kt-radio kt-radio--check-bold kt-radio--brand"
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.radio,
+                              expression: "radio"
+                            }
+                          ],
+                          attrs: {
+                            type: "radio",
+                            name: "m_option_1",
+                            value: "2"
+                          },
+                          domProps: { checked: _vm._q(_vm.radio, "2") },
+                          on: {
+                            change: function($event) {
+                              _vm.radio = "2"
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span")
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(3)
+                ])
+              ])
+            ]),
             _vm._v(" "),
             _c(
               "div",
@@ -4319,205 +4501,39 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.player,
-                    expression: "player"
+                    value: _vm.radio === "1",
+                    expression: "radio === '1'"
                   }
-                ],
-                staticClass: "kt-widget-15 kt-option"
+                ]
               },
-              [
-                _c("div", { staticClass: "kt-widget-15__body" }, [
-                  _c("div", { staticClass: "kt-widget-15__author" }, [
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "kt-widget-15__detail" }, [
-                      _c("a", {
-                        staticClass: "kt-widget-15__name",
-                        attrs: { href: "#" },
-                        domProps: { textContent: _vm._s(_vm.player.name) }
-                      }),
-                      _vm._v(" "),
-                      _vm.player && _vm.player.bp_club
-                        ? _c("div", {
-                            staticClass: "kt-widget-15__desc",
-                            domProps: {
-                              textContent: _vm._s(_vm.player.bp_club.name)
-                            }
-                          })
-                        : _vm._e()
-                    ])
-                  ])
-                ])
-              ]
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group form-group-marginless" }, [
-          _c("label", [_vm._v("Er du spiller eller træner?:")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("label", { staticClass: "kt-option" }, [
-                _c("span", { staticClass: "kt-option__control" }, [
-                  _c(
-                    "span",
-                    {
-                      staticClass:
-                        "kt-radio kt-radio--check-bold kt-radio--success"
-                    },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.radio,
-                            expression: "radio"
-                          }
-                        ],
-                        attrs: {
-                          type: "radio",
-                          name: "m_option_1",
-                          value: "1"
-                        },
-                        domProps: { checked: _vm._q(_vm.radio, "1") },
-                        on: {
-                          change: function($event) {
-                            _vm.radio = "1"
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("span")
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _vm._m(2)
-              ])
-            ]),
+              [_vm._v("Test")]
+            ),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("label", { staticClass: "kt-option" }, [
-                _c("span", { staticClass: "kt-option__control" }, [
-                  _c(
-                    "span",
-                    {
-                      staticClass:
-                        "kt-radio kt-radio--check-bold kt-radio--brand"
-                    },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.radio,
-                            expression: "radio"
-                          }
-                        ],
-                        attrs: {
-                          type: "radio",
-                          name: "m_option_1",
-                          value: "2"
-                        },
-                        domProps: { checked: _vm._q(_vm.radio, "2") },
-                        on: {
-                          change: function($event) {
-                            _vm.radio = "2"
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("span")
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _vm._m(3)
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.radio === "1",
-                  expression: "radio === '1'"
-                }
-              ]
-            },
-            [_vm._v("Test")]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.radio === "2",
-                  expression: "radio === '2'"
-                }
-              ]
-            },
-            [_vm._v("Test2")]
-          )
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        attrs: {
-          "data-ktwizard-type": "step-content",
-          "data-ktwizard-state": _vm.step.state
-        }
-      },
-      [
-        _c("div", { staticClass: "kt-form__actions" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "btn btn-outline-brand btn-md btn-tall btn-wide btn-bold btn-upper",
-              attrs: { "data-ktwizard-type": "action-prev" }
-            },
-            [_vm._v("\n                    Previous\n                ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper",
-              attrs: { "data-ktwizard-type": "action-submit" }
-            },
-            [_vm._v("\n                    Submit\n                ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper",
-              attrs: { "data-ktwizard-type": "action-next" },
-              on: { click: _vm.next }
-            },
-            [_vm._v("\n                    Færdig\n                ")]
-          )
-        ])
-      ]
-    )
-  ])
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.radio === "2",
+                    expression: "radio === '2'"
+                  }
+                ]
+              },
+              [_vm._v("Test2")]
+            )
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("step-actions", {
+        attrs: { step: _vm.step, states: _vm.states },
+        on: { submit: _vm.next }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -4628,46 +4644,66 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "kt-form__actions" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "btn btn-outline-brand btn-md btn-tall btn-wide btn-bold btn-upper",
-            staticStyle: { display: "block" },
-            attrs: { "data-ktwizard-type": "action-prev" },
-            on: {
-              click: function($event) {
-                return _vm.prev(_vm.step.step - 1)
-              }
-            }
-          },
-          [_vm._v("\n        Forrige\n    ")]
-        ),
+        _vm.states.prev && _vm.states.prev.display
+          ? _c(
+              "div",
+              {
+                staticClass:
+                  "btn btn-outline-brand btn-md btn-tall btn-wide btn-bold btn-upper",
+                style: { display: _vm.states.prev.display },
+                attrs: { "data-ktwizard-type": "action-prev" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.prev(_vm.step.step - 1)
+                  }
+                }
+              },
+              [_vm._v("\n        Forrige\n    ")]
+            )
+          : _vm._e(),
         _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper",
-            attrs: { "data-ktwizard-type": "action-submit" }
-          },
-          [_vm._v("\n        Færdig\n    ")]
-        ),
+        _vm.states.submit && _vm.states.submit.display
+          ? _c(
+              "button",
+              {
+                staticClass:
+                  "btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper",
+                style: { display: _vm.states.submit.display },
+                attrs: { "data-ktwizard-type": "action-submit" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.submit($event)
+                  }
+                }
+              },
+              [_vm._v("\n        Færdig\n    ")]
+            )
+          : _vm._e(),
         _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper",
-            attrs: { "data-ktwizard-type": "action-next" },
-            on: {
-              click: function($event) {
-                return _vm.next(_vm.step.step + 1)
-              }
-            }
-          },
-          [_vm._v("\n       Næste\n    ")]
-        )
+        _vm.states.next && _vm.states.next.display
+          ? _c(
+              "button",
+              {
+                staticClass:
+                  "btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper",
+                staticStyle: { display: "hidden" },
+                style: { display: _vm.states.next.display },
+                attrs: {
+                  "data-ktwizard-type": "action-next",
+                  disabled: _vm.states.next.disabled == 1
+                },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.next(_vm.step.step + 1)
+                  }
+                }
+              },
+              [_vm._v("\n       Næste\n    ")]
+            )
+          : _vm._e()
       ])
     ]
   )
@@ -4853,7 +4889,15 @@ var render = function() {
                               return [
                                 _c(step.contentComponent, {
                                   tag: "component",
-                                  attrs: { step: step }
+                                  attrs: { step: step, states: _vm.states },
+                                  on: {
+                                    next: function($event) {
+                                      return _vm.setStep(step.step + 1)
+                                    },
+                                    prev: function($event) {
+                                      return _vm.setStep(step.step - 1)
+                                    }
+                                  }
                                 })
                               ]
                             })

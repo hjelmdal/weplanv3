@@ -6,9 +6,26 @@
         },
         name: "step0Welcome",
         props: ["step"],
+        data: function () {
+            return {
+                states:{
+                    next:{
+                        display: "block",
+                        disabled: 0
+                    }
 
-        created() {
-            Event.$on("next",(step) => { Event.$emit("successNext",step); console.log("yay");})
+                }
+            }
+
+        },
+        methods: {
+            next() {
+                this.$emit("next");
+            },
+
+        },
+        mounted() {
+            this.$set(this.states.next,'disabled',0)
         }
     }
 </script>
@@ -17,5 +34,5 @@
 
 </style>
 <template>
-    <step-actions :step="step"></step-actions>
+    <step-actions @next="next" :step="step" :states="states"></step-actions>
 </template>

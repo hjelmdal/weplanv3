@@ -20,7 +20,22 @@
         },
         data: function () {
             return {
-                steps: stepData
+                steps: stepData,
+                states:{
+                    submit:{
+                        display: "hidden",
+                        disabled: 1
+                    },
+                    prev:{
+                        display: "hidden",
+                        disabled: 1
+                    },
+                    next:{
+                        display: "block",
+                        disabled: 1
+                    }
+
+                }
             }
             
         },
@@ -179,7 +194,7 @@
                             <form class="kt-form" id="kt_form" novalidate="novalidate">
 
                                 <template v-for="step in steps">
-                                    <component :is="step.contentComponent" :step="step"></component>
+                                    <component @next="setStep(step.step + 1)" @prev="setStep(step.step - 1)" :is="step.contentComponent" :step="step" :states="states"></component>
                                 </template>
 
 

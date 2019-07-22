@@ -1,11 +1,11 @@
 <script>
     import Form from "../../Form";
-    import stepActions from "./stepActions"
+    import stepActions from "./stepActions";
     export default {
-        name: "step1Password",
         components: {
             stepActions
         },
+        name: "step1Password",
         props: ["step"],
         data: function() {
             return {
@@ -13,12 +13,19 @@
                     password: '',
                     password_confirmation: ''
                 }),
+                states:{
+                    next: {
+                        display:"block",
+                        disabled:1,
+                    }
+                }
 
             };
         },
         methods: {
             next() {
-                //Event.$emit("next",step);
+                // Calls parent component's next method
+                this.$emit("next");
             },
             submitForm() {
                 this.form.patch("/api/v1/user")
@@ -27,13 +34,18 @@
                         }
                     ).catch(e => {
 
-                    //I don't care about this
+                    //TODO: add message flash
                 })
 
+            },
+            checkChars() {
+                this.form.errors.clear();
+                if(this.form.password.length > 5 && this.form.password_confirmation === this.form.password) {
+                    this.states.next.disabled = 0;
+                } else {
+                    this.states.next.disabled = 1;
+                }
             }
-        },
-        created() {
-            Event.$on("submitForm",(num) => {this.submitForm()});
         }
     }
 
@@ -55,8 +67,8 @@
                 <p>Tillykke med din nye konto hos os. For at kunne logge ind på vores site uden om Facebook / Google, skal du sætte et personligt password.</p>
                 <div class="form-group">
                     <label for="password">Dit nye password</label>
-                    <input type="password" class="form-control" :class="{'is-invalid': (form.errors && form.errors.has('password'))}" id="password" placeholder="Adgangskode" v-model="form.password" @keyup="form.errors.clear()" autocomplete="new-password"><br>
-                    <input type="password" class="form-control" :class="{'is-invalid': (form.errors && form.errors.has('password'))}" id="password_confirm" placeholder="Bekræft adgangskode" v-model="form.password_confirmation" autocomplete="new-password">
+                    <input type="password" class="form-control" :class="{'is-invalid': (form.errors && form.errors.has('password'))}" id="password" placeholder="Adgangskode" v-model="form.password" @keyup="checkChars" autocomplete="new-password"><br>
+                    <input type="password" class="form-control" :class="{'is-invalid': (form.errors && form.errors.has('password'))}" id="password_confirm" placeholder="Bekræft adgangskode" v-model="form.password_confirmation" @keyup="checkChars" autocomplete="new-password">
                     <div class="kt-section__content kt-section__content--border" v-if="form.errors && (form.errors.has('password') || form.errors.has('form'))">
                         <hr />
                         <div class="alert alert-secondary" role="alert">
@@ -77,7 +89,7 @@
 
             </div>
         </div>
-        <step-actions :step="step"></step-actions>
+        <step-actions @next="submitForm" :step="step" :states="states"></step-actions>
         <!--end: Form Wizard Step 1-->
 
     </div>
