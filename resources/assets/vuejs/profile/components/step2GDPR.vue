@@ -1,23 +1,25 @@
 <script>
-    import Form from "../../Form"
+    import Form from "../../Form";
+    import stepActions from "./stepActions";
     export default {
         name: "step2GDPR",
+        components: {
+            stepActions
+        },
         props: ["step"],
         data: function() {
             return {
                 form: new Form({
-                    gdpr: ''
+                    gdpr: '',
+                    resetOnSuccess: false
                 })
             };
         },
         methods: {
-            next() {
-                this.$emit("next");
-            },
             submitForm() {
                 this.form.patch("/api/v1/user")
                     .then(data => {
-                            this.next()
+                        //Event.$emit("next",step.step +1);
                         }
                     ).catch(e => {
 
@@ -32,7 +34,33 @@
 </script>
 
 <style scoped>
-
+    .kt-checkbox {
+        font-size: 1.6rem;
+        padding-left:3rem;
+    }
+    .kt-checkbox>span {
+        border-radius: 3px;
+        background: none;
+        position: absolute;
+        top: 1px;
+        left: 0;
+        height: 30px;
+        width: 30px;
+    }
+    .kt-checkbox>span:after {
+        content: '';
+        position: absolute;
+        display: none;
+        top: 50%;
+        left: 50%;
+        margin-left: -4px;
+        margin-top: -11px;
+        width: 10px;
+        height: 20px;
+        border-width: 0 2px 2px 0/*rtl:ignore*/ !important;
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg)/*rtl:ignore*/;
+    }
 </style>
 
 <template>
@@ -46,29 +74,17 @@
             <div class="form-group">
                 <label class="kt-checkbox kt-checkbox--success">
                     <input @change="submitForm" v-model="form.gdpr" type="checkbox" value="1"> Jeg giver hermed mit samtykke til, at WePlan må opbevare og behandle data om mig i henhold til ovenstående formål.
-                    <br> Klik her for at læse mere om vores <a href="#">privatlivspolitik</a>.
+
                     <span></span>
                 </label>
+                <br> Klik her for at læse mere om vores <a href="#">privatlivspolitik</a>.
             </div>
 
         </div>
     </div>
-    <div data-ktwizard-type="step-content" :data-ktwizard-state="step.state">
-        <!--begin: Form Actions -->
-        <div class="kt-form__actions">
-            <div class="btn btn-outline-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-prev">
-                Previous
-            </div>
-            <div class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-submit">
-                Submit
-            </div>
-            <div @click="next" class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-next">
-                Next Step
-            </div>
-        </div>
-        <!--end: Form Actions -->
-    </div>
-    <!--end: Form Wizard Step 1-->
+        <step-actions :step="step"></step-actions>
+
+        <!--end: Form Wizard Step 1-->
 
     </div>
 </template>

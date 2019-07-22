@@ -1,14 +1,16 @@
 <script>
-    import stepInfo from "./stepInfo";
+    import step0Welcome from "./step0Welcome";
     import step1Password from "./step1Password";
     import step2GDPR from "./step2GDPR";
     import step3Avatar from "./step3Avatar";
     import step4Player from "./step4Player";
     import step4Content from "./step4Content";
     import {stepData} from "./stepData";
+    import stepInfo from "./stepInfo";
     export default {
         name: "Wizard",
         components: {
+            step0Welcome,
             stepInfo,
             step1Password,
             step2GDPR,
@@ -24,7 +26,7 @@
         },
         methods: {
             setStep(index = false) {
-                console.log(index);
+                //console.log(index);
                 if (typeof this.steps[index - 1] != 'undefined') {
                     this.steps.forEach(step => {
                         step.state = "pending";
@@ -35,16 +37,24 @@
                         } else if (step.step == index) {
                             step.state = "current";
                         }
-                        console.log("step:" + step.state);
+                        //console.log("step:" + step.state);
                     });
+                    //Scroll to top on page change
+                    var myDiv = document.getElementById('wizzard_container');
+                    myDiv.scrollTop = 0;
 
                 }
             }
+        },
+        created() {
+            Event.$on("successNext", (step) => this.setStep(step));
+            Event.$on("prev", (step) => this.setStep(step));
         }
     }
 </script>
 
 <style scoped>
+
 #portlet_block {
     z-index: 1010;
     opacity: 1;
@@ -123,7 +133,14 @@
     #portlet_block {
         margin:10px;
     }
+    .kt-wizard-v1 .kt-wizard-v1__nav {
+        padding: 2rem 0rem 0.5rem;
+    }
+
 }
+
+
+
 </style>
 <template>
     <div>
@@ -140,7 +157,7 @@
                             <!--begin: Form Wizard Nav -->
                             <div class="kt-wizard-v1__nav">
                                 <div class="kt-wizard-v1__nav-items">
-                                    <template v-for="step in steps">
+                                    <template v-for="step in steps" v-if="step.step > 0">
                                     <a class="kt-wizard-v1__nav-item" href="javascript:;" data-ktwizard-type="step" :data-ktwizard-state="step.state" v-on:click="step.state != 'current' ? setStep(step.step): false">
                                         <span v-if="step.state == 'done'" v-html="step.icon"></span>
                                         <span v-else v-text="step.step"></span>
@@ -162,7 +179,7 @@
                             <form class="kt-form" id="kt_form" novalidate="novalidate">
 
                                 <template v-for="step in steps">
-                                    <component @next="setStep(step.step + 1)" @prev="setStep(step.step - 1)" :is="step.contentComponent" :step="step"></component>
+                                    <component :is="step.contentComponent" :step="step"></component>
                                 </template>
 
 

@@ -1,7 +1,11 @@
 <script>
     import Form from "../../Form";
+    import stepActions from "./stepActions"
     export default {
         name: "step1Password",
+        components: {
+            stepActions
+        },
         props: ["step"],
         data: function() {
             return {
@@ -14,7 +18,7 @@
         },
         methods: {
             next() {
-                this.$emit("next");
+                //Event.$emit("next",step);
             },
             submitForm() {
                 this.form.patch("/api/v1/user")
@@ -28,6 +32,9 @@
 
             }
         },
+        created() {
+            Event.$on("submitForm",(num) => {this.submitForm()});
+        }
     }
 
 </script>
@@ -70,21 +77,7 @@
 
             </div>
         </div>
-        <div data-ktwizard-type="step-content" :data-ktwizard-state="step.state">
-            <!--begin: Form Actions -->
-            <div class="kt-form__actions">
-                <div class="btn btn-outline-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-prev">
-                    Forrige
-                </div>
-                <div class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-submit">
-                    Færdig
-                </div>
-                <div @click="submitForm" class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-next">
-                    Næste
-                </div>
-            </div>
-            <!--end: Form Actions -->
-        </div>
+        <step-actions :step="step"></step-actions>
         <!--end: Form Wizard Step 1-->
 
     </div>

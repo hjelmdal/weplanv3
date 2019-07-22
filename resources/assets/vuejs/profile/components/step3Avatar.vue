@@ -13,6 +13,7 @@
                 user: [],
                 requestType: "POST",
                 authHeaders: { Authorization: apiToken },
+                labels: { submit: "Gem", cancel: "Fortryd"}
             };
         },
         methods: {
@@ -33,7 +34,7 @@
                 });
             },
             next() {
-                this.$emit("next");
+                Event.$emit("next");
             },
             prev() {
                 this.$emit("prev");
@@ -106,8 +107,13 @@
     }
 
 
-</style>
 
+</style>
+<style>
+    .avatar-cropper .avatar-cropper-overlay {
+        background: rgba(0,0,0,0.7);
+    }
+</style>
 <template>
     <div>
     <!--begin: Form Wizard Step 2-->
@@ -120,7 +126,7 @@
                     <div class="card-body">
                         <img :src="user.avatar" class="card-img avatar" />
                         <div class="card-img-overlay">
-                            <button class="btn btn-primary btn-sm" id="pick-avatar">Select an new image</button>
+                            <button class="btn btn-primary btn-sm" id="pick-avatar">Vælg nyt billede</button>
                         </div>
                         <h5 class="card-title mb-0">{{ user.name }}</h5>
                         <div class="text-muted">{{ user.email }}</div>
@@ -129,6 +135,7 @@
                     <avatar-cropper
                             v-bind:requestMethod="requestType"
                             v-bind:uploadHeaders="authHeaders"
+                            v-bind:labels="labels"
                             @uploading="handleUploading"
                             @uploaded="handleUploaded"
                             @completed="handleCompleted"

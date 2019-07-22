@@ -1,7 +1,18 @@
 export const stepData = [
     {
-        step: 1,
+        step: 0,
         state: "current",
+        icon: "",
+        stepInfo: {
+            title: "Opsætning af brugerkonto!",
+            text: "Færdiggør venligst din profil og udfyld dit BadmintonDanmark ID, så du kan blive tilknyttet træninger mv.",
+            svg: "/base/media/wizard/undraw_checklist_7q37.svg"
+        },
+        contentComponent: "step0Welcome"
+    },
+    {
+        step: 1,
+        state: "pending",
         icon: "",
         stepInfo: {
             title: "Opsætning af brugerkonto!",
@@ -38,7 +49,7 @@ export const stepData = [
         icon: "",
         stepInfo: {
             title: "Opsætning af brugerkonto!",
-            text: "To start off, please enter your username, email address and password.",
+            text: "For at kunne identificere dig som spiller, skal du angive dit spillerid fra Badminton Danmark nedenfor",
             svg: "/base/media/wizard/undraw_hiring_cyhs.svg"
         },
         contentComponent: "step4Player"

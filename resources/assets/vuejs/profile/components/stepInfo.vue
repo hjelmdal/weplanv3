@@ -17,5 +17,11 @@
 </script>
 
 <style scoped>
+@media (max-width: 575px) {
 
+    .kt-wizard-v1__nav-image {
+        max-width: 100px !important;
+        margin: 1rem auto 0 !important;
+    }
+}
 </style>
