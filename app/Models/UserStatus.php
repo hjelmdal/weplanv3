@@ -12,7 +12,8 @@ class UserStatus extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id','password_at', 'consent_at', 'avatar_at', 'player_at','completed_at','team_at','approved_at','rejected_at'
+        //'user_id','password_at', 'consent_at', 'avatar_at', 'player_at','completed_at','team_at','approved_at','rejected_at'
+        'user_id','type','content','approved_at','rejected_at'
 
     ];
 
@@ -22,6 +23,6 @@ class UserStatus extends Model
      * @var array
      */
     protected $hidden = [
-        'password_at', 'consent_at', 'avatar_at', 'player_at','completed_at','team_at','approved_at','rejected_at','created_at','updated_at','deleted_at'
+        //'password_at', 'consent_at', 'avatar_at', 'player_at','completed_at','team_at','approved_at','rejected_at','created_at','updated_at','deleted_at'
     ];
 }

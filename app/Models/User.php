@@ -8,9 +8,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notification;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Auth\Authenticatable as AuthenticableTrait;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
+    use AuthenticableTrait;
     use Notifiable;
     use HasRoles;
     protected $guard_name = 'web'; // or whatever guard you want to use
@@ -78,5 +80,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function routeNotificationForSlack(Notification $notification)
     {
         return 'https://hooks.slack.com/services/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';
+    }
+    
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail());
     }
 }

@@ -17,6 +17,7 @@ class CreateUserStatusesTable extends Migration
             $table->bigIncrements('id')->unsigned();
             $table->integer("user_id")->unsigned();
             $table->text("type");
+            $table->longText("content")->nullable();
             $table->timestamp("approved_at")->nullable();
             $table->timestamp("rejected_at")->nullable();
             $table->nullableTimestamps();
