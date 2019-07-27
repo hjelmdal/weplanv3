@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\WePlan\WePlayer;
+use App\Notifications\NewUserRegistered;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -84,6 +86,6 @@ class User extends Authenticatable implements MustVerifyEmail
     
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new VerifyEmail());
+        $this->notify(new NewUserRegistered());
     }
 }
