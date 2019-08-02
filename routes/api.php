@@ -35,6 +35,7 @@ Route::name('api.')->group(function () {
             Route::get('user',"UserAPI@getMyUser")->name("my-user");
             Route::patch('user',"UserAPI@patch");
             Route::post('user',"UserAPI@saveAvatar");
+            Route::post('user/activate',"UserAPI@activateEmail");
 
         });
 

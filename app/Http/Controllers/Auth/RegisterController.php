@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\Helpers;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Models\UserStatus;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -74,10 +76,13 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
+
+
         try {
-            UserStatus::updateOrCreate(["user_id" => $user->id], ["user_id" => $user->id, "password_at" => now()]);
+            UserStatus::updateOrCreate(["user_id" => $user->id], ["user_id" => $user->id, "type" => "password"]);
         } catch (QueryException $e) {
-            return response()->json(["errors" => ["SQL" => [0 => $e, 1 => "User: " . $user->id]]],500);
+            //return response()->json(["errors" => ["SQL" => [0 => $e, 1 => "User: " . $user->id]]],500);
+            Log::error("Exception during user registration:" . $e);
         }
 
         return $user;

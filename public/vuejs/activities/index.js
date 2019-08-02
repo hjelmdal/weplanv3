@@ -20027,7 +20027,7 @@ new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/hjelmdal/Pixel8/Websites/WePlan/WePlanV4/resources/assets/vuejs/activities/index.js */"./resources/assets/vuejs/activities/index.js");
+module.exports = __webpack_require__(/*! /Users/impact/.web/WePlanV3/resources/assets/vuejs/activities/index.js */"./resources/assets/vuejs/activities/index.js");
 
 
 /***/ })

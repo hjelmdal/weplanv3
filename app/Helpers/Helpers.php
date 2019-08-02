@@ -20,4 +20,8 @@ class Helpers
     {
         return app()->make(Elapsed::class);
     }
+
+    static function codeGen() {
+        return app()->make(CodeGenerator::class);
+    }
 }

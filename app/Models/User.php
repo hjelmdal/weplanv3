@@ -4,11 +4,11 @@ namespace App\Models;
 
 use App\Models\WePlan\WePlayer;
 use App\Notifications\NewUserRegistered;
-use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Auth\Authenticatable as AuthenticableTrait;
 
@@ -70,8 +70,14 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function UserStatus() {
-        return $this->hasOne(UserStatus::class,"user_id","id");
+        return $this->hasMany(UserStatus::class,"user_id","id");
     }
+
+    public function UserActivation() {
+        return $this->hasOne(UserActivation::class,"user_id","id");
+    }
+
+
 
     /**
      * Route notifications for the Slack channel.
@@ -86,6 +92,9 @@ class User extends Authenticatable implements MustVerifyEmail
     
     public function sendEmailVerificationNotification()
     {
+        Log::error("TEST");
         $this->notify(new NewUserRegistered());
     }
+
+
 }

@@ -111,4 +111,23 @@ class UserAPI extends Controller
         }
         return true;
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function activateEmail(Request $request) {
+        if($request->code) {
+            $this->userFromApiToken($request);
+            $hashed = $this->user->UserActivation->activation_hashed;
+            if (password_verify($request->code, $hashed)) {
+
+                return response()->json(["input" => $request->code, "output" => $hashed], 200);
+
+            } else {
+                return response()->json("no", 400);
+            }
+        }
+        return response()->json("none", 404);
+    }
 }

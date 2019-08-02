@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Facebook;
 use App\Models\Google;
+use App\Notifications\NewUserRegistered;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -144,7 +145,7 @@ class LoginController extends Controller
                 'google_id' => $user->getId()
             ]);
             $userObj->google()->save($google);
-            $userObj->notify(new VerifyEmail());
+            $userObj->notify(new NewUserRegistered());
             Auth::login($userObj,true);
             //$this->guard()->login($userObj,true);
 
@@ -218,7 +219,7 @@ class LoginController extends Controller
                 'facebook_id' => $user->getId()
             ]);
             $userObj->facebook()->save($facebook);
-            $userObj->notify(new VerifyEmail());
+            $userObj->notify(new NewUserRegistered());
             Auth::login($userObj,true);
             //$this->guard()->login($userObj);
 
