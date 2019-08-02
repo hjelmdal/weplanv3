@@ -20,7 +20,6 @@ class CreateUserActivationsTable extends Migration
             $table->string("activation_hashed");
             $table->nullableTimestamps();
             $table->foreign('user_id')->references('id')->on('users');
-
         });
     }
 
