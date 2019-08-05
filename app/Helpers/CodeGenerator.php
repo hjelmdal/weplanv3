@@ -33,7 +33,7 @@ class CodeGenerator
         $this->generateActivationCode();
         if($user) {
 
-            $user->UserActivation()->create(["activation_code" => $this->code["plain"],"activation_hashed" => $this->code["hashed"]]);
+            $user->UserActivation()->updateOrCreate(["user_id" => $user->id], ["activation_code" => $this->code["plain"],"activation_hashed" => $this->code["hashed"]]);
 
 
         }

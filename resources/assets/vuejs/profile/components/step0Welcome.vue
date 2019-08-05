@@ -1,6 +1,7 @@
 <script>
     import stepActions from "./stepActions";
     import Form from "../../Form"
+    import Notification from "../../Notification";
     export default {
         components: {
           stepActions
@@ -28,35 +29,48 @@
         methods: {
             submitForm(refs) {
               if(this.form.digits.length == 6) {
+                  this.notification = new Notification();
                   this.states.next.disabled = 0;
                   this.form.code = "";
                   this.form.digits.forEach(item => {
                       this.form.code = this.form.code + item;
                   });
-                  this.form.post("/api/v1/user/activate")
-                      .then(data => {
-                        document.querySelector(".activation-wrapper").classList.add("success");
-                      })
-                      .catch(e => {
+                  if(this.form.code.length == 6) {
+                      this.form.post("/api/v1/user/activate")
+                          .then(data => {
+                              document.querySelector(".activation-wrapper").classList.add("success");
+                          })
+                          .catch(e => {
 
-                          this.form.digits = [];
-                          //refs.digit1.focus();
+                              this.form.digits = [];
+                              //refs.digit1.focus();
+                              document.querySelector(".activation-wrapper").classList.remove("success");
+                              document.querySelector(".activation-wrapper").classList.add("failure");
+                          })
+                      setTimeout(function () {
                           document.querySelector(".activation-wrapper").classList.remove("success");
-                          document.querySelector(".activation-wrapper").classList.add("failure");
-                      })
-                  setTimeout(function() {
-                      document.querySelector(".activation-wrapper").classList.remove("success");
-                      document.querySelector(".activation-wrapper").classList.remove("failure");
-                  },2000);
-
+                          document.querySelector(".activation-wrapper").classList.remove("failure");
+                      }, 4000);
+                  }
               }
+            },
+            resendActivation() {
+                this.form.post("/api/v1/user/activate/resend")
+                    .then(data => {
+                        console.log(data);
+                        this.notification = new Notification();
+                        this.notification.send("info",data.message);
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    })
             },
             isNumber(event,refs,index) {
                 event = (event) ? event : window.event;
                 var charCode = (event.which) ? event.which : event.keyCode;
                 if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
                     event.preventDefault();
-                    console.log("NOPE!")
+                    event.target.value = "";
                 } else {
                     this.submitForm(refs);
                     if(index == 6) {
@@ -140,8 +154,8 @@
 
 
 
-                <a class="si-link ax-outline tk-subbody lite-theme-override" id="no-trstd-device-pop" href="#" aria-haspopup="true">
-                    Har du ikke modtaget en aktiveringskode fra os?
+                <a @click="resendActivation" class="si-link ax-outline tk-subbody lite-theme-override" id="no-trstd-device-pop" href="#" aria-haspopup="true">
+                    Har du ikke modtaget en aktiveringskode fra os? - klik her!
                 </a>
                 <div class="spinner-container verifying-code" id="verifying-code"></div>
             </div>

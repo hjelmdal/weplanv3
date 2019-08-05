@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Auth;
 
 use App\Models\User;
 use App\Models\UserStatus;
+use App\Notifications\Auth\SendNewActivationCode;
 use Carbon\Carbon;
 use http\Env\Response;
 use Illuminate\Database\QueryException;
@@ -125,9 +126,21 @@ class UserAPI extends Controller
                 return response()->json(["input" => $request->code, "output" => $hashed], 200);
 
             } else {
-                return response()->json("no", 400);
+                return response()->json(["errors" => ["Bad input" => "Forkert aktiveringskode"]], 400);
             }
         }
         return response()->json("none", 404);
+    }
+
+    public function sendNewActivationCode(Request $request) {
+        if($this->userFromApiToken($request)) {
+            try {
+                $this->user->notify(new SendNewActivationCode());
+                return response()->json(["message" => "En ny aktiveringskode er sendt til din email"],200);
+            } catch (\Exception $exception) {
+
+            }
+
+        }
     }
 }

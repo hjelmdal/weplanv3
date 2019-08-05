@@ -1765,6 +1765,8 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stepActions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./stepActions */ "./resources/assets/vuejs/profile/components/stepActions.vue");
 /* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Form */ "./resources/assets/vuejs/Form.js");
+/* harmony import */ var _Notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Notification */ "./resources/assets/vuejs/Notification.js");
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1793,24 +1795,40 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (this.form.digits.length == 6) {
+        this.notification = new _Notification__WEBPACK_IMPORTED_MODULE_2__["default"]();
         this.states.next.disabled = 0;
         this.form.code = "";
         this.form.digits.forEach(function (item) {
           _this.form.code = _this.form.code + item;
         });
-        this.form.post("/api/v1/user/activate").then(function (data) {
-          document.querySelector(".activation-wrapper").classList.add("success");
-        }).catch(function (e) {
-          _this.form.digits = []; //refs.digit1.focus();
 
-          document.querySelector(".activation-wrapper").classList.remove("success");
-          document.querySelector(".activation-wrapper").classList.add("failure");
-        });
-        setTimeout(function () {
-          document.querySelector(".activation-wrapper").classList.remove("success");
-          document.querySelector(".activation-wrapper").classList.remove("failure");
-        }, 2000);
+        if (this.form.code.length == 6) {
+          this.form.post("/api/v1/user/activate").then(function (data) {
+            document.querySelector(".activation-wrapper").classList.add("success");
+          }).catch(function (e) {
+            _this.form.digits = []; //refs.digit1.focus();
+
+            document.querySelector(".activation-wrapper").classList.remove("success");
+            document.querySelector(".activation-wrapper").classList.add("failure");
+          });
+          setTimeout(function () {
+            document.querySelector(".activation-wrapper").classList.remove("success");
+            document.querySelector(".activation-wrapper").classList.remove("failure");
+          }, 4000);
+        }
       }
+    },
+    resendActivation: function resendActivation() {
+      var _this2 = this;
+
+      this.form.post("/api/v1/user/activate/resend").then(function (data) {
+        console.log(data);
+        _this2.notification = new _Notification__WEBPACK_IMPORTED_MODULE_2__["default"]();
+
+        _this2.notification.send("info", data.message);
+      }).catch(function (e) {
+        console.log(e);
+      });
     },
     isNumber: function isNumber(event, refs, index) {
       event = event ? event : window.event;
@@ -1818,7 +1836,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46) {
         event.preventDefault();
-        console.log("NOPE!");
+        event.target.value = "";
       } else {
         this.submitForm(refs);
 
@@ -3906,11 +3924,12 @@ var render = function() {
                   id: "no-trstd-device-pop",
                   href: "#",
                   "aria-haspopup": "true"
-                }
+                },
+                on: { click: _vm.resendActivation }
               },
               [
                 _vm._v(
-                  "\n                Har du ikke modtaget en aktiveringskode fra os?\n            "
+                  "\n                Har du ikke modtaget en aktiveringskode fra os? - klik her!\n            "
                 )
               ]
             ),
@@ -17550,6 +17569,57 @@ function () {
 
   return Errors;
 }();
+
+/***/ }),
+
+/***/ "./resources/assets/vuejs/Notification.js":
+/*!************************************************!*\
+  !*** ./resources/assets/vuejs/Notification.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Notification; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Notification =
+/*#__PURE__*/
+function () {
+  function Notification() {
+    _classCallCheck(this, Notification);
+
+    this.message = "";
+    this.title = "";
+    this.type = "";
+  }
+
+  _createClass(Notification, [{
+    key: "send",
+    value: function send(type, message) {
+      var title = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      toastr.options.closeButton = true;
+      toastr.options.positionClass = "toast-top-center";
+      toastr.options.showMethod = "fadeIn";
+      toastr.options.showDuration = 1000;
+      toastr.options.extendedTimeOut = 100000;
+
+      if (type == "info") {
+        toastr.info(message, title);
+      } //toastr.{{ Session::get('message-type','info') }}('{{ Session::get('message') . session('status') }}', '{{ Session::get('message-title',Session::get('title')) }}');
+
+    }
+  }]);
+
+  return Notification;
+}();
+
+
 
 /***/ }),
 

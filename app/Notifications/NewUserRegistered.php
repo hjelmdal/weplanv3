@@ -62,7 +62,7 @@ class NewUserRegistered extends Notification
             ->subject("Aktiveringskode til WePlan: ". $regFormat)
             ->greeting('Hej '. $notifiable->name . "!")
             ->line('Vi er glade for at byde dig velkommen til WePlan.dk')
-            ->line("For at kunne bruge applikationen skal du gøre din profil færdig. Først skal vi sikre os, at du ejer denne mail adresse, som du bedes bekræfte nedenfor.")
+            ->line("For at kunne bruge applikationen skal du gøre din profil færdig. Først skal vi sikre os, at du ejer denne mail adresse, som du bedes bekræfte nedenfor. Du kan enten taste aktiveringskoden vist i emnefeltet samt nedenfor i vores applikation, eller du kan trykke på knappen nedenfor.")
             ->action(__('Bekræft Email Addresse'),
                 URL::temporarySignedRoute(
                     'verification.verify',
