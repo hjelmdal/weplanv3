@@ -3,6 +3,7 @@
 namespace App\Console\Commands\BadmintonDanmark;
 
 use App\Helpers\Helpers;
+use App\Helpers\UUID;
 use App\Models\BadmintonPeople\BpClub;
 use App\Models\SystemJob;
 use GuzzleHttp\Client;
@@ -45,6 +46,8 @@ class ImportClubs extends Command
      */
     public function handle()
     {
+        $arguments = $this->arguments();
+        $job_id = UUID::v4();
         $time = Helpers::elapsedTime();
         $file = "DBF_Downloads/DBF.xml";
         if(!$this->filesystemManager->disk()->exists($file)){
@@ -126,11 +129,14 @@ class ImportClubs extends Command
         $this->info("Number of clubs updated: ". $old);
         $runtime = $time->elapsed();
         $this->info("Runtime: ". $runtime);
-        SystemJob::updateOrCreate(['id' => null],['job_id' => NULL,'handle' => $this->signature, 'updated_count' => $old, 'created_count' => $new, 'errors_count' => $errors, 'runtime' => $runtime,'data_checksum' => $data_checksum]);
+        $array = array('status'=>'completed','command' => $arguments["command"],'updated_count' => $old, 'created_count' => $new, 'errors_count' => $errors, 'runtime' => $runtime,'data_checksum' => $data_checksum);
+        SystemJob::updateOrCreate(['job_id' => $job_id],$array);
         $this->setIds();
     }
 
     private function setIds() {
+        $arguments = $this->arguments();
+        $job_id = UUID::v4();
         $time = Helpers::elapsedTime();
         $signature = $this->signature . " setIds";
         $client = new Client();
@@ -162,8 +168,9 @@ class ImportClubs extends Command
             }
         }
         $runtime = $time->elapsed();
-        SystemJob::updateOrCreate(['id' => null],['job_id' => NULL,'handle' => $signature, 'updated_count' => $old, 'created_count' => $new, 'errors_count' => $errors, 'runtime' => $runtime,'data_checksum' => $data_checksum]);
-
+        $array = array('status'=>'completed','command' => $arguments["command"] ." (setIds)",'updated_count' => $old, 'created_count' => $new, 'errors_count' => $errors, 'runtime' => $runtime,'data_checksum' => $data_checksum);
+        SystemJob::updateOrCreate(['job_id' => $job_id],$array);
+        $this->info(dd($array));
     }
 
 }

@@ -3,6 +3,7 @@
 namespace App\Console\Commands\BadmintonDanmark;
 
 use App\Helpers\Helpers;
+use App\Helpers\UUID;
 use App\Models\SystemJob;
 use Illuminate\Console\Command;
 use App\Models\BadmintonPeople\BpClub;
@@ -47,6 +48,8 @@ class ImportPlayers extends Command
      */
     public function handle()
     {
+        $arguments = $this->arguments();
+        $job_id = UUID::v4();
 
         $time = Helpers::elapsedTime();
         $file = "DBF_Downloads/DBF.xml";
@@ -112,10 +115,14 @@ class ImportPlayers extends Command
                             $errors++;
                         }
 
-
+                        if($i%100 == 0) {
+                            $array = array('status'=> 'incomplete','command' => $arguments["command"],'arguments' => $arguments["club"], 'updated_count' => $old, 'created_count' => $new, 'errors_count' => $errors, 'runtime' => $time->elapsed(),'data_checksum' => $data_checksum);
+                            SystemJob::updateOrCreate(['job_id' => $job_id],$array);
+                        }
                     }
                 } else {
                     $this->error("No club found for id: " . $attr->id);
+                    $errors++;
                 }
             }
         }
@@ -123,8 +130,9 @@ class ImportPlayers extends Command
         $this->info("Number of new players added : ".$new);
         $this->info("Number of players updated: ". $old);
         $runtime = $time->elapsed();
-        $this->info("Runtime: ". $runtime);
-        SystemJob::updateOrCreate(['id' => null],['job_id' => NULL,'handle' => $this->signature, 'updated_count' => $old, 'created_count' => $new, 'errors_count' => $errors, 'runtime' => $runtime,'data_checksum' => $data_checksum]);
+        $array = array('status'=> 'completed','command' => $arguments["command"],'arguments' => $arguments["club"], 'updated_count' => $old, 'created_count' => $new, 'errors_count' => $errors, 'runtime' => $runtime,'data_checksum' => $data_checksum);
+        SystemJob::updateOrCreate(['job_id' => $job_id],$array);
+        $this->info(dd($array));
     }
 
 }

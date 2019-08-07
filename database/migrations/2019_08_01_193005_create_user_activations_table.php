@@ -14,13 +14,17 @@ class CreateUserActivationsTable extends Migration
     public function up()
     {
         Schema::create('user_activations', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
-            $table->integer("user_id")->unique();
+            $table->increments('id')->unsigned();
+            $table->integer("user_id")->unique()->unsigned();
             $table->integer("activation_code");
             $table->string("activation_hashed");
             $table->nullableTimestamps();
             $table->softDeletes();
+        });
+
+        Schema::table('user_activations', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
+
         });
     }
 
