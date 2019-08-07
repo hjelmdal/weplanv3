@@ -15,7 +15,7 @@ class CreateUserActivationsTable extends Migration
     {
         Schema::create('user_activations', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer("user_id")->unique()->unsigned();
+            $table->integer("user_id")->unsigned();
             $table->integer("activation_code");
             $table->string("activation_hashed");
             $table->nullableTimestamps();
