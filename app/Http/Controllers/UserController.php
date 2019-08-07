@@ -13,7 +13,12 @@ class UserController extends Controller
     }
     
     public function profile() {
-        $user = Auth::user();
+        $user = Auth::user()->with("UserStatus");
+        foreach ($user->userStatus as $s) {
+            if ($s->type == "password") {
+
+            }
+        }
         
         return view("user.profile")->with("user", $user);
     }

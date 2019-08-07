@@ -14,7 +14,7 @@ class CreateSystemJobsTable extends Migration
     public function up()
     {
         Schema::create('system_jobs', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->integer('job_id')->nullable();
             $table->string('status')->nullable();
             $table->string('handle')->nullable();

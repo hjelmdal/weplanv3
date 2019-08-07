@@ -77,6 +77,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(UserActivation::class,"user_id","id");
     }
 
+    public function setStatus() {
+        $status = $this->UserStatus()->get();
+        return $status;
+    }
+
 
 
     /**

@@ -27,6 +27,9 @@
 
         },
         methods: {
+            next() {
+                this.$emit("next");
+            },
             submitForm(refs) {
               if(this.form.digits.length == 6) {
                   this.notification = new Notification();
@@ -39,6 +42,9 @@
                       this.form.post("/api/v1/user/activate")
                           .then(data => {
                               document.querySelector(".activation-wrapper").classList.add("success");
+                              setTimeout(function () {
+                                  this.next();
+                              },2000);
                           })
                           .catch(e => {
 
@@ -71,15 +77,19 @@
                 if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
                     event.preventDefault();
                     event.target.value = "";
-                } else {
+                } else if(!isNaN(event.target.value)) {
                     this.submitForm(refs);
                     if(index == 6) {
                         index = 0;
                     }
                     let str = "digit" + (index + 1);
-                    this.$refs[str][0].focus();
+                    setTimeout(function() {
+                        refs[str][0].focus()
+                    },10);
                     //event.target.focus()
                     //this.getRef(index);
+                } else {
+                    event.target.value = "";
                 }
             },
 
@@ -162,7 +172,7 @@
 
 
         </div>
-    <step-actions @next="submitForm" :step="step" :states="states"></step-actions>
+    <step-actions @next="next" :step="step" :states="states"></step-actions>
     </div>
     </div>
 </template>

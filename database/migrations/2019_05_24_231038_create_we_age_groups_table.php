@@ -14,8 +14,9 @@ class CreateWeAgeGroupsTable extends Migration
     public function up()
     {
         Schema::create('we_age_groups', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

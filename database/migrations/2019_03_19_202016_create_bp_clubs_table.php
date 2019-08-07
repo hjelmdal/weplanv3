@@ -14,7 +14,7 @@ class CreateBpClubsTable extends Migration
     public function up()
     {
         Schema::create('bp_clubs', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->integer('club_id')->nullable();
             $table->string('name')->nullable();
             $table->string('team_name')->nullable();

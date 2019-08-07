@@ -14,7 +14,7 @@ class CreateBpPlayersTable extends Migration
     public function up()
     {
         Schema::create('bp_players', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->string('dbf_id');
             $table->integer('bp_id')->nullable();
             $table->integer('club_id')->nullable();

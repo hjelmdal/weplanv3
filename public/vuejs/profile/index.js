@@ -1791,6 +1791,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    next: function next() {
+      this.$emit("next");
+    },
     submitForm: function submitForm(refs) {
       var _this = this;
 
@@ -1805,6 +1808,9 @@ __webpack_require__.r(__webpack_exports__);
         if (this.form.code.length == 6) {
           this.form.post("/api/v1/user/activate").then(function (data) {
             document.querySelector(".activation-wrapper").classList.add("success");
+            setTimeout(function () {
+              this.next();
+            }, 2000);
           }).catch(function (e) {
             _this.form.digits = []; //refs.digit1.focus();
 
@@ -1837,7 +1843,7 @@ __webpack_require__.r(__webpack_exports__);
       if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46) {
         event.preventDefault();
         event.target.value = "";
-      } else {
+      } else if (!isNaN(event.target.value)) {
         this.submitForm(refs);
 
         if (index == 6) {
@@ -1845,8 +1851,12 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         var str = "digit" + (index + 1);
-        this.$refs[str][0].focus(); //event.target.focus()
+        setTimeout(function () {
+          refs[str][0].focus();
+        }, 10); //event.target.focus()
         //this.getRef(index);
+      } else {
+        event.target.value = "";
       }
     }
   },
@@ -2235,6 +2245,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _step4Content__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./step4Content */ "./resources/assets/vuejs/profile/components/step4Content.vue");
 /* harmony import */ var _stepData__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./stepData */ "./resources/assets/vuejs/profile/components/stepData.js");
 /* harmony import */ var _stepInfo__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./stepInfo */ "./resources/assets/vuejs/profile/components/stepInfo.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_8__);
+
 
 
 
@@ -2297,14 +2310,27 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
-  created: function created() {
+  mounted: function mounted() {
     var _this = this;
 
+    console.log(this.steps);
+    var instance = axios__WEBPACK_IMPORTED_MODULE_8___default.a.create({});
+    instance.defaults.headers.common['Authorization'] = document.querySelector('meta[name="api-token"]').getAttribute('content');
+    axios__WEBPACK_IMPORTED_MODULE_8___default.a.get("/api/v1/user/status").then(function (data) {
+      _this.steps = data.data;
+      console.log(_this.steps);
+    }).catch(function (e) {
+      console.log("Der skete en fejl: " + e);
+    });
+  },
+  created: function created() {
+    var _this2 = this;
+
     Event.$on("successNext", function (step) {
-      return _this.setStep(step);
+      return _this2.setStep(step);
     });
     Event.$on("prev", function (step) {
-      return _this.setStep(step);
+      return _this2.setStep(step);
     });
   }
 });
@@ -2456,7 +2482,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n#portlet_block[data-v-4529790a] {\n    z-index: 1010;\n    opacity: 1;\n    filter: alpha(opacity=100); /* For IE8 and earlier */\n    margin:20px;\n    -webkit-animation: fadein-data-v-4529790a 1s; /* Safari, Chrome and Opera > 12.1 */ /* Firefox < 16 */ /* Internet Explorer */ /* Opera < 12.1 */\n    animation: fadein-data-v-4529790a 1s;\n}\n@keyframes fadein-data-v-4529790a {\nfrom { opacity: 0;\n}\nto   { opacity: 1;\n}\n}\n\n/* Firefox < 16 */\n\n/* Safari, Chrome and Opera > 12.1 */\n@-webkit-keyframes fadein-data-v-4529790a {\nfrom { opacity: 0;\n}\nto   { opacity: 1;\n}\n}\n\n/* Internet Explorer */\n\n/* Opera < 12.1 */\n#wizzard_overlay[data-v-4529790a] {\n    position: fixed;\n    top:0px;\n    left: 0px;\n    width:100%;\n    height:100%;\n    background:#000;\n    opacity:0.7;\n    filter: alpha(opacity=70); /* For IE8 and earlier */\n    z-index: 100;\n    -webkit-animation: fadein-data-v-4529790a 1s; /* Safari, Chrome and Opera > 12.1 */ /* Firefox < 16 */ /* Internet Explorer */ /* Opera < 12.1 */\n    animation: fadein-data-v-4529790a 1s;\n}\n#wizzard_container[data-v-4529790a] {\n    position: fixed;\n    margin:40px;\n    top:0px;\n    left: 0px;\n    width: calc(100vw - 80px);\n    height: calc(100vh - 80px);\n    overflow-y: scroll;\n    z-index: 1000;\n    background: #fff;\n}\n@media (max-width: 575px) {\n#wizzard_container[data-v-4529790a] {\n        margin:10px;\n        width: calc(100vw - 20px);\n        height: calc(100vh - 20px);\n        scroll-behavior: smooth;\n}\n#portlet_block[data-v-4529790a] {\n        margin:10px;\n}\n.kt-wizard-v1 .kt-wizard-v1__nav[data-v-4529790a] {\n        padding: 2rem 0rem 0.5rem;\n}\n}\n\n\n\n", ""]);
+exports.push([module.i, "\n#portlet_block[data-v-4529790a] {\n    z-index: 1010;\n    opacity: 1;\n    filter: alpha(opacity=100); /* For IE8 and earlier */\n    margin:20px;\n    -webkit-animation: fadein-data-v-4529790a 1s; /* Safari, Chrome and Opera > 12.1 */ /* Firefox < 16 */ /* Internet Explorer */ /* Opera < 12.1 */\n    animation: fadein-data-v-4529790a 1s;\n}\n@keyframes fadein-data-v-4529790a {\nfrom { opacity: 0;\n}\nto   { opacity: 1;\n}\n}\n\n/* Firefox < 16 */\n\n/* Safari, Chrome and Opera > 12.1 */\n@-webkit-keyframes fadein-data-v-4529790a {\nfrom { opacity: 0;\n}\nto   { opacity: 1;\n}\n}\n\n/* Internet Explorer */\n\n/* Opera < 12.1 */\n#wizzard_overlay[data-v-4529790a] {\n    position: fixed;\n    top:0px;\n    left: 0px;\n    width:100%;\n    height:100%;\n    background:#000;\n    opacity:0.7;\n    filter: alpha(opacity=70); /* For IE8 and earlier */\n    z-index: 100;\n    -webkit-animation: fadein-data-v-4529790a 1s; /* Safari, Chrome and Opera > 12.1 */ /* Firefox < 16 */ /* Internet Explorer */ /* Opera < 12.1 */\n    animation: fadein-data-v-4529790a 1s;\n}\n#wizzard_container[data-v-4529790a] {\n    position: fixed;\n    margin:40px;\n    top:0px;\n    left: 0px;\n    width: calc(100vw - 80px);\n    height: calc(100vh - 80px);\n    overflow-y: scroll;\n    z-index: 1000;\n    background: #fff;\n    border-radius: 15px;\n}\n@media (max-width: 575px) {\n#wizzard_container[data-v-4529790a] {\n        margin:10px;\n        width: calc(100vw - 20px);\n        height: calc(100vh - 20px);\n        scroll-behavior: smooth;\n}\n#portlet_block[data-v-4529790a] {\n        margin:10px;\n}\n.kt-wizard-v1 .kt-wizard-v1__nav[data-v-4529790a] {\n        padding: 2rem 0rem 0.5rem;\n}\n}\n\n\n\n", ""]);
 
 // exports
 
@@ -3943,7 +3969,7 @@ var render = function() {
         _vm._v(" "),
         _c("step-actions", {
           attrs: { step: _vm.step, states: _vm.states },
-          on: { next: _vm.submitForm }
+          on: { next: _vm.next }
         })
       ],
       1
@@ -5085,13 +5111,6 @@ var render = function() {
                                             href: "javascript:;",
                                             "data-ktwizard-type": "step",
                                             "data-ktwizard-state": step.state
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              step.state != "current"
-                                                ? _vm.setStep(step.step)
-                                                : false
-                                            }
                                           }
                                         },
                                         [

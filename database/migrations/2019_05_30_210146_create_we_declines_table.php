@@ -14,7 +14,7 @@ class CreateWeDeclinesTable extends Migration
     public function up()
     {
         Schema::create('we_declines', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->integer("player_id");//->unsigned();
             $table->integer("training_id")->nullable();
             $table->date("start_date");

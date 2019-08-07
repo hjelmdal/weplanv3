@@ -19,6 +19,7 @@ class CreateUserActivationsTable extends Migration
             $table->integer("activation_code");
             $table->string("activation_hashed");
             $table->nullableTimestamps();
+            $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

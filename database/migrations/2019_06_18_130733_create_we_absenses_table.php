@@ -14,7 +14,7 @@ class CreateWeAbsensesTable extends Migration
     public function up()
     {
         Schema::create('we_absenses', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->integer("player_id")->unsigned();
             $table->date("start_date");
             $table->date("end_date");

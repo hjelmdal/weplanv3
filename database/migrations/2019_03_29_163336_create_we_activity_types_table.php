@@ -14,7 +14,7 @@ class CreateWeActivityTypesTable extends Migration
     public function up()
     {
         Schema::create('we_activity_types', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->index('id');
             $table->string('name', 99);
             $table->boolean('signup')->nullable();

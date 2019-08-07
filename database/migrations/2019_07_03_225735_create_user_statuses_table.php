@@ -21,6 +21,7 @@ class CreateUserStatusesTable extends Migration
             $table->timestamp("approved_at")->nullable();
             $table->timestamp("rejected_at")->nullable();
             $table->nullableTimestamps();
+            $table->softDeletes();
             $table->foreign("user_id")->references("id")->on("users")->onUpdate("cascade");
         });
     }

@@ -47,6 +47,7 @@ class ImportPlayers extends Command
      */
     public function handle()
     {
+
         $time = Helpers::elapsedTime();
         $file = "DBF_Downloads/DBF.xml";
         if(!$this->filesystemManager->disk()->exists($file)){

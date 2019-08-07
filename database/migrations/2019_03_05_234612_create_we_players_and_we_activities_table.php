@@ -14,7 +14,7 @@ class CreateWePlayersAndWeActivitiesTable extends Migration
     public function up()
     {
         Schema::create('we_players', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->index('id');
             $table->text('name');
             $table->tinyInteger('team_id')->nullable();

@@ -7,6 +7,7 @@
     import step4Content from "./step4Content";
     import {stepData} from "./stepData";
     import stepInfo from "./stepInfo";
+    import axios from "axios";
     export default {
         name: "Wizard",
         components: {
@@ -60,6 +61,20 @@
 
                 }
             }
+        },
+        mounted() {
+            console.log(this.steps);
+            const instance = axios.create({
+            });
+            instance.defaults.headers.common['Authorization'] = document.querySelector('meta[name="api-token"]').getAttribute('content');
+            axios.get("/api/v1/user/status")
+              .then(data =>  {
+                  this.steps = data.data;
+                  console.log(this.steps);
+              })
+              .catch(e => {
+                  console.log("Der skete en fejl: " + e);
+              })
         },
         created() {
             Event.$on("successNext", (step) => this.setStep(step));
@@ -137,6 +152,7 @@
     overflow-y: scroll;
     z-index: 1000;
     background: #fff;
+    border-radius: 15px;
 }
 @media (max-width: 575px) {
     #wizzard_container {
@@ -173,7 +189,7 @@
                             <div class="kt-wizard-v1__nav">
                                 <div class="kt-wizard-v1__nav-items">
                                     <template v-for="step in steps" v-if="step.step > 0">
-                                    <a class="kt-wizard-v1__nav-item" href="javascript:;" data-ktwizard-type="step" :data-ktwizard-state="step.state" v-on:click="step.state != 'current' ? setStep(step.step): false">
+                                    <a class="kt-wizard-v1__nav-item" href="javascript:;" data-ktwizard-type="step" :data-ktwizard-state="step.state">
                                         <span v-if="step.state == 'done'" v-html="step.icon"></span>
                                         <span v-else v-text="step.step"></span>
                                     </a>

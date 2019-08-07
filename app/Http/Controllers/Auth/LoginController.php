@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Facebook;
 use App\Models\Google;
+use App\Models\UserStatus;
 use App\Notifications\NewUserRegistered;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -145,6 +147,9 @@ class LoginController extends Controller
                 'google_id' => $user->getId()
             ]);
             $userObj->google()->save($google);
+            if($userObj->avatar) {
+                $this->setUserStatus($userObj, "avatar", "Avatar set from Social account");
+            }
             $userObj->notify(new NewUserRegistered());
             Auth::login($userObj,true);
             //$this->guard()->login($userObj,true);
@@ -219,6 +224,9 @@ class LoginController extends Controller
                 'facebook_id' => $user->getId()
             ]);
             $userObj->facebook()->save($facebook);
+            if($userObj->avatar) {
+                $this->setUserStatus($userObj, "avatar", "Avatar set from Social account");
+            }
             $userObj->notify(new NewUserRegistered());
             Auth::login($userObj,true);
             //$this->guard()->login($userObj);
@@ -227,5 +235,15 @@ class LoginController extends Controller
             return $this->redirectToPage();
         }
         redirect()->route('login');
+    }
+
+    private function setUserStatus($user,$type,$content) {
+        $content = json_encode(["text" => $content]);
+        try {
+            UserStatus::updateOrCreate(["user_id" => $user->id], ["user_id" => $user->id, "type" => $type, "content" => $content]);
+        } catch (QueryException $exception) {
+            return $exception;
+        }
+        return true;
     }
 }

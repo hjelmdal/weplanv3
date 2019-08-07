@@ -14,7 +14,7 @@ class CreateWeSeasonsTable extends Migration
     public function up()
     {
         Schema::create('we_seasons', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->string('name');
             $table->date('start_date');
             $table->date('end_date');

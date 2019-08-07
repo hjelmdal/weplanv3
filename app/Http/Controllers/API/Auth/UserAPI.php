@@ -20,11 +20,17 @@ use Illuminate\Http\File;
 class UserAPI extends Controller
 {
     private $user;
+    private $userStatus;
 
+    /**
+     * @param Request $request
+     * @return User
+     */
     private function userFromApiToken(Request $request)
     {
         if ($request->header('Authorization')) {
-            $this->user = User::where('api_token', $request->header("Authorization"))->first();
+            $this->user = User::where('api_token', $request->header("Authorization"))->with("userStatus")->first();
+            //$this->userStatus = $this->user->load("UserStatus");
             if (!$this->user) {
                 return response()->json(["message" => 'Unauthorized'], 401);
             }
@@ -39,7 +45,7 @@ class UserAPI extends Controller
         if(!$user->avatar) {
             $user->avatar = "/img/profile.png";
         }
-        return response()->json(["message" => "OK", "user" => $user]);
+        return response()->json(["message" => "OK", "user" => $user,"status" => $user->setStatus()]);
     }
 
     public function patch(Request $request)
@@ -122,6 +128,8 @@ class UserAPI extends Controller
             $this->userFromApiToken($request);
             $hashed = $this->user->UserActivation->activation_hashed;
             if (password_verify($request->code, $hashed)) {
+                $this->user->email_verified_at = now();
+                $this->user->save();
 
                 return response()->json(["input" => $request->code, "output" => $hashed], 200);
 
@@ -142,5 +150,90 @@ class UserAPI extends Controller
             }
 
         }
+    }
+
+    public function getUserStatus(Request $request) {
+        $this->userFromApiToken($request);
+        $status = [];
+        $i = 0;
+        $state_index = 0;
+        if(!$this->user->email_verified_at) {
+            $status[$i]["step"] = $i;
+            $status[$i]["state"] = "pending";
+            $status[$i]["icon"] = "";
+            $status[$i]["stepInfo"] = array();
+            $status[$i]["stepInfo"]["title"] = "Opsætning af brugerkonto!";
+            $status[$i]["stepInfo"]["text"] = "Færdiggør venligst din profil og udfyld dit BadmintonDanmark ID, så du kan blive tilknyttet træninger mv.";
+            $status[$i]["stepInfo"]["svg"] = "/base/media/wizard/undraw_checklist_7q37.svg";
+            $status[$i]["contentComponent"] = "step0Welcome";
+        } else {
+            $state_index = 1;
+        }
+        $pw = false;
+        $consent = false;
+        $avatar = false;
+        $i = 1; // hvis velkomst skærm ikke skal vises
+        foreach ($this->user->userStatus as $s) {
+            if($s->type == "password") {
+                $pw = true;
+            }
+            if($s->type == "consent") {
+                $consent = true;
+            }
+            if($s->type == "avatar") {
+                $avatar = true;
+            }
+        }
+        if(!$pw) {
+            $status[$i]["step"] = $i;
+            $status[$i]["state"] = "pending";
+            $status[$i]["icon"] = "";
+            $status[$i]["stepInfo"] = array();
+            $status[$i]["stepInfo"]["title"] = "Adgangskode til brug for login";
+            $status[$i]["stepInfo"]["text"] = "Da du har registreret din konto med Facebook eller Google, er det nødvendigt at sætte et password til WePlan, så du kan logge ind manuelt, hvis du skulle lukke din konto hos din social media udbyder.";
+            $status[$i]["stepInfo"]["svg"] = "/base/media/wizard/undraw_checklist_7q37.svg";
+            $status[$i]["contentComponent"] = "step1Password";
+            $i++;
+        }
+
+        if(!$consent) {
+            $status[$i]["step"] = $i;
+            $status[$i]["state"] = "pending";
+            $status[$i]["icon"] = "";
+            $status[$i]["stepInfo"] = array();
+            $status[$i]["stepInfo"]["title"] = "Vi bekymrer os om dine data!";
+            $status[$i]["stepInfo"]["text"] = "I henhold til den nye GDPR forordning, skal vi bruge din tilladelse til at vi må behandle dine persondata";
+            $status[$i]["stepInfo"]["svg"] = "/base/media/wizard/undraw_resume_folder_2_arse.svg";
+            $status[$i]["contentComponent"] = "step2GDPR";
+            $i++;
+        }
+
+        if(!$avatar) {
+            $status[$i]["step"] = $i;
+            $status[$i]["state"] = "pending";
+            $status[$i]["icon"] = "";
+            $status[$i]["stepInfo"] = array();
+            $status[$i]["stepInfo"]["title"] = "Indstilling af profilbillede";
+            $status[$i]["stepInfo"]["text"] = "Vi har behov for at du angiver et tydeligt billede af dit ansigt som profilbillede, for at din træner hurtigt og nemt kan sætte dig på træninger mv.";
+            $status[$i]["stepInfo"]["svg"] = "/base/media/wizard/undraw_live_collaboration_2r4y.svg";
+            $status[$i]["contentComponent"] = "step3Avatar";
+            $i++;
+        }
+
+        if(!$this->user->player_id) {
+            $status[$i]["step"] = $i;
+            $status[$i]["state"] = "pending";
+            $status[$i]["icon"] = "";
+            $status[$i]["stepInfo"] = array();
+            $status[$i]["stepInfo"]["title"] = "Tilknytning til spiller";
+            $status[$i]["stepInfo"]["text"] = "For at kunne identificere dig som spiller, skal du angive dit spillerid fra Badminton Danmark nedenfor";
+            $status[$i]["stepInfo"]["svg"] = "/base/media/wizard/undraw_hiring_cyhs.svg";
+            $status[$i]["contentComponent"] = "step4Player";
+            $i++;
+        }
+
+        $status[$state_index]["state"] = "current";
+        return response()->json($status,200);
+
     }
 }

@@ -14,7 +14,7 @@ class CreateWeTeamsTable extends Migration
     public function up()
     {
         Schema::create('we_teams', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->index('id');
             $table->string('name', 100);
             $table->integer('max_players')->nullable();
