@@ -80,6 +80,12 @@ class UserAPI extends Controller
             $this->updateUserStatus("consent",$cont);
             return response()->json("Tak for dit samtykke!", 200);
         }
+
+        if($request->playerId && $request->playerConfirm) {
+            $cont = json_encode(array("text" => $this->user->name." har indsendt sit Badminton ID","data" => $request->playerId));
+            $this->updateUserStatus("player",$cont);
+            return response()->json("jaah!",200);
+        }
         
 
 
@@ -100,7 +106,7 @@ class UserAPI extends Controller
             $old_avatar = $user->avatar;
             $user->avatar = "/storage/" .$file;
             $user->save();
-            $this->updateUserStatus("avatar",'{"text":"'.$user->name.' har uploadet en ny avatar til godkendelse","old":"'.$old_avatar.'","new":"'.$user->avatar.'"}');
+            $this->updateUserStatus("avatar",'{"text":"'.$user->name.' har uploadet en ny avatar til godkendelse","avatar_old":"'.$old_avatar.'","avatar":"'.$user->avatar.'"}');
             return response()->json(["status" => "success", "url" =>  "/storage/".$file, "request" => $file]);
     
         }
@@ -152,11 +158,52 @@ class UserAPI extends Controller
         }
     }
 
+    public function complete(Request $request) {
+        $arr["pw"] = false;
+        $arr["consent"] = false;
+        $arr["avatar"] = false;
+        $arr["player"] = false;
+        $this->userFromApiToken($request);
+        foreach ($this->user->userStatus as $s) {
+            if($s->type == "password") {
+                $arr["pw"] = true;
+            }
+            if($s->type == "consent") {
+                $arr["consent"] = true;
+            }
+            if($s->type == "avatar") {
+                $arr["avatar"] = true;
+            }
+            if($s->type == "player" || $s->type == "coach") {
+                $arr["player"] = true;
+            }
+        }
+
+        if($this->user->email_verified_at && $arr["pw"] && $arr["consent"] && $arr["avatar"] && $arr["player"]) {
+            return response()->json(["message" => "Tillykke! Din bruger er aktiveret"],200);
+        } else {
+            return response()->json(["message" => "Brugeren mangler godkendelser","errors" => $arr],400);
+        }
+
+    }
     public function getUserStatus(Request $request) {
         $this->userFromApiToken($request);
         $status = [];
         $i = 0;
         $state_index = 0;
+
+            $status[$i]["step"] = $i;
+            $status[$i]["hideNav"] = true;
+            $status[$i]["state"] = "current";
+            $status[$i]["icon"] = "";
+            $status[$i]["stepInfo"] = array();
+            $status[$i]["stepInfo"]["title"] = "Opsætning af brugerkonto!";
+            $status[$i]["stepInfo"]["text"] = "Færdiggør venligst din profil og udfyld dit BadmintonDanmark ID, så du kan blive tilknyttet træninger mv.";
+            $status[$i]["stepInfo"]["svg"] = "/base/media/wizard/undraw_checklist_7q37.svg";
+            $status[$i]["contentComponent"] = "step0Welcome";
+            $i++;
+
+
         if(!$this->user->email_verified_at) {
             $status[$i]["step"] = $i;
             $status[$i]["state"] = "pending";
@@ -164,15 +211,16 @@ class UserAPI extends Controller
             $status[$i]["stepInfo"] = array();
             $status[$i]["stepInfo"]["title"] = "Opsætning af brugerkonto!";
             $status[$i]["stepInfo"]["text"] = "Færdiggør venligst din profil og udfyld dit BadmintonDanmark ID, så du kan blive tilknyttet træninger mv.";
-            $status[$i]["stepInfo"]["svg"] = "/base/media/wizard/undraw_checklist_7q37.svg";
-            $status[$i]["contentComponent"] = "step0Welcome";
+            $status[$i]["stepInfo"]["svg"] = "/img/yes.svg";
+            $status[$i]["contentComponent"] = "step1Activate";
+            $i++;
         } else {
             $state_index = 1;
         }
         $pw = false;
         $consent = false;
         $avatar = false;
-        $i = 1; // hvis velkomst skærm ikke skal vises
+        //$i = 1; // hvis velkomst skærm ikke skal vises
         foreach ($this->user->userStatus as $s) {
             if($s->type == "password") {
                 $pw = true;
@@ -232,7 +280,17 @@ class UserAPI extends Controller
             $i++;
         }
 
-        $status[$state_index]["state"] = "current";
+        $status[$i]["step"] = $i;
+        $status[$i]["hideNav"] = true;
+        $status[$i]["state"] = "pending";
+        $status[$i]["icon"] = "";
+        $status[$i]["stepInfo"] = array();
+        $status[$i]["stepInfo"]["title"] = "Tak for din tid!";
+        $status[$i]["stepInfo"]["text"] = "Du har nu givet os de nødvendige oplysninger vi skal bruge til din profil. Du vil modtage en mail fra os, når en administrator eller en træner har godkendt dig.";
+        $status[$i]["stepInfo"]["svg"] = "/img/confetti.svg";
+        $status[$i]["contentComponent"] = "stepsCompleted";
+
+
         return response()->json($status,200);
 
     }

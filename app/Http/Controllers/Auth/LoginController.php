@@ -148,7 +148,8 @@ class LoginController extends Controller
             ]);
             $userObj->google()->save($google);
             if($userObj->avatar) {
-                $this->setUserStatus($userObj, "avatar", "Avatar set from Social account");
+                $content = json_encode(array("text" => "Avatar set from Google account","avatar" => $userObj->avatar));
+                $this->setUserStatus($userObj, "avatar", $content,true);
             }
             $userObj->notify(new NewUserRegistered());
             Auth::login($userObj,true);
@@ -225,7 +226,8 @@ class LoginController extends Controller
             ]);
             $userObj->facebook()->save($facebook);
             if($userObj->avatar) {
-                $this->setUserStatus($userObj, "avatar", "Avatar set from Social account");
+                $content = json_encode(array("text" => "Avatar set from Facebook account","avatar" => $userObj->avatar));
+                $this->setUserStatus($userObj, "avatar", $content,true);
             }
             $userObj->notify(new NewUserRegistered());
             Auth::login($userObj,true);
@@ -237,8 +239,10 @@ class LoginController extends Controller
         redirect()->route('login');
     }
 
-    private function setUserStatus($user,$type,$content) {
-        $content = json_encode(["text" => $content]);
+    private function setUserStatus($user,$type,$content,$json = false) {
+        if(!$json) {
+            $content = json_encode(["text" => $content]);
+        }
         try {
             UserStatus::updateOrCreate(["user_id" => $user->id], ["user_id" => $user->id, "type" => $type, "content" => $content]);
         } catch (QueryException $exception) {

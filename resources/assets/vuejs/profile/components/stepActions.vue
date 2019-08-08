@@ -27,7 +27,7 @@
         <div v-if="states.prev && states.prev.display" @click.prevent="prev(step.step - 1)" class="btn btn-outline-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-prev" :style="{ display: states.prev.display }">
             Forrige
         </div>
-        <button @click.prevent="submit" v-if="states.submit && states.submit.display" class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-submit" :style="{ display: states.submit.display }">
+        <button @click.prevent="submit" v-if="states.submit && states.submit.display" class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-submit" :style="{ display: states.submit.display }" :disabled="states.submit.disabled == 1">
             Færdig
         </button>
         <button v-if="states.next && states.next.display" @click.prevent="next(step.step + 1)" class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-next" style="display: hidden" :style="{ display: states.next.display }" :disabled="states.next.disabled == 1">

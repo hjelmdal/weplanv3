@@ -38,6 +38,7 @@ Route::name('api.')->group(function () {
             Route::post('user/activate',"UserAPI@activateEmail");
             Route::post('user/activate/resend',"UserAPI@sendNewActivationCode");
             Route::get("user/status","UserAPI@getUserStatus");
+            Route::post('user/complete',"UserAPI@complete");
 
         });
 

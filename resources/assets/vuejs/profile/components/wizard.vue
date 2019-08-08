@@ -1,10 +1,12 @@
 <script>
     import step0Welcome from "./step0Welcome";
+    import step1Activate from "./step1Activate";
     import step1Password from "./step1Password";
     import step2GDPR from "./step2GDPR";
     import step3Avatar from "./step3Avatar";
     import step4Player from "./step4Player";
     import step4Content from "./step4Content";
+    import stepsCompleted from "./stepsCompleted";
     import {stepData} from "./stepData";
     import stepInfo from "./stepInfo";
     import axios from "axios";
@@ -13,11 +15,13 @@
         components: {
             step0Welcome,
             stepInfo,
+            step1Activate,
             step1Password,
             step2GDPR,
             step3Avatar,
             step4Player,
-            step4Content
+            step4Content,
+            stepsCompleted
         },
         data: function () {
             return {
@@ -42,7 +46,7 @@
         },
         methods: {
             setStep(index = false) {
-                //console.log(index);
+                console.log("Index: " + index);
                 if (typeof this.steps[index - 1] != 'undefined') {
                     this.steps.forEach(step => {
                         step.state = "pending";
@@ -53,7 +57,7 @@
                         } else if (step.step == index) {
                             step.state = "current";
                         }
-                        //console.log("step:" + step.state);
+                        console.log("step:" + step.state);
                     });
                     //Scroll to top on page change
                     var myDiv = document.getElementById('wizzard_container');
@@ -188,8 +192,8 @@
                             <!--begin: Form Wizard Nav -->
                             <div class="kt-wizard-v1__nav">
                                 <div class="kt-wizard-v1__nav-items">
-                                    <template v-for="step in steps" v-if="step.step > 0">
-                                    <a class="kt-wizard-v1__nav-item" href="javascript:;" data-ktwizard-type="step" :data-ktwizard-state="step.state">
+                                    <template v-for="step in steps" v-if="step.step > 0 && typeof step.hideNav == 'undefined'">
+                                    <a class="kt-wizard-v1__nav-item" href="javascript:;" data-ktwizard-type="step" :data-ktwizard-state="step.state" v-on:click="setStep(step.step)">
                                         <span v-if="step.state == 'done'" v-html="step.icon"></span>
                                         <span v-else v-text="step.step"></span>
                                     </a>

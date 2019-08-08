@@ -35,7 +35,7 @@
     <link href="{{ config("app.keen_assets") }}/app/custom/user/profile-v1.demo5.css" rel="stylesheet" type="text/css" />
 @endsection
 @section("content")
-    @if($user->UserStatus)
+    @if(!$user->isComplete())
         <wizard></wizard>
    @endif
     <!--begin::Portlet-->

@@ -12,19 +12,21 @@
                 radio: false,
                 form: new Form({
                     resetOnSuccess:"false",
-                    playerId:""
+                    playerId:"",
+                    playerConfirm:""
                 }),
                 states: {
-                    submit: {
+                    next: {
                         display:"block",
                         disabled:1
                     }
                 }
             }
+
         },
         methods: {
             next() {
-                this.$emit("next");
+                this.saveID();
             },
             checkPlayer(event) {
                 event.target.classList.remove("is-valid", "is-invalid");
@@ -44,6 +46,22 @@
                 } else {
                     this.player = "";
                 }
+            },
+            approve() {
+                if(this.form.playerConfirm == "true") {
+                    this.states.next.disabled = 0;
+                }
+            },
+            saveID() {
+                this.form.patch("/api/v1/user")
+                    .then(data =>  {
+                        console.log(data);
+                        this.$emit("next");
+                    })
+                    .catch(e => {
+                        // Do something
+                        return false;
+                    })
             }
 
         }
@@ -74,33 +92,34 @@
             <TheMask @keyup.native="checkPlayer($event)" mask="######-##" :masked="true" class="form-control form-control-lg" style="font-size: 2rem;" v-model="form.playerId" />
             <span class="form-text text-muted">Kender du ikke dit spiller id? Find det <a target="_blank" href="https://www.badmintonplayer.dk/DBF/Spiller/VisSpiller/">her</a> </span>
 
-            <div v-show="player" class="kt-widget-15 kt-option">
+            <div v-show="player" class="kt-widget-15 kt-option"  style="position: relative;">
                 <div class="kt-widget-15__body">
                     <div class="kt-widget-15__author">
                         <div class="kt-widget-15__photo">
                             <a href="#"><img src="/img/profile.png" alt="" title=""></a>
                         </div>
-                        <div class="kt-widget-15__detail">
+                        <div class="kt-widget-15__detail float-left">
                             <a href="#" class="kt-widget-15__name" v-text="player.name"></a>
                             <div class="kt-widget-15__desc" v-if="player && player.bp_club" v-text="player.bp_club.name">
+
+
+
                             </div>
+
+                        </div>
+                        <div class="float-right" style="position: absolute; right: 10px; align-self: center;">
+                            <label  class="kt-radio kt-radio--success" name="radio5" style="margin-bottom: 15px;">
+                                <input @change="approve" type="radio" v-model="form.playerConfirm" value="true">
+                                <span></span>
+                            </label>
                         </div>
                     </div>
-                    <!--div class="kt-widget-15__wrapper">
-                        <div class="kt-widget-15__info">
-                            <a href="#" class="btn btn-icon btn-sm btn-circle btn-success"><i class="fa fa-envelope"></i></a>
-                            <a href="#" class="kt-widget-15__info--item">sale@boatline.com</a>
-                        </div>
-                        <div class="kt-widget-15__info">
-                            <a href="#" class="btn btn-icon btn-sm btn-circle btn-brand"><i class="fa fa-phone"></i></a>
-                            <a href="#" class="kt-widget-15__info--item">(+44) 345 345 4705</a>
-                        </div>
-                    </div-->
                 </div>
             </div>
+            <span v-show="player" class="form-text text-muted">Er det ikke dig? <a target="_blank" href="https://www.badmintonplayer.dk/DBF/Spiller/VisSpiller/">Klik her</a> </span>
         </div>
 
-        <div class="form-group form-group-marginless">
+        <!--div class="form-group form-group-marginless">
             <label>Er du spiller eller træner?:</label>
             <div class="row">
                 <div class="col-md-6">
@@ -154,9 +173,9 @@
             <div v-show="radio === '1'">Test</div>
             <div v-show="radio === '2'">Test2</div>
 
-        </div>
+        </div-->
     </div>
-        <step-actions @submit="next" :step="step" :states="states"></step-actions>
+        <step-actions @next="next" :step="step" :states="states"></step-actions>
 
         <!--end: Form Wizard Step 3-->
     </div>

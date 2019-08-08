@@ -82,6 +82,34 @@ class User extends Authenticatable implements MustVerifyEmail
         return $status;
     }
 
+    public function isComplete() {
+        $status = $this->UserStatus()->get();
+        $arr["pw"] = false;
+        $arr["consent"] = false;
+        $arr["avatar"] = false;
+        $arr["player"] = false;
+        foreach ($status as $s) {
+            if($s->type == "password") {
+                $arr["pw"] = true;
+            }
+            if($s->type == "consent") {
+                $arr["consent"] = true;
+            }
+            if($s->type == "avatar") {
+                $arr["avatar"] = true;
+            }
+            if($s->type == "player" || $s->type == "coach") {
+                $arr["player"] = true;
+            }
+        }
+
+        if($this->email_verified_at && $arr["pw"] && $arr["consent"] && $arr["avatar"] && $arr["player"]) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 
     /**
