@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\Helpers;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Models\UserStatus;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -28,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/user';
 
     /**
      * Create a new controller instance.
@@ -51,7 +55,10 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'password' => ['required',
+                'min:6',
+                'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$/',
+                'confirmed']
         ]);
     }
 
@@ -63,10 +70,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+
+
+        try {
+            UserStatus::updateOrCreate(["user_id" => $user->id], ["user_id" => $user->id, "type" => "password"]);
+        } catch (QueryException $e) {
+            //return response()->json(["errors" => ["SQL" => [0 => $e, 1 => "User: " . $user->id]]],500);
+            Log::error("Exception during user registration:" . $e);
+        }
+
+        return $user;
+
     }
 }

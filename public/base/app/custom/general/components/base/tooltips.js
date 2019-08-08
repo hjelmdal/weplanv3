@@ -1,1 +1,1 @@
-"use strict";var KBootstrapTooltipsDemo={init:function(){$('[data-toggle="tooltip"]').tooltip()}};jQuery(document).ready(function(){KBootstrapTooltipsDemo.init()});
+"use strict";var KTBootstrapTooltipsDemo={init:function(){$('[data-toggle="tooltip"]').tooltip()}};jQuery(document).ready(function(){KTBootstrapTooltipsDemo.init()});

@@ -11,6 +11,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        if (App::Environment() === 'local') {
+            $this->call(WeDeclineCategoriesTableSeeder::class);
+            $this->call(RoleTableSeeder::class);
+            $this->call(AdminUsersTableSeeder::class);
+            $this->call(WeActivityTypesTableSeeder::class);
+            $this->call(WeTeamsTableSeeder::class);
+        }
+
+        if (App::Environment() === 'dev') {
+            $this->call(WeDeclineCategoriesTableSeeder::class);
+            $this->call(RoleTableSeeder::class);
+            $this->call(AdminUsersTableSeeder::class);
+            $this->call(WeActivityTypesTableSeeder::class);
+            $this->call(WeTeamsTableSeeder::class);
+        }
+
+        if (App::Environment() === 'production') {
+            $this->call(WeDeclineCategoriesTableSeeder::class);
+            $this->call(RoleTableSeeder::class);
+            $this->call(AdminUsersTableSeeder::class);
+        }
     }
 }

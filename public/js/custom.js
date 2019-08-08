@@ -94,7 +94,15 @@
 /***/ (function(module, exports) {
 
 document.addEventListener("DOMContentLoaded", function () {
-  $('#k_login_submit').click(function (e) {
+  $('#link_facebook').click(function () {
+    var btn = $(this);
+    btn.addClass('kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light');
+  });
+  $('#link_google').click(function () {
+    var btn = $(this);
+    btn.addClass('kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light');
+  });
+  $('#kt_login_submit').click(function (e) {
     e.preventDefault();
     var btn = $(this);
     var form = $(this).closest('form');
@@ -114,10 +122,10 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    btn.addClass('k-spinner k-spinner--right k-spinner--md k-spinner--light').attr('disabled', true);
+    btn.addClass('kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light').attr('disabled', true);
     form.submit();
   });
-  $('#k_signup_submit').click(function (e) {
+  $('#kt_signup_submit').click(function (e) {
     e.preventDefault();
     var btn = $(this);
     var form = $(this).closest('form');
@@ -146,10 +154,10 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    btn.addClass('k-spinner k-spinner--right k-spinner--md k-spinner--light').attr('disabled', true);
+    btn.addClass('kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light').attr('disabled', true);
     form.submit();
   });
-  $('#k_forgot_submit').click(function (e) {
+  $('#kt_forgot_submit').click(function (e) {
     e.preventDefault();
     var btn = $(this);
     var form = $(this).closest('form');
@@ -166,51 +174,54 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    btn.addClass('k-spinner k-spinner--right k-spinner--md k-spinner--light').attr('disabled', true);
+    btn.addClass('kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light').attr('disabled', true);
     form.submit();
   });
-  $('#k_signup').click(function (e) {
+  $('#kt_signup').click(function (e) {
     e.preventDefault();
-    $('#k_forgot_form').css("display", "none");
-    $('#k_login_form').css("display", "none");
-    $('#k_signup_form').css("display", "block");
-    $('#k_signup_form').addClass('flipInX animated');
+    $('#kt_forgot_form').css("display", "none");
+    $('#kt_login_form').css("display", "none");
+    $('#kt_signup_form').css("display", "block");
+    $('#kt_signup_form').addClass('flipInX animated');
   });
-  $('#k_forgot').click(function (e) {
+  $('#kt_forgot').click(function (e) {
     e.preventDefault();
-    $('#k_login_form').css("display", "none");
-    $('#k_signup_form').css("display", "none");
-    $('#k_forgot_form').css("display", "block");
-    $('#k_forgot_form').addClass('flipInX animated');
+    $('#kt_login_form').css("display", "none");
+    $('#kt_signup_form').css("display", "none");
+    $('#kt_forgot_form').css("display", "block");
+    $('#kt_forgot_form').addClass('flipInX animated');
   });
-  $('.k_login_cancel').click(function (e) {
+  $('.kt_login_cancel').click(function (e) {
     e.preventDefault();
-    $('#k_forgot_form').css("display", "none");
-    $('#k_signup_form').css("display", "none");
-    $('#k_login_form').css("display", "block");
-    $('#k_login_form').addClass('flipInX animated');
+    $('#kt_forgot_form').css("display", "none");
+    $('#kt_signup_form').css("display", "none");
+    $('#kt_login_form').css("display", "block");
+    $('#kt_login_form').addClass('flipInX animated');
   }); // V2
 
-  $('#k_signup2').click(function (e) {
+  $('#kt_signup2').click(function (e) {
     e.preventDefault();
-    $('#k_forgot_form2').css("display", "none");
-    $('#k_login_form2').css("display", "none");
-    $('#k_signup_form2').css("display", "flex");
-    $('#k_signup_form2').addClass('flipInX animated');
+    $('#kt_forgot_form2').css("display", "none");
+    $('#kt_login_form2').css("display", "none");
+    $('#kt_signup_form2').css("display", "flex");
+    $('#kt_signup_form2').addClass('flipInX animated');
   });
-  $('#k_forgot2').click(function (e) {
+  $('#kt_forgot2').click(function (e) {
     e.preventDefault();
-    $('#k_login_form2').css("display", "none");
-    $('#k_signup_form2').css("display", "none");
-    $('#k_forgot_form2').css("display", "flex");
-    $('#k_forgot_form2').addClass('flipInX animated');
+    $('#kt_login_form2').css("display", "none");
+    $('#kt_signup_form2').css("display", "none");
+    $('#kt_forgot_form2').css("display", "flex");
+    $('#kt_forgot_form2').addClass('flipInX animated');
   });
-  $('.k_login_cancel2').click(function (e) {
+  $('.kt_login_cancel2').click(function (e) {
     e.preventDefault();
-    $('#k_forgot_form2').css("display", "none");
-    $('#k_signup_form2').css("display", "none");
-    $('#k_login_form2').css("display", "flex");
-    $('#k_login_form2').addClass('flipInX animated');
+    $('#kt_forgot_form2').css("display", "none");
+    $('#kt_signup_form2').css("display", "none");
+    $('#kt_login_form2').css("display", "flex");
+    $('#kt_login_form2').addClass('flipInX animated');
+  });
+  $("#toggle_aside_mobile").on("click", function () {
+    $("#kt_aside_toggler").trigger("click");
   });
 });
 document.addEventListener("DOMContentLoaded", function (event) {
@@ -225,18 +236,23 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     $(target).load(url, function (result) {
       tab.tab('show');
-      KApp.unblock('#portlet .m-portlet__body');
+      KTApp.unblock('#portlet .m-portlet__body');
     });
-    KApp.block('#portlet .m-portlet__body', {
+    KTApp.block('#portlet .m-portlet__body', {
       overlayColor: '#000000',
       type: 'loader',
       state: 'primary',
       message: 'Processing...',
       opacity: '0.3'
     });
+  }); // OffCanvas
+
+  $('.kt-offcanvas-panel__close').click(function () {
+    $(this).parent().parent().removeClass("kt-offcanvas-panel--on");
   }); // Modals
 
   $('body').on('click', '[data-toggle="modal"]', function (e) {
+    e.preventDefault();
     var ref = $(this).data("target");
     console.log("target: " + ref);
     var hrefLink = $(this).attr("href");
@@ -247,7 +263,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     if (hrefLink && hrefLink.charAt(0) != "#") {
       setTimeout(function () {
-        KApp.block(ref + ' .modal-content', {
+        KTApp.block(ref + ' .modal-content', {
           overlayColor: '#fff',
           type: 'loader',
           state: 'primary',
@@ -255,15 +271,31 @@ document.addEventListener("DOMContentLoaded", function (event) {
           opacity: '0.9'
         });
       }, 200);
-      $(ref + ' .modal-content').load(hrefLink, function () {
-        console.log("Content loaded...");
-        KApp.unblock(ref);
+      $(ref + ' .modal-content').load(hrefLink, function (response, status, xhr) {
+        //console.log(xhr);
+        //console.log("response " + response);
+        //console.log("status " + status);
+        if (response.startsWith("<!DOCTYPE html") || xhr.status == 401) {
+          $(ref + ' .modal-content').empty();
+          swal({
+            position: 'top',
+            type: 'warning',
+            title: "Session expired - reloading page",
+            showConfirmButton: false,
+            timer: 1000
+          }); //window.location.reload();
+        } else if (status == "success") {
+          console.log("Content loaded...");
+          setTimeout(function () {
+            KTApp.unblock(ref + ' .modal-content');
+          }, 200);
+        }
       });
       console.log("href2: " + hrefLink);
       setTimeout(function () {
-        KApp.unblock(ref);
+        KTApp.unblock(ref + ' .modal-content');
         console.log("Modal ready...");
-      }, 2000);
+      }, 1000);
     }
   });
   $('body').on('click', '[data-toggle="same"]', function (e) {
@@ -369,8 +401,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/hjelmdal/Pixel8/Websites/WePlan/WePlanV3/resources/assets/js/custom.js */"./resources/assets/js/custom.js");
-module.exports = __webpack_require__(/*! /Users/hjelmdal/Pixel8/Websites/WePlan/WePlanV3/resources/assets/sass/custom.scss */"./resources/assets/sass/custom.scss");
+__webpack_require__(/*! /Users/impact/.web/WePlanV3/resources/assets/js/custom.js */"./resources/assets/js/custom.js");
+module.exports = __webpack_require__(/*! /Users/impact/.web/WePlanV3/resources/assets/sass/custom.scss */"./resources/assets/sass/custom.scss");
 
 
 /***/ })

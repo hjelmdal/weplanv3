@@ -1,0 +1,231 @@
+<script>
+    import step0Welcome from "./step0Welcome";
+    import step1Activate from "./step1Activate";
+    import step1Password from "./step1Password";
+    import step2GDPR from "./step2GDPR";
+    import step3Avatar from "./step3Avatar";
+    import step4Player from "./step4Player";
+    import step4Content from "./step4Content";
+    import stepsCompleted from "./stepsCompleted";
+    import {stepData} from "./stepData";
+    import stepInfo from "./stepInfo";
+    import axios from "axios";
+    export default {
+        name: "Wizard",
+        components: {
+            step0Welcome,
+            stepInfo,
+            step1Activate,
+            step1Password,
+            step2GDPR,
+            step3Avatar,
+            step4Player,
+            step4Content,
+            stepsCompleted
+        },
+        data: function () {
+            return {
+                steps: stepData,
+                states:{
+                    submit:{
+                        display: "hidden",
+                        disabled: 1
+                    },
+                    prev:{
+                        display: "hidden",
+                        disabled: 1
+                    },
+                    next:{
+                        display: "block",
+                        disabled: 1
+                    }
+
+                }
+            }
+            
+        },
+        methods: {
+            setStep(index = false) {
+                console.log("Index: " + index);
+                if (typeof this.steps[index - 1] != 'undefined') {
+                    this.steps.forEach(step => {
+                        step.state = "pending";
+                        step.icon = "";
+                        if (step.step < index) {
+                            step.state = "done";
+                            step.icon = '<i class="la la-check kt-font-success"></i>';
+                        } else if (step.step == index) {
+                            step.state = "current";
+                        }
+                        console.log("step:" + step.state);
+                    });
+                    //Scroll to top on page change
+                    var myDiv = document.getElementById('wizzard_container');
+                    myDiv.scrollTop = 0;
+
+                }
+            }
+        },
+        mounted() {
+            console.log(this.steps);
+            const instance = axios.create({
+            });
+            instance.defaults.headers.common['Authorization'] = document.querySelector('meta[name="api-token"]').getAttribute('content');
+            axios.get("/api/v1/user/status")
+              .then(data =>  {
+                  this.steps = data.data;
+                  console.log(this.steps);
+              })
+              .catch(e => {
+                  console.log("Der skete en fejl: " + e);
+              })
+        },
+        created() {
+            Event.$on("successNext", (step) => this.setStep(step));
+            Event.$on("prev", (step) => this.setStep(step));
+        }
+    }
+</script>
+
+<style scoped>
+
+#portlet_block {
+    z-index: 1010;
+    opacity: 1;
+    filter: alpha(opacity=100); /* For IE8 and earlier */
+    margin:20px;
+    -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 1s; /* Firefox < 16 */
+    -ms-animation: fadein 1s; /* Internet Explorer */
+    -o-animation: fadein 1s; /* Opera < 12.1 */
+    animation: fadein 1s;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+
+}
+#wizzard_overlay {
+    position: fixed;
+    top:0px;
+    left: 0px;
+    width:100%;
+    height:100%;
+    background:#000;
+    opacity:0.7;
+    filter: alpha(opacity=70); /* For IE8 and earlier */
+    z-index: 100;
+    -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 1s; /* Firefox < 16 */
+    -ms-animation: fadein 1s; /* Internet Explorer */
+    -o-animation: fadein 1s; /* Opera < 12.1 */
+    animation: fadein 1s;
+}
+#wizzard_container {
+    position: fixed;
+    margin:40px;
+    top:0px;
+    left: 0px;
+    width: calc(100vw - 80px);
+    height: calc(100vh - 80px);
+    overflow-y: scroll;
+    z-index: 1000;
+    background: #fff;
+    border-radius: 15px;
+}
+@media (max-width: 575px) {
+    #wizzard_container {
+        margin:10px;
+        width: calc(100vw - 20px);
+        height: calc(100vh - 20px);
+        scroll-behavior: smooth;
+    }
+    #portlet_block {
+        margin:10px;
+    }
+    .kt-wizard-v1 .kt-wizard-v1__nav {
+        padding: 2rem 0rem 0.5rem;
+    }
+
+}
+
+
+
+</style>
+<template>
+    <div>
+        <div id="wizzard_overlay">
+
+        </div>
+
+        <div class="container-fluid" id="wizzard_container" data-scroll="true">
+            <div class="kt-portlet" id="portlet_block">
+                <div class="kt-portlet__body kt-portlet__body--fit">
+                    <div class="kt-grid kt-grid--desktop-xl kt-grid--ver-desktop-xl kt-wizard-v1 kt-wizard-v1--extend" id="kt_wizard_v4" data-ktwizard-state="first">
+                        <div class="kt-grid__item kt-wizard-v1__aside">
+
+                            <!--begin: Form Wizard Nav -->
+                            <div class="kt-wizard-v1__nav">
+                                <div class="kt-wizard-v1__nav-items">
+                                    <template v-for="step in steps" v-if="step.step > 0 && typeof step.hideNav == 'undefined'">
+                                    <a class="kt-wizard-v1__nav-item" href="javascript:;" data-ktwizard-type="step" :data-ktwizard-state="step.state" v-on:click="setStep(step.step)">
+                                        <span v-if="step.state == 'done'" v-html="step.icon"></span>
+                                        <span v-else v-text="step.step"></span>
+                                    </a>
+                                    </template>
+                                </div>
+                                <div class="kt-wizard-v1__nav-details">
+                                    <template v-for="step in steps">
+                                        <step-info :step="step"></step-info>
+                                    </template>
+                                </div>
+
+                            </div>
+                            <!--end: Form Wizard Nav -->
+
+                        </div>
+                        <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v1__wrapper">
+                            <!--begin: Form Wizard Form-->
+                            <form class="kt-form" id="kt_form" novalidate="novalidate">
+
+                                <template v-for="step in steps">
+                                    <component @next="setStep(step.step + 1)" @prev="setStep(step.step - 1)" :is="step.contentComponent" :step="step" :states="states"></component>
+                                </template>
+
+
+                            </form>
+                            <!--end: Form Wizard Form-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</template>

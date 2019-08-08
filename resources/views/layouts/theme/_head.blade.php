@@ -5,9 +5,18 @@
  * Date: 21/02/2019
  * Time: 18.31
  */
+$user = Auth::user();
 ?>
 <!--link rel="manifest" href="/manifest.json"-->
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 shrink-to-fit=no">
+@if($user)
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="api-token" content="{{ $user->api_token }}">
+<script>
+    const apiToken = '{{ $user->api_token }}';
+</script>
+@endif
+@yield("meta")
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no, user-scalable=no">
 <meta name="description" content="Badminton trainingssystem">
 <meta name="keywords" content="training, badminton, pixel8">
 <meta name="apple-mobile-web-app-title" content="{{ config('app.name') }}">
@@ -71,15 +80,5 @@
 <link href="/css/custom.css?v={{ Helpers::gitVersion()->getVersion() }}" rel="stylesheet" type="text/css" />
 <!--end::Custom styling(by Pixel8) -->
 
-<!-- Hotjar Tracking Code for keenthemes.com >
-<script>    (function(h,o,t,j,a,r){
-h.hj=h.hj||function(){
-(h.hj.q=h.hj.q||[
-]).push(arguments)};        h._hjSettings={
-hjid:1070954,hjsv:6};        a=o.getElementsByTagName('head')[
-0];        r=o.createElement('script');r.async=1;        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;        a.appendChild(r);    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');</script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<!--script async src="https://www.googletagmanager.com/gtag/js?id=UA-37564768-1"></script>
-<script>  window.dataLayer = window.dataLayer || [
-];  function gtag(){
-dataLayer.push(arguments);}  gtag('js', new Date());  gtag('config', 'UA-37564768-1');</script-->
+
+

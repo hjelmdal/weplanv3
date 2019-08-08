@@ -17,4 +17,10 @@ const mix = require('laravel-mix');
 
 mix.sass('resources/assets/sass/custom.scss','public/css')
     .js('resources/assets/js/custom.js','public/js')
-    .js('resources/assets/js/fullscreen.js','public/js');
+    .js('resources/assets/js/fullscreen.js','public/js')
+    .js('resources/assets/vuejs/activities/index.js', 'public/vuejs/activities')
+    .js('resources/assets/vuejs/activities/plan.js', 'public/vuejs/activities')
+    .js('resources/assets/vuejs/teams/index.js', 'public/vuejs/teams')
+    .js('resources/assets/vuejs/profile/index.js', 'public/vuejs/profile')
+    .js('resources/assets/vuejs/test/app.js', 'public/vuejs/test');
+

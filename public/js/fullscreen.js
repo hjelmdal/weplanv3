@@ -94,24 +94,46 @@
 /***/ (function(module, exports) {
 
 (function (document, navigator, standalone) {
-  // prevents links from apps from oppening in mobile safari
-  // this javascript must be the first script in your <head>
   if (standalone in navigator && navigator[standalone]) {
-    var curnode,
-        location = document.location,
+    var insideApp = sessionStorage.getItem('insideApp'),
+        location = window.location,
         stop = /^(a|html)$/i;
-    document.addEventListener('click', function (e) {
-      curnode = e.target;
 
-      while (!stop.test(curnode.nodeName)) {
-        curnode = curnode.parentNode;
-      } // Condidions to do this only on links to your own app
-      // if you want all links, use if('href' in curnode) instead.
+    if (insideApp) {
+      localStorage.setItem('returnToPage', location);
+      localStorage.setItem('sessionTime', new Date().getTime());
+    } else {
+      var returnToPage = localStorage.getItem('returnToPage');
+      var sessionTime = localStorage.getItem('sessionTime');
+      var isValid = false;
 
+      if (sessionTime) {
+        var time = new Date() - sessionTime;
+        var timeout = 60 * 60 * 1000;
+        /* ms */
 
-      if ('href' in curnode && (curnode.href.indexOf('http') || ~curnode.href.indexOf(location.host))) {
-        e.preventDefault();
-        location.href = curnode.href;
+        if (time < timeout) {
+          isValid = true;
+        }
+      }
+
+      if (returnToPage && isValid) {
+        location.href = returnToPage;
+      }
+
+      sessionStorage.setItem('insideApp', true);
+    }
+
+    document.addEventListener('click', function (event) {
+      var clickedLink = event.target;
+
+      while (!stop.test(clickedLink.nodeName)) {
+        clickedLink = clickedLink.parentNode;
+      }
+
+      if ('href' in clickedLink && !clickedLink.getAttribute("data-toggle") && !clickedLink.getAttribute("data-target") && (clickedLink.href.indexOf('http') || ~clickedLink.href.indexOf(location.host))) {
+        event.preventDefault();
+        location.href = clickedLink.href;
       }
     }, false);
   }
@@ -126,7 +148,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/hjelmdal/Pixel8/Websites/WePlan/WePlanV3/resources/assets/js/fullscreen.js */"./resources/assets/js/fullscreen.js");
+module.exports = __webpack_require__(/*! /Users/impact/.web/WePlanV3/resources/assets/js/fullscreen.js */"./resources/assets/js/fullscreen.js");
 
 
 /***/ })

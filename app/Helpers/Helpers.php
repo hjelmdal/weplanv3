@@ -15,4 +15,13 @@ class Helpers
     {
         return app()->make(ReadVersion::class);
     }
+
+    static function elapsedTime()
+    {
+        return app()->make(Elapsed::class);
+    }
+
+    static function codeGen() {
+        return app()->make(CodeGenerator::class);
+    }
 }

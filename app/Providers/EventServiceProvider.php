@@ -18,6 +18,22 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        'Illuminate\Auth\Events\Login' => [
+            'App\Listeners\AddTokenOnLogin',
+        ],
+
+        'Illuminate\Auth\Events\Logout' => [
+            'App\Listeners\DeleteTokenOnLogout',
+        ],
+
+        'Illuminate\Auth\Events\Registered' => [
+            'App\Listeners\Slack\UserRegistered'
+        ],
+
+
+
+
+
     ];
 
     /**
