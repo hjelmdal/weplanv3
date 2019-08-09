@@ -43,7 +43,7 @@ Route::name('api.')->group(function () {
         });
 
 
-        Route::namespace('WePlan')->middleware("api.token")->group(function () {
+        Route::namespace('WePlan')->middleware("auth.complete")->group(function () {
             Route::apiResource('activities','WeActivitiesAPI');
             Route::post('/activities/get/{date?}/{filter?}','WeActivitiesAPI@get')->name("activities.get");
             Route::post('/activities/enroll','WeActivitiesAPI@enroll')->name("activities.enroll");
@@ -53,7 +53,7 @@ Route::name('api.')->group(function () {
             Route::get('/teams/{id}/players',"WeTeamAPI@players")->name("teams.players");
             Route::apiResource('teams','WeTeamAPI');
             Route::get('/players/byteam',"WePlayerAPI@byTeam")->name("players.byteam");
-            Route::apiResource('players','WePlayerAPI');
+            Route::apiResource('players','WePlayerAPI')->middleware(["auth.complete"]);
 
             Route::get('/calendar/{date?}','CalendarAPI@plan')->name("calendar.plan")->where(['date' => '[0-9]{4}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}']);
 
