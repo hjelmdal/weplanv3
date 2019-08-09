@@ -30,6 +30,9 @@ class Kernel extends ConsoleKernel
         //$schedule->command(ImportPlayers::class,["all"])->everyFiveMinutes();
         // $schedule->command('inspire')
         //          ->hourly();
+
+        //log cleaning - Telescope
+        $schedule->command('telescope:prune')->weekly();
     }
 
     /**

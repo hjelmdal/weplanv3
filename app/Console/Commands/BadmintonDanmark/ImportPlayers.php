@@ -132,7 +132,7 @@ class ImportPlayers extends Command
         $runtime = $time->elapsed();
         $array = array('status'=> 'completed','command' => $arguments["command"],'arguments' => $arguments["club"], 'updated_count' => $old, 'created_count' => $new, 'errors_count' => $errors, 'runtime' => $runtime,'data_checksum' => $data_checksum);
         SystemJob::updateOrCreate(['job_id' => $job_id],$array);
-        $this->info(dd($array));
+        $this->info(print_r($array));
     }
 
 }

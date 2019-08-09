@@ -18,18 +18,20 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
     {
         // Telescope::night();
 
-        $this->hideSensitiveRequestDetails();
+        if($this->app->isProduction()) {
+            $this->hideSensitiveRequestDetails();
+        }
 
-        Telescope::filter(function (IncomingEntry $entry) {
-            if ($this->app->isLocal() || env("APP_ENV") == "dev") {
-                return true;
-            }
-
-            return $entry->isReportableException() ||
-                   $entry->isFailedJob() ||
-                   $entry->isScheduledTask() ||
-                   $entry->hasMonitoredTag();
-        });
+//        Telescope::filter(function (IncomingEntry $entry) {
+//            if ($this->app->isLocal() || env("APP_ENV") == "dev") {
+//                return true;
+//            }
+//
+//            return $entry->isReportableException() ||
+//                   $entry->isFailedJob() ||
+//                   $entry->isScheduledTask() ||
+//                   $entry->hasMonitoredTag();
+//        });
     }
 
     /**
