@@ -5229,13 +5229,7 @@ var staticRenderFns = [
     return _c(
       "div",
       { staticClass: "kt-form__section kt-form__section--first" },
-      [
-        _c("p", [
-          _vm._v(
-            "For at kunne benytte WePlan, har vi behov for at behandle visse personlige data om dig. Udover navn, email adresse og et billede af dig, vil der i WePlan også benyttes data omkring administration af afbud til træninger, deltagelse på træninger samt kampstatistikker, alt sammen for at din træner kan tilrettelægge den bedst mulige badmintonoplevelse for dig. Vi beder dig derfor bekræfte at vi må registrere og behandle disse data om dig, så længe du har en tilknytning til klubben. Så snart du stopper med at spille badminton eller skifter klub, vil dine personlige data efterfølgende blive slettet fra vores system, samt data til statistik vil blive anonymiseret. "
-          )
-        ])
-      ]
+      [_c("p", [_vm._v("TBD ")])]
     )
   }
 ]
