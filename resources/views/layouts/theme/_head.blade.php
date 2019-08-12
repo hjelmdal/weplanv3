@@ -68,11 +68,11 @@ $user = Auth::user();
 <link href="{{ config("app.keen_assets") }}/vendors/custom/fullcalendar/fullcalendar.bundle.css?v={{ Helpers::gitVersion()->getVersion() }}" rel="stylesheet" type="text/css" />
 <!--end::Page Vendors Styles -->
 <!--begin::Global Theme Styles(used by all pages) -->
-<link href="{{ config("app.keen_assets") }}/vendors/base/vendors.bundle.css?v={{ Helpers::gitVersion()->getVersion() }}" rel="stylesheet" type="text/css" />
-<link href="{{ config("app.keen_assets") }}/demo/demo5/base/style.bundle.css?v={{ Helpers::gitVersion()->getVersion() }}" rel="stylesheet" type="text/css" />
+<link href="{{ config("app.keen_assets") }}/vendors/global/vendors.bundle.css?v={{ Helpers::gitVersion()->getVersion() }}" rel="stylesheet" type="text/css" />
+<link href="{{ config("app.keen_assets") }}/css/demo5/style.bundle.css?v={{ Helpers::gitVersion()->getVersion() }}" rel="stylesheet" type="text/css" />
 <!--end::Global Theme Styles -->
 <!--begin::Layout Skins(used by all pages) -->
-<link href="{{ config("app.keen_assets") }}/demo/demo5/skins/header/navy.css?v={{ Helpers::gitVersion()->getVersion() }}" rel="stylesheet" type="text/css" />
+<link href="{{ config("app.keen_assets") }}/css/demo5/skins/header/navy.css?v={{ Helpers::gitVersion()->getVersion() }}" rel="stylesheet" type="text/css" />
 <!--end::Layout Skins -->
 
 <!--begin::Custom styling(by Pixel8) -->

@@ -7,10 +7,10 @@
  */
 ?>
 @section("styles")
-    <link href="{{ config("app.keen_assets") }}/app/custom/user/login-v2.demo5.css?v={{ Helpers::gitVersion()->getVersion() }}" rel="stylesheet" type="text/css" />
+    <link href="{{ config("app.keen_assets") }}/css/demo5/pages/login/login-v2.css?v={{ Helpers::gitVersion()->getVersion() }}" rel="stylesheet" type="text/css" />
 @endsection
 @section("scripts")
-    <script src="{{ config("app.keen_assets") }}/app/custom/general/custom/login/login.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
+    <script src="{{ config("app.keen_assets") }}/js/demo5/pages/custom/user/login.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
 
 @endsection
     <!DOCTYPE html>

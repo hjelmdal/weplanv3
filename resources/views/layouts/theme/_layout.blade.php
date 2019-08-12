@@ -25,7 +25,7 @@
 @include("layouts.theme.partials._offcanvas-user")
 <!-- end:: Topbar Offcanvas Panels -->
 @include("layouts.theme.partials._layout-quick-panel")
-@include("layouts.theme.custom.offcanvas01")
+
 @include("layouts.theme.partials._layout-scrolltop")
 {{--@include("layouts.theme.partials._layout-toolbar")--}}
 {{--@include("layouts.theme.partials._layout-demo-panel")--}}

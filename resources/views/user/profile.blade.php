@@ -13,7 +13,7 @@
     </script>
 @endsection
 @section("scripts")
-    <script src="{{ config("app.keen_assets") }}/app/custom/general/custom/profile/profile.js" type="text/javascript"></script>
+    <script src="{{ config("app.keen_assets") }}/js/demo5/pages/custom/profile/profile.js" type="text/javascript"></script>
     <script src="{{ route("index") }}/vuejs/profile/index.js?v={{ Helpers::gitVersion()->getVersion() }}"></script>
     @if(Session::has('resent'))
     <script type="text/javascript">
@@ -32,7 +32,8 @@
   @endif
 @endsection
 @section("styles")
-    <link href="{{ config("app.keen_assets") }}/app/custom/user/profile-v1.demo5.css" rel="stylesheet" type="text/css" />
+    <link href="{{ config("app.keen_assets") }}/css/demo5/pages/login/profile-v1.css" rel="stylesheet" type="text/css" />
+    <link href="{{ config("app.keen_assets") }}/css/demo5/pages/wizards/wizard-v1.css" rel="stylesheet" type="text/css" />
 @endsection
 @section("content")
     @if(!$user->isComplete())
