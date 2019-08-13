@@ -13,19 +13,21 @@ $img_url = "https://keenthemes.com/keen/preview/assets/media/users/100_";
 @section("meta","")
 @section("styles")
 <style>
+    .modal:nth-of-type(odd) {
+        z-index: 1053 !important;
+    }
     .modal:nth-of-type(even) {
         z-index: 1051 !important;
     }
     .modal-backdrop.show:nth-of-type(even) {
-        z-index: 1049 !important;
+        z-index: 1051 !important;
     }
     .modal-backdrop.show:nth-of-type(odd) {
-        z-index: 1049 !important;
+        z-index: 1050 !important;
     }
 </style>
 @endsection
 @section("scripts")
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js" xmlns="http://www.w3.org/1999/html"></script>
     <script src="{{ route("index") }}/vuejs/teams/index.js?v={{ Helpers::gitVersion()->getVersion() }}"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
