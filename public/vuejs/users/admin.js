@@ -1790,7 +1790,7 @@ __webpack_require__.r(__webpack_exports__);
     getWePlanPlayer: function getWePlanPlayer() {
       var _this = this;
 
-      this.form.get("/api/v1/players/find/" + this.input + "/").then(function (data) {
+      this.form.get("/api/v1/players/find/" + this.input).then(function (data) {
         _this.weplanUsers = data;
       }).catch(function (errors) {
         _this.weplanUsers = null; //console.log(errors);
@@ -1800,7 +1800,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       if (this.weplanUsers == null) {
-        this.form.get("/api/v1/BP/players/find/" + this.input + "/").then(function (data) {
+        this.form.get("/api/v1/BP/players/find/" + this.input).then(function (data) {
           _this2.bpUsers = data; //console.log(data);
         }).catch(function (errors) {
           _this2.bpUsers = null; //console.log(errors);
