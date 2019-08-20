@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\API\Auth;
 
+use App\Models\BadmintonPeople\BpPlayer;
 use App\Models\User;
 use App\Models\UserStatus;
+use App\Models\WePlan\WePlayer;
 use App\Notifications\Auth\SendNewActivationCode;
 use Carbon\Carbon;
 use http\Env\Response;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -186,6 +189,38 @@ class UserAPI extends Controller
         }
 
     }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function all() {
+        try {
+            $users = User::all();
+            $users->load(["roles","UserStatus"]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(["errors" => ["form" => "No users found"]],404);
+        }
+
+        foreach($users as $user) {
+            if($user->UserStatus->count() > 0) {
+                foreach ($user->UserStatus as $status) {
+                    Log::info("rammer!1");
+                    if($status->type == "player") {
+                        $json = json_decode($status->content);
+                        $user->suggested_player = $json->data;
+                        $user->matched_weplayer = WePlayer::where("dbf_id",$user->suggested_player)->first();
+
+                        if(!$user->matched_weplayer) {
+                            $user->matched_bpplayer = BpPlayer::where("dbf_id",$user->suggested_player)->first();
+                        }
+                    }
+                }
+            }
+        }
+        return response()->json($users,200);
+    }
+
+
     public function getUserStatus(Request $request) {
         $this->userFromApiToken($request);
         $status = [];

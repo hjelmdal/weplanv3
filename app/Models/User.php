@@ -45,8 +45,10 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
-    
+
+    protected $appends = ["complete"];
+
+
     public function facebook(){
         return $this->hasOne(Facebook::class);
     }
@@ -81,6 +83,11 @@ class User extends Authenticatable implements MustVerifyEmail
         $status = $this->UserStatus()->get();
         return $status;
     }
+
+    public function getCompleteAttribute() {
+        return $this->isComplete();
+    }
+
 
     public function isComplete() {
         $status = $this->UserStatus()->get();

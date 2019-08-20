@@ -6,5 +6,6 @@
     "/vuejs/activities/plan.js": "/vuejs/activities/plan.js",
     "/vuejs/profile/index.js": "/vuejs/profile/index.js",
     "/vuejs/teams/index.js": "/vuejs/teams/index.js",
-    "/vuejs/test/app.js": "/vuejs/test/app.js"
+    "/vuejs/test/app.js": "/vuejs/test/app.js",
+    "/vuejs/users/admin.js": "/vuejs/users/admin.js"
 }

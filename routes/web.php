@@ -73,9 +73,16 @@ Route::middleware(['auth.complete'])->namespace('WePlan')->group(function () {
 
 
 
-// Calendar routes
-Route::get("/calendar/list","CalendarController@list")->name("calendar.list");
+    // Calendar routes
+    Route::get("/calendar/list","CalendarController@list")->name("calendar.list");
 
+
+
+});
+
+// Users routes
+Route::middleware(['auth.complete'])->prefix('users')->name("users.")->group(function () {
+    Route::get('/admin','UserController@admin')->name("admin");
 
 });
 

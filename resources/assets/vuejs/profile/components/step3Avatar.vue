@@ -13,6 +13,8 @@
             return {
                 message: "Upload",
                 user: [],
+                outputMime: "image/jpeg",
+                outputQuality: "0.8",
                 requestType: "POST",
                 authHeaders: { Authorization: apiToken },
                 labels: { submit: "Gem", cancel: "Fortryd"},
@@ -150,6 +152,8 @@
                             @uploaded="handleUploaded"
                             @completed="handleCompleted"
                             @error="handlerError"
+                            :output-mime="'image/jpeg'"
+                            :output-quality=0.8
                             trigger="#pick-avatar"
                             upload-url="/api/v1/user"
                     />

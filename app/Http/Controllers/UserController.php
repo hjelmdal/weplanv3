@@ -22,4 +22,7 @@ class UserController extends Controller
         
         return view("user.profile")->with("user", $user);
     }
+    public function admin() {
+        return view("app.users.admin");
+    }
 }

@@ -16,7 +16,11 @@ class WePlayerAPI extends Controller
      */
     public function index()
     {
-        $players = WePlayer::all();
+        try {
+            $players = WePlayer::all();
+        } catch (ModelNotFoundException $e) {
+            return response()->json("Not found",404);
+        }
         $players->load("user","team");
         return response()->json(array("data" => $players));
 
@@ -51,7 +55,21 @@ class WePlayerAPI extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $player = WePlayer::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(["errors" => ["form" => "Player not found"]],404);
+        }
+        return response()->json($player,200);
+    }
+
+    public function find($id) {
+        try {
+            $player = WePlayer::where('dbf_id', 'like', '%' . $id . '%')->with("user")->get();
+        } catch (ModelNotFoundException $e) {
+            return response()->json(["errors" => ["form" => "Player not found"]],404);
+        }
+        return response()->json($player,200);
     }
 
     /**

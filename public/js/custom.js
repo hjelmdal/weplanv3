@@ -277,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         //console.log("status " + status);
         if (response.startsWith("<!DOCTYPE html") || xhr.status == 401) {
           $(ref + ' .modal-content').empty();
-          swal({
+          swal.fire({
             position: 'top',
             type: 'warning',
             title: "Session expired - reloading page",
@@ -334,7 +334,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
           errorMsg = "An error occured";
         }
 
-        swal({
+        swal.fire({
           position: 'center',
           type: 'error',
           title: errorMsg,
@@ -353,7 +353,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
           var successMsg = "No message";
         }
 
-        swal({
+        swal.fire({
           position: 'center',
           type: 'success',
           title: successMsg,

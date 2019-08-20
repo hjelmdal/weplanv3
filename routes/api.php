@@ -39,6 +39,7 @@ Route::name('api.')->group(function () {
             Route::post('user/activate/resend',"UserAPI@sendNewActivationCode");
             Route::get("user/status","UserAPI@getUserStatus");
             Route::post('user/complete',"UserAPI@complete");
+            Route::get("users","UserAPI@all");
 
         });
 
@@ -52,6 +53,10 @@ Route::name('api.')->group(function () {
 
             Route::get('/teams/{id}/players',"WeTeamAPI@players")->name("teams.players");
             Route::apiResource('teams','WeTeamAPI');
+
+
+            //Players
+            Route::get("/players/find/{id}","WePlayerAPI@find")->name("players.find");
             Route::get('/players/byteam',"WePlayerAPI@byTeam")->name("players.byteam");
             Route::apiResource('players','WePlayerAPI')->middleware(["auth.complete"]);
 
@@ -69,6 +74,8 @@ Route::name('api.')->group(function () {
             Route::get("/players","BpPlayerAPI@index")->name("players.index");
             Route::post("/players/store","BpPlayerAPI@store")->name("players.store");
             Route::post("/player/check", "BpPlayerAPI@checkPlayer")->name("player.check");
+            Route::get("/players/{id}", "BpPlayerAPI@show")->name(("players.show"));
+            Route::get("/players/find/{id}","BpPlayerAPI@find")->name("players.find");
         });
     });
 });

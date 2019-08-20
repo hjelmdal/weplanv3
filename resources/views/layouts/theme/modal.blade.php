@@ -99,7 +99,7 @@
                         if(data.status == 401) {
                             errorMsg = 'Login expired - reloading';
                         }
-                        swal({
+                        swal.fire({
                             position: 'top',
                             type: 'error',
                             title: errorMsg,
@@ -127,7 +127,7 @@
                             var successMsg = "Done";
                         }
                         KTApp.unblock(modal + ' .modal-content');
-                        swal({
+                        swal.fire({
                             position: 'top',
                             type: 'success',
                             title: successMsg,

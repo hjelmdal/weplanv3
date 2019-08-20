@@ -1,0 +1,435 @@
+<script>
+    import Form from "./../../Form";
+    import modal from "./modal";
+    import associateUser from "./associateUser";
+
+    export default {
+        name: "usersAdmin",
+        components: {
+            modal,
+            associateUser
+        },
+        data: function() {
+            return {
+                search:"",
+                test: "yay",
+                users: [],
+                usersGet: new Form(),
+                modalData: {
+                    id: "modal3",
+                    user: "",
+                    suggested_id:""
+                }
+            }
+        },
+        methods: {
+          associate(user,id) {
+              console.log("id: " + id);
+              console.log("length: " + id.length);
+              this.modalData.user = user;
+              this.modalData.suggested_id = id;
+          }
+        },
+        mounted() {
+            this.usersGet.get("/api/v1/users")
+                .then((response) =>  {
+                    this.users = response;
+                })
+        },
+        computed: {
+            filteredUsers() {
+                return this.users.filter((user) => {
+                    return user.name.toLowerCase().includes(this.search.toLowerCase()) || user.email.toLowerCase().includes(this.search.toLowerCase());
+                });
+            }
+        }
+    }
+
+</script>
+
+<style scoped>
+    @media (max-width: 1024px) {
+        .input-group-lg>.custom-select, .input-group-lg>.form-control, .input-group-lg>.input-group-append>.btn, .input-group-lg>.input-group-append>.input-group-text, .input-group-lg>.input-group-prepend>.btn, .input-group-lg>.input-group-prepend>.input-group-text {
+            padding: 1.1rem 1.65rem;
+        }
+    }
+.badge-sm {
+    font-size: 70%;
+    padding: 0.2em 0.4em;
+    margin-right: 0.3em;
+}
+.fa svg {
+    width: 2rem;
+    height: 2rem;
+    fill: #fff;
+}
+.kt-svg-icon g [fill] {
+    fill: #5d78ff;
+}
+</style>
+
+<template>
+    <!--Begin::App-->
+    <div class="kt-grid kt-grid--desktop kt-grid--ver kt-grid--ver-desktop kt-app" style="width: 100%;">
+        <!--Begin:: App Aside Mobile Toggle-->
+        <button class="kt-app__aside-close" id="kt_users_aside_close">
+            <i class="la la-close"></i>
+        </button>
+        <!--End:: App Aside Mobile Toggle-->
+
+        <!--Begin:: App Aside-->
+        <div class="kt-grid__item kt-app__toggle kt-app__aside kt-app__aside--sm kt-app__aside--fit" id="kt_users_aside">
+            <div class="kt-portlet">
+                <div class="kt-portlet__body">
+                    <div class="kt-widget kt-widget--general-1">
+                        <div class="kt-media kt-media--brand kt-media--md kt-media--circle">
+                            <img src="/base/media/users/100_6.jpg" alt="image">
+                        </div>
+                        <div class="kt-widget__wrapper">
+                            <div class="kt-widget__label">
+                                <a href="#" class="kt-widget__title">
+                                    Luke Davids
+                                </a>
+                                <span class="kt-widget__desc">
+                                Web Developer
+                            </span>
+                            </div>
+                            <div class="kt-widget__toolbar kt-widget__toolbar--top-">
+                                <div class="btn-group">
+                                    <div class="dropdown dropdown-inline">
+                                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="flaticon-more-1"></i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-fit dropdown-menu-md dropdown-menu-right">
+                                            <!--begin::Nav-->
+                                            <ul class="kt-nav">
+                                                <li class="kt-nav__head">
+                                                    Export Options
+                                                    <i class="flaticon2-information" data-toggle="kt-tooltip" data-placement="right" title="Click to learn more..."></i>
+                                                </li>
+                                                <li class="kt-nav__separator"></li>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link">
+                                                        <i class="kt-nav__link-icon flaticon2-drop"></i>
+                                                        <span class="kt-nav__link-text">Users</span>
+                                                    </a>
+                                                </li>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link">
+                                                        <i class="kt-nav__link-icon flaticon2-calendar-8"></i>
+                                                        <span class="kt-nav__link-text">Reports</span>
+                                                        <span class="kt-nav__link-badge">
+					<span class="kt-badge kt-badge--danger">9</span>
+                </span>
+                                                    </a>
+                                                </li>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link">
+                                                        <i class="kt-nav__link-icon flaticon2-link"></i>
+                                                        <span class="kt-nav__link-text">Statements</span>
+                                                    </a>
+                                                </li>
+                                                <li class="kt-nav__item">
+                                                    <a href="#" class="kt-nav__link">
+                                                        <i class="kt-nav__link-icon flaticon2-new-email"></i>
+                                                        <span class="kt-nav__link-text">Customer Support</span>
+                                                    </a>
+                                                </li>
+                                                <li class="kt-nav__separator"></li>
+                                                <li class="kt-nav__foot">
+                                                    <a class="btn btn-label-brand btn-bold btn-sm" href="#">Proceed</a>
+                                                    <a class="btn btn-clean btn-bold btn-sm" href="#" data-toggle="kt-tooltip" data-placement="right" title="Click to learn more...">Learn more</a>
+                                                </li>
+                                            </ul>
+                                            <!--end::Nav-->
+                                        </div>                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="kt-portlet__separator"></div>
+
+                <div class="kt-portlet__body">
+                    <ul class="kt-nav kt-nav--bolder kt-nav--fit-ver kt-nav--v4" role="tablist">
+                        <li class="kt-nav__item">
+                            <a class="kt-nav__link active" data-toggle="tab" href="#kt_profile_tab_personal_information" role="tab">
+                                <span class="kt-nav__link-icon"><i class="flaticon2-user"></i></span>
+                                <span class="kt-nav__link-text">Personal Information</span>
+                            </a>
+                        </li>
+                        <li class="kt-nav__item  active">
+                            <a class="kt-nav__link" data-toggle="tab" href="#kt_profile_tab_account_information" role="tab">
+                                <span class="kt-nav__link-icon"><i class="flaticon-feed"></i></span>
+                                <span class="kt-nav__link-text">Acccount Information</span>
+                            </a>
+                        </li>
+                        <li class="kt-nav__item">
+                            <a class="kt-nav__link" data-toggle="tab" href="#kt_profile_change_password" role="tab">
+                                <span class="kt-nav__link-icon"><i class="flaticon2-settings"></i></span>
+                                <span class="kt-nav__link-text">Change Password</span>
+                            </a>
+                        </li>
+                        <li class="kt-nav__item">
+                            <a class="kt-nav__link" data-toggle="tab" href="#kt_profile_email_settings" role="tab">
+                                <span class="kt-nav__link-icon"><i class="flaticon2-chart2"></i></span>
+                                <span class="kt-nav__link-text">Email Settings</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="kt-portlet__separator"></div>
+
+                <div class="kt-portlet__body">
+                    <ul class="kt-nav kt-nav--bolder kt-nav--fit-ver kt-nav--v4" role="tablist">
+                        <li class="kt-nav__item">
+                            <a class="kt-nav__link" data-toggle="tab" href="#kt_profile_email_settings" role="tab">
+                                <span class="kt-nav__link-icon"><i class="flaticon2-chart2"></i></span>
+                                <span class="kt-nav__link-text">Email Settings</span>
+                            </a>
+                        </li>
+                        <li class="kt-nav__item">
+                            <a class="kt-nav__link" href="#" role="tab" data-toggle="kt-tooltip" title="" data-placement="right" data-original-title="This feature is coming soon!">
+                                <span class="kt-nav__link-icon"><i class="flaticon-safe-shield-protection"></i></span>
+                                <span class="kt-nav__link-text">Saved Credit Cards</span>
+                            </a>
+                        </li>
+                        <li class="kt-nav__item">
+                            <a class="kt-nav__link" href="#" role="tab" data-toggle="kt-tooltip" title="" data-placement="right" data-original-title="This feature is coming soon!">
+                                <span class="kt-nav__link-icon"><i class="flaticon-download-1"></i></span>
+                                <span class="kt-nav__link-text">Social Networks</span>
+                            </a>
+                        </li>
+                        <li class="kt-nav__item">
+                            <a class="kt-nav__link" href="#" role="tab" data-toggle="kt-tooltip" title="" data-placement="right" data-original-title="This feature is coming soon!">
+                                <span class="kt-nav__link-icon"><i class="flaticon-security"></i></span>
+                                <span class="kt-nav__link-text">Tax Information</span>
+                            </a>
+                        </li>
+
+                        <li class="kt-nav__space"></li>
+
+                        <li class="kt-nav__custom">
+                            <a href="#" class="btn btn-default btn-sm btn-upper btn-bold">
+                                New Group
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--End:: App Aside-->
+
+        <!--Begin:: App Content-->
+        <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
+            <div class="input-group input-group-lg kt-margin-b-20">
+                <div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="bound" x="0" y="0" width="24" height="24"></rect>
+        <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" id="Path-2" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+        <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" id="Path" fill="#000000" fill-rule="nonzero"></path>
+    </g>
+</svg></span></div>
+                <input type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon1" v-model="search">
+            </div>
+
+            <!--begin::Portlet-->
+            <div v-for="user in filteredUsers" class="kt-portlet kt-widget kt-widget--general-3">
+                <div class="kt-portlet__body kt-portlet__body--fit">
+                    <div class="kt-widget__top">
+                        <div class="kt-media kt-media--lg kt-media--circle">
+                            <img v-show="user.avatar" :src="user.avatar" :alt="user.name">
+                            <img v-if="!user.avatar" src="/img/profile.png" :alt="user.name">
+                        </div>
+                        <div class="kt-widget__wrapper">
+                            <div class="kt-widget__label">
+                                <a href="#" class="kt-widget__title">
+                                    {{ user.name }}
+                                </a>
+                                <span class="kt-widget__desc">
+                                    <i class="flaticon2-send  kt-font-success"></i> <a target="_blank" :href="'mailto:' +user.email">{{ user.email }} <i v-if="user.email_verified_at != null" class="flaticon2-correct kt-font-success"></i></a>
+
+                                </span>
+                                <span class="kt-widget__desc">
+                                    <span v-for="role in user.roles"  class="badge badge-secondary badge-sm">{{ role.name }}</span>
+                                </span>
+                                <span v-if="user.roles.length == 0" class="kt-widget__desc">
+                                    << None >>
+                                </span>
+                            </div>
+                            <div class="kt-widget__progress">
+                                <div class="kt-widget__cont">
+                                    <div class="kt-widget__stat">
+
+                                        <span class="kt-widget__caption">Progress</span>
+                                        <span class="kt-widget__value">78</span>
+                                    </div>
+                                    <div class="progress">
+                                        <!-- Doc: A bootstrap progress bar can be used to show a user how far along it's in a process, see https://getbootstrap.com/docs/4.1/components/progress/ -->
+                                        <div class="progress-bar bg-brand" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-widget__links">
+                                <div class="kt-widget__cont">
+                                    <div class="kt-widget__link">
+                                        <i class="flaticon2-send  kt-font-success"></i><a href="#">{{ user.email }} <i v-if="user.email_verified_at != null" class="flaticon2-correct kt-font-success"></i></a>
+                                    </div>
+                                    <div class="kt-widget__link">
+                                        <i class="socicon-skype kt-font-skype"></i><a href="#">lukemanson</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-widget__stats">
+                                <template  v-for="status in user.user_status" v-if="status.type == 'player'">
+                                    <button data-toggle="modal" data-target="#modal3" v-for="(str,index) in JSON.parse(status.content)" v-if="index == 'data'"  @click="associate(user,str)" type="button" class="btn btn-primary btn-sm"><i class="fa">
+
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                             width="487.811px" height="487.81px" viewBox="0 0 487.811 487.81" style="enable-background:new 0 0 487.811 487.81;"
+                                             xml:space="preserve">
+<g>
+	<g id="_x33_6_24_">
+		<g>
+			<path d="M150.463,109.521h150.512c3.955,0,7.16-3.206,7.16-7.161c0-3.955-3.205-7.161-7.16-7.161H150.463
+				c-3.955,0-7.161,3.206-7.161,7.161C143.302,106.315,146.508,109.521,150.463,109.521z"/>
+            <path d="M15.853,179.537h150.511c3.955,0,7.161-3.206,7.161-7.161s-3.206-7.16-7.161-7.16H15.853
+				c-3.955,0-7.161,3.205-7.161,7.16S11.898,179.537,15.853,179.537z"/>
+            <path d="M56.258,253.214c0,3.955,3.206,7.162,7.161,7.162H213.93c3.955,0,7.161-3.207,7.161-7.162s-3.206-7.16-7.161-7.16H63.419
+				C59.464,246.054,56.258,249.259,56.258,253.214z"/>
+            <path d="M142.396,336.44H7.161C3.206,336.44,0,339.645,0,343.6s3.206,7.161,7.161,7.161h135.235c3.955,0,7.161-3.206,7.161-7.161
+				S146.351,336.44,142.396,336.44z"/>
+            <path d="M385.729,154.418c21.6,0,39.111-17.513,39.111-39.114s-17.512-39.113-39.111-39.113
+				c-21.605,0-39.119,17.513-39.119,39.113C346.609,136.905,364.123,154.418,385.729,154.418z"/>
+            <path d="M450.066,143.155c-22.459,31.459-52.533,35.102-84.895,15.89c-2.203-1.306-11.977-6.691-14.141-7.977
+				c-52.061-30.906-104.061-18.786-138.934,30.05c-14.819,20.771,19.455,40.459,34.108,19.93
+				c18.018-25.232,40.929-32.533,65.986-24.541c-12.83,22.27-24.047,44.405-39.875,75.853
+				c-15.832,31.448-50.787,56.562-84.374,36.92c-24.235-14.165-46.09,20.651-21.928,34.772
+				c45.854,26.799,99.619,10.343,127.066-24.493c0.952,0.509,1.958,0.968,3.062,1.354c22.422,7.812,51.814,28.61,60.77,35.981
+				c8.953,7.371,24.336,44.921,33.471,63.788c11.082,22.893,46.871,6.219,35.748-16.771c-10.355-21.406-27.736-64.129-41.293-74.938
+				c-10.875-8.669-31.988-24.803-49.895-33.956c12.115-23.466,24.729-46.679,38.008-69.491
+				c42.328,12.969,82.561-2.308,111.215-42.446C498.996,142.312,464.73,122.624,450.066,143.155z"/>
+		</g>
+	</g>
+</g>
+                                            <g>
+</g>
+                                            <g>
+</g>
+                                            <g>
+</g>
+                                            <g>
+</g>
+                                            <g>
+</g>
+                                            <g>
+</g>
+                                            <g>
+</g>
+                                            <g>
+</g>
+                                            <g>
+</g>
+                                            <g>
+</g>
+                                            <g>
+</g>
+                                            <g>
+</g>
+                                            <g>
+</g>
+                                            <g>
+</g>
+                                            <g>
+</g>
+</svg>
+                                    </i> Opret spiller</button>
+
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kt-widget__bottom">
+                        <div class="kt-widget__summary">
+                            <div class="kt-widget__item">
+                                <span class="btn btn-label-brand btn-sm btn-bold btn-upper">{{ user.created_at | formatDate("DD-MMM")}}</span>&nbsp;
+                                <span class="kt-widget__hint">Joined Date</span>
+                            </div>
+                        </div>
+                        <div class="kt-widget__toolbar">
+                            <a href="#" class="btn btn-icon btn-circle btn-label-facebook">
+                                <i class="socicon-facebook"></i>
+                            </a>
+                            <a href="#" class="btn btn-icon btn-circle btn-label-twitter">
+                                <i class="socicon-twitter"></i>
+                            </a>
+                            <a href="#" class="btn btn-icon btn-circle btn-label-linkedin">
+                                <i class="socicon-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Portlet-->
+
+            <!--begin: Pagination-->
+            <div class="kt-pagination kt-pagination--brand kt-margin-t-10">
+                <ul class="kt-pagination__links">
+                    <li class="kt-pagination__link--first">
+                        <a href="#"><i class="fa fa-angle-double-left"></i></a>
+                    </li>
+                    <li class="kt-pagination__link--next">
+                        <a href="#"><i class="fa fa-angle-left"></i></a>
+                    </li>
+
+                    <li>
+                        <a href="#">...</a>
+                    </li>
+                    <li>
+                        <a href="#">29</a>
+                    </li>
+                    <li>
+                        <a href="#">30</a>
+                    </li>
+                    <li class="kt-pagination__link--active">
+                        <a href="#">32</a>
+                    </li>
+                    <li>
+                        <a href="#">34</a>
+                    </li>
+                    <li>
+                        <a href="#">...</a>
+                    </li>
+
+                    <li class="kt-pagination__link--prev">
+                        <a href="#"><i class="fa fa-angle-right"></i></a>
+                    </li>
+                    <li class="kt-pagination__link--last">
+                        <a href="#"><i class="fa fa-angle-double-right"></i></a>
+                    </li>
+                </ul>
+                <div class="kt-pagination__toolbar">
+                    <select class="form-control" style="width: 60px;">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <span class="pagination__desc">
+                    10 of 230
+                </span>
+                </div>
+            </div>
+            <!--end: Pagination-->
+        </div>
+        <!--End:: App Content-->
+        <modal :modal-data="modalData" :title="modalData.user.name">
+            <associate-user :form-data="modalData" :id="modalData.user.suggested_player"></associate-user>
+        </modal>
+
+    </div>
+    <!--End::App-->
+</template>
