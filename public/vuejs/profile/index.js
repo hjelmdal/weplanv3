@@ -17782,7 +17782,7 @@ function () {
 
       return new Promise(function (resolve, reject) {
         var instance = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({});
-        instance.defaults.headers.common['Authorization'] = document.querySelector('meta[name="api-token"]').getAttribute('content');
+        instance.defaults.headers.common['Authorization'] = apiToken;
         axios__WEBPACK_IMPORTED_MODULE_0___default.a[requestType](url, _this.data()).then(function (response) {
           _this.onSuccess(response.data);
 

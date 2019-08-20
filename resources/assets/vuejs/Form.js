@@ -103,7 +103,7 @@ export default class Form {
         return new Promise((resolve, reject) => {
             const instance = axios.create({
             });
-            instance.defaults.headers.common['Authorization'] = document.querySelector('meta[name="api-token"]').getAttribute('content');
+            instance.defaults.headers.common['Authorization'] = apiToken;
             axios[requestType](url, this.data())
                 .then(response => {
                     this.onSuccess(response.data);
