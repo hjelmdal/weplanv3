@@ -24,7 +24,7 @@
                 }
             },
             getWePlanPlayer() {
-                this.form.get("/api/v1/players/find/" + this.input + "/")
+                this.form.get("/api/v1/players/find/" + this.input)
                     .then(data => {
                         this.weplanUsers = data;
                     })
@@ -35,7 +35,7 @@
             },
             getBpPlayer() {
                 if(this.weplanUsers == null) {
-                    this.form.get("/api/v1/BP/players/find/" + this.input + "/")
+                    this.form.get("/api/v1/BP/players/find/" + this.input)
                         .then(data => {
                             this.bpUsers = data;
                             //console.log(data);
