@@ -427,7 +427,7 @@
         </div>
         <!--End:: App Content-->
         <modal :modal-data="modalData" :title="modalData.user.name">
-            <associate-user :form-data="modalData" :id="modalData.user.suggested_player"></associate-user>
+            <associate-user :now="Date.now()" :form-data="modalData" :id="modalData.user.suggested_player"></associate-user>
         </modal>
 
     </div>

@@ -2,7 +2,7 @@
     import Form from "../../Form";
     export default {
         name: "associateUser",
-        props:["formData","id"],
+        props:["formData","id","now"],
         data: function(){
             return {
                 weplanUsers: null,
@@ -72,7 +72,7 @@
             }
         },
         watch: {
-            id: {
+            now: {
                 // the callback will be called immediately after the start of the observation
                 immediate: true,
                 handler (val, oldVal) {

@@ -1767,7 +1767,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "associateUser",
-  props: ["formData", "id"],
+  props: ["formData", "id", "now"],
   data: function data() {
     return {
       weplanUsers: null,
@@ -1832,7 +1832,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   watch: {
-    id: {
+    now: {
       // the callback will be called immediately after the start of the observation
       immediate: true,
       handler: function handler(val, oldVal) {
@@ -21725,6 +21725,7 @@ var render = function() {
         [
           _c("associate-user", {
             attrs: {
+              now: Date.now(),
               "form-data": _vm.modalData,
               id: _vm.modalData.user.suggested_player
             }
