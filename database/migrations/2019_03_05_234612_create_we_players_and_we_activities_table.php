@@ -63,10 +63,10 @@ class CreateWePlayersAndWeActivitiesTable extends Migration
             $table->index('activity_id');
 
             $table->foreign('activity_id')->references('id')
-                ->on('we_activities')->onDelete('cascade')->onUpdate('cascade');
+                ->on('we_activities')->onUpdate('cascade');
 
             $table->foreign('player_id')->references('id')
-                ->on('we_players')->onDelete('cascade')->onUpdate('cascade');
+                ->on('we_players')->onUpdate('cascade');
 
 
 
