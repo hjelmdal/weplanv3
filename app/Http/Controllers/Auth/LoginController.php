@@ -148,8 +148,8 @@ class LoginController extends Controller
             ]);
             $userObj->google()->save($google);
             if($userObj->avatar) {
-                $content = json_encode(array("text" => "Avatar set from Google account","avatar" => $userObj->avatar));
-                $this->setUserStatus($userObj, "avatar", $content,true);
+                $content = "Avatar set from Google account";
+                $this->setUserStatus($userObj, "avatar", $content,$userObj->avatar);
             }
             $userObj->notify(new NewUserRegistered());
             Auth::login($userObj,true);
@@ -226,8 +226,8 @@ class LoginController extends Controller
             ]);
             $userObj->facebook()->save($facebook);
             if($userObj->avatar) {
-                $content = json_encode(array("text" => "Avatar set from Facebook account","avatar" => $userObj->avatar));
-                $this->setUserStatus($userObj, "avatar", $content,true);
+                $content = "Avatar set from Facebook account";
+                $this->setUserStatus($userObj, "avatar", $content,$userObj->avatar);
             }
             $userObj->notify(new NewUserRegistered());
             Auth::login($userObj,true);
@@ -239,12 +239,11 @@ class LoginController extends Controller
         redirect()->route('login');
     }
 
-    private function setUserStatus($user,$type,$content,$json = false) {
-        if(!$json) {
-            $content = json_encode(["text" => $content]);
-        }
+    private function setUserStatus($user,$type,$content,$data = false) {
+
         try {
-            UserStatus::updateOrCreate(["user_id" => $user->id], ["user_id" => $user->id, "type" => $type, "content" => $content]);
+            $user->generateActivationFlow();
+            UserStatus::updateOrCreate(["user_id" => $user->id, "type" => $type], ["user_id" => $user->id, "type" => $type, "content" => $content, "data" => $data, "confirmed_at" => now()]);
         } catch (QueryException $exception) {
             return $exception;
         }

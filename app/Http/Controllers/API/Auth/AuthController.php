@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Auth;
 
 use App\Models\User;
+use App\Models\UserStatus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
@@ -94,9 +95,9 @@ class AuthController extends Controller
             ];
             // $user = User::GetInsertId($postArray);
             $user = User::insert($postArray);
-            $user1 = User::where("email",$request->email)->get();
+            $user1 = User::where("email",$request->email)->first();
             Notification::send($user1,new NewUserRegistered($user1));
-
+            $user1->generateActivationFlow();
             if($user) {
                 return response()->json([
                     'name'         => $request->name,

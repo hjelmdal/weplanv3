@@ -35,11 +35,14 @@ Route::name('api.')->group(function () {
             Route::get('user',"UserAPI@getMyUser")->name("my-user");
             Route::patch('user',"UserAPI@patch");
             Route::post('user',"UserAPI@saveAvatar");
+            Route::post('user/associate',"UserAPI@associatePlayer");
             Route::post('user/activate',"UserAPI@activateEmail");
             Route::post('user/activate/resend',"UserAPI@sendNewActivationCode");
             Route::get("user/status","UserAPI@getUserStatus");
             Route::post('user/complete',"UserAPI@complete");
+            //users
             Route::get("users","UserAPI@all");
+            Route::get("users/filter/{filter}","UserAPI@filteredUsers");
 
         });
 

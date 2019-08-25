@@ -60,7 +60,7 @@
                     })
                     .catch(e => {
                         // Do something
-                        return false;
+                        console.log(e);
                     })
             }
 

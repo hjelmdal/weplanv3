@@ -1770,10 +1770,13 @@ __webpack_require__.r(__webpack_exports__);
   props: ["formData", "id", "now"],
   data: function data() {
     return {
-      weplanUsers: null,
-      bpUsers: null,
+      weplanPlayers: null,
+      bpPlayers: null,
       user: this.formData.user,
-      form: new _Form__WEBPACK_IMPORTED_MODULE_0__["default"](),
+      form: new _Form__WEBPACK_IMPORTED_MODULE_0__["default"]({
+        playerId: "",
+        userId: ""
+      }),
       input: ""
     };
   },
@@ -1783,27 +1786,41 @@ __webpack_require__.r(__webpack_exports__);
         this.getWePlanPlayer();
         this.getBpPlayer();
       } else {
-        this.weplanUsers = null;
-        this.bpUsers = null;
+        this.weplanPlayers = null;
+        this.bpPlayers = null;
       }
     },
-    getWePlanPlayer: function getWePlanPlayer() {
+    associate: function associate(playerId) {
       var _this = this;
 
+      this.form.playerId = playerId;
+      this.form.userId = this.user.id;
+      this.form.post("/api/v1/user/associate").then(function (data) {
+        console.log(data);
+
+        _this.getWePlanPlayer();
+
+        _this.$root.$emit('userAssociated');
+      }).catch(function (e) {// nothing now
+      });
+    },
+    getWePlanPlayer: function getWePlanPlayer() {
+      var _this2 = this;
+
       this.form.get("/api/v1/players/find/" + this.input).then(function (data) {
-        _this.weplanUsers = data;
+        _this2.weplanPlayers = data;
       }).catch(function (errors) {
-        _this.weplanUsers = null; //console.log(errors);
+        _this2.weplanPlayers = null; //console.log(errors);
       });
     },
     getBpPlayer: function getBpPlayer() {
-      var _this2 = this;
+      var _this3 = this;
 
-      if (this.weplanUsers == null) {
+      if (this.weplanPlayers == null) {
         this.form.get("/api/v1/BP/players/find/" + this.input).then(function (data) {
-          _this2.bpUsers = data; //console.log(data);
+          _this3.bpPlayers = data; //console.log(data);
         }).catch(function (errors) {
-          _this2.bpUsers = null; //console.log(errors);
+          _this3.bpPlayers = null; //console.log(errors);
         });
       }
     },
@@ -1844,10 +1861,10 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    var _this3 = this;
+    var _this4 = this;
 
     this.$root.$on('modalSubmit', function (data) {
-      _this3.submit();
+      _this4.submit();
     });
   }
 });
@@ -1874,6 +1891,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     modalSubmit: function modalSubmit() {
       this.$root.$emit('modalSubmit');
+    },
+    modalClose: function modalClose() {
+      this.$root.$emit('modalClose');
     }
   }
 });
@@ -1920,21 +1940,78 @@ __webpack_require__.r(__webpack_exports__);
       console.log("length: " + id.length);
       this.modalData.user = user;
       this.modalData.suggested_id = id;
+    },
+    getAllUsers: function getAllUsers() {
+      var _this = this;
+
+      this.usersGet.get("/api/v1/users").then(function (response) {
+        _this.users = response;
+      });
+    },
+    getFilteredUsers: function getFilteredUsers(filter) {
+      var _this2 = this;
+
+      var param = null;
+
+      switch (filter) {
+        case "activated":
+          param = "activated";
+          break;
+
+        case "all":
+          this.getAllUsers();
+          break;
+
+        case "incomplete":
+          param = "incomplete";
+          break;
+
+        case "dissociated":
+          param = "dissociated";
+          break;
+
+        default: // code block
+
+      }
+
+      if (param) {
+        this.usersGet.get("/api/v1/users/filter/" + param).then(function (data) {
+          _this2.users = data;
+        });
+      }
+    },
+    filterUsers: function filterUsers(event, filter) {
+      var elems = document.querySelectorAll("#usersNav .kt-nav__item");
+      [].forEach.call(elems, function (el) {
+        el.classList.remove("active");
+      });
+      document.querySelectorAll("#usersNav .kt-nav__item .kt-nav__link").forEach(function (e) {
+        e.classList.remove("active");
+      });
+      event.currentTarget.parentElement.classList.add("active");
+      this.getFilteredUsers(filter);
+    },
+    refresh: function refresh() {
+      document.querySelector(".kt-nav__item .active").click();
     }
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this3 = this;
 
-    this.usersGet.get("/api/v1/users").then(function (response) {
-      _this.users = response;
+    this.getAllUsers();
+    this.$root.$on('modalClose', function (data) {
+      _this3.refresh();
+    });
+    this.$root.$on('userAssociated', function (data) {
+      _this3.refresh();
     });
   },
   computed: {
     filteredUsers: function filteredUsers() {
-      var _this2 = this;
+      var _this4 = this;
 
       return this.users.filter(function (user) {
-        return user.name.toLowerCase().includes(_this2.search.toLowerCase()) || user.email.toLowerCase().includes(_this2.search.toLowerCase());
+        return user.name.toLowerCase().includes(_this4.search.toLowerCase()) || user.email.toLowerCase().includes(_this4.search.toLowerCase());
       });
     }
   }
@@ -20929,8 +21006,8 @@ var render = function() {
           {
             name: "show",
             rawName: "v-show",
-            value: _vm.weplanUsers,
-            expression: "weplanUsers"
+            value: _vm.weplanPlayers,
+            expression: "weplanPlayers"
           }
         ]
       },
@@ -20943,8 +21020,8 @@ var render = function() {
       _c(
         "tbody",
         [
-          _vm._l(_vm.weplanUsers, function(weplanUser) {
-            return _vm.weplanUsers && _vm.weplanUsers.length > 0
+          _vm._l(_vm.weplanPlayers, function(weplanPlayer) {
+            return _vm.weplanPlayers && _vm.weplanPlayers.length > 0
               ? _c("tr", [
                   _c("th", { attrs: { scope: "row" } }, [
                     _c(
@@ -20957,12 +21034,12 @@ var render = function() {
                             staticClass:
                               "kt-media kt-media--brand kt-media--sm kt-media--circle",
                             class: {
-                              "kt-media--danger": weplanUser.gender == "K"
+                              "kt-media--danger": weplanPlayer.gender == "K"
                             }
                           },
                           [
                             _c("span", [
-                              _vm._v(_vm._s(_vm.getInitials(weplanUser.name)))
+                              _vm._v(_vm._s(_vm.getInitials(weplanPlayer.name)))
                             ])
                           ]
                         )
@@ -20970,20 +21047,25 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(weplanUser.name))]),
+                  _c("td", [_vm._v(_vm._s(weplanPlayer.name))]),
                   _vm._v(" "),
                   _c("td", { attrs: { valign: "middle" } }, [
-                    _vm._v(_vm._s(weplanUser.gender))
+                    _vm._v(_vm._s(weplanPlayer.gender))
                   ]),
                   _vm._v(" "),
                   _c("td", [
-                    !weplanUser.user
+                    !weplanPlayer.user
                       ? _c(
                           "button",
                           {
                             staticClass:
                               "btn btn-outline-brand btn-elevate btn-sm",
-                            attrs: { type: "button" }
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.associate(weplanPlayer.id)
+                              }
+                            }
                           },
                           [
                             _c("i", { staticClass: "la la-chain" }),
@@ -21007,7 +21089,7 @@ var render = function() {
               : _vm._e()
           }),
           _vm._v(" "),
-          !_vm.weplanUsers || _vm.weplanUsers.length < 1
+          !_vm.weplanPlayers || _vm.weplanPlayers.length < 1
             ? _c("tr", [
                 _c("td", { attrs: { colspan: "4" } }, [
                   _vm._v("Ingen spillere fundet!")
@@ -21029,8 +21111,10 @@ var render = function() {
             name: "show",
             rawName: "v-show",
             value:
-              _vm.bpUsers && (!_vm.weplanUsers || _vm.weplanUsers.length == 0),
-            expression: "bpUsers && (!weplanUsers || weplanUsers.length == 0)"
+              _vm.bpPlayers &&
+              (!_vm.weplanPlayers || _vm.weplanPlayers.length == 0),
+            expression:
+              "bpPlayers && (!weplanPlayers || weplanPlayers.length == 0)"
           }
         ]
       },
@@ -21042,8 +21126,8 @@ var render = function() {
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.bpUsers, function(bpUser) {
-              return _vm.bpUsers
+            _vm._l(_vm.bpPlayers, function(bpPlayer) {
+              return _vm.bpPlayers
                 ? _c("tr", [
                     _c("th", { attrs: { scope: "row" } }, [
                       _c(
@@ -21056,12 +21140,12 @@ var render = function() {
                               staticClass:
                                 "kt-media kt-media--brand kt-media--sm kt-media--circle",
                               class: {
-                                "kt-media--danger": bpUser.gender == "K"
+                                "kt-media--danger": bpPlayer.gender == "K"
                               }
                             },
                             [
                               _c("span", [
-                                _vm._v(_vm._s(_vm.getInitials(bpUser.name)))
+                                _vm._v(_vm._s(_vm.getInitials(bpPlayer.name)))
                               ])
                             ]
                           )
@@ -21070,18 +21154,18 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("td", [
-                      _vm._v(_vm._s(bpUser.name)),
+                      _vm._v(_vm._s(bpPlayer.name)),
                       _c("br"),
                       _c("span", { staticClass: "text-muted" }, [
-                        _vm._v(_vm._s(bpUser.dbf_id))
+                        _vm._v(_vm._s(bpPlayer.dbf_id))
                       ])
                     ]),
                     _vm._v(" "),
                     _c("td", { attrs: { valign: "middle" } }, [
-                      _vm._v(_vm._s(bpUser.gender))
+                      _vm._v(_vm._s(bpPlayer.gender))
                     ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(bpUser.bp_club.team_name))]),
+                    _c("td", [_vm._v(_vm._s(bpPlayer.bp_club.team_name))]),
                     _vm._v(" "),
                     _vm._m(2, true)
                   ])
@@ -21181,7 +21265,8 @@ var render = function() {
         role: "dialog",
         "aria-labelledby": _vm.title,
         "aria-hidden": "true"
-      }
+      },
+      on: { close: _vm.modalClose }
     },
     [
       _c(
@@ -21215,7 +21300,8 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-outline-brand",
-                  attrs: { type: "button", "data-dismiss": "modal" }
+                  attrs: { type: "button", "data-dismiss": "modal" },
+                  on: { click: _vm.modalClose }
                 },
                 [_vm._v("Close")]
               ),
@@ -21286,7 +21372,139 @@ var render = function() {
     [
       _vm._m(0),
       _vm._v(" "),
-      _vm._m(1),
+      _c(
+        "div",
+        {
+          staticClass:
+            "kt-grid__item kt-app__toggle kt-app__aside kt-app__aside--sm kt-app__aside--fit",
+          attrs: { id: "kt_users_aside" }
+        },
+        [
+          _c("div", { staticClass: "kt-portlet" }, [
+            _c("div", { staticClass: "kt-portlet__separator" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "kt-portlet__body" }, [
+              _c(
+                "ul",
+                {
+                  staticClass:
+                    "kt-nav kt-nav--bolder kt-nav--fit-ver kt-nav--v4",
+                  attrs: { role: "tablist", id: "usersNav" }
+                },
+                [
+                  _c("li", { staticClass: "kt-nav__item active" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "kt-nav__link",
+                        attrs: {
+                          "data-toggle": "tab",
+                          href: "#kt_profile_tab_personal_information",
+                          role: "tab"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.filterUsers($event, "all")
+                          }
+                        }
+                      },
+                      [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "kt-nav__link-text" }, [
+                          _vm._v("Alle brugere")
+                        ])
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "kt-nav__item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "kt-nav__link",
+                        attrs: {
+                          "data-toggle": "tab",
+                          href: "#kt_profile_tab_account_information",
+                          role: "tab"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.filterUsers($event, "activated")
+                          }
+                        }
+                      },
+                      [
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "kt-nav__link-text" }, [
+                          _vm._v("Aktiverede")
+                        ])
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "kt-nav__item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "kt-nav__link",
+                        attrs: {
+                          "data-toggle": "tab",
+                          href: "#kt_profile_change_password",
+                          role: "tab"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.filterUsers($event, "incomplete")
+                          }
+                        }
+                      },
+                      [
+                        _vm._m(3),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "kt-nav__link-text" }, [
+                          _vm._v("Brugere i aktiveringsflow")
+                        ])
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "kt-nav__item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "kt-nav__link",
+                        attrs: {
+                          "data-toggle": "tab",
+                          href: "#kt_profile_email_settings",
+                          role: "tab"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.filterUsers($event, "dissociated")
+                          }
+                        }
+                      },
+                      [
+                        _vm._m(4),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "kt-nav__link-text" }, [
+                          _vm._v("Brugere uden tilknytning")
+                        ])
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "kt-portlet__separator" }),
+            _vm._v(" "),
+            _vm._m(5)
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -21395,7 +21613,7 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._l(_vm.filteredUsers, function(user) {
+          _vm._l(_vm.filteredUsers, function(user, index) {
             return _c(
               "div",
               { staticClass: "kt-portlet kt-widget kt-widget--general-3" },
@@ -21500,7 +21718,125 @@ var render = function() {
                             : _vm._e()
                         ]),
                         _vm._v(" "),
-                        _vm._m(2, true),
+                        _c("div", { staticClass: "kt-widget__progress" }, [
+                          _c("div", { staticClass: "kt-widget__cont" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "btn-group",
+                                attrs: { role: "group" }
+                              },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-sm dropdown-toggle",
+                                    class: {
+                                      "btn-success": user.complete,
+                                      "btn-warning": !user.complete
+                                    },
+                                    attrs: {
+                                      id: "btnGroupDrop1",
+                                      type: "button",
+                                      "data-toggle": "dropdown",
+                                      "aria-haspopup": "true",
+                                      "aria-expanded": "false"
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                            Status\n                                        "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "dropdown-menu",
+                                    staticStyle: {
+                                      position: "absolute",
+                                      "will-change": "transform",
+                                      top: "0px",
+                                      left: "0px",
+                                      transform: "translate3d(0px, 38px, 0px)"
+                                    },
+                                    attrs: {
+                                      "aria-labelledby": "btnGroupDrop1",
+                                      "x-placement": "bottom-start"
+                                    }
+                                  },
+                                  [
+                                    user.email_verified_at
+                                      ? _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "text-success dropdown-item text-capitalize",
+                                            attrs: { href: "#" }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "fa fa-check text-success"
+                                            }),
+                                            _vm._v(" Email")
+                                          ]
+                                        )
+                                      : _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "dropdown-item text-capitalize",
+                                            attrs: { href: "#" }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fa fa-clock"
+                                            }),
+                                            _vm._v(" Email")
+                                          ]
+                                        ),
+                                    _vm._v(" "),
+                                    _vm._l(user.user_status, function(
+                                      status,
+                                      key
+                                    ) {
+                                      return _c(
+                                        "a",
+                                        {
+                                          staticClass:
+                                            "dropdown-item text-capitalize",
+                                          class: {
+                                            "text-success": status.confirmed_at,
+                                            "text-muted": !status.confirmed_at
+                                          },
+                                          attrs: { href: "#" }
+                                        },
+                                        [
+                                          status.confirmed_at
+                                            ? _c("i", {
+                                                staticClass: "fa fa-check",
+                                                class: {
+                                                  "text-success":
+                                                    status.confirmed_at,
+                                                  "text-muted": !status.confirmed_at
+                                                }
+                                              })
+                                            : _c("i", {
+                                                staticClass: "fa fa-clock"
+                                              }),
+                                          _vm._v(" " + _vm._s(status.type))
+                                        ]
+                                      )
+                                    })
+                                  ],
+                                  2
+                                )
+                              ]
+                            )
+                          ])
+                        ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "kt-widget__links" }, [
                           _c("div", { staticClass: "kt-widget__cont" }, [
@@ -21519,7 +21855,7 @@ var render = function() {
                               ])
                             ]),
                             _vm._v(" "),
-                            _vm._m(3, true)
+                            _vm._m(6, true)
                           ])
                         ]),
                         _vm._v(" "),
@@ -21529,11 +21865,8 @@ var render = function() {
                           [
                             _vm._l(user.user_status, function(status) {
                               return status.type == "player"
-                                ? _vm._l(JSON.parse(status.content), function(
-                                    str,
-                                    index
-                                  ) {
-                                    return index == "data"
+                                ? [
+                                    status.data && !user.player_id
                                       ? _c(
                                           "button",
                                           {
@@ -21546,7 +21879,10 @@ var render = function() {
                                             },
                                             on: {
                                               click: function($event) {
-                                                return _vm.associate(user, str)
+                                                return _vm.associate(
+                                                  user,
+                                                  status.data
+                                                )
                                               }
                                             }
                                           },
@@ -21668,9 +22004,24 @@ var render = function() {
                                           ]
                                         )
                                       : _vm._e()
-                                  })
+                                  ]
                                 : _vm._e()
-                            })
+                            }),
+                            _vm._v(" "),
+                            user.player_id
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "btn btn-outline-success btn-elevate btn-sm",
+                                    attrs: { type: "button" }
+                                  },
+                                  [
+                                    _c("i", { staticClass: "la la-user" }),
+                                    _vm._v(" Se Profil")
+                                  ]
+                                )
+                              : _vm._e()
                           ],
                           2
                         )
@@ -21704,7 +22055,7 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _vm._m(4, true)
+                      _vm._m(7, true)
                     ])
                   ]
                 )
@@ -21712,7 +22063,7 @@ var render = function() {
             )
           }),
           _vm._v(" "),
-          _vm._m(5)
+          _vm._m(8)
         ],
         2
       ),
@@ -21755,506 +22106,165 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "kt-grid__item kt-app__toggle kt-app__aside kt-app__aside--sm kt-app__aside--fit",
-        attrs: { id: "kt_users_aside" }
-      },
-      [
-        _c("div", { staticClass: "kt-portlet" }, [
-          _c("div", { staticClass: "kt-portlet__body" }, [
-            _c("div", { staticClass: "kt-widget kt-widget--general-1" }, [
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "kt-media kt-media--brand kt-media--md kt-media--circle"
-                },
-                [
-                  _c("img", {
-                    attrs: { src: "/base/media/users/100_6.jpg", alt: "image" }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "kt-widget__wrapper" }, [
-                _c("div", { staticClass: "kt-widget__label" }, [
-                  _c(
-                    "a",
-                    { staticClass: "kt-widget__title", attrs: { href: "#" } },
-                    [
-                      _vm._v(
-                        "\n                                    Luke Davids\n                                "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "kt-widget__desc" }, [
-                    _vm._v(
-                      "\n                                Web Developer\n                            "
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "kt-widget__toolbar kt-widget__toolbar--top-"
-                  },
-                  [
-                    _c("div", { staticClass: "btn-group" }, [
-                      _c("div", { staticClass: "dropdown dropdown-inline" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass:
-                              "btn btn-clean btn-sm btn-icon btn-icon-md",
-                            attrs: {
-                              type: "button",
-                              "data-toggle": "dropdown",
-                              "aria-haspopup": "true",
-                              "aria-expanded": "false"
-                            }
-                          },
-                          [_c("i", { staticClass: "flaticon-more-1" })]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "dropdown-menu dropdown-menu-fit dropdown-menu-md dropdown-menu-right"
-                          },
-                          [
-                            _c("ul", { staticClass: "kt-nav" }, [
-                              _c("li", { staticClass: "kt-nav__head" }, [
-                                _vm._v(
-                                  "\n                                                    Export Options\n                                                    "
-                                ),
-                                _c("i", {
-                                  staticClass: "flaticon2-information",
-                                  attrs: {
-                                    "data-toggle": "kt-tooltip",
-                                    "data-placement": "right",
-                                    title: "Click to learn more..."
-                                  }
-                                })
-                              ]),
-                              _vm._v(" "),
-                              _c("li", { staticClass: "kt-nav__separator" }),
-                              _vm._v(" "),
-                              _c("li", { staticClass: "kt-nav__item" }, [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "kt-nav__link",
-                                    attrs: { href: "#" }
-                                  },
-                                  [
-                                    _c("i", {
-                                      staticClass:
-                                        "kt-nav__link-icon flaticon2-drop"
-                                    }),
-                                    _vm._v(" "),
-                                    _c(
-                                      "span",
-                                      { staticClass: "kt-nav__link-text" },
-                                      [_vm._v("Users")]
-                                    )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", { staticClass: "kt-nav__item" }, [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "kt-nav__link",
-                                    attrs: { href: "#" }
-                                  },
-                                  [
-                                    _c("i", {
-                                      staticClass:
-                                        "kt-nav__link-icon flaticon2-calendar-8"
-                                    }),
-                                    _vm._v(" "),
-                                    _c(
-                                      "span",
-                                      { staticClass: "kt-nav__link-text" },
-                                      [_vm._v("Reports")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "span",
-                                      { staticClass: "kt-nav__link-badge" },
-                                      [
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass:
-                                              "kt-badge kt-badge--danger"
-                                          },
-                                          [_vm._v("9")]
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", { staticClass: "kt-nav__item" }, [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "kt-nav__link",
-                                    attrs: { href: "#" }
-                                  },
-                                  [
-                                    _c("i", {
-                                      staticClass:
-                                        "kt-nav__link-icon flaticon2-link"
-                                    }),
-                                    _vm._v(" "),
-                                    _c(
-                                      "span",
-                                      { staticClass: "kt-nav__link-text" },
-                                      [_vm._v("Statements")]
-                                    )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", { staticClass: "kt-nav__item" }, [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "kt-nav__link",
-                                    attrs: { href: "#" }
-                                  },
-                                  [
-                                    _c("i", {
-                                      staticClass:
-                                        "kt-nav__link-icon flaticon2-new-email"
-                                    }),
-                                    _vm._v(" "),
-                                    _c(
-                                      "span",
-                                      { staticClass: "kt-nav__link-text" },
-                                      [_vm._v("Customer Support")]
-                                    )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", { staticClass: "kt-nav__separator" }),
-                              _vm._v(" "),
-                              _c("li", { staticClass: "kt-nav__foot" }, [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass:
-                                      "btn btn-label-brand btn-bold btn-sm",
-                                    attrs: { href: "#" }
-                                  },
-                                  [_vm._v("Proceed")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass:
-                                      "btn btn-clean btn-bold btn-sm",
-                                    attrs: {
-                                      href: "#",
-                                      "data-toggle": "kt-tooltip",
-                                      "data-placement": "right",
-                                      title: "Click to learn more..."
-                                    }
-                                  },
-                                  [_vm._v("Learn more")]
-                                )
-                              ])
-                            ])
-                          ]
-                        )
-                      ])
-                    ])
-                  ]
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "kt-portlet__separator" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "kt-portlet__body" }, [
-            _c(
-              "ul",
-              {
-                staticClass: "kt-nav kt-nav--bolder kt-nav--fit-ver kt-nav--v4",
-                attrs: { role: "tablist" }
-              },
-              [
-                _c("li", { staticClass: "kt-nav__item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "kt-nav__link active",
-                      attrs: {
-                        "data-toggle": "tab",
-                        href: "#kt_profile_tab_personal_information",
-                        role: "tab"
-                      }
-                    },
-                    [
-                      _c("span", { staticClass: "kt-nav__link-icon" }, [
-                        _c("i", { staticClass: "flaticon2-user" })
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "kt-nav__link-text" }, [
-                        _vm._v("Personal Information")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "kt-nav__item  active" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "kt-nav__link",
-                      attrs: {
-                        "data-toggle": "tab",
-                        href: "#kt_profile_tab_account_information",
-                        role: "tab"
-                      }
-                    },
-                    [
-                      _c("span", { staticClass: "kt-nav__link-icon" }, [
-                        _c("i", { staticClass: "flaticon-feed" })
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "kt-nav__link-text" }, [
-                        _vm._v("Acccount Information")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "kt-nav__item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "kt-nav__link",
-                      attrs: {
-                        "data-toggle": "tab",
-                        href: "#kt_profile_change_password",
-                        role: "tab"
-                      }
-                    },
-                    [
-                      _c("span", { staticClass: "kt-nav__link-icon" }, [
-                        _c("i", { staticClass: "flaticon2-settings" })
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "kt-nav__link-text" }, [
-                        _vm._v("Change Password")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "kt-nav__item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "kt-nav__link",
-                      attrs: {
-                        "data-toggle": "tab",
-                        href: "#kt_profile_email_settings",
-                        role: "tab"
-                      }
-                    },
-                    [
-                      _c("span", { staticClass: "kt-nav__link-icon" }, [
-                        _c("i", { staticClass: "flaticon2-chart2" })
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "kt-nav__link-text" }, [
-                        _vm._v("Email Settings")
-                      ])
-                    ]
-                  )
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "kt-portlet__separator" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "kt-portlet__body" }, [
-            _c(
-              "ul",
-              {
-                staticClass: "kt-nav kt-nav--bolder kt-nav--fit-ver kt-nav--v4",
-                attrs: { role: "tablist" }
-              },
-              [
-                _c("li", { staticClass: "kt-nav__item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "kt-nav__link",
-                      attrs: {
-                        "data-toggle": "tab",
-                        href: "#kt_profile_email_settings",
-                        role: "tab"
-                      }
-                    },
-                    [
-                      _c("span", { staticClass: "kt-nav__link-icon" }, [
-                        _c("i", { staticClass: "flaticon2-chart2" })
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "kt-nav__link-text" }, [
-                        _vm._v("Email Settings")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "kt-nav__item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "kt-nav__link",
-                      attrs: {
-                        href: "#",
-                        role: "tab",
-                        "data-toggle": "kt-tooltip",
-                        title: "",
-                        "data-placement": "right",
-                        "data-original-title": "This feature is coming soon!"
-                      }
-                    },
-                    [
-                      _c("span", { staticClass: "kt-nav__link-icon" }, [
-                        _c("i", {
-                          staticClass: "flaticon-safe-shield-protection"
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "kt-nav__link-text" }, [
-                        _vm._v("Saved Credit Cards")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "kt-nav__item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "kt-nav__link",
-                      attrs: {
-                        href: "#",
-                        role: "tab",
-                        "data-toggle": "kt-tooltip",
-                        title: "",
-                        "data-placement": "right",
-                        "data-original-title": "This feature is coming soon!"
-                      }
-                    },
-                    [
-                      _c("span", { staticClass: "kt-nav__link-icon" }, [
-                        _c("i", { staticClass: "flaticon-download-1" })
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "kt-nav__link-text" }, [
-                        _vm._v("Social Networks")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "kt-nav__item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "kt-nav__link",
-                      attrs: {
-                        href: "#",
-                        role: "tab",
-                        "data-toggle": "kt-tooltip",
-                        title: "",
-                        "data-placement": "right",
-                        "data-original-title": "This feature is coming soon!"
-                      }
-                    },
-                    [
-                      _c("span", { staticClass: "kt-nav__link-icon" }, [
-                        _c("i", { staticClass: "flaticon-security" })
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "kt-nav__link-text" }, [
-                        _vm._v("Tax Information")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "kt-nav__space" }),
-                _vm._v(" "),
-                _c("li", { staticClass: "kt-nav__custom" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-default btn-sm btn-upper btn-bold",
-                      attrs: { href: "#" }
-                    },
-                    [
-                      _vm._v(
-                        "\n                                New Group\n                            "
-                      )
-                    ]
-                  )
-                ])
-              ]
-            )
-          ])
-        ])
-      ]
-    )
+    return _c("span", { staticClass: "kt-nav__link-icon" }, [
+      _c("i", { staticClass: "flaticon2-user" })
+    ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "kt-widget__progress" }, [
-      _c("div", { staticClass: "kt-widget__cont" }, [
-        _c("div", { staticClass: "kt-widget__stat" }, [
-          _c("span", { staticClass: "kt-widget__caption" }, [
-            _vm._v("Progress")
+    return _c("span", { staticClass: "kt-nav__link-icon" }, [
+      _c("i", { staticClass: "flaticon-feed" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "kt-nav__link-icon" }, [
+      _c("i", { staticClass: "flaticon2-settings" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "kt-nav__link-icon" }, [
+      _c("i", { staticClass: "flaticon2-chart2" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "kt-portlet__body" }, [
+      _c(
+        "ul",
+        {
+          staticClass: "kt-nav kt-nav--bolder kt-nav--fit-ver kt-nav--v4",
+          attrs: { role: "tablist" }
+        },
+        [
+          _c("li", { staticClass: "kt-nav__item" }, [
+            _c(
+              "a",
+              {
+                staticClass: "kt-nav__link",
+                attrs: {
+                  "data-toggle": "tab",
+                  href: "#kt_profile_email_settings",
+                  role: "tab"
+                }
+              },
+              [
+                _c("span", { staticClass: "kt-nav__link-icon" }, [
+                  _c("i", { staticClass: "flaticon2-chart2" })
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "kt-nav__link-text" }, [
+                  _vm._v("Email Settings")
+                ])
+              ]
+            )
           ]),
           _vm._v(" "),
-          _c("span", { staticClass: "kt-widget__value" }, [_vm._v("78")])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "progress" }, [
-          _c("div", {
-            staticClass: "progress-bar bg-brand",
-            staticStyle: { width: "40%" },
-            attrs: {
-              role: "progressbar",
-              "aria-valuenow": "40",
-              "aria-valuemin": "0",
-              "aria-valuemax": "100"
-            }
-          })
-        ])
-      ])
+          _c("li", { staticClass: "kt-nav__item" }, [
+            _c(
+              "a",
+              {
+                staticClass: "kt-nav__link",
+                attrs: {
+                  href: "#",
+                  role: "tab",
+                  "data-toggle": "kt-tooltip",
+                  title: "",
+                  "data-placement": "right",
+                  "data-original-title": "This feature is coming soon!"
+                }
+              },
+              [
+                _c("span", { staticClass: "kt-nav__link-icon" }, [
+                  _c("i", { staticClass: "flaticon-safe-shield-protection" })
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "kt-nav__link-text" }, [
+                  _vm._v("Saved Credit Cards")
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "kt-nav__item" }, [
+            _c(
+              "a",
+              {
+                staticClass: "kt-nav__link",
+                attrs: {
+                  href: "#",
+                  role: "tab",
+                  "data-toggle": "kt-tooltip",
+                  title: "",
+                  "data-placement": "right",
+                  "data-original-title": "This feature is coming soon!"
+                }
+              },
+              [
+                _c("span", { staticClass: "kt-nav__link-icon" }, [
+                  _c("i", { staticClass: "flaticon-download-1" })
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "kt-nav__link-text" }, [
+                  _vm._v("Social Networks")
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "kt-nav__item" }, [
+            _c(
+              "a",
+              {
+                staticClass: "kt-nav__link",
+                attrs: {
+                  href: "#",
+                  role: "tab",
+                  "data-toggle": "kt-tooltip",
+                  title: "",
+                  "data-placement": "right",
+                  "data-original-title": "This feature is coming soon!"
+                }
+              },
+              [
+                _c("span", { staticClass: "kt-nav__link-icon" }, [
+                  _c("i", { staticClass: "flaticon-security" })
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "kt-nav__link-text" }, [
+                  _vm._v("Tax Information")
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "kt-nav__space" }),
+          _vm._v(" "),
+          _c("li", { staticClass: "kt-nav__custom" }, [
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-default btn-sm btn-upper btn-bold",
+                attrs: { href: "#" }
+              },
+              [
+                _vm._v(
+                  "\n                                New Group\n                            "
+                )
+              ]
+            )
+          ])
+        ]
+      )
     ])
   },
   function() {

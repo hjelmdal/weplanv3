@@ -28,13 +28,62 @@
               console.log("length: " + id.length);
               this.modalData.user = user;
               this.modalData.suggested_id = id;
-          }
+          },
+            getAllUsers() {
+                this.usersGet.get("/api/v1/users")
+                    .then((response) =>  {
+                        this.users = response;
+                    })
+            },
+            getFilteredUsers(filter) {
+              let param = null;
+
+                switch(filter) {
+                    case "activated":
+                        param = "activated"
+                        break;
+                    case "all":
+                        this.getAllUsers();
+                        break;
+                    case "incomplete":
+                        param = "incomplete"
+                        break;
+                    case "dissociated":
+                        param = "dissociated"
+                        break;
+                    default:
+                    // code block
+                }
+              if(param) {
+                  this.usersGet.get("/api/v1/users/filter/" + param)
+                      .then((data) => {
+                          this.users = data;
+                      })
+              }
+            },
+            filterUsers(event,filter) {
+              let elems = document.querySelectorAll("#usersNav .kt-nav__item");
+                [].forEach.call(elems, function(el) {
+                    el.classList.remove("active");
+                });
+                document.querySelectorAll("#usersNav .kt-nav__item .kt-nav__link").forEach(e => { e.classList.remove("active") });
+                event.currentTarget.parentElement.classList.add("active");
+
+                this.getFilteredUsers(filter);
+
+            },
+            refresh() {
+                document.querySelector(".kt-nav__item .active").click();
+            }
         },
         mounted() {
-            this.usersGet.get("/api/v1/users")
-                .then((response) =>  {
-                    this.users = response;
-                })
+            this.getAllUsers();
+            this.$root.$on('modalClose', data => {
+                this.refresh();
+            });
+            this.$root.$on('userAssociated', data => {
+                this.refresh();
+            });
         },
         computed: {
             filteredUsers() {
@@ -80,101 +129,34 @@
         <!--Begin:: App Aside-->
         <div class="kt-grid__item kt-app__toggle kt-app__aside kt-app__aside--sm kt-app__aside--fit" id="kt_users_aside">
             <div class="kt-portlet">
-                <div class="kt-portlet__body">
-                    <div class="kt-widget kt-widget--general-1">
-                        <div class="kt-media kt-media--brand kt-media--md kt-media--circle">
-                            <img src="/base/media/users/100_6.jpg" alt="image">
-                        </div>
-                        <div class="kt-widget__wrapper">
-                            <div class="kt-widget__label">
-                                <a href="#" class="kt-widget__title">
-                                    Luke Davids
-                                </a>
-                                <span class="kt-widget__desc">
-                                Web Developer
-                            </span>
-                            </div>
-                            <div class="kt-widget__toolbar kt-widget__toolbar--top-">
-                                <div class="btn-group">
-                                    <div class="dropdown dropdown-inline">
-                                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="flaticon-more-1"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-fit dropdown-menu-md dropdown-menu-right">
-                                            <!--begin::Nav-->
-                                            <ul class="kt-nav">
-                                                <li class="kt-nav__head">
-                                                    Export Options
-                                                    <i class="flaticon2-information" data-toggle="kt-tooltip" data-placement="right" title="Click to learn more..."></i>
-                                                </li>
-                                                <li class="kt-nav__separator"></li>
-                                                <li class="kt-nav__item">
-                                                    <a href="#" class="kt-nav__link">
-                                                        <i class="kt-nav__link-icon flaticon2-drop"></i>
-                                                        <span class="kt-nav__link-text">Users</span>
-                                                    </a>
-                                                </li>
-                                                <li class="kt-nav__item">
-                                                    <a href="#" class="kt-nav__link">
-                                                        <i class="kt-nav__link-icon flaticon2-calendar-8"></i>
-                                                        <span class="kt-nav__link-text">Reports</span>
-                                                        <span class="kt-nav__link-badge">
-					<span class="kt-badge kt-badge--danger">9</span>
-                </span>
-                                                    </a>
-                                                </li>
-                                                <li class="kt-nav__item">
-                                                    <a href="#" class="kt-nav__link">
-                                                        <i class="kt-nav__link-icon flaticon2-link"></i>
-                                                        <span class="kt-nav__link-text">Statements</span>
-                                                    </a>
-                                                </li>
-                                                <li class="kt-nav__item">
-                                                    <a href="#" class="kt-nav__link">
-                                                        <i class="kt-nav__link-icon flaticon2-new-email"></i>
-                                                        <span class="kt-nav__link-text">Customer Support</span>
-                                                    </a>
-                                                </li>
-                                                <li class="kt-nav__separator"></li>
-                                                <li class="kt-nav__foot">
-                                                    <a class="btn btn-label-brand btn-bold btn-sm" href="#">Proceed</a>
-                                                    <a class="btn btn-clean btn-bold btn-sm" href="#" data-toggle="kt-tooltip" data-placement="right" title="Click to learn more...">Learn more</a>
-                                                </li>
-                                            </ul>
-                                            <!--end::Nav-->
-                                        </div>                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
 
                 <div class="kt-portlet__separator"></div>
 
                 <div class="kt-portlet__body">
-                    <ul class="kt-nav kt-nav--bolder kt-nav--fit-ver kt-nav--v4" role="tablist">
-                        <li class="kt-nav__item">
-                            <a class="kt-nav__link active" data-toggle="tab" href="#kt_profile_tab_personal_information" role="tab">
+                    <ul class="kt-nav kt-nav--bolder kt-nav--fit-ver kt-nav--v4" role="tablist" id="usersNav">
+                        <li class="kt-nav__item active">
+                            <a @click="filterUsers($event,'all')" class="kt-nav__link" data-toggle="tab" href="#kt_profile_tab_personal_information" role="tab">
                                 <span class="kt-nav__link-icon"><i class="flaticon2-user"></i></span>
-                                <span class="kt-nav__link-text">Personal Information</span>
+                                <span class="kt-nav__link-text">Alle brugere</span>
                             </a>
                         </li>
-                        <li class="kt-nav__item  active">
-                            <a class="kt-nav__link" data-toggle="tab" href="#kt_profile_tab_account_information" role="tab">
+                        <li class="kt-nav__item">
+                            <a @click="filterUsers($event,'activated')" class="kt-nav__link" data-toggle="tab" href="#kt_profile_tab_account_information" role="tab">
                                 <span class="kt-nav__link-icon"><i class="flaticon-feed"></i></span>
-                                <span class="kt-nav__link-text">Acccount Information</span>
+                                <span class="kt-nav__link-text">Aktiverede</span>
                             </a>
                         </li>
                         <li class="kt-nav__item">
-                            <a class="kt-nav__link" data-toggle="tab" href="#kt_profile_change_password" role="tab">
+                            <a @click="filterUsers($event,'incomplete')" class="kt-nav__link" data-toggle="tab" href="#kt_profile_change_password" role="tab">
                                 <span class="kt-nav__link-icon"><i class="flaticon2-settings"></i></span>
-                                <span class="kt-nav__link-text">Change Password</span>
+                                <span class="kt-nav__link-text">Brugere i aktiveringsflow</span>
                             </a>
                         </li>
                         <li class="kt-nav__item">
-                            <a class="kt-nav__link" data-toggle="tab" href="#kt_profile_email_settings" role="tab">
+                            <a @click="filterUsers($event,'dissociated')" class="kt-nav__link" data-toggle="tab" href="#kt_profile_email_settings" role="tab">
                                 <span class="kt-nav__link-icon"><i class="flaticon2-chart2"></i></span>
-                                <span class="kt-nav__link-text">Email Settings</span>
+                                <span class="kt-nav__link-text">Brugere uden tilknytning</span>
                             </a>
                         </li>
                     </ul>
@@ -237,7 +219,7 @@
             </div>
 
             <!--begin::Portlet-->
-            <div v-for="user in filteredUsers" class="kt-portlet kt-widget kt-widget--general-3">
+            <div v-for="(user,index) in filteredUsers" class="kt-portlet kt-widget kt-widget--general-3">
                 <div class="kt-portlet__body kt-portlet__body--fit">
                     <div class="kt-widget__top">
                         <div class="kt-media kt-media--lg kt-media--circle">
@@ -262,15 +244,19 @@
                             </div>
                             <div class="kt-widget__progress">
                                 <div class="kt-widget__cont">
-                                    <div class="kt-widget__stat">
+                                    <div class="btn-group" role="group">
+                                        <button id="btnGroupDrop1" type="button" :class="{ 'btn-success' : user.complete, 'btn-warning' : !user.complete }" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Status
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                                            <a v-if="user.email_verified_at" class="text-success dropdown-item text-capitalize" href="#"><i class="fa fa-check text-success"></i> Email</a>
+                                            <a v-else class="dropdown-item text-capitalize" href="#"><i class="fa fa-clock"></i> Email</a>
+                                            <a v-for="(status,key) in user.user_status" :class="{ 'text-success' : status.confirmed_at, 'text-muted' : !status.confirmed_at }" class="dropdown-item text-capitalize" href="#"><i v-if="status.confirmed_at" :class="{ 'text-success' : status.confirmed_at, 'text-muted' : !status.confirmed_at }" class="fa fa-check"></i><i v-else class="fa fa-clock"></i> {{ status.type }}</a>
+                                        </div>
+                                    </div>
 
-                                        <span class="kt-widget__caption">Progress</span>
-                                        <span class="kt-widget__value">78</span>
-                                    </div>
-                                    <div class="progress">
-                                        <!-- Doc: A bootstrap progress bar can be used to show a user how far along it's in a process, see https://getbootstrap.com/docs/4.1/components/progress/ -->
-                                        <div class="progress-bar bg-brand" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
+
+
                                 </div>
                             </div>
                             <div class="kt-widget__links">
@@ -285,7 +271,7 @@
                             </div>
                             <div class="kt-widget__stats">
                                 <template  v-for="status in user.user_status" v-if="status.type == 'player'">
-                                    <button data-toggle="modal" data-target="#modal3" v-for="(str,index) in JSON.parse(status.content)" v-if="index == 'data'"  @click="associate(user,str)" type="button" class="btn btn-primary btn-sm"><i class="fa">
+                                    <button data-toggle="modal" data-target="#modal3" v-if="status.data && !user.player_id"  @click="associate(user,status.data)" type="button" class="btn btn-primary btn-sm"><i class="fa">
 
                                         <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                              width="487.811px" height="487.81px" viewBox="0 0 487.811 487.81" style="enable-background:new 0 0 487.811 487.81;"
@@ -348,6 +334,7 @@
                                     </i> Opret spiller</button>
 
                                 </template>
+                                <button v-if="user.player_id" type="button" class="btn btn-outline-success btn-elevate btn-sm"><i class="la la-user"></i>&nbsp;Se Profil</button>
                             </div>
                         </div>
                     </div>

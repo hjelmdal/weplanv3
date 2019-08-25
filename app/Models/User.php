@@ -96,16 +96,16 @@ class User extends Authenticatable implements MustVerifyEmail
         $arr["avatar"] = false;
         $arr["player"] = false;
         foreach ($status as $s) {
-            if($s->type == "password") {
+            if($s->type == "password"  && $s->confirmed_at && !$s->rejected_at) {
                 $arr["pw"] = true;
             }
-            if($s->type == "consent") {
+            if($s->type == "consent" && $s->confirmed_at && !$s->rejected_at) {
                 $arr["consent"] = true;
             }
-            if($s->type == "avatar") {
+            if($s->type == "avatar" && $s->confirmed_at && !$s->rejected_at) {
                 $arr["avatar"] = true;
             }
-            if($s->type == "player" || $s->type == "coach") {
+            if(($s->type == "player" || $s->type == "coach")  && $s->confirmed_at  && !$s->rejected_at) {
                 $arr["player"] = true;
             }
         }
@@ -115,6 +115,13 @@ class User extends Authenticatable implements MustVerifyEmail
         } else {
             return false;
         }
+    }
+
+    public function generateActivationFlow() {
+        UserStatus::insert(["user_id" => $this->id, "type" => "password", "created_at" => now()]);
+        UserStatus::insert(["user_id" => $this->id, "type" => "consent", "created_at" => now()]);
+        UserStatus::insert(["user_id" => $this->id, "type" => "avatar", "created_at" => now()]);
+        UserStatus::insert(["user_id" => $this->id, "type" => "player", "created_at" => now()]);
     }
 
 

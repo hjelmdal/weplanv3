@@ -5,10 +5,13 @@
         props:["formData","id","now"],
         data: function(){
             return {
-                weplanUsers: null,
-                bpUsers:null,
+                weplanPlayers: null,
+                bpPlayers:null,
                 user: this.formData.user,
-                form: new Form(),
+                form: new Form({
+                    playerId: "",
+                    userId: ""
+                }),
                 input: ""
             }
         },
@@ -19,29 +22,42 @@
                     this.getBpPlayer();
 
                 } else {
-                    this.weplanUsers = null;
-                    this.bpUsers = null;
+                    this.weplanPlayers = null;
+                    this.bpPlayers = null;
                 }
+            },
+            associate(playerId) {
+                this.form.playerId = playerId;
+                this.form.userId = this.user.id;
+                this.form.post("/api/v1/user/associate")
+                    .then(data => {
+                        console.log(data);
+                        this.getWePlanPlayer();
+                        this.$root.$emit('userAssociated');
+                    })
+                    .catch(e => {
+                        // nothing now
+                    })
             },
             getWePlanPlayer() {
                 this.form.get("/api/v1/players/find/" + this.input)
                     .then(data => {
-                        this.weplanUsers = data;
+                        this.weplanPlayers = data;
                     })
                     .catch(errors => {
-                        this.weplanUsers = null;
+                        this.weplanPlayers = null;
                         //console.log(errors);
                     })
             },
             getBpPlayer() {
-                if(this.weplanUsers == null) {
+                if(this.weplanPlayers == null) {
                     this.form.get("/api/v1/BP/players/find/" + this.input)
                         .then(data => {
-                            this.bpUsers = data;
+                            this.bpPlayers = data;
                             //console.log(data);
                         })
                         .catch(errors => {
-                            this.bpUsers = null;
+                            this.bpPlayers = null;
                             //console.log(errors);
                         })
                 }
@@ -144,7 +160,7 @@
     </div>
 
     <hr />
-    <h4 v-show="weplanUsers">Matchende spiller(e) i WePlan</h4>
+    <h4 v-show="weplanPlayers">Matchende spiller(e) i WePlan</h4>
     <table class="table table-striped m-table">
         <thead>
         <tr>
@@ -155,22 +171,22 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-if="weplanUsers && weplanUsers.length > 0" v-for="weplanUser in weplanUsers">
+        <tr v-if="weplanPlayers && weplanPlayers.length > 0" v-for="weplanPlayer in weplanPlayers">
             <th scope="row"><div class="kt-widget kt-widget--general-1">
-                <div :class="{ 'kt-media--danger' : weplanUser.gender == 'K'}" class="kt-media kt-media--brand kt-media--sm kt-media--circle">
-                    <span>{{ getInitials(weplanUser.name) }}</span>
+                <div :class="{ 'kt-media--danger' : weplanPlayer.gender == 'K'}" class="kt-media kt-media--brand kt-media--sm kt-media--circle">
+                    <span>{{ getInitials(weplanPlayer.name) }}</span>
                 </div>
 
             </div></th>
-            <td>{{ weplanUser.name }}</td>
-            <td valign="middle">{{ weplanUser.gender }}</td>
+            <td>{{ weplanPlayer.name }}</td>
+            <td valign="middle">{{ weplanPlayer.gender }}</td>
             <td>
-                <button v-if="!weplanUser.user" type="button" class="btn btn-outline-brand btn-elevate btn-sm"><i class="la la-chain"></i>&nbsp;Tilknyt</button>
+                <button v-if="!weplanPlayer.user" type="button" @click="associate(weplanPlayer.id)" class="btn btn-outline-brand btn-elevate btn-sm"><i class="la la-chain"></i>&nbsp;Tilknyt</button>
                 <button v-else type="button" class="btn btn-outline-success btn-elevate btn-sm"><i class="la la-user"></i>&nbsp;Se Profil</button>
             </td>
         </tr>
 
-        <tr v-if="!weplanUsers || weplanUsers.length < 1">
+        <tr v-if="!weplanPlayers || weplanPlayers.length < 1">
             <td colspan="4">Ingen spillere fundet!</td>
         </tr>
         </tbody>
@@ -178,7 +194,7 @@
 
     <hr />
 
-    <div v-show="bpUsers && (!weplanUsers || weplanUsers.length == 0)">
+    <div v-show="bpPlayers && (!weplanPlayers || weplanPlayers.length == 0)">
         <h4>Matchende spiller(e) hos Badminton DK</h4>
 
         <table class="table table-striped m-table">
@@ -192,16 +208,16 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-if="bpUsers" v-for="bpUser in bpUsers">
+            <tr v-if="bpPlayers" v-for="bpPlayer in bpPlayers">
                 <th scope="row"><div class="kt-widget kt-widget--general-1">
-                    <div :class="{ 'kt-media--danger' : bpUser.gender == 'K'}" class="kt-media kt-media--brand kt-media--sm kt-media--circle">
-                        <span>{{ getInitials(bpUser.name) }}</span>
+                    <div :class="{ 'kt-media--danger' : bpPlayer.gender == 'K'}" class="kt-media kt-media--brand kt-media--sm kt-media--circle">
+                        <span>{{ getInitials(bpPlayer.name) }}</span>
                     </div>
 
                 </div></th>
-                <td>{{ bpUser.name }}<br /><span class="text-muted">{{ bpUser.dbf_id }}</span> </td>
-                <td valign="middle">{{ bpUser.gender }}</td>
-                <td>{{ bpUser.bp_club.team_name }}</td>
+                <td>{{ bpPlayer.name }}<br /><span class="text-muted">{{ bpPlayer.dbf_id }}</span> </td>
+                <td valign="middle">{{ bpPlayer.gender }}</td>
+                <td>{{ bpPlayer.bp_club.team_name }}</td>
                 <td><button type="button" class="btn btn-outline-success btn-elevate btn-sm"><i class="la la-plus"></i>&nbsp;Opret og tilknyt</button></td>
             </tr>
 

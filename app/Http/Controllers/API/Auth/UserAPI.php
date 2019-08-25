@@ -70,8 +70,8 @@ class UserAPI extends Controller
             ]);
             $this->user->password = Hash::make($request->password);
             $this->user->save();
-            $cont = ["text" => $this->user->name . " har skiftet password."];
-            $this->updateUserStatus("password",json_encode($cont));
+            $cont = $this->user->name . " har sat sit password";
+            $this->updateUserStatus("password",$cont);
             
             return response()->json("Password er succesfuldt opdateret!", 200);
         }
@@ -79,14 +79,14 @@ class UserAPI extends Controller
         if($request->gdpr) {
             $now = Carbon::parse(now());
             
-            $cont = '{"text":"'.$this->user->name.' har givet samtykke til behandling af dennes data d. '.$now->format("d. M Y H:i").'"}';
+            $cont = $this->user->name.' har givet samtykke til behandling af dennes data d. '.$now->format("d. M Y H:i");
             $this->updateUserStatus("consent",$cont);
             return response()->json("Tak for dit samtykke!", 200);
         }
 
         if($request->playerId && $request->playerConfirm) {
-            $cont = json_encode(array("text" => $this->user->name." har indsendt sit Badminton ID","data" => $request->playerId));
-            $this->updateUserStatus("player",$cont);
+            $cont = $this->user->name." har indsendt sit Badminton ID";
+            $this->updateUserStatus("player",$cont, $request->playerId);
             return response()->json("jaah!",200);
         }
         
@@ -107,9 +107,11 @@ class UserAPI extends Controller
         
         if($user) {
             $old_avatar = $user->avatar;
+
+            Log::info("old". $old_avatar);
             $user->avatar = "/storage/" .$file;
             $user->save();
-            $this->updateUserStatus("avatar",'{"text":"'.$user->name.' har uploadet en ny avatar til godkendelse","avatar_old":"'.$old_avatar.'","avatar":"'.$user->avatar.'"}');
+            $this->updateUserStatus("avatar",$user->name.' har uploadet en ny avatar til godkendelse',$user->avatar,$old_avatar);
             return response()->json(["status" => "success", "url" =>  "/storage/".$file, "request" => $file]);
     
         }
@@ -119,9 +121,10 @@ class UserAPI extends Controller
     }
     
     
-    private function updateUserStatus($type,$content = null) {
+    private function updateUserStatus($type,$content = null,$data = null, $data_old = null) {
         try {
-            UserStatus::updateOrCreate(["user_id" => $this->user->id, "type" => $type], ["user_id" => $this->user->id, "type" => $type, "content" => $content]);
+
+            UserStatus::updateOrCreate(["user_id" => $this->user->id, "type" => $type], ["user_id" => $this->user->id, "type" => $type, "content" => $content, "data" => $data, "data_old" => $data_old, "confirmed_at" => now()]);
         } catch (QueryException $e) {
             return response()->json(["errors" => ["SQL" => [0 => $e, 1 => "User: " . $this->user->id]]], 500);
         }
@@ -193,21 +196,20 @@ class UserAPI extends Controller
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function all() {
+    public function all($filter = null) {
+
         try {
             $users = User::all();
             $users->load(["roles","UserStatus"]);
         } catch (ModelNotFoundException $e) {
             return response()->json(["errors" => ["form" => "No users found"]],404);
         }
-
+        $array = array();
         foreach($users as $user) {
             if($user->UserStatus->count() > 0) {
                 foreach ($user->UserStatus as $status) {
-                    Log::info("rammer!1");
                     if($status->type == "player") {
-                        $json = json_decode($status->content);
-                        $user->suggested_player = $json->data;
+                        $user->suggested_player = $status->data;
                         $user->matched_weplayer = WePlayer::where("dbf_id",$user->suggested_player)->first();
 
                         if(!$user->matched_weplayer) {
@@ -216,8 +218,49 @@ class UserAPI extends Controller
                     }
                 }
             }
+            if($filter == "activated" && $user->email_verified_at) {
+                $array[] = $user;
+            } elseif($filter == "incomplete" && !$user->isComplete()) {
+                $array[] = $user;
+            } elseif($filter == "dissociated" && !$user->player_id) {
+                $array[] = $user;
+            }
+        }
+
+        if($filter) {
+            return response()->json($array,200);
         }
         return response()->json($users,200);
+    }
+
+    public function filteredUsers(Request $request) {
+        if($request->filter) {
+            switch ($request->filter) {
+                case "activated":
+                    return $this->all("activated");
+                    break;
+                case "incomplete":
+                    return $this->all("incomplete");
+                    break;
+                case "dissociated":
+                    return $this->all("dissociated");
+            }
+
+        }
+        return response()->json("Ingen brugere fundet",404);
+    }
+
+    public function associatePlayer(Request $request) {
+        if(!$request->playerId || !$request->userId) {
+            return response()->json(["errors" => ["form" => "Bad request"]], 400);
+        } else {
+
+            $this->user = User::findOrFail($request->userId);
+
+            $this->user->player_id = $request->playerId;
+            $this->user->save();
+        }
+        return response()->json($this->user,200);
     }
 
 
@@ -255,16 +298,20 @@ class UserAPI extends Controller
         $pw = false;
         $consent = false;
         $avatar = false;
+        $player = false;
         //$i = 1; // hvis velkomst skærm ikke skal vises
         foreach ($this->user->userStatus as $s) {
-            if($s->type == "password") {
+            if($s->type == "password" && $s->confirmed_at && !$s->rejected_at) {
                 $pw = true;
             }
-            if($s->type == "consent") {
+            if($s->type == "consent" && $s->confirmed_at && !$s->rejected_at) {
                 $consent = true;
             }
-            if($s->type == "avatar") {
+            if($s->type == "avatar" && $s->confirmed_at && !$s->rejected_at) {
                 $avatar = true;
+            }
+            if($s->type == "player" && $s->confirmed_at && !$s->rejected_at) {
+                $player = true;
             }
         }
         if(!$pw) {
@@ -303,7 +350,7 @@ class UserAPI extends Controller
             $i++;
         }
 
-        if(!$this->user->player_id) {
+        if(!$player) {
             $status[$i]["step"] = $i;
             $status[$i]["state"] = "pending";
             $status[$i]["icon"] = "";

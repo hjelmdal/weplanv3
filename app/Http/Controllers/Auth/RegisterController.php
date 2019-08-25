@@ -79,7 +79,8 @@ class RegisterController extends Controller
 
 
         try {
-            UserStatus::updateOrCreate(["user_id" => $user->id], ["user_id" => $user->id, "type" => "password"]);
+            UserStatus::generateStatuses($user);
+            UserStatus::updateOrCreate(["user_id" => $user->id,"type" => "password"], ["user_id" => $user->id, "type" => "password","confirmed_at" => now()]);
         } catch (QueryException $e) {
             //return response()->json(["errors" => ["SQL" => [0 => $e, 1 => "User: " . $user->id]]],500);
             Log::error("Exception during user registration:" . $e);

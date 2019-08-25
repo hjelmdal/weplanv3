@@ -2226,7 +2226,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$emit("next");
       }).catch(function (e) {
         // Do something
-        return false;
+        console.log(e);
       });
     }
   }
