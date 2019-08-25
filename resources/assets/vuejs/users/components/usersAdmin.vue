@@ -136,7 +136,7 @@
                 <div class="kt-portlet__body">
                     <ul class="kt-nav kt-nav--bolder kt-nav--fit-ver kt-nav--v4" role="tablist" id="usersNav">
                         <li class="kt-nav__item active">
-                            <a @click="filterUsers($event,'all')" class="kt-nav__link" data-toggle="tab" href="#kt_profile_tab_personal_information" role="tab">
+                            <a @click="filterUsers($event,'all')" class="kt-nav__link active" data-toggle="tab" href="#kt_profile_tab_personal_information" role="tab">
                                 <span class="kt-nav__link-icon"><i class="flaticon2-user"></i></span>
                                 <span class="kt-nav__link-text">Alle brugere</span>
                             </a>

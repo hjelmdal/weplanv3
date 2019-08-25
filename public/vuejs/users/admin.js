@@ -21396,7 +21396,7 @@ var render = function() {
                     _c(
                       "a",
                       {
-                        staticClass: "kt-nav__link",
+                        staticClass: "kt-nav__link active",
                         attrs: {
                           "data-toggle": "tab",
                           href: "#kt_profile_tab_personal_information",
