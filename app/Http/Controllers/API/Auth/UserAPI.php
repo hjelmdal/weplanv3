@@ -200,7 +200,7 @@ class UserAPI extends Controller
 
         try {
             $users = User::all();
-            $users->load(["roles","UserStatus"]);
+            $users->load(["roles","UserStatus","WePlayer"]);
         } catch (ModelNotFoundException $e) {
             return response()->json(["errors" => ["form" => "No users found"]],404);
         }

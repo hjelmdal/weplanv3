@@ -1923,6 +1923,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      view: "table",
       search: "",
       test: "yay",
       users: [],
@@ -1993,6 +1994,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     refresh: function refresh() {
       document.querySelector(".kt-nav__item .active").click();
+    },
+    toggleView: function toggleView(view) {
+      this.view = view;
     }
   },
   mounted: function mounted() {
@@ -21497,11 +21501,7 @@ var render = function() {
                   ])
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "kt-portlet__separator" }),
-            _vm._v(" "),
-            _vm._m(5)
+            ])
           ])
         ]
       ),
@@ -21613,457 +21613,887 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._l(_vm.filteredUsers, function(user, index) {
-            return _c(
-              "div",
-              { staticClass: "kt-portlet kt-widget kt-widget--general-3" },
-              [
-                _c(
-                  "div",
-                  { staticClass: "kt-portlet__body kt-portlet__body--fit" },
-                  [
-                    _c("div", { staticClass: "kt-widget__top" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "kt-media kt-media--lg kt-media--circle"
-                        },
-                        [
-                          _c("img", {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: user.avatar,
-                                expression: "user.avatar"
-                              }
-                            ],
-                            attrs: { src: user.avatar, alt: user.name }
-                          }),
-                          _vm._v(" "),
-                          !user.avatar
-                            ? _c("img", {
-                                attrs: {
-                                  src: "/img/profile.png",
-                                  alt: user.name
-                                }
-                              })
-                            : _vm._e()
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "kt-widget__wrapper" }, [
-                        _c("div", { staticClass: "kt-widget__label" }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "kt-widget__title",
-                              attrs: { href: "#" }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                    " +
-                                  _vm._s(user.name) +
-                                  "\n                                "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "kt-widget__desc" }, [
-                            _c("i", {
-                              staticClass: "flaticon2-send  kt-font-success"
-                            }),
-                            _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "btn-group btn-group-sm kt-margin-b-10 float-right",
+              attrs: { role: "group", "aria-label": "Small group" }
+            },
+            [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  class: { active: _vm.view == "table" },
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.toggleView("table")
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa flaticon2-indent-dots" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  class: { active: _vm.view == "grid" },
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.toggleView("grid")
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa flaticon2-layers" })]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "clearfix" }),
+          _vm._v(" "),
+          _vm.view == "table"
+            ? _c("div", { staticClass: "kt-portlet" }, [
+                _c("div", { staticClass: "kt-portlet__body" }, [
+                  _c("table", { staticClass: "table table-striped" }, [
+                    _vm._m(5),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      [
+                        _vm._l(_vm.filteredUsers, function(user, index) {
+                          return _c("tr", [
                             _c(
-                              "a",
-                              {
-                                attrs: {
-                                  target: "_blank",
-                                  href: "mailto:" + user.email
-                                }
-                              },
+                              "td",
+                              { staticStyle: { padding: "0.75rem 5px" } },
                               [
-                                _vm._v(_vm._s(user.email) + " "),
-                                user.email_verified_at != null
-                                  ? _c("i", {
-                                      staticClass:
-                                        "flaticon2-correct kt-font-success"
-                                    })
-                                  : _vm._e()
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            { staticClass: "kt-widget__desc" },
-                            _vm._l(user.roles, function(role) {
-                              return _c(
-                                "span",
-                                {
-                                  staticClass: "badge badge-secondary badge-sm"
-                                },
-                                [_vm._v(_vm._s(role.name))]
-                              )
-                            }),
-                            0
-                          ),
-                          _vm._v(" "),
-                          user.roles.length == 0
-                            ? _c("span", { staticClass: "kt-widget__desc" }, [
-                                _vm._v(
-                                  "\n                                    << None >>\n                                "
-                                )
-                              ])
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "kt-widget__progress" }, [
-                          _c("div", { staticClass: "kt-widget__cont" }, [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "btn-group",
-                                attrs: { role: "group" }
-                              },
-                              [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-sm dropdown-toggle",
-                                    class: {
-                                      "btn-success": user.complete,
-                                      "btn-warning": !user.complete
-                                    },
-                                    attrs: {
-                                      id: "btnGroupDrop1",
-                                      type: "button",
-                                      "data-toggle": "dropdown",
-                                      "aria-haspopup": "true",
-                                      "aria-expanded": "false"
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                            Status\n                                        "
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
                                 _c(
                                   "div",
                                   {
-                                    staticClass: "dropdown-menu",
-                                    staticStyle: {
-                                      position: "absolute",
-                                      "will-change": "transform",
-                                      top: "0px",
-                                      left: "0px",
-                                      transform: "translate3d(0px, 38px, 0px)"
-                                    },
+                                    staticClass:
+                                      "kt-media kt-media--sm kt-media--circle"
+                                  },
+                                  [
+                                    _c("img", {
+                                      directives: [
+                                        {
+                                          name: "show",
+                                          rawName: "v-show",
+                                          value: user.avatar,
+                                          expression: "user.avatar"
+                                        }
+                                      ],
+                                      attrs: {
+                                        src: user.avatar,
+                                        alt: user.name
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    !user.avatar
+                                      ? _c("img", {
+                                          attrs: {
+                                            src: "/img/profile.png",
+                                            alt: user.name
+                                          }
+                                        })
+                                      : _vm._e()
+                                  ]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(user.name)
+                              ),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "kt-widget__desc" }, [
+                                _c("i", {
+                                  staticClass: "flaticon2-send  kt-font-success"
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
                                     attrs: {
-                                      "aria-labelledby": "btnGroupDrop1",
-                                      "x-placement": "bottom-start"
+                                      target: "_blank",
+                                      href: "mailto:" + user.email
                                     }
                                   },
                                   [
-                                    user.email_verified_at
-                                      ? _c(
-                                          "a",
-                                          {
+                                    _vm._v(_vm._s(user.email) + " "),
+                                    user.email_verified_at != null
+                                      ? _c("i", {
+                                          staticClass:
+                                            "flaticon2-correct kt-font-success"
+                                        })
+                                      : _vm._e()
+                                  ]
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "btn-group",
+                                  attrs: { role: "group" }
+                                },
+                                [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-sm dropdown-toggle",
+                                      class: {
+                                        "btn-outline-brand": user.complete,
+                                        "btn-warning": !user.complete
+                                      },
+                                      attrs: {
+                                        id: "btnGroupDrop1",
+                                        type: "button",
+                                        "data-toggle": "dropdown",
+                                        "aria-haspopup": "true",
+                                        "aria-expanded": "false"
+                                      }
+                                    },
+                                    [
+                                      user.complete
+                                        ? _c("i", {
+                                            staticClass: "fa fa-check"
+                                          })
+                                        : _c("i", {
                                             staticClass:
-                                              "text-success dropdown-item text-capitalize",
-                                            attrs: { href: "#" }
-                                          },
-                                          [
-                                            _c("i", {
+                                              "fa fa-clock fa-inverse"
+                                          })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "dropdown-menu",
+                                      staticStyle: {
+                                        position: "absolute",
+                                        "will-change": "transform",
+                                        top: "0px",
+                                        left: "0px",
+                                        transform: "translate3d(0px, 38px, 0px)"
+                                      },
+                                      attrs: {
+                                        "aria-labelledby": "btnGroupDrop1",
+                                        "x-placement": "bottom-start"
+                                      }
+                                    },
+                                    [
+                                      user.email_verified_at
+                                        ? _c(
+                                            "a",
+                                            {
                                               staticClass:
-                                                "fa fa-check text-success"
-                                            }),
-                                            _vm._v(" Email")
-                                          ]
-                                        )
-                                      : _c(
+                                                "text-success dropdown-item text-capitalize",
+                                              attrs: { href: "#" }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass:
+                                                  "fa fa-check text-success"
+                                              }),
+                                              _vm._v(" Email")
+                                            ]
+                                          )
+                                        : _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "dropdown-item text-capitalize",
+                                              attrs: { href: "#" }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass: "fa fa-clock"
+                                              }),
+                                              _vm._v(" Email")
+                                            ]
+                                          ),
+                                      _vm._v(" "),
+                                      _vm._l(user.user_status, function(
+                                        status,
+                                        key
+                                      ) {
+                                        return _c(
                                           "a",
                                           {
                                             staticClass:
                                               "dropdown-item text-capitalize",
+                                            class: {
+                                              "text-success":
+                                                status.confirmed_at,
+                                              "text-muted": !status.confirmed_at
+                                            },
                                             attrs: { href: "#" }
                                           },
                                           [
-                                            _c("i", {
-                                              staticClass: "fa fa-clock"
-                                            }),
-                                            _vm._v(" Email")
+                                            status.confirmed_at
+                                              ? _c("i", {
+                                                  staticClass: "fa fa-check",
+                                                  class: {
+                                                    "text-success":
+                                                      status.confirmed_at,
+                                                    "text-muted": !status.confirmed_at
+                                                  }
+                                                })
+                                              : _c("i", {
+                                                  staticClass: "fa fa-clock"
+                                                }),
+                                            _vm._v(" " + _vm._s(status.type))
                                           ]
-                                        ),
-                                    _vm._v(" "),
-                                    _vm._l(user.user_status, function(
-                                      status,
-                                      key
-                                    ) {
-                                      return _c(
-                                        "a",
-                                        {
-                                          staticClass:
-                                            "dropdown-item text-capitalize",
-                                          class: {
-                                            "text-success": status.confirmed_at,
-                                            "text-muted": !status.confirmed_at
-                                          },
-                                          attrs: { href: "#" }
-                                        },
-                                        [
-                                          status.confirmed_at
-                                            ? _c("i", {
-                                                staticClass: "fa fa-check",
-                                                class: {
-                                                  "text-success":
-                                                    status.confirmed_at,
-                                                  "text-muted": !status.confirmed_at
+                                        )
+                                      })
+                                    ],
+                                    2
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              user.we_player
+                                ? _c("span", [_vm._m(6, true)])
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              [
+                                _vm._l(user.user_status, function(status) {
+                                  return status.type == "player"
+                                    ? [
+                                        status.data && !user.player_id
+                                          ? _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "btn btn-primary btn-sm",
+                                                attrs: {
+                                                  "data-toggle": "modal",
+                                                  "data-target": "#modal3",
+                                                  type: "button"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.associate(
+                                                      user,
+                                                      status.data
+                                                    )
+                                                  }
                                                 }
-                                              })
-                                            : _c("i", {
-                                                staticClass: "fa fa-clock"
-                                              }),
-                                          _vm._v(" " + _vm._s(status.type))
-                                        ]
-                                      )
-                                    })
-                                  ],
-                                  2
+                                              },
+                                              [
+                                                _c("i", { staticClass: "fa" }, [
+                                                  _c(
+                                                    "svg",
+                                                    {
+                                                      staticStyle: {
+                                                        "enable-background":
+                                                          "new 0 0 487.811 487.81"
+                                                      },
+                                                      attrs: {
+                                                        version: "1.1",
+                                                        id: "Capa_1",
+                                                        xmlns:
+                                                          "http://www.w3.org/2000/svg",
+                                                        "xmlns:xlink":
+                                                          "http://www.w3.org/1999/xlink",
+                                                        x: "0px",
+                                                        y: "0px",
+                                                        width: "487.811px",
+                                                        height: "487.81px",
+                                                        viewBox:
+                                                          "0 0 487.811 487.81",
+                                                        "xml:space": "preserve"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("g", [
+                                                        _c(
+                                                          "g",
+                                                          {
+                                                            attrs: {
+                                                              id: "_x33_6_24_"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("g", [
+                                                              _c("path", {
+                                                                attrs: {
+                                                                  d:
+                                                                    "M150.463,109.521h150.512c3.955,0,7.16-3.206,7.16-7.161c0-3.955-3.205-7.161-7.16-7.161H150.463\n\t\t\t\tc-3.955,0-7.161,3.206-7.161,7.161C143.302,106.315,146.508,109.521,150.463,109.521z"
+                                                                }
+                                                              }),
+                                                              _vm._v(" "),
+                                                              _c("path", {
+                                                                attrs: {
+                                                                  d:
+                                                                    "M15.853,179.537h150.511c3.955,0,7.161-3.206,7.161-7.161s-3.206-7.16-7.161-7.16H15.853\n\t\t\t\tc-3.955,0-7.161,3.205-7.161,7.16S11.898,179.537,15.853,179.537z"
+                                                                }
+                                                              }),
+                                                              _vm._v(" "),
+                                                              _c("path", {
+                                                                attrs: {
+                                                                  d:
+                                                                    "M56.258,253.214c0,3.955,3.206,7.162,7.161,7.162H213.93c3.955,0,7.161-3.207,7.161-7.162s-3.206-7.16-7.161-7.16H63.419\n\t\t\t\tC59.464,246.054,56.258,249.259,56.258,253.214z"
+                                                                }
+                                                              }),
+                                                              _vm._v(" "),
+                                                              _c("path", {
+                                                                attrs: {
+                                                                  d:
+                                                                    "M142.396,336.44H7.161C3.206,336.44,0,339.645,0,343.6s3.206,7.161,7.161,7.161h135.235c3.955,0,7.161-3.206,7.161-7.161\n\t\t\t\tS146.351,336.44,142.396,336.44z"
+                                                                }
+                                                              }),
+                                                              _vm._v(" "),
+                                                              _c("path", {
+                                                                attrs: {
+                                                                  d:
+                                                                    "M385.729,154.418c21.6,0,39.111-17.513,39.111-39.114s-17.512-39.113-39.111-39.113\n\t\t\t\tc-21.605,0-39.119,17.513-39.119,39.113C346.609,136.905,364.123,154.418,385.729,154.418z"
+                                                                }
+                                                              }),
+                                                              _vm._v(" "),
+                                                              _c("path", {
+                                                                attrs: {
+                                                                  d:
+                                                                    "M450.066,143.155c-22.459,31.459-52.533,35.102-84.895,15.89c-2.203-1.306-11.977-6.691-14.141-7.977\n\t\t\t\tc-52.061-30.906-104.061-18.786-138.934,30.05c-14.819,20.771,19.455,40.459,34.108,19.93\n\t\t\t\tc18.018-25.232,40.929-32.533,65.986-24.541c-12.83,22.27-24.047,44.405-39.875,75.853\n\t\t\t\tc-15.832,31.448-50.787,56.562-84.374,36.92c-24.235-14.165-46.09,20.651-21.928,34.772\n\t\t\t\tc45.854,26.799,99.619,10.343,127.066-24.493c0.952,0.509,1.958,0.968,3.062,1.354c22.422,7.812,51.814,28.61,60.77,35.981\n\t\t\t\tc8.953,7.371,24.336,44.921,33.471,63.788c11.082,22.893,46.871,6.219,35.748-16.771c-10.355-21.406-27.736-64.129-41.293-74.938\n\t\t\t\tc-10.875-8.669-31.988-24.803-49.895-33.956c12.115-23.466,24.729-46.679,38.008-69.491\n\t\t\t\tc42.328,12.969,82.561-2.308,111.215-42.446C498.996,142.312,464.73,122.624,450.066,143.155z"
+                                                                }
+                                                              })
+                                                            ])
+                                                          ]
+                                                        )
+                                                      ]),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g")
+                                                    ]
+                                                  )
+                                                ]),
+                                                _vm._v(" Opret spiller")
+                                              ]
+                                            )
+                                          : _vm._e()
+                                      ]
+                                    : _vm._e()
+                                }),
+                                _vm._v(" "),
+                                user.player_id
+                                  ? _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "btn btn-outline-success btn-elevate btn-sm",
+                                        attrs: { type: "button" }
+                                      },
+                                      [
+                                        _c("i", { staticClass: "la la-user" }),
+                                        _vm._v(" Se Profil")
+                                      ]
+                                    )
+                                  : _vm._e()
+                              ],
+                              2
+                            )
+                          ])
+                        }),
+                        _vm._v(" "),
+                        _vm.filteredUsers.length < 1
+                          ? _c("tr", [
+                              _c(
+                                "td",
+                                {
+                                  staticClass: "text-center",
+                                  attrs: { colspan: "5" }
+                                },
+                                [_vm._v("Ingen brugere blev fundet.")]
+                              )
+                            ])
+                          : _vm._e()
+                      ],
+                      2
+                    )
+                  ])
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._l(_vm.filteredUsers, function(user, index) {
+            return _vm.view == "grid"
+              ? _c(
+                  "div",
+                  { staticClass: "kt-portlet kt-widget kt-widget--general-3" },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "kt-portlet__body kt-portlet__body--fit" },
+                      [
+                        _c("div", { staticClass: "kt-widget__top" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "kt-media kt-media--lg kt-media--circle"
+                            },
+                            [
+                              _c("img", {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: user.avatar,
+                                    expression: "user.avatar"
+                                  }
+                                ],
+                                attrs: { src: user.avatar, alt: user.name }
+                              }),
+                              _vm._v(" "),
+                              !user.avatar
+                                ? _c("img", {
+                                    attrs: {
+                                      src: "/img/profile.png",
+                                      alt: user.name
+                                    }
+                                  })
+                                : _vm._e()
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "kt-widget__wrapper" }, [
+                            _c("div", { staticClass: "kt-widget__label" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "kt-widget__title",
+                                  attrs: { href: "#" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(user.name) +
+                                      "\n                                "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "kt-widget__desc" }, [
+                                _c("i", {
+                                  staticClass: "flaticon2-send  kt-font-success"
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      target: "_blank",
+                                      href: "mailto:" + user.email
+                                    }
+                                  },
+                                  [
+                                    _vm._v(_vm._s(user.email) + " "),
+                                    user.email_verified_at != null
+                                      ? _c("i", {
+                                          staticClass:
+                                            "flaticon2-correct kt-font-success"
+                                        })
+                                      : _vm._e()
+                                  ]
                                 )
-                              ]
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                { staticClass: "kt-widget__desc" },
+                                _vm._l(user.roles, function(role) {
+                                  return _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "badge badge-secondary badge-sm"
+                                    },
+                                    [_vm._v(_vm._s(role.name))]
+                                  )
+                                }),
+                                0
+                              ),
+                              _vm._v(" "),
+                              user.roles.length == 0
+                                ? _c(
+                                    "span",
+                                    { staticClass: "kt-widget__desc" },
+                                    [
+                                      _vm._v(
+                                        "\n                                    << None >>\n                                "
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "kt-widget__progress" }, [
+                              _c("div", { staticClass: "kt-widget__cont" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "btn-group",
+                                    attrs: { role: "group" }
+                                  },
+                                  [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "btn btn-sm dropdown-toggle",
+                                        class: {
+                                          "btn-success": user.complete,
+                                          "btn-warning": !user.complete
+                                        },
+                                        attrs: {
+                                          id: "btnGroupDrop1",
+                                          type: "button",
+                                          "data-toggle": "dropdown",
+                                          "aria-haspopup": "true",
+                                          "aria-expanded": "false"
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                            Status\n                                        "
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "dropdown-menu",
+                                        staticStyle: {
+                                          position: "absolute",
+                                          "will-change": "transform",
+                                          top: "0px",
+                                          left: "0px",
+                                          transform:
+                                            "translate3d(0px, 38px, 0px)"
+                                        },
+                                        attrs: {
+                                          "aria-labelledby": "btnGroupDrop1",
+                                          "x-placement": "bottom-start"
+                                        }
+                                      },
+                                      [
+                                        user.email_verified_at
+                                          ? _c(
+                                              "a",
+                                              {
+                                                staticClass:
+                                                  "text-success dropdown-item text-capitalize",
+                                                attrs: { href: "#" }
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass:
+                                                    "fa fa-check text-success"
+                                                }),
+                                                _vm._v(" Email")
+                                              ]
+                                            )
+                                          : _c(
+                                              "a",
+                                              {
+                                                staticClass:
+                                                  "dropdown-item text-capitalize",
+                                                attrs: { href: "#" }
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass: "fa fa-clock"
+                                                }),
+                                                _vm._v(" Email")
+                                              ]
+                                            ),
+                                        _vm._v(" "),
+                                        _vm._l(user.user_status, function(
+                                          status,
+                                          key
+                                        ) {
+                                          return _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "dropdown-item text-capitalize",
+                                              class: {
+                                                "text-success":
+                                                  status.confirmed_at,
+                                                "text-muted": !status.confirmed_at
+                                              },
+                                              attrs: { href: "#" }
+                                            },
+                                            [
+                                              status.confirmed_at
+                                                ? _c("i", {
+                                                    staticClass: "fa fa-check",
+                                                    class: {
+                                                      "text-success":
+                                                        status.confirmed_at,
+                                                      "text-muted": !status.confirmed_at
+                                                    }
+                                                  })
+                                                : _c("i", {
+                                                    staticClass: "fa fa-clock"
+                                                  }),
+                                              _vm._v(" " + _vm._s(status.type))
+                                            ]
+                                          )
+                                        })
+                                      ],
+                                      2
+                                    )
+                                  ]
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "kt-widget__stats" },
+                              [
+                                _vm._l(user.user_status, function(status) {
+                                  return status.type == "player"
+                                    ? [
+                                        status.data && !user.player_id
+                                          ? _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "btn btn-primary btn-sm",
+                                                attrs: {
+                                                  "data-toggle": "modal",
+                                                  "data-target": "#modal3",
+                                                  type: "button"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.associate(
+                                                      user,
+                                                      status.data
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("i", { staticClass: "fa" }, [
+                                                  _c(
+                                                    "svg",
+                                                    {
+                                                      staticStyle: {
+                                                        "enable-background":
+                                                          "new 0 0 487.811 487.81"
+                                                      },
+                                                      attrs: {
+                                                        version: "1.1",
+                                                        id: "Capa_1",
+                                                        xmlns:
+                                                          "http://www.w3.org/2000/svg",
+                                                        "xmlns:xlink":
+                                                          "http://www.w3.org/1999/xlink",
+                                                        x: "0px",
+                                                        y: "0px",
+                                                        width: "487.811px",
+                                                        height: "487.81px",
+                                                        viewBox:
+                                                          "0 0 487.811 487.81",
+                                                        "xml:space": "preserve"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("g", [
+                                                        _c(
+                                                          "g",
+                                                          {
+                                                            attrs: {
+                                                              id: "_x33_6_24_"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("g", [
+                                                              _c("path", {
+                                                                attrs: {
+                                                                  d:
+                                                                    "M150.463,109.521h150.512c3.955,0,7.16-3.206,7.16-7.161c0-3.955-3.205-7.161-7.16-7.161H150.463\n\t\t\t\tc-3.955,0-7.161,3.206-7.161,7.161C143.302,106.315,146.508,109.521,150.463,109.521z"
+                                                                }
+                                                              }),
+                                                              _vm._v(" "),
+                                                              _c("path", {
+                                                                attrs: {
+                                                                  d:
+                                                                    "M15.853,179.537h150.511c3.955,0,7.161-3.206,7.161-7.161s-3.206-7.16-7.161-7.16H15.853\n\t\t\t\tc-3.955,0-7.161,3.205-7.161,7.16S11.898,179.537,15.853,179.537z"
+                                                                }
+                                                              }),
+                                                              _vm._v(" "),
+                                                              _c("path", {
+                                                                attrs: {
+                                                                  d:
+                                                                    "M56.258,253.214c0,3.955,3.206,7.162,7.161,7.162H213.93c3.955,0,7.161-3.207,7.161-7.162s-3.206-7.16-7.161-7.16H63.419\n\t\t\t\tC59.464,246.054,56.258,249.259,56.258,253.214z"
+                                                                }
+                                                              }),
+                                                              _vm._v(" "),
+                                                              _c("path", {
+                                                                attrs: {
+                                                                  d:
+                                                                    "M142.396,336.44H7.161C3.206,336.44,0,339.645,0,343.6s3.206,7.161,7.161,7.161h135.235c3.955,0,7.161-3.206,7.161-7.161\n\t\t\t\tS146.351,336.44,142.396,336.44z"
+                                                                }
+                                                              }),
+                                                              _vm._v(" "),
+                                                              _c("path", {
+                                                                attrs: {
+                                                                  d:
+                                                                    "M385.729,154.418c21.6,0,39.111-17.513,39.111-39.114s-17.512-39.113-39.111-39.113\n\t\t\t\tc-21.605,0-39.119,17.513-39.119,39.113C346.609,136.905,364.123,154.418,385.729,154.418z"
+                                                                }
+                                                              }),
+                                                              _vm._v(" "),
+                                                              _c("path", {
+                                                                attrs: {
+                                                                  d:
+                                                                    "M450.066,143.155c-22.459,31.459-52.533,35.102-84.895,15.89c-2.203-1.306-11.977-6.691-14.141-7.977\n\t\t\t\tc-52.061-30.906-104.061-18.786-138.934,30.05c-14.819,20.771,19.455,40.459,34.108,19.93\n\t\t\t\tc18.018-25.232,40.929-32.533,65.986-24.541c-12.83,22.27-24.047,44.405-39.875,75.853\n\t\t\t\tc-15.832,31.448-50.787,56.562-84.374,36.92c-24.235-14.165-46.09,20.651-21.928,34.772\n\t\t\t\tc45.854,26.799,99.619,10.343,127.066-24.493c0.952,0.509,1.958,0.968,3.062,1.354c22.422,7.812,51.814,28.61,60.77,35.981\n\t\t\t\tc8.953,7.371,24.336,44.921,33.471,63.788c11.082,22.893,46.871,6.219,35.748-16.771c-10.355-21.406-27.736-64.129-41.293-74.938\n\t\t\t\tc-10.875-8.669-31.988-24.803-49.895-33.956c12.115-23.466,24.729-46.679,38.008-69.491\n\t\t\t\tc42.328,12.969,82.561-2.308,111.215-42.446C498.996,142.312,464.73,122.624,450.066,143.155z"
+                                                                }
+                                                              })
+                                                            ])
+                                                          ]
+                                                        )
+                                                      ]),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g"),
+                                                      _vm._v(" "),
+                                                      _c("g")
+                                                    ]
+                                                  )
+                                                ]),
+                                                _vm._v(" Opret spiller")
+                                              ]
+                                            )
+                                          : _vm._e()
+                                      ]
+                                    : _vm._e()
+                                }),
+                                _vm._v(" "),
+                                user.player_id
+                                  ? _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "btn btn-outline-success btn-elevate btn-sm",
+                                        attrs: { type: "button" }
+                                      },
+                                      [
+                                        _c("i", { staticClass: "la la-user" }),
+                                        _vm._v(" Se Profil")
+                                      ]
+                                    )
+                                  : _vm._e()
+                              ],
+                              2
                             )
                           ])
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "kt-widget__links" }, [
-                          _c("div", { staticClass: "kt-widget__cont" }, [
-                            _c("div", { staticClass: "kt-widget__link" }, [
-                              _c("i", {
-                                staticClass: "flaticon2-send  kt-font-success"
-                              }),
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v(_vm._s(user.email) + " "),
-                                user.email_verified_at != null
-                                  ? _c("i", {
-                                      staticClass:
-                                        "flaticon2-correct kt-font-success"
-                                    })
-                                  : _vm._e()
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _vm._m(6, true)
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "kt-widget__stats" },
-                          [
-                            _vm._l(user.user_status, function(status) {
-                              return status.type == "player"
-                                ? [
-                                    status.data && !user.player_id
-                                      ? _c(
-                                          "button",
-                                          {
-                                            staticClass:
-                                              "btn btn-primary btn-sm",
-                                            attrs: {
-                                              "data-toggle": "modal",
-                                              "data-target": "#modal3",
-                                              type: "button"
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.associate(
-                                                  user,
-                                                  status.data
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _c("i", { staticClass: "fa" }, [
-                                              _c(
-                                                "svg",
-                                                {
-                                                  staticStyle: {
-                                                    "enable-background":
-                                                      "new 0 0 487.811 487.81"
-                                                  },
-                                                  attrs: {
-                                                    version: "1.1",
-                                                    id: "Capa_1",
-                                                    xmlns:
-                                                      "http://www.w3.org/2000/svg",
-                                                    "xmlns:xlink":
-                                                      "http://www.w3.org/1999/xlink",
-                                                    x: "0px",
-                                                    y: "0px",
-                                                    width: "487.811px",
-                                                    height: "487.81px",
-                                                    viewBox:
-                                                      "0 0 487.811 487.81",
-                                                    "xml:space": "preserve"
-                                                  }
-                                                },
-                                                [
-                                                  _c("g", [
-                                                    _c(
-                                                      "g",
-                                                      {
-                                                        attrs: {
-                                                          id: "_x33_6_24_"
-                                                        }
-                                                      },
-                                                      [
-                                                        _c("g", [
-                                                          _c("path", {
-                                                            attrs: {
-                                                              d:
-                                                                "M150.463,109.521h150.512c3.955,0,7.16-3.206,7.16-7.161c0-3.955-3.205-7.161-7.16-7.161H150.463\n\t\t\t\tc-3.955,0-7.161,3.206-7.161,7.161C143.302,106.315,146.508,109.521,150.463,109.521z"
-                                                            }
-                                                          }),
-                                                          _vm._v(" "),
-                                                          _c("path", {
-                                                            attrs: {
-                                                              d:
-                                                                "M15.853,179.537h150.511c3.955,0,7.161-3.206,7.161-7.161s-3.206-7.16-7.161-7.16H15.853\n\t\t\t\tc-3.955,0-7.161,3.205-7.161,7.16S11.898,179.537,15.853,179.537z"
-                                                            }
-                                                          }),
-                                                          _vm._v(" "),
-                                                          _c("path", {
-                                                            attrs: {
-                                                              d:
-                                                                "M56.258,253.214c0,3.955,3.206,7.162,7.161,7.162H213.93c3.955,0,7.161-3.207,7.161-7.162s-3.206-7.16-7.161-7.16H63.419\n\t\t\t\tC59.464,246.054,56.258,249.259,56.258,253.214z"
-                                                            }
-                                                          }),
-                                                          _vm._v(" "),
-                                                          _c("path", {
-                                                            attrs: {
-                                                              d:
-                                                                "M142.396,336.44H7.161C3.206,336.44,0,339.645,0,343.6s3.206,7.161,7.161,7.161h135.235c3.955,0,7.161-3.206,7.161-7.161\n\t\t\t\tS146.351,336.44,142.396,336.44z"
-                                                            }
-                                                          }),
-                                                          _vm._v(" "),
-                                                          _c("path", {
-                                                            attrs: {
-                                                              d:
-                                                                "M385.729,154.418c21.6,0,39.111-17.513,39.111-39.114s-17.512-39.113-39.111-39.113\n\t\t\t\tc-21.605,0-39.119,17.513-39.119,39.113C346.609,136.905,364.123,154.418,385.729,154.418z"
-                                                            }
-                                                          }),
-                                                          _vm._v(" "),
-                                                          _c("path", {
-                                                            attrs: {
-                                                              d:
-                                                                "M450.066,143.155c-22.459,31.459-52.533,35.102-84.895,15.89c-2.203-1.306-11.977-6.691-14.141-7.977\n\t\t\t\tc-52.061-30.906-104.061-18.786-138.934,30.05c-14.819,20.771,19.455,40.459,34.108,19.93\n\t\t\t\tc18.018-25.232,40.929-32.533,65.986-24.541c-12.83,22.27-24.047,44.405-39.875,75.853\n\t\t\t\tc-15.832,31.448-50.787,56.562-84.374,36.92c-24.235-14.165-46.09,20.651-21.928,34.772\n\t\t\t\tc45.854,26.799,99.619,10.343,127.066-24.493c0.952,0.509,1.958,0.968,3.062,1.354c22.422,7.812,51.814,28.61,60.77,35.981\n\t\t\t\tc8.953,7.371,24.336,44.921,33.471,63.788c11.082,22.893,46.871,6.219,35.748-16.771c-10.355-21.406-27.736-64.129-41.293-74.938\n\t\t\t\tc-10.875-8.669-31.988-24.803-49.895-33.956c12.115-23.466,24.729-46.679,38.008-69.491\n\t\t\t\tc42.328,12.969,82.561-2.308,111.215-42.446C498.996,142.312,464.73,122.624,450.066,143.155z"
-                                                            }
-                                                          })
-                                                        ])
-                                                      ]
-                                                    )
-                                                  ]),
-                                                  _vm._v(" "),
-                                                  _c("g"),
-                                                  _vm._v(" "),
-                                                  _c("g"),
-                                                  _vm._v(" "),
-                                                  _c("g"),
-                                                  _vm._v(" "),
-                                                  _c("g"),
-                                                  _vm._v(" "),
-                                                  _c("g"),
-                                                  _vm._v(" "),
-                                                  _c("g"),
-                                                  _vm._v(" "),
-                                                  _c("g"),
-                                                  _vm._v(" "),
-                                                  _c("g"),
-                                                  _vm._v(" "),
-                                                  _c("g"),
-                                                  _vm._v(" "),
-                                                  _c("g"),
-                                                  _vm._v(" "),
-                                                  _c("g"),
-                                                  _vm._v(" "),
-                                                  _c("g"),
-                                                  _vm._v(" "),
-                                                  _c("g"),
-                                                  _vm._v(" "),
-                                                  _c("g"),
-                                                  _vm._v(" "),
-                                                  _c("g")
-                                                ]
-                                              )
-                                            ]),
-                                            _vm._v(" Opret spiller")
-                                          ]
-                                        )
-                                      : _vm._e()
-                                  ]
-                                : _vm._e()
-                            }),
-                            _vm._v(" "),
-                            user.player_id
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-outline-success btn-elevate btn-sm",
-                                    attrs: { type: "button" }
-                                  },
-                                  [
-                                    _c("i", { staticClass: "la la-user" }),
-                                    _vm._v(" Se Profil")
-                                  ]
-                                )
-                              : _vm._e()
-                          ],
-                          2
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "kt-widget__bottom" }, [
-                      _c("div", { staticClass: "kt-widget__summary" }, [
-                        _c("div", { staticClass: "kt-widget__item" }, [
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "btn btn-label-brand btn-sm btn-bold btn-upper"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(
-                                  _vm._f("formatDate")(
-                                    user.created_at,
-                                    "DD-MMM"
+                        _c("div", { staticClass: "kt-widget__bottom" }, [
+                          _c("div", { staticClass: "kt-widget__summary" }, [
+                            _c("div", { staticClass: "kt-widget__item" }, [
+                              _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "btn btn-label-brand btn-sm btn-bold btn-upper"
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm._f("formatDate")(
+                                        user.created_at,
+                                        "DD-MMM"
+                                      )
+                                    )
                                   )
-                                )
-                              )
-                            ]
-                          ),
-                          _vm._v(" \n                                "),
-                          _c("span", { staticClass: "kt-widget__hint" }, [
-                            _vm._v("Joined Date")
-                          ])
+                                ]
+                              ),
+                              _vm._v(" \n                                "),
+                              _c("span", { staticClass: "kt-widget__hint" }, [
+                                _vm._v("Joined Date")
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(7, true)
                         ])
-                      ]),
-                      _vm._v(" "),
-                      _vm._m(7, true)
-                    ])
+                      ]
+                    )
                   ]
                 )
-              ]
-            )
-          }),
-          _vm._v(" "),
-          _vm._m(8)
+              : _vm._e()
+          })
         ],
         2
       ),
@@ -22138,142 +22568,26 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "kt-portlet__body" }, [
-      _c(
-        "ul",
-        {
-          staticClass: "kt-nav kt-nav--bolder kt-nav--fit-ver kt-nav--v4",
-          attrs: { role: "tablist" }
-        },
-        [
-          _c("li", { staticClass: "kt-nav__item" }, [
-            _c(
-              "a",
-              {
-                staticClass: "kt-nav__link",
-                attrs: {
-                  "data-toggle": "tab",
-                  href: "#kt_profile_email_settings",
-                  role: "tab"
-                }
-              },
-              [
-                _c("span", { staticClass: "kt-nav__link-icon" }, [
-                  _c("i", { staticClass: "flaticon2-chart2" })
-                ]),
-                _vm._v(" "),
-                _c("span", { staticClass: "kt-nav__link-text" }, [
-                  _vm._v("Email Settings")
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "kt-nav__item" }, [
-            _c(
-              "a",
-              {
-                staticClass: "kt-nav__link",
-                attrs: {
-                  href: "#",
-                  role: "tab",
-                  "data-toggle": "kt-tooltip",
-                  title: "",
-                  "data-placement": "right",
-                  "data-original-title": "This feature is coming soon!"
-                }
-              },
-              [
-                _c("span", { staticClass: "kt-nav__link-icon" }, [
-                  _c("i", { staticClass: "flaticon-safe-shield-protection" })
-                ]),
-                _vm._v(" "),
-                _c("span", { staticClass: "kt-nav__link-text" }, [
-                  _vm._v("Saved Credit Cards")
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "kt-nav__item" }, [
-            _c(
-              "a",
-              {
-                staticClass: "kt-nav__link",
-                attrs: {
-                  href: "#",
-                  role: "tab",
-                  "data-toggle": "kt-tooltip",
-                  title: "",
-                  "data-placement": "right",
-                  "data-original-title": "This feature is coming soon!"
-                }
-              },
-              [
-                _c("span", { staticClass: "kt-nav__link-icon" }, [
-                  _c("i", { staticClass: "flaticon-download-1" })
-                ]),
-                _vm._v(" "),
-                _c("span", { staticClass: "kt-nav__link-text" }, [
-                  _vm._v("Social Networks")
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "kt-nav__item" }, [
-            _c(
-              "a",
-              {
-                staticClass: "kt-nav__link",
-                attrs: {
-                  href: "#",
-                  role: "tab",
-                  "data-toggle": "kt-tooltip",
-                  title: "",
-                  "data-placement": "right",
-                  "data-original-title": "This feature is coming soon!"
-                }
-              },
-              [
-                _c("span", { staticClass: "kt-nav__link-icon" }, [
-                  _c("i", { staticClass: "flaticon-security" })
-                ]),
-                _vm._v(" "),
-                _c("span", { staticClass: "kt-nav__link-text" }, [
-                  _vm._v("Tax Information")
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "kt-nav__space" }),
-          _vm._v(" "),
-          _c("li", { staticClass: "kt-nav__custom" }, [
-            _c(
-              "a",
-              {
-                staticClass: "btn btn-default btn-sm btn-upper btn-bold",
-                attrs: { href: "#" }
-              },
-              [
-                _vm._v(
-                  "\n                                New Group\n                            "
-                )
-              ]
-            )
-          ])
-        ]
-      )
+    return _c("thead", [
+      _c("th", { attrs: { width: "40" } }),
+      _vm._v(" "),
+      _c("th", [_vm._v("Bruger")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Status")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Spiller")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("#")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "kt-widget__link" }, [
-      _c("i", { staticClass: "socicon-skype kt-font-skype" }),
-      _c("a", { attrs: { href: "#" } }, [_vm._v("lukemanson")])
+    return _c("span", { staticClass: "float-left fa fa-stack fa-lg" }, [
+      _c("i", { staticClass: "fa fa-certificate fa-stack-1x kt-font-brand" }),
+      _vm._v(" "),
+      _c("i", { staticClass: "fa fa-check fa-stack-1x fa-sm fa-inverse" })
     ])
   },
   function() {
@@ -22308,78 +22622,6 @@ var staticRenderFns = [
         [_c("i", { staticClass: "socicon-linkedin" })]
       )
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "kt-pagination kt-pagination--brand kt-margin-t-10" },
-      [
-        _c("ul", { staticClass: "kt-pagination__links" }, [
-          _c("li", { staticClass: "kt-pagination__link--first" }, [
-            _c("a", { attrs: { href: "#" } }, [
-              _c("i", { staticClass: "fa fa-angle-double-left" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "kt-pagination__link--next" }, [
-            _c("a", { attrs: { href: "#" } }, [
-              _c("i", { staticClass: "fa fa-angle-left" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("...")])]),
-          _vm._v(" "),
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("29")])]),
-          _vm._v(" "),
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("30")])]),
-          _vm._v(" "),
-          _c("li", { staticClass: "kt-pagination__link--active" }, [
-            _c("a", { attrs: { href: "#" } }, [_vm._v("32")])
-          ]),
-          _vm._v(" "),
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("34")])]),
-          _vm._v(" "),
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("...")])]),
-          _vm._v(" "),
-          _c("li", { staticClass: "kt-pagination__link--prev" }, [
-            _c("a", { attrs: { href: "#" } }, [
-              _c("i", { staticClass: "fa fa-angle-right" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "kt-pagination__link--last" }, [
-            _c("a", { attrs: { href: "#" } }, [
-              _c("i", { staticClass: "fa fa-angle-double-right" })
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "kt-pagination__toolbar" }, [
-          _c(
-            "select",
-            { staticClass: "form-control", staticStyle: { width: "60px" } },
-            [
-              _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "20" } }, [_vm._v("20")]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "30" } }, [_vm._v("30")]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "50" } }, [_vm._v("50")]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "100" } }, [_vm._v("100")])
-            ]
-          ),
-          _vm._v(" "),
-          _c("span", { staticClass: "pagination__desc" }, [
-            _vm._v("\n                    10 of 230\n                ")
-          ])
-        ])
-      ]
-    )
   }
 ]
 render._withStripped = true
