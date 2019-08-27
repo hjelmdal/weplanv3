@@ -41,8 +41,12 @@ class BpPlayerAPI extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
+
+        if($request->playerId) {
+            $request->data = $request->playerId;
+            $request["data"] = $request->playerId;
+        }
         $request->validate([
             "data.*" => "required|integer|min:1|distinct",
         ]);

@@ -259,6 +259,7 @@ class UserAPI extends Controller
 
             $this->user->player_id = $request->playerId;
             $this->user->save();
+            $this->user->load("WePlayer");
         }
         return response()->json($this->user,200);
     }

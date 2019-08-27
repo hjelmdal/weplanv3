@@ -532,6 +532,13 @@ body::before {
   cursor: not-allowed !important;
 }
 
+.table.table-ellipsis tbody td {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 @media (max-width: 575px) {
   .kt-content {
     padding: 15px 0px 15px 0px;

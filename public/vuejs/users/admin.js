@@ -1764,8 +1764,13 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Form */ "./resources/assets/vuejs/Form.js");
+/* harmony import */ var _playerTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./playerTable */ "./resources/assets/vuejs/users/components/playerTable.vue");
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    playerTable: _playerTable__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   name: "associateUser",
   props: ["formData", "id", "now"],
   data: function data() {
@@ -1777,12 +1782,14 @@ __webpack_require__.r(__webpack_exports__);
         playerId: "",
         userId: ""
       }),
-      input: ""
+      input: "",
+      readOnly: false
     };
   },
   methods: {
     submit: function submit() {
       if (this.input && this.input.length > 5) {
+        console.log("yer");
         this.getWePlanPlayer();
         this.getBpPlayer();
       } else {
@@ -1793,58 +1800,64 @@ __webpack_require__.r(__webpack_exports__);
     associate: function associate(playerId) {
       var _this = this;
 
+      console.log("also done");
       this.form.playerId = playerId;
       this.form.userId = this.user.id;
       this.form.post("/api/v1/user/associate").then(function (data) {
         console.log(data);
+        _this.input = data.we_player.dbf_id;
+        _this.user = data;
 
-        _this.getWePlanPlayer();
+        _this.submit();
+
+        _this.setReadOnly();
 
         _this.$root.$emit('userAssociated');
       }).catch(function (e) {// nothing now
       });
     },
-    getWePlanPlayer: function getWePlanPlayer() {
+    createWeplanPlayer: function createWeplanPlayer(playerId) {
       var _this2 = this;
 
+      console.log("also here");
+      this.form.playerId = [];
+      this.form.playerId.push(playerId);
+      this.form.post("/api/v1/BP/players/store").then(function (data) {
+        console.log(data.message);
+
+        _this2.getWePlanPlayer();
+      }).catch(function (e) {//nothing
+      });
+    },
+    getWePlanPlayer: function getWePlanPlayer() {
+      var _this3 = this;
+
       this.form.get("/api/v1/players/find/" + this.input).then(function (data) {
-        _this2.weplanPlayers = data;
+        _this3.weplanPlayers = data;
       }).catch(function (errors) {
-        _this2.weplanPlayers = null; //console.log(errors);
+        _this3.weplanPlayers = null; //console.log(errors);
       });
     },
     getBpPlayer: function getBpPlayer() {
-      var _this3 = this;
+      var _this4 = this;
 
-      if (this.weplanPlayers == null) {
-        this.form.get("/api/v1/BP/players/find/" + this.input).then(function (data) {
-          _this3.bpPlayers = data; //console.log(data);
-        }).catch(function (errors) {
-          _this3.bpPlayers = null; //console.log(errors);
-        });
-      }
+      this.form.get("/api/v1/BP/players/find/" + this.input).then(function (data) {
+        _this4.bpPlayers = data; //console.log(data);
+      }).catch(function (errors) {
+        _this4.bpPlayers = null; //console.log(errors);
+      });
     },
     setInput: function setInput() {
       this.input = this.formData.user.suggested_player;
     },
-    getInitials: function getInitials(name) {
-      if (name) {
-        var nameSplit = name.split(" ");
-        var final = "";
-        nameSplit.forEach(function (i, idx, array) {
-          i = i.substr(0, 1);
+    setReadOnly: function setReadOnly() {
+      console.log("has run");
 
-          if (idx == 0) {
-            final = final + i;
-          }
-
-          if (idx === array.length - 1 && i.substr(0, 1) != '(') {
-            final = final + i;
-          } else if (idx === array.length - 1 && array.length > 2) {
-            final = final + array[idx - 1].substr(0, 1);
-          }
-        });
-        return final;
+      if (this.user.we_player) {
+        this.readOnly = true;
+        console.log("is set");
+      } else {
+        this.readOnly = false;
       }
     }
   },
@@ -1854,17 +1867,23 @@ __webpack_require__.r(__webpack_exports__);
       immediate: true,
       handler: function handler(val, oldVal) {
         this.input = this.id;
+
+        if (this.id == 0) {
+          this.input = null;
+        }
+
         this.user = this.formData.user;
         this.submit();
+        this.setReadOnly();
         console.log('Prop changed: ', val, ' | was: ', oldVal);
       }
     }
   },
   mounted: function mounted() {
-    var _this4 = this;
+    var _this5 = this;
 
     this.$root.$on('modalSubmit', function (data) {
-      _this4.submit();
+      _this5.submit();
     });
   }
 });
@@ -1894,6 +1913,57 @@ __webpack_require__.r(__webpack_exports__);
     },
     modalClose: function modalClose() {
       this.$root.$emit('modalClose');
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/users/components/playerTable.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/users/components/playerTable.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "playerTable",
+  props: ["user", "players", "title", "type"],
+  methods: {
+    getInitials: function getInitials(name) {
+      if (name) {
+        var nameSplit = name.split(" ");
+        var final = "";
+        nameSplit.forEach(function (i, idx, array) {
+          i = i.substr(0, 1);
+
+          if (idx == 0) {
+            final = final + i;
+          }
+
+          if (idx === array.length - 1 && i.substr(0, 1) != '(') {
+            final = final + i;
+          } else if (idx === array.length - 1 && array.length > 2) {
+            final = final + array[idx - 1].substr(0, 1);
+          }
+        });
+        return final;
+      }
+    },
+    associate: function associate(playerId) {
+      this.$emit("associate", playerId);
+      console.log("done");
+    }
+  },
+  computed: {
+    getButtonText: function getButtonText() {
+      if (this.type == "BD") {
+        return '<i class="la la-plus"></i>&nbsp;Opret';
+      } else if (this.type == "weplan") {
+        return '<i class="la la-chain"></i>&nbsp;Tilknyt';
+      }
     }
   }
 });
@@ -1937,10 +2007,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     associate: function associate(user, id) {
-      console.log("id: " + id);
-      console.log("length: " + id.length);
+      console.log("somebody touched me!");
       this.modalData.user = user;
-      this.modalData.suggested_id = id;
+
+      if (user.we_player) {
+        console.log("Er tilknyttet: " + user.we_player.dbf_id);
+        this.modalData.suggested_id = user.we_player.dbf_id;
+      } else {
+        this.modalData.suggested_id = id;
+      }
     },
     getAllUsers: function getAllUsers() {
       var _this = this;
@@ -20837,406 +20912,256 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "kt-searchbar" }, [
-      _c("div", { staticClass: "input-group input-group-lg" }, [
-        _c("div", { staticClass: "input-group-prepend" }, [
-          _c(
-            "span",
-            { staticClass: "input-group-text", attrs: { id: "basic-addon1" } },
-            [
-              _c(
-                "svg",
-                {
-                  staticClass: "kt-svg-icon",
-                  attrs: {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    "xmlns:xlink": "http://www.w3.org/1999/xlink",
-                    width: "24px",
-                    height: "24px",
-                    viewBox: "0 0 24 24",
-                    version: "1.1"
-                  }
-                },
-                [
-                  _c(
-                    "g",
-                    {
-                      attrs: {
-                        stroke: "none",
-                        "stroke-width": "1",
-                        fill: "none",
-                        "fill-rule": "evenodd"
-                      }
-                    },
-                    [
-                      _c("rect", {
-                        attrs: {
-                          id: "bound",
-                          x: "0",
-                          y: "0",
-                          width: "24",
-                          height: "24"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z",
-                          id: "Path-2",
-                          fill: "#000000",
-                          "fill-rule": "nonzero",
-                          opacity: "0.3"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z",
-                          id: "Path",
-                          fill: "#000000",
-                          "fill-rule": "nonzero"
-                        }
-                      })
-                    ]
-                  )
-                ]
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.input,
-              expression: "input"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            placeholder: "Search",
-            "aria-describedby": "basic-addon1"
-          },
-          domProps: { value: _vm.input },
-          on: {
-            keyup: _vm.submit,
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.input = $event.target.value
-            }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "kt-portlet kt-widget kt-widget--general-3" }, [
-      _c("div", { staticClass: "kt-portlet__body kt-portlet__body--fit" }, [
-        _c("div", { staticClass: "kt-widget__top" }, [
-          _c("div", { staticClass: "kt-media kt-media--lg kt-media--circle" }, [
-            _c("img", {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.user.avatar,
-                  expression: "user.avatar"
-                }
-              ],
-              attrs: { src: _vm.user.avatar, alt: _vm.user.name }
-            }),
-            _vm._v(" "),
-            !_vm.user.avatar
-              ? _c("img", {
-                  attrs: { src: "/img/profile.png", alt: _vm.user.name }
-                })
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "kt-widget__wrapper" }, [
-            _c("div", { staticClass: "kt-widget__label" }, [
-              _c(
-                "a",
-                { staticClass: "kt-widget__title", attrs: { href: "#" } },
-                [
-                  _vm._v(
-                    "\n                            " +
-                      _vm._s(_vm.user.name) +
-                      "\n                        "
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c("span", { staticClass: "kt-widget__desc" }, [
-                _c("i", { staticClass: "flaticon2-send  kt-font-success" }),
-                _vm._v(" "),
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "kt-searchbar" }, [
+        _c("div", { staticClass: "input-group input-group-lg" }, [
+          _c("div", { staticClass: "input-group-prepend" }, [
+            _c(
+              "span",
+              {
+                staticClass: "input-group-text",
+                attrs: { id: "basic-addon1" }
+              },
+              [
                 _c(
-                  "a",
+                  "svg",
                   {
+                    staticClass: "kt-svg-icon",
                     attrs: {
-                      target: "_blank",
-                      href: "mailto:" + _vm.user.email
+                      xmlns: "http://www.w3.org/2000/svg",
+                      "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                      width: "24px",
+                      height: "24px",
+                      viewBox: "0 0 24 24",
+                      version: "1.1"
                     }
                   },
                   [
-                    _vm._v(_vm._s(_vm.user.email) + " "),
-                    _vm.user.email_verified_at != null
-                      ? _c("i", {
-                          staticClass: "flaticon2-correct kt-font-success"
+                    _c(
+                      "g",
+                      {
+                        attrs: {
+                          stroke: "none",
+                          "stroke-width": "1",
+                          fill: "none",
+                          "fill-rule": "evenodd"
+                        }
+                      },
+                      [
+                        _c("rect", {
+                          attrs: {
+                            id: "bound",
+                            x: "0",
+                            y: "0",
+                            width: "24",
+                            height: "24"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z",
+                            id: "Path-2",
+                            fill: "#000000",
+                            "fill-rule": "nonzero",
+                            opacity: "0.3"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z",
+                            id: "Path",
+                            fill: "#000000",
+                            "fill-rule": "nonzero"
+                          }
                         })
-                      : _vm._e()
+                      ]
+                    )
                   ]
                 )
-              ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.input,
+                expression: "input"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              placeholder: "Search",
+              "aria-describedby": "basic-addon1",
+              disabled: _vm.readOnly
+            },
+            domProps: { value: _vm.input },
+            on: {
+              keyup: _vm.submit,
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.input = $event.target.value
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "kt-portlet kt-widget kt-widget--general-3" }, [
+        _c("div", { staticClass: "kt-portlet__body kt-portlet__body--fit" }, [
+          _c("div", { staticClass: "kt-widget__top" }, [
+            _c(
+              "div",
+              { staticClass: "kt-media kt-media--lg kt-media--circle" },
+              [
+                _c("img", {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.user.avatar,
+                      expression: "user.avatar"
+                    }
+                  ],
+                  attrs: { src: _vm.user.avatar, alt: _vm.user.name }
+                }),
+                _vm._v(" "),
+                !_vm.user.avatar
+                  ? _c("img", {
+                      attrs: { src: "/img/profile.png", alt: _vm.user.name }
+                    })
+                  : _vm._e()
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "kt-widget__wrapper" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "kt-widget__label",
+                  staticStyle: { "flex-grow": "0" }
+                },
+                [
+                  _c(
+                    "a",
+                    { staticClass: "kt-widget__title", attrs: { href: "#" } },
+                    [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(_vm.user.name) +
+                          "\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "kt-widget__desc" }, [
+                    _c("i", { staticClass: "flaticon2-send  kt-font-success" }),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          target: "_blank",
+                          href: "mailto:" + _vm.user.email
+                        }
+                      },
+                      [
+                        _vm._v(_vm._s(_vm.user.email) + " "),
+                        _vm.user.email_verified_at != null
+                          ? _c("i", {
+                              staticClass: "flaticon2-correct kt-font-success"
+                            })
+                          : _vm._e()
+                      ]
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "kt-widget__label",
+                  staticStyle: { "flex-direction": "row" }
+                },
+                [
+                  _vm.user.we_player
+                    ? _c(
+                        "button",
+                        { staticClass: "btn btn-sm btn-outline-warning" },
+                        [
+                          _c("i", { staticClass: "la la-chain-broken" }),
+                          _vm._v(" Fjern spiller")
+                        ]
+                      )
+                    : _vm._e()
+                ]
+              )
             ])
           ])
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
-    _c(
-      "h4",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.weplanPlayers,
-            expression: "weplanPlayers"
-          }
-        ]
-      },
-      [_vm._v("Matchende spiller(e) i WePlan")]
-    ),
-    _vm._v(" "),
-    _c("table", { staticClass: "table table-striped m-table" }, [
-      _vm._m(0),
+      ]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("player-table", {
+        attrs: {
+          user: _vm.user,
+          players: _vm.weplanPlayers,
+          type: "weplan",
+          title: "Matchende spiller(e) i WePlan"
+        },
+        on: { associate: _vm.associate }
+      }),
+      _vm._v(" "),
+      _c("hr"),
       _vm._v(" "),
       _c(
-        "tbody",
-        [
-          _vm._l(_vm.weplanPlayers, function(weplanPlayer) {
-            return _vm.weplanPlayers && _vm.weplanPlayers.length > 0
-              ? _c("tr", [
-                  _c("th", { attrs: { scope: "row" } }, [
-                    _c(
-                      "div",
-                      { staticClass: "kt-widget kt-widget--general-1" },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "kt-media kt-media--brand kt-media--sm kt-media--circle",
-                            class: {
-                              "kt-media--danger": weplanPlayer.gender == "K"
-                            }
-                          },
-                          [
-                            _c("span", [
-                              _vm._v(_vm._s(_vm.getInitials(weplanPlayer.name)))
-                            ])
-                          ]
-                        )
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(weplanPlayer.name))]),
-                  _vm._v(" "),
-                  _c("td", { attrs: { valign: "middle" } }, [
-                    _vm._v(_vm._s(weplanPlayer.gender))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    !weplanPlayer.user
-                      ? _c(
-                          "button",
-                          {
-                            staticClass:
-                              "btn btn-outline-brand btn-elevate btn-sm",
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                return _vm.associate(weplanPlayer.id)
-                              }
-                            }
-                          },
-                          [
-                            _c("i", { staticClass: "la la-chain" }),
-                            _vm._v(" Tilknyt")
-                          ]
-                        )
-                      : _c(
-                          "button",
-                          {
-                            staticClass:
-                              "btn btn-outline-success btn-elevate btn-sm",
-                            attrs: { type: "button" }
-                          },
-                          [
-                            _c("i", { staticClass: "la la-user" }),
-                            _vm._v(" Se Profil")
-                          ]
-                        )
-                  ])
-                ])
-              : _vm._e()
-          }),
-          _vm._v(" "),
-          !_vm.weplanPlayers || _vm.weplanPlayers.length < 1
-            ? _c("tr", [
-                _c("td", { attrs: { colspan: "4" } }, [
-                  _vm._v("Ingen spillere fundet!")
-                ])
-              ])
-            : _vm._e()
-        ],
-        2
-      )
-    ]),
-    _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value:
-              _vm.bpPlayers &&
-              (!_vm.weplanPlayers || _vm.weplanPlayers.length == 0),
-            expression:
-              "bpPlayers && (!weplanPlayers || weplanPlayers.length == 0)"
-          }
-        ]
-      },
-      [
-        _c("h4", [_vm._v("Matchende spiller(e) hos Badminton DK")]),
-        _vm._v(" "),
-        _c("table", { staticClass: "table table-striped m-table" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.bpPlayers, function(bpPlayer) {
-              return _vm.bpPlayers
-                ? _c("tr", [
-                    _c("th", { attrs: { scope: "row" } }, [
-                      _c(
-                        "div",
-                        { staticClass: "kt-widget kt-widget--general-1" },
-                        [
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "kt-media kt-media--brand kt-media--sm kt-media--circle",
-                              class: {
-                                "kt-media--danger": bpPlayer.gender == "K"
-                              }
-                            },
-                            [
-                              _c("span", [
-                                _vm._v(_vm._s(_vm.getInitials(bpPlayer.name)))
-                              ])
-                            ]
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(_vm._s(bpPlayer.name)),
-                      _c("br"),
-                      _c("span", { staticClass: "text-muted" }, [
-                        _vm._v(_vm._s(bpPlayer.dbf_id))
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { attrs: { valign: "middle" } }, [
-                      _vm._v(_vm._s(bpPlayer.gender))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(bpPlayer.bp_club.team_name))]),
-                    _vm._v(" "),
-                    _vm._m(2, true)
-                  ])
-                : _c("tr", [
-                    _c("td", { attrs: { colspan: "4" } }, [
-                      _vm._v("Ingen spillere fundet!")
-                    ])
-                  ])
-            }),
-            0
-          )
-        ])
-      ]
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { attrs: { width: "20" } }, [_vm._v("#")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Navn")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Køn")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("#")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { attrs: { width: "20" } }, [_vm._v("#")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Navn")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Køn")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Klub")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("#")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c(
-        "button",
+        "div",
         {
-          staticClass: "btn btn-outline-success btn-elevate btn-sm",
-          attrs: { type: "button" }
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value:
+                _vm.bpPlayers &&
+                (!_vm.weplanPlayers ||
+                  _vm.weplanPlayers.length == 0 ||
+                  _vm.input.length < 9),
+              expression:
+                "bpPlayers && (!weplanPlayers || weplanPlayers.length == 0 || input.length < 9)"
+            }
+          ]
         },
-        [_c("i", { staticClass: "la la-plus" }), _vm._v(" Opret og tilknyt")]
+        [
+          _c("player-table", {
+            attrs: {
+              user: _vm.user,
+              players: _vm.bpPlayers,
+              type: "BD",
+              title: "Matchende spiller(e) hos Badminton DK"
+            },
+            on: { associate: _vm.createWeplanPlayer }
+          })
+        ],
+        1
       )
-    ])
-  }
-]
+    ],
+    1
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -21343,6 +21268,155 @@ var staticRenderFns = [
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
     )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/users/components/playerTable.vue?vue&type=template&id=10f44a9f&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/users/components/playerTable.vue?vue&type=template&id=10f44a9f&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "h4",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.players,
+            expression: "players"
+          }
+        ]
+      },
+      [_vm._v(_vm._s(_vm.title))]
+    ),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-striped m-table table-ellipsis" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        [
+          _vm._l(_vm.players, function(weplanPlayer) {
+            return _vm.players && _vm.players.length > 0
+              ? _c("tr", [
+                  _c("th", { attrs: { scope: "row" } }, [
+                    _c(
+                      "div",
+                      { staticClass: "kt-widget kt-widget--general-1" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "kt-media kt-media--brand kt-media--sm kt-media--circle",
+                            class: {
+                              "kt-media--danger": weplanPlayer.gender == "K"
+                            }
+                          },
+                          [
+                            _c("span", [
+                              _vm._v(_vm._s(_vm.getInitials(weplanPlayer.name)))
+                            ])
+                          ]
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(weplanPlayer.name))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    weplanPlayer.bp_player
+                      ? _c("span", [
+                          _vm._v(
+                            _vm._s(weplanPlayer.bp_player.bp_club.team_name)
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    weplanPlayer.bp_club
+                      ? _c("span", [
+                          _vm._v(_vm._s(weplanPlayer.bp_club.team_name))
+                        ])
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    !weplanPlayer.user
+                      ? _c("button", {
+                          staticClass:
+                            "btn btn-outline-brand btn-elevate btn-sm",
+                          attrs: { type: "button" },
+                          domProps: { innerHTML: _vm._s(_vm.getButtonText) },
+                          on: {
+                            click: function($event) {
+                              return _vm.associate(weplanPlayer.id)
+                            }
+                          }
+                        })
+                      : _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-outline-success btn-elevate btn-sm",
+                            attrs: { type: "button" }
+                          },
+                          [
+                            _c("i", { staticClass: "la la-user" }),
+                            _vm._v(" Profil")
+                          ]
+                        )
+                  ])
+                ])
+              : _vm._e()
+          }),
+          _vm._v(" "),
+          !_vm.players || _vm.players.length < 1
+            ? _c("tr", [
+                _c("td", { attrs: { colspan: "4" } }, [
+                  _vm._v("Ingen spillere fundet!")
+                ])
+              ])
+            : _vm._e()
+        ],
+        2
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { width: "20" } }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Navn")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Klub")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("#")])
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -21512,7 +21586,7 @@ var render = function() {
         [
           _c(
             "div",
-            { staticClass: "input-group input-group-lg kt-margin-b-20" },
+            { staticClass: "input-group input-group-lg kt-margin-b-10" },
             [
               _c("div", { staticClass: "input-group-prepend" }, [
                 _c(
@@ -21711,33 +21785,52 @@ var render = function() {
                               ),
                               _c("br"),
                               _vm._v(" "),
-                              _c("span", { staticClass: "kt-widget__desc" }, [
-                                _c("i", {
-                                  staticClass: "flaticon2-send  kt-font-success"
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "a",
-                                  {
-                                    attrs: {
-                                      target: "_blank",
-                                      href: "mailto:" + user.email
-                                    }
-                                  },
-                                  [
-                                    _vm._v(_vm._s(user.email) + " "),
-                                    user.email_verified_at != null
-                                      ? _c("i", {
-                                          staticClass:
-                                            "flaticon2-correct kt-font-success"
-                                        })
-                                      : _vm._e()
-                                  ]
-                                )
-                              ])
+                              _c(
+                                "span",
+                                { staticClass: "kt-widget__desc" },
+                                [
+                                  _c("i", {
+                                    staticClass:
+                                      "flaticon2-send  kt-font-success"
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        target: "_blank",
+                                        href: "mailto:" + user.email
+                                      }
+                                    },
+                                    [
+                                      _vm._v(_vm._s(user.email) + " "),
+                                      user.email_verified_at != null
+                                        ? _c("i", {
+                                            staticClass:
+                                              "flaticon2-correct kt-font-success"
+                                          })
+                                        : _vm._e()
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _vm._l(user.roles, function(role) {
+                                    return _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-secondary badge-sm"
+                                      },
+                                      [_vm._v(_vm._s(role.name))]
+                                    )
+                                  })
+                                ],
+                                2
+                              )
                             ]),
                             _vm._v(" "),
-                            _c("td", [
+                            _c("td", { staticClass: "align-middle" }, [
                               _c(
                                 "div",
                                 {
@@ -21861,177 +21954,77 @@ var render = function() {
                               )
                             ]),
                             _vm._v(" "),
-                            _c("td", [
+                            _c("td", { staticClass: "align-middle" }, [
                               user.we_player
                                 ? _c("span", [_vm._m(6, true)])
                                 : _vm._e()
                             ]),
                             _vm._v(" "),
-                            _c(
-                              "td",
-                              [
-                                _vm._l(user.user_status, function(status) {
-                                  return status.type == "player"
-                                    ? [
-                                        status.data && !user.player_id
-                                          ? _c(
-                                              "button",
-                                              {
-                                                staticClass:
-                                                  "btn btn-primary btn-sm",
-                                                attrs: {
-                                                  "data-toggle": "modal",
-                                                  "data-target": "#modal3",
-                                                  type: "button"
-                                                },
-                                                on: {
-                                                  click: function($event) {
-                                                    return _vm.associate(
-                                                      user,
-                                                      status.data
-                                                    )
-                                                  }
-                                                }
-                                              },
-                                              [
-                                                _c("i", { staticClass: "fa" }, [
-                                                  _c(
-                                                    "svg",
-                                                    {
-                                                      staticStyle: {
-                                                        "enable-background":
-                                                          "new 0 0 487.811 487.81"
-                                                      },
-                                                      attrs: {
-                                                        version: "1.1",
-                                                        id: "Capa_1",
-                                                        xmlns:
-                                                          "http://www.w3.org/2000/svg",
-                                                        "xmlns:xlink":
-                                                          "http://www.w3.org/1999/xlink",
-                                                        x: "0px",
-                                                        y: "0px",
-                                                        width: "487.811px",
-                                                        height: "487.81px",
-                                                        viewBox:
-                                                          "0 0 487.811 487.81",
-                                                        "xml:space": "preserve"
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("g", [
-                                                        _c(
-                                                          "g",
-                                                          {
-                                                            attrs: {
-                                                              id: "_x33_6_24_"
-                                                            }
-                                                          },
-                                                          [
-                                                            _c("g", [
-                                                              _c("path", {
-                                                                attrs: {
-                                                                  d:
-                                                                    "M150.463,109.521h150.512c3.955,0,7.16-3.206,7.16-7.161c0-3.955-3.205-7.161-7.16-7.161H150.463\n\t\t\t\tc-3.955,0-7.161,3.206-7.161,7.161C143.302,106.315,146.508,109.521,150.463,109.521z"
-                                                                }
-                                                              }),
-                                                              _vm._v(" "),
-                                                              _c("path", {
-                                                                attrs: {
-                                                                  d:
-                                                                    "M15.853,179.537h150.511c3.955,0,7.161-3.206,7.161-7.161s-3.206-7.16-7.161-7.16H15.853\n\t\t\t\tc-3.955,0-7.161,3.205-7.161,7.16S11.898,179.537,15.853,179.537z"
-                                                                }
-                                                              }),
-                                                              _vm._v(" "),
-                                                              _c("path", {
-                                                                attrs: {
-                                                                  d:
-                                                                    "M56.258,253.214c0,3.955,3.206,7.162,7.161,7.162H213.93c3.955,0,7.161-3.207,7.161-7.162s-3.206-7.16-7.161-7.16H63.419\n\t\t\t\tC59.464,246.054,56.258,249.259,56.258,253.214z"
-                                                                }
-                                                              }),
-                                                              _vm._v(" "),
-                                                              _c("path", {
-                                                                attrs: {
-                                                                  d:
-                                                                    "M142.396,336.44H7.161C3.206,336.44,0,339.645,0,343.6s3.206,7.161,7.161,7.161h135.235c3.955,0,7.161-3.206,7.161-7.161\n\t\t\t\tS146.351,336.44,142.396,336.44z"
-                                                                }
-                                                              }),
-                                                              _vm._v(" "),
-                                                              _c("path", {
-                                                                attrs: {
-                                                                  d:
-                                                                    "M385.729,154.418c21.6,0,39.111-17.513,39.111-39.114s-17.512-39.113-39.111-39.113\n\t\t\t\tc-21.605,0-39.119,17.513-39.119,39.113C346.609,136.905,364.123,154.418,385.729,154.418z"
-                                                                }
-                                                              }),
-                                                              _vm._v(" "),
-                                                              _c("path", {
-                                                                attrs: {
-                                                                  d:
-                                                                    "M450.066,143.155c-22.459,31.459-52.533,35.102-84.895,15.89c-2.203-1.306-11.977-6.691-14.141-7.977\n\t\t\t\tc-52.061-30.906-104.061-18.786-138.934,30.05c-14.819,20.771,19.455,40.459,34.108,19.93\n\t\t\t\tc18.018-25.232,40.929-32.533,65.986-24.541c-12.83,22.27-24.047,44.405-39.875,75.853\n\t\t\t\tc-15.832,31.448-50.787,56.562-84.374,36.92c-24.235-14.165-46.09,20.651-21.928,34.772\n\t\t\t\tc45.854,26.799,99.619,10.343,127.066-24.493c0.952,0.509,1.958,0.968,3.062,1.354c22.422,7.812,51.814,28.61,60.77,35.981\n\t\t\t\tc8.953,7.371,24.336,44.921,33.471,63.788c11.082,22.893,46.871,6.219,35.748-16.771c-10.355-21.406-27.736-64.129-41.293-74.938\n\t\t\t\tc-10.875-8.669-31.988-24.803-49.895-33.956c12.115-23.466,24.729-46.679,38.008-69.491\n\t\t\t\tc42.328,12.969,82.561-2.308,111.215-42.446C498.996,142.312,464.73,122.624,450.066,143.155z"
-                                                                }
-                                                              })
-                                                            ])
-                                                          ]
-                                                        )
-                                                      ]),
-                                                      _vm._v(" "),
-                                                      _c("g"),
-                                                      _vm._v(" "),
-                                                      _c("g"),
-                                                      _vm._v(" "),
-                                                      _c("g"),
-                                                      _vm._v(" "),
-                                                      _c("g"),
-                                                      _vm._v(" "),
-                                                      _c("g"),
-                                                      _vm._v(" "),
-                                                      _c("g"),
-                                                      _vm._v(" "),
-                                                      _c("g"),
-                                                      _vm._v(" "),
-                                                      _c("g"),
-                                                      _vm._v(" "),
-                                                      _c("g"),
-                                                      _vm._v(" "),
-                                                      _c("g"),
-                                                      _vm._v(" "),
-                                                      _c("g"),
-                                                      _vm._v(" "),
-                                                      _c("g"),
-                                                      _vm._v(" "),
-                                                      _c("g"),
-                                                      _vm._v(" "),
-                                                      _c("g"),
-                                                      _vm._v(" "),
-                                                      _c("g")
-                                                    ]
-                                                  )
-                                                ]),
-                                                _vm._v(" Opret spiller")
-                                              ]
-                                            )
-                                          : _vm._e()
-                                      ]
-                                    : _vm._e()
-                                }),
-                                _vm._v(" "),
-                                user.player_id
-                                  ? _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "btn btn-outline-success btn-elevate btn-sm",
-                                        attrs: { type: "button" }
-                                      },
-                                      [
-                                        _c("i", { staticClass: "la la-user" }),
-                                        _vm._v(" Se Profil")
-                                      ]
-                                    )
-                                  : _vm._e()
-                              ],
-                              2
-                            )
+                            _c("td", { staticClass: "align-middle" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "btn-group",
+                                  attrs: {
+                                    role: "group",
+                                    "aria-label": "First group"
+                                  }
+                                },
+                                [
+                                  _vm._m(7, true),
+                                  _vm._v(" "),
+                                  user.player_id
+                                    ? _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-sm btn-metal",
+                                          attrs: {
+                                            "data-toggle": "modal",
+                                            "data-target": "#modal3",
+                                            type: "button"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.associate(user, 0)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "la la-chain-broken"
+                                          })
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  !user.player_id
+                                    ? _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-sm btn-success",
+                                          attrs: {
+                                            "data-toggle": "modal",
+                                            "data-target": "#modal3",
+                                            type: "button"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.associate(user, 0)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "la la-chain"
+                                          })
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm._m(8, true)
+                                ]
+                              )
+                            ])
                           ])
                         }),
                         _vm._v(" "),
@@ -22486,7 +22479,7 @@ var render = function() {
                             ])
                           ]),
                           _vm._v(" "),
-                          _vm._m(7, true)
+                          _vm._m(9, true)
                         ])
                       ]
                     )
@@ -22506,9 +22499,9 @@ var render = function() {
         [
           _c("associate-user", {
             attrs: {
-              now: Date.now(),
+              now: _vm.modalData.user,
               "form-data": _vm.modalData,
-              id: _vm.modalData.user.suggested_player
+              id: _vm.modalData.suggested_id
             }
           })
         ],
@@ -22589,6 +22582,26 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("i", { staticClass: "fa fa-check fa-stack-1x fa-sm fa-inverse" })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      { staticClass: "btn btn-sm btn-primary", attrs: { type: "button" } },
+      [_c("i", { staticClass: "la la-pencil-square-o" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      { staticClass: "btn btn-sm btn-danger", attrs: { type: "button" } },
+      [_c("i", { staticClass: "la la-trash" })]
+    )
   },
   function() {
     var _vm = this
@@ -35036,10 +35049,14 @@ function () {
 
           resolve(response.data);
         }).catch(function (error) {
-          _this.onFail(error.response.data.errors); //console.log(error.response.data);
+          if (error.response) {
+            _this.onFail(error.response.data.errors); //console.log(error.response.data);
 
 
-          reject(error.response);
+            reject(error.response);
+          } else {
+            reject("Service is down!");
+          }
         });
       });
     }
@@ -35269,6 +35286,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_modal_vue_vue_type_template_id_7f70a942_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_modal_vue_vue_type_template_id_7f70a942_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/vuejs/users/components/playerTable.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/assets/vuejs/users/components/playerTable.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _playerTable_vue_vue_type_template_id_10f44a9f_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./playerTable.vue?vue&type=template&id=10f44a9f&scoped=true& */ "./resources/assets/vuejs/users/components/playerTable.vue?vue&type=template&id=10f44a9f&scoped=true&");
+/* harmony import */ var _playerTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./playerTable.vue?vue&type=script&lang=js& */ "./resources/assets/vuejs/users/components/playerTable.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _playerTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _playerTable_vue_vue_type_template_id_10f44a9f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _playerTable_vue_vue_type_template_id_10f44a9f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "10f44a9f",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/assets/vuejs/users/components/playerTable.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/assets/vuejs/users/components/playerTable.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/assets/vuejs/users/components/playerTable.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_playerTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./playerTable.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/users/components/playerTable.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_playerTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/assets/vuejs/users/components/playerTable.vue?vue&type=template&id=10f44a9f&scoped=true&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/assets/vuejs/users/components/playerTable.vue?vue&type=template&id=10f44a9f&scoped=true& ***!
+  \************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_playerTable_vue_vue_type_template_id_10f44a9f_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./playerTable.vue?vue&type=template&id=10f44a9f&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/users/components/playerTable.vue?vue&type=template&id=10f44a9f&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_playerTable_vue_vue_type_template_id_10f44a9f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_playerTable_vue_vue_type_template_id_10f44a9f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

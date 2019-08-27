@@ -1,6 +1,10 @@
 <script>
     import Form from "../../Form";
+    import playerTable from "./playerTable";
     export default {
+        components: {
+            playerTable
+        },
         name: "associateUser",
         props:["formData","id","now"],
         data: function(){
@@ -10,14 +14,16 @@
                 user: this.formData.user,
                 form: new Form({
                     playerId: "",
-                    userId: ""
+                    userId: "",
                 }),
-                input: ""
+                input: "",
+                readOnly: false,
             }
         },
         methods: {
             submit() {
                 if(this.input && this.input.length > 5) {
+                    console.log("yer");
                     this.getWePlanPlayer();
                     this.getBpPlayer();
 
@@ -27,16 +33,34 @@
                 }
             },
             associate(playerId) {
+                console.log("also done");
                 this.form.playerId = playerId;
                 this.form.userId = this.user.id;
                 this.form.post("/api/v1/user/associate")
                     .then(data => {
                         console.log(data);
-                        this.getWePlanPlayer();
+                        this.input = data.we_player.dbf_id;
+                        this.user = data;
+                        this.submit();
+                        this.setReadOnly();
                         this.$root.$emit('userAssociated');
                     })
                     .catch(e => {
                         // nothing now
+                    })
+            },
+
+            createWeplanPlayer(playerId) {
+                console.log("also here");
+                this.form.playerId = [];
+                this.form.playerId.push(playerId);
+                this.form.post("/api/v1/BP/players/store")
+                    .then(data => {
+                        console.log(data.message);
+                        this.getWePlanPlayer();
+                    })
+                    .catch(e => {
+                        //nothing
                     })
             },
             getWePlanPlayer() {
@@ -50,7 +74,6 @@
                     })
             },
             getBpPlayer() {
-                if(this.weplanPlayers == null) {
                     this.form.get("/api/v1/BP/players/find/" + this.input)
                         .then(data => {
                             this.bpPlayers = data;
@@ -60,32 +83,22 @@
                             this.bpPlayers = null;
                             //console.log(errors);
                         })
-                }
+
             },
             setInput() {
                 this.input = this.formData.user.suggested_player;
             },
-            getInitials(name) {
-                if(name) {
-                    let nameSplit = name.split(" ");
-                    let final = "";
-                    nameSplit.forEach(function(i, idx, array){
-                        i = i.substr(0,1);
-                        if(idx == 0) {
-                            final = final + i;
-                        }
-                        if (idx === array.length - 1 && i.substr(0,1) != '(') {
-                            final = final + i;
-                        } else if(idx === array.length - 1 && array.length > 2) {
-                            final = final + array[idx - 1].substr(0,1);
 
-                        }
-                    });
-
-
-                    return final;
+            setReadOnly() {
+                console.log("has run");
+                if(this.user.we_player) {
+                    this.readOnly = true;
+                    console.log("is set");
+                } else {
+                    this.readOnly = false;
                 }
             }
+
         },
         watch: {
             now: {
@@ -93,8 +106,12 @@
                 immediate: true,
                 handler (val, oldVal) {
                     this.input = this.id;
+                    if(this.id == 0) {
+                        this.input = null;
+                    }
                     this.user = this.formData.user;
                     this.submit();
+                    this.setReadOnly();
                     console.log('Prop changed: ', val, ' | was: ', oldVal)
                 }
             }
@@ -103,6 +120,7 @@
             this.$root.$on('modalSubmit', data => {
                 this.submit();
             });
+
         }
     }
 </script>
@@ -133,7 +151,7 @@
         <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" id="Path" fill="#000000" fill-rule="nonzero"></path>
     </g>
 </svg></span></div>
-            <input v-model="input" type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon1" @keyup="submit">
+            <input v-model="input" type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon1" @keyup="submit" :disabled="readOnly">
         </div>
     </div>
     <div class="kt-portlet kt-widget kt-widget--general-3">
@@ -144,7 +162,7 @@
                     <img v-if="!user.avatar" src="/img/profile.png" :alt="user.name">
                 </div>
                 <div class="kt-widget__wrapper">
-                    <div class="kt-widget__label">
+                    <div class="kt-widget__label" style="flex-grow: 0;">
                         <a href="#" class="kt-widget__title">
                             {{ user.name }}
                         </a>
@@ -154,78 +172,24 @@
                                 </span>
 
                     </div>
+                    <div class="kt-widget__label" style="flex-direction: row;">
+                        <button v-if="user.we_player" class="btn btn-sm btn-outline-warning"><i class="la la-chain-broken"></i>&nbsp;Fjern spiller</button>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 
     <hr />
-    <h4 v-show="weplanPlayers">Matchende spiller(e) i WePlan</h4>
-    <table class="table table-striped m-table">
-        <thead>
-        <tr>
-            <th width="20">#</th>
-            <th>Navn</th>
-            <th>Køn</th>
-            <th>#</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-if="weplanPlayers && weplanPlayers.length > 0" v-for="weplanPlayer in weplanPlayers">
-            <th scope="row"><div class="kt-widget kt-widget--general-1">
-                <div :class="{ 'kt-media--danger' : weplanPlayer.gender == 'K'}" class="kt-media kt-media--brand kt-media--sm kt-media--circle">
-                    <span>{{ getInitials(weplanPlayer.name) }}</span>
-                </div>
 
-            </div></th>
-            <td>{{ weplanPlayer.name }}</td>
-            <td valign="middle">{{ weplanPlayer.gender }}</td>
-            <td>
-                <button v-if="!weplanPlayer.user" type="button" @click="associate(weplanPlayer.id)" class="btn btn-outline-brand btn-elevate btn-sm"><i class="la la-chain"></i>&nbsp;Tilknyt</button>
-                <button v-else type="button" class="btn btn-outline-success btn-elevate btn-sm"><i class="la la-user"></i>&nbsp;Se Profil</button>
-            </td>
-        </tr>
-
-        <tr v-if="!weplanPlayers || weplanPlayers.length < 1">
-            <td colspan="4">Ingen spillere fundet!</td>
-        </tr>
-        </tbody>
-    </table>
+    <player-table @associate="associate" :user="user" :players="weplanPlayers" :type="'weplan'" :title="'Matchende spiller(e) i WePlan'"></player-table>
 
     <hr />
 
-    <div v-show="bpPlayers && (!weplanPlayers || weplanPlayers.length == 0)">
-        <h4>Matchende spiller(e) hos Badminton DK</h4>
+    <div v-show="bpPlayers && (!weplanPlayers || weplanPlayers.length == 0 || input.length < 9)">
+        <player-table @associate="createWeplanPlayer" :user="user" :players="bpPlayers" :type="'BD'" :title="'Matchende spiller(e) hos Badminton DK'"></player-table>
 
-        <table class="table table-striped m-table">
-            <thead>
-            <tr>
-                <th width="20">#</th>
-                <th>Navn</th>
-                <th>Køn</th>
-                <th>Klub</th>
-                <th>#</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-if="bpPlayers" v-for="bpPlayer in bpPlayers">
-                <th scope="row"><div class="kt-widget kt-widget--general-1">
-                    <div :class="{ 'kt-media--danger' : bpPlayer.gender == 'K'}" class="kt-media kt-media--brand kt-media--sm kt-media--circle">
-                        <span>{{ getInitials(bpPlayer.name) }}</span>
-                    </div>
-
-                </div></th>
-                <td>{{ bpPlayer.name }}<br /><span class="text-muted">{{ bpPlayer.dbf_id }}</span> </td>
-                <td valign="middle">{{ bpPlayer.gender }}</td>
-                <td>{{ bpPlayer.bp_club.team_name }}</td>
-                <td><button type="button" class="btn btn-outline-success btn-elevate btn-sm"><i class="la la-plus"></i>&nbsp;Opret og tilknyt</button></td>
-            </tr>
-
-            <tr v-else>
-                <td colspan="4">Ingen spillere fundet!</td>
-            </tr>
-            </tbody>
-        </table>
     </div>
 </div>
 </template>

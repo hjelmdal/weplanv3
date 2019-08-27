@@ -111,9 +111,13 @@ export default class Form {
                     resolve(response.data);
                 })
                 .catch(error => {
-                    this.onFail(error.response.data.errors);
-                    //console.log(error.response.data);
-                    reject(error.response);
+                    if(error.response) {
+                        this.onFail(error.response.data.errors);
+                        //console.log(error.response.data);
+                        reject(error.response);
+                    } else {
+                        reject("Service is down!");
+                    }
                 });
         });
     }

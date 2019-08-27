@@ -61,9 +61,12 @@ class LoginController extends Controller
      *
      * @return view
      */
-    public function showLoginForm()
+    public function showLoginForm(Request $request)
     {
-        session(['link' => url()->previous()]);
+        $cookie = cookie('name', 'value', 100);
+
+        Log::info($cookie);
+        session(['url.intended' => url()->previous()]);
         return view("login/login2");
     }
 

@@ -17788,10 +17788,14 @@ function () {
 
           resolve(response.data);
         }).catch(function (error) {
-          _this.onFail(error.response.data.errors); //console.log(error.response.data);
+          if (error.response) {
+            _this.onFail(error.response.data.errors); //console.log(error.response.data);
 
 
-          reject(error.response);
+            reject(error.response);
+          } else {
+            reject("Service is down!");
+          }
         });
       });
     }

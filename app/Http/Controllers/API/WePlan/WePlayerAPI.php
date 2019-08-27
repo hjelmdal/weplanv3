@@ -65,7 +65,7 @@ class WePlayerAPI extends Controller
 
     public function find($id) {
         try {
-            $players = WePlayer::where('dbf_id', 'like', '%' . $id . '%')->with("user")->get();
+            $players = WePlayer::where('dbf_id', 'like', '%' . $id . '%')->with(["user","BpPlayer.BpClub"])->get();
         } catch (ModelNotFoundException $e) {
             return response()->json(["errors" => ["form" => "Player not found"]],404);
         }

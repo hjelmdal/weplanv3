@@ -20,6 +20,10 @@ class WePlayer extends Model
         return $this->hasOne(User::class,'player_id','id');
     }
 
+    public function BpPlayer() {
+        return $this->belongsTo(BpPlayer::class,"dbf_id","dbf_id");
+    }
+
     public function team() {
         return $this->belongsTo(WeTeam::class,'team_id','id');
     }

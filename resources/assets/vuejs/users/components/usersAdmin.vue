@@ -25,10 +25,14 @@
         },
         methods: {
           associate(user,id) {
-              console.log("id: " + id);
-              console.log("length: " + id.length);
+              console.log("somebody touched me!");
               this.modalData.user = user;
-              this.modalData.suggested_id = id;
+              if(user.we_player) {
+                  console.log("Er tilknyttet: " + user.we_player.dbf_id);
+                  this.modalData.suggested_id = user.we_player.dbf_id;
+              } else {
+                  this.modalData.suggested_id = id;
+              }
           },
             getAllUsers() {
                 this.usersGet.get("/api/v1/users")
@@ -173,7 +177,7 @@
 
         <!--Begin:: App Content-->
         <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
-            <div class="input-group input-group-lg kt-margin-b-20">
+            <div class="input-group input-group-lg kt-margin-b-10">
                 <div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -212,10 +216,11 @@
                             {{ user.name }}<br>
                             <span class="kt-widget__desc">
                                 <i class="flaticon2-send  kt-font-success"></i> <a target="_blank" :href="'mailto:' +user.email">{{ user.email }} <i v-if="user.email_verified_at != null" class="flaticon2-correct kt-font-success"></i></a>
-
+                                <br />
+                            <span v-for="role in user.roles"  class="badge badge-secondary badge-sm">{{ role.name }}</span>
                            </span>
                     </td>
-                    <td>
+                    <td class="align-middle">
                         <div class="btn-group" role="group">
                             <button id="btnGroupDrop1" type="button" :class="{ 'btn-outline-brand' : user.complete, 'btn-warning' : !user.complete }" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i v-if="user.complete" class="fa fa-check"></i>
@@ -229,73 +234,20 @@
                             </div>
                         </div>
                     </td>
-                    <td><span v-if="user.we_player"><span class="float-left fa fa-stack fa-lg"> <i class="fa fa-certificate fa-stack-1x kt-font-brand"></i> <i class="fa fa-check fa-stack-1x fa-sm fa-inverse"></i> </span></span></td>
-                    <td>
-                        <template  v-for="status in user.user_status" v-if="status.type == 'player'">
-                        <button data-toggle="modal" data-target="#modal3" v-if="status.data && !user.player_id"  @click="associate(user,status.data)" type="button" class="btn btn-primary btn-sm"><i class="fa">
-
-                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                 width="487.811px" height="487.81px" viewBox="0 0 487.811 487.81" style="enable-background:new 0 0 487.811 487.81;"
-                                 xml:space="preserve">
-<g>
-	<g id="_x33_6_24_">
-		<g>
-			<path d="M150.463,109.521h150.512c3.955,0,7.16-3.206,7.16-7.161c0-3.955-3.205-7.161-7.16-7.161H150.463
-				c-3.955,0-7.161,3.206-7.161,7.161C143.302,106.315,146.508,109.521,150.463,109.521z"/>
-            <path d="M15.853,179.537h150.511c3.955,0,7.161-3.206,7.161-7.161s-3.206-7.16-7.161-7.16H15.853
-				c-3.955,0-7.161,3.205-7.161,7.16S11.898,179.537,15.853,179.537z"/>
-            <path d="M56.258,253.214c0,3.955,3.206,7.162,7.161,7.162H213.93c3.955,0,7.161-3.207,7.161-7.162s-3.206-7.16-7.161-7.16H63.419
-				C59.464,246.054,56.258,249.259,56.258,253.214z"/>
-            <path d="M142.396,336.44H7.161C3.206,336.44,0,339.645,0,343.6s3.206,7.161,7.161,7.161h135.235c3.955,0,7.161-3.206,7.161-7.161
-				S146.351,336.44,142.396,336.44z"/>
-            <path d="M385.729,154.418c21.6,0,39.111-17.513,39.111-39.114s-17.512-39.113-39.111-39.113
-				c-21.605,0-39.119,17.513-39.119,39.113C346.609,136.905,364.123,154.418,385.729,154.418z"/>
-            <path d="M450.066,143.155c-22.459,31.459-52.533,35.102-84.895,15.89c-2.203-1.306-11.977-6.691-14.141-7.977
-				c-52.061-30.906-104.061-18.786-138.934,30.05c-14.819,20.771,19.455,40.459,34.108,19.93
-				c18.018-25.232,40.929-32.533,65.986-24.541c-12.83,22.27-24.047,44.405-39.875,75.853
-				c-15.832,31.448-50.787,56.562-84.374,36.92c-24.235-14.165-46.09,20.651-21.928,34.772
-				c45.854,26.799,99.619,10.343,127.066-24.493c0.952,0.509,1.958,0.968,3.062,1.354c22.422,7.812,51.814,28.61,60.77,35.981
-				c8.953,7.371,24.336,44.921,33.471,63.788c11.082,22.893,46.871,6.219,35.748-16.771c-10.355-21.406-27.736-64.129-41.293-74.938
-				c-10.875-8.669-31.988-24.803-49.895-33.956c12.115-23.466,24.729-46.679,38.008-69.491
-				c42.328,12.969,82.561-2.308,111.215-42.446C498.996,142.312,464.73,122.624,450.066,143.155z"/>
-		</g>
-	</g>
-</g>
-                                <g>
-</g>
-                                <g>
-</g>
-                                <g>
-</g>
-                                <g>
-</g>
-                                <g>
-</g>
-                                <g>
-</g>
-                                <g>
-</g>
-                                <g>
-</g>
-                                <g>
-</g>
-                                <g>
-</g>
-                                <g>
-</g>
-                                <g>
-</g>
-                                <g>
-</g>
-                                <g>
-</g>
-                                <g>
-</g>
-</svg>
-                        </i> Opret spiller</button>
-
-                    </template>
-                        <button v-if="user.player_id" type="button" class="btn btn-outline-success btn-elevate btn-sm"><i class="la la-user"></i>&nbsp;Se Profil</button></td>
+                    <td class="align-middle">
+                        <span v-if="user.we_player">
+                            <span class="float-left fa fa-stack fa-lg"> <i class="fa fa-certificate fa-stack-1x kt-font-brand"></i> <i class="fa fa-check fa-stack-1x fa-sm fa-inverse"></i>
+                            </span>
+                        </span>
+                    </td>
+                    <td class="align-middle">
+                        <div class="btn-group" role="group" aria-label="First group">
+                            <button type="button" class="btn btn-sm btn-primary"><i class="la la-pencil-square-o"></i></button>
+                            <button data-toggle="modal" data-target="#modal3" v-if="user.player_id" @click="associate(user,0)" type="button" class="btn btn-sm btn-metal"><i class="la la-chain-broken"></i></button>
+                            <button data-toggle="modal" data-target="#modal3" v-if="!user.player_id"  @click="associate(user,0)" type="button" class="btn btn-sm btn-success"><i class="la la-chain"></i></button>
+                            <button type="button" class="btn btn-sm btn-danger"><i class="la la-trash"></i></button>
+                        </div>
+                    </td>
                 </tr>
                 <tr v-if="filteredUsers.length < 1"><td colspan="5" class="text-center">Ingen brugere blev fundet.</td> </tr>
                 </tbody>
@@ -489,7 +441,7 @@
         </div>
         <!--End:: App Content-->
         <modal :modal-data="modalData" :title="modalData.user.name">
-            <associate-user :now="Date.now()" :form-data="modalData" :id="modalData.user.suggested_player"></associate-user>
+            <associate-user :now="modalData.user" :form-data="modalData" :id="modalData.suggested_id"></associate-user>
         </modal>
 
     </div>
