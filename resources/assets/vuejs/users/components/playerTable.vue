@@ -27,8 +27,10 @@
             },
             associate(playerId) {
                 this.$emit("associate",playerId);
-                console.log("done");
 
+            },
+            dissociate(playerId) {
+                this.$emit("dissociate",playerId);
             }
         },
         computed: {
@@ -51,7 +53,7 @@
 <template>
     <div>
     <h4 v-show="players">{{ title }}</h4>
-    <table class="table table-striped m-table table-ellipsis">
+    <table class="table table-striped m-table">
         <thead>
         <tr>
             <th width="20">#</th>
@@ -68,14 +70,14 @@
                 </div>
 
             </div></th>
-            <td>{{ weplanPlayer.name }}</td>
+            <td class="td-ellipsis">{{ weplanPlayer.name }}</td>
             <td>
                 <span v-if="weplanPlayer.bp_player">{{ weplanPlayer.bp_player.bp_club.team_name }}</span>
                 <span v-if="weplanPlayer.bp_club">{{ weplanPlayer.bp_club.team_name }}</span>
             </td>
 
             <td>
-                <button v-if="!weplanPlayer.user" type="button" @click="associate(weplanPlayer.id)" class="btn btn-outline-brand btn-elevate btn-sm" v-html="getButtonText"></button>
+                <button v-if="!weplanPlayer.user && !weplanPlayer.we_player" type="button" @click="associate(weplanPlayer.id)" class="btn btn-outline-brand btn-elevate btn-sm" v-html="getButtonText"></button>
                 <button v-else type="button" class="btn btn-outline-success btn-elevate btn-sm"><i class="la la-user"></i>&nbsp;Profil</button>
             </td>
         </tr>

@@ -36,6 +36,7 @@ Route::name('api.')->group(function () {
             Route::patch('user',"UserAPI@patch");
             Route::post('user',"UserAPI@saveAvatar");
             Route::post('user/associate',"UserAPI@associatePlayer");
+            Route::post('user/dissociate',"UserAPI@dissociatePlayer");
             Route::post('user/activate',"UserAPI@activateEmail");
             Route::post('user/activate/resend',"UserAPI@sendNewActivationCode");
             Route::get("user/status","UserAPI@getUserStatus");

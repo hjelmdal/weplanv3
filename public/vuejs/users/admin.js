@@ -113,7 +113,6 @@ var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "./node_modules/
 var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "./node_modules/axios/lib/helpers/parseHeaders.js");
 var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "./node_modules/axios/lib/helpers/isURLSameOrigin.js");
 var createError = __webpack_require__(/*! ../core/createError */ "./node_modules/axios/lib/core/createError.js");
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ "./node_modules/axios/lib/helpers/btoa.js");
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -125,22 +124,6 @@ module.exports = function xhrAdapter(config) {
     }
 
     var request = new XMLHttpRequest();
-    var loadEvent = 'onreadystatechange';
-    var xDomain = false;
-
-    // For IE 8/9 CORS support
-    // Only supports POST and GET calls and doesn't returns the response headers.
-    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if ( true &&
-        typeof window !== 'undefined' &&
-        window.XDomainRequest && !('withCredentials' in request) &&
-        !isURLSameOrigin(config.url)) {
-      request = new window.XDomainRequest();
-      loadEvent = 'onload';
-      xDomain = true;
-      request.onprogress = function handleProgress() {};
-      request.ontimeout = function handleTimeout() {};
-    }
 
     // HTTP basic authentication
     if (config.auth) {
@@ -155,8 +138,8 @@ module.exports = function xhrAdapter(config) {
     request.timeout = config.timeout;
 
     // Listen for ready state
-    request[loadEvent] = function handleLoad() {
-      if (!request || (request.readyState !== 4 && !xDomain)) {
+    request.onreadystatechange = function handleLoad() {
+      if (!request || request.readyState !== 4) {
         return;
       }
 
@@ -173,9 +156,8 @@ module.exports = function xhrAdapter(config) {
       var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
       var response = {
         data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
-        status: request.status === 1223 ? 204 : request.status,
-        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        status: request.status,
+        statusText: request.statusText,
         headers: responseHeaders,
         config: config,
         request: request
@@ -988,54 +970,6 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/helpers/btoa.js":
-/*!************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/btoa.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
-
-var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-
-function E() {
-  this.message = 'String contains an invalid character';
-}
-E.prototype = new Error;
-E.prototype.code = 5;
-E.prototype.name = 'InvalidCharacterError';
-
-function btoa(input) {
-  var str = String(input);
-  var output = '';
-  for (
-    // initialize result and counter
-    var block, charCode, idx = 0, map = chars;
-    // if the next str index does not exist:
-    //   change the mapping table to "="
-    //   check if d has no fractional digits
-    str.charAt(idx | 0) || (map = '=', idx % 1);
-    // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
-    output += map.charAt(63 & block >> 8 - idx % 1 * 8)
-  ) {
-    charCode = str.charCodeAt(idx += 3 / 4);
-    if (charCode > 0xFF) {
-      throw new E();
-    }
-    block = block << 8 | charCode;
-  }
-  return output;
-}
-
-module.exports = btoa;
-
-
-/***/ }),
-
 /***/ "./node_modules/axios/lib/helpers/buildURL.js":
 /*!****************************************************!*\
   !*** ./node_modules/axios/lib/helpers/buildURL.js ***!
@@ -1450,7 +1384,7 @@ module.exports = function spread(callback) {
 
 
 var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
-var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js");
+var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/axios/node_modules/is-buffer/index.js");
 
 /*global toString:true*/
 
@@ -1754,6 +1688,28 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/axios/node_modules/is-buffer/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/axios/node_modules/is-buffer/index.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+module.exports = function isBuffer (obj) {
+  return obj != null && obj.constructor != null &&
+    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/users/components/associateUser.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/users/components/associateUser.vue?vue&type=script&lang=js& ***!
@@ -1812,12 +1768,31 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.setReadOnly();
 
-        _this.$root.$emit('userAssociated');
-      }).catch(function (e) {// nothing now
+        _this.$root.$emit('refreshUsers');
+      })["catch"](function (e) {// nothing now
+      });
+    },
+    dissociate: function dissociate(playerId) {
+      var _this2 = this;
+
+      this.form.playerId = playerId;
+      this.form.userId = this.user.id;
+      this.form.post("/api/v1/user/dissociate").then(function (data) {
+        console.log(data);
+        _this2.input = null;
+        _this2.user = data;
+        _this2.input = _this2.user.suggested_player;
+
+        _this2.submit();
+
+        _this2.setReadOnly();
+
+        _this2.$root.$emit('refreshUsers');
+      })["catch"](function (e) {// nothing now
       });
     },
     createWeplanPlayer: function createWeplanPlayer(playerId) {
-      var _this2 = this;
+      var _this3 = this;
 
       console.log("also here");
       this.form.playerId = [];
@@ -1825,26 +1800,26 @@ __webpack_require__.r(__webpack_exports__);
       this.form.post("/api/v1/BP/players/store").then(function (data) {
         console.log(data.message);
 
-        _this2.getWePlanPlayer();
-      }).catch(function (e) {//nothing
+        _this3.getWePlanPlayer();
+      })["catch"](function (e) {//nothing
       });
     },
     getWePlanPlayer: function getWePlanPlayer() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.form.get("/api/v1/players/find/" + this.input).then(function (data) {
-        _this3.weplanPlayers = data;
-      }).catch(function (errors) {
-        _this3.weplanPlayers = null; //console.log(errors);
+        _this4.weplanPlayers = data;
+      })["catch"](function (errors) {
+        _this4.weplanPlayers = null; //console.log(errors);
       });
     },
     getBpPlayer: function getBpPlayer() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.form.get("/api/v1/BP/players/find/" + this.input).then(function (data) {
-        _this4.bpPlayers = data; //console.log(data);
-      }).catch(function (errors) {
-        _this4.bpPlayers = null; //console.log(errors);
+        _this5.bpPlayers = data; //console.log(data);
+      })["catch"](function (errors) {
+        _this5.bpPlayers = null; //console.log(errors);
       });
     },
     setInput: function setInput() {
@@ -1880,10 +1855,10 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    var _this5 = this;
+    var _this6 = this;
 
     this.$root.$on('modalSubmit', function (data) {
-      _this5.submit();
+      _this6.submit();
     });
   }
 });
@@ -1935,26 +1910,28 @@ __webpack_require__.r(__webpack_exports__);
     getInitials: function getInitials(name) {
       if (name) {
         var nameSplit = name.split(" ");
-        var final = "";
+        var _final = "";
         nameSplit.forEach(function (i, idx, array) {
           i = i.substr(0, 1);
 
           if (idx == 0) {
-            final = final + i;
+            _final = _final + i;
           }
 
           if (idx === array.length - 1 && i.substr(0, 1) != '(') {
-            final = final + i;
+            _final = _final + i;
           } else if (idx === array.length - 1 && array.length > 2) {
-            final = final + array[idx - 1].substr(0, 1);
+            _final = _final + array[idx - 1].substr(0, 1);
           }
         });
-        return final;
+        return _final;
       }
     },
     associate: function associate(playerId) {
       this.$emit("associate", playerId);
-      console.log("done");
+    },
+    dissociate: function dissociate(playerId) {
+      this.$emit("dissociate", playerId);
     }
   },
   computed: {
@@ -2014,7 +1991,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log("Er tilknyttet: " + user.we_player.dbf_id);
         this.modalData.suggested_id = user.we_player.dbf_id;
       } else {
-        this.modalData.suggested_id = id;
+        this.modalData.suggested_id = user.suggested_player;
       }
     },
     getAllUsers: function getAllUsers() {
@@ -2069,6 +2046,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     refresh: function refresh() {
       document.querySelector(".kt-nav__item .active").click();
+      console.log("refreshed!");
     },
     toggleView: function toggleView(view) {
       this.view = view;
@@ -2081,7 +2059,7 @@ __webpack_require__.r(__webpack_exports__);
     this.$root.$on('modalClose', function (data) {
       _this3.refresh();
     });
-    this.$root.$on('userAssociated', function (data) {
+    this.$root.$on('refreshUsers', function (data) {
       _this3.refresh();
     });
   },
@@ -2218,38 +2196,6 @@ function toComment(sourceMap) {
 	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
 
 	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/is-buffer/index.js":
-/*!*****************************************!*\
-  !*** ./node_modules/is-buffer/index.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-// The _isBuffer check is for Safari 5-7 support, because it's missing
-// Object.prototype.constructor. Remove this eventually
-module.exports = function (obj) {
-  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
-}
-
-function isBuffer (obj) {
-  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
-// For Node v0.10 support. Remove this eventually.
-function isSlowBuffer (obj) {
-  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
 
@@ -21020,96 +20966,149 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "kt-portlet kt-widget kt-widget--general-3" }, [
         _c("div", { staticClass: "kt-portlet__body kt-portlet__body--fit" }, [
-          _c("div", { staticClass: "kt-widget__top" }, [
-            _c(
-              "div",
-              { staticClass: "kt-media kt-media--lg kt-media--circle" },
-              [
-                _c("img", {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.user.avatar,
-                      expression: "user.avatar"
-                    }
-                  ],
-                  attrs: { src: _vm.user.avatar, alt: _vm.user.name }
-                }),
-                _vm._v(" "),
-                !_vm.user.avatar
-                  ? _c("img", {
-                      attrs: { src: "/img/profile.png", alt: _vm.user.name }
-                    })
-                  : _vm._e()
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "kt-widget__wrapper" }, [
+          _c(
+            "div",
+            {
+              staticClass: "kt-widget__top",
+              staticStyle: { "padding-left": "10px", "padding-right": "10px" }
+            },
+            [
               _c(
                 "div",
-                {
-                  staticClass: "kt-widget__label",
-                  staticStyle: { "flex-grow": "0" }
-                },
+                { staticClass: "kt-media kt-media--lg kt-media--circle" },
                 [
-                  _c(
-                    "a",
-                    { staticClass: "kt-widget__title", attrs: { href: "#" } },
-                    [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(_vm.user.name) +
-                          "\n                        "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "kt-widget__desc" }, [
-                    _c("i", { staticClass: "flaticon2-send  kt-font-success" }),
-                    _vm._v(" "),
-                    _c(
-                      "a",
+                  _c("img", {
+                    directives: [
                       {
-                        attrs: {
-                          target: "_blank",
-                          href: "mailto:" + _vm.user.email
-                        }
-                      },
-                      [
-                        _vm._v(_vm._s(_vm.user.email) + " "),
-                        _vm.user.email_verified_at != null
-                          ? _c("i", {
-                              staticClass: "flaticon2-correct kt-font-success"
-                            })
-                          : _vm._e()
-                      ]
-                    )
-                  ])
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.user.avatar,
+                        expression: "user.avatar"
+                      }
+                    ],
+                    attrs: { src: _vm.user.avatar, alt: _vm.user.name }
+                  }),
+                  _vm._v(" "),
+                  !_vm.user.avatar
+                    ? _c("img", {
+                        attrs: { src: "/img/profile.png", alt: _vm.user.name }
+                      })
+                    : _vm._e()
                 ]
               ),
               _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "kt-widget__label",
-                  staticStyle: { "flex-direction": "row" }
-                },
-                [
-                  _vm.user.we_player
-                    ? _c(
-                        "button",
-                        { staticClass: "btn btn-sm btn-outline-warning" },
+              _c("div", { staticClass: "kt-widget__wrapper" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "kt-widget__label",
+                    staticStyle: { "flex-grow": "0" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      { staticClass: "kt-widget__title", attrs: { href: "#" } },
+                      [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(_vm.user.name) +
+                            "\n                        "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "kt-widget__desc" }, [
+                      _c("i", {
+                        staticClass: "flaticon2-send  kt-font-success"
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            target: "_blank",
+                            href: "mailto:" + _vm.user.email
+                          }
+                        },
                         [
-                          _c("i", { staticClass: "la la-chain-broken" }),
-                          _vm._v(" Fjern spiller")
+                          _vm._v(_vm._s(_vm.user.email) + " "),
+                          _vm.user.email_verified_at != null
+                            ? _c("i", {
+                                staticClass: "flaticon2-correct kt-font-success"
+                              })
+                            : _vm._e()
                         ]
                       )
-                    : _vm._e()
-                ]
-              )
-            ])
-          ])
+                    ]),
+                    _vm._v(" "),
+                    _vm.user.we_player
+                      ? _c("span", { staticClass: "kt-widget__desc" }, [
+                          _c(
+                            "span",
+                            {
+                              staticClass: "fixed-ellipsis",
+                              staticStyle: { "max-width": "120px" }
+                            },
+                            [
+                              _c("i", { staticClass: "la la-chain" }),
+                              _vm._v(
+                                " " + _vm._s(_vm.user.we_player.name) + ","
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            { staticStyle: { display: "inline-block" } },
+                            [
+                              _c("i", { staticClass: "la la-home" }),
+                              _vm._v(
+                                " " +
+                                  _vm._s(
+                                    _vm.user.we_player.bp_player.bp_club
+                                      .team_name
+                                  ) +
+                                  "\n                            "
+                              )
+                            ]
+                          )
+                        ])
+                      : _vm._e()
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "kt-widget__label",
+                    staticStyle: {
+                      "flex-direction": "row-reverse",
+                      "margin-right": "0rem"
+                    }
+                  },
+                  [
+                    _vm.user.we_player
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-outline-warning",
+                            on: {
+                              click: function($event) {
+                                return _vm.dissociate(_vm.user.player_id)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "la la-chain-broken" }),
+                            _vm._v(" Ophæv")
+                          ]
+                        )
+                      : _vm._e()
+                  ]
+                )
+              ])
+            ]
+          )
         ])
       ]),
       _vm._v(" "),
@@ -21122,7 +21121,7 @@ var render = function() {
           type: "weplan",
           title: "Matchende spiller(e) i WePlan"
         },
-        on: { associate: _vm.associate }
+        on: { dissociate: _vm.dissociate, associate: _vm.associate }
       }),
       _vm._v(" "),
       _c("hr"),
@@ -21307,7 +21306,7 @@ var render = function() {
       [_vm._v(_vm._s(_vm.title))]
     ),
     _vm._v(" "),
-    _c("table", { staticClass: "table table-striped m-table table-ellipsis" }, [
+    _c("table", { staticClass: "table table-striped m-table" }, [
       _vm._m(0),
       _vm._v(" "),
       _c(
@@ -21340,7 +21339,9 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(weplanPlayer.name))]),
+                  _c("td", { staticClass: "td-ellipsis" }, [
+                    _vm._v(_vm._s(weplanPlayer.name))
+                  ]),
                   _vm._v(" "),
                   _c("td", [
                     weplanPlayer.bp_player
@@ -21359,7 +21360,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("td", [
-                    !weplanPlayer.user
+                    !weplanPlayer.user && !weplanPlayer.we_player
                       ? _c("button", {
                           staticClass:
                             "btn btn-outline-brand btn-elevate btn-sm",
@@ -21778,57 +21779,64 @@ var render = function() {
                               ]
                             ),
                             _vm._v(" "),
-                            _c("td", [
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(user.name)
-                              ),
-                              _c("br"),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                { staticClass: "kt-widget__desc" },
-                                [
-                                  _c("i", {
-                                    staticClass:
-                                      "flaticon2-send  kt-font-success"
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "a",
-                                    {
-                                      attrs: {
-                                        target: "_blank",
-                                        href: "mailto:" + user.email
-                                      }
-                                    },
-                                    [
-                                      _vm._v(_vm._s(user.email) + " "),
-                                      user.email_verified_at != null
-                                        ? _c("i", {
-                                            staticClass:
-                                              "flaticon2-correct kt-font-success"
-                                          })
-                                        : _vm._e()
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("br"),
-                                  _vm._v(" "),
-                                  _vm._l(user.roles, function(role) {
-                                    return _c(
-                                      "span",
+                            _c(
+                              "td",
+                              {
+                                staticClass: "td-ellipsis",
+                                staticStyle: { "max-width": "30%" }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                            " +
+                                    _vm._s(user.name)
+                                ),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  { staticClass: "kt-widget__desc" },
+                                  [
+                                    _c("i", {
+                                      staticClass:
+                                        "flaticon2-send  kt-font-success"
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
                                       {
-                                        staticClass:
-                                          "badge badge-secondary badge-sm"
+                                        attrs: {
+                                          target: "_blank",
+                                          href: "mailto:" + user.email
+                                        }
                                       },
-                                      [_vm._v(_vm._s(role.name))]
-                                    )
-                                  })
-                                ],
-                                2
-                              )
-                            ]),
+                                      [
+                                        _vm._v(_vm._s(user.email) + " "),
+                                        user.email_verified_at != null
+                                          ? _c("i", {
+                                              staticClass:
+                                                "flaticon2-correct kt-font-success"
+                                            })
+                                          : _vm._e()
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _vm._l(user.roles, function(role) {
+                                      return _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "badge badge-secondary badge-sm"
+                                        },
+                                        [_vm._v(_vm._s(role.name))]
+                                      )
+                                    })
+                                  ],
+                                  2
+                                )
+                              ]
+                            ),
                             _vm._v(" "),
                             _c("td", { staticClass: "align-middle" }, [
                               _c(
@@ -21954,11 +21962,18 @@ var render = function() {
                               )
                             ]),
                             _vm._v(" "),
-                            _c("td", { staticClass: "align-middle" }, [
-                              user.we_player
-                                ? _c("span", [_vm._m(6, true)])
-                                : _vm._e()
-                            ]),
+                            _c(
+                              "td",
+                              {
+                                staticClass:
+                                  "align-middle d-none d-sm-table-cell"
+                              },
+                              [
+                                user.we_player
+                                  ? _c("span", [_vm._m(6, true)])
+                                  : _vm._e()
+                              ]
+                            ),
                             _vm._v(" "),
                             _c("td", { staticClass: "align-middle" }, [
                               _c(
@@ -22566,11 +22581,15 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Bruger")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Status")]),
+      _c("th", { attrs: { width: "75" } }, [_vm._v("Status")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Spiller")]),
+      _c(
+        "th",
+        { staticClass: "d-none d-sm-table-cell", attrs: { width: "60" } },
+        [_vm._v("Spiller")]
+      ),
       _vm._v(" "),
-      _c("th", [_vm._v("#")])
+      _c("th", { attrs: { width: "155" } }, [_vm._v("#")])
     ])
   },
   function() {
@@ -35048,7 +35067,7 @@ function () {
           _this.onSuccess(response.data);
 
           resolve(response.data);
-        }).catch(function (error) {
+        })["catch"](function (error) {
           if (error.response) {
             _this.onFail(error.response.data.errors); //console.log(error.response.data);
 

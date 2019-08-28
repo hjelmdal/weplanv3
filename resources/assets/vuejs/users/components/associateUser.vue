@@ -43,7 +43,27 @@
                         this.user = data;
                         this.submit();
                         this.setReadOnly();
-                        this.$root.$emit('userAssociated');
+                        this.$root.$emit('refreshUsers');
+                    })
+                    .catch(e => {
+                        // nothing now
+                    })
+            },
+
+            dissociate(playerId) {
+                this.form.playerId = playerId;
+                this.form.userId = this.user.id;
+                this.form.post("/api/v1/user/dissociate")
+                    .then(data => {
+                        console.log(data);
+                        this.input = null;
+                        this.user = data;
+                        this.input = this.user.suggested_player;
+                        this.submit();
+                        this.setReadOnly();
+                        this.$root.$emit('refreshUsers');
+
+
                     })
                     .catch(e => {
                         // nothing now
@@ -156,7 +176,7 @@
     </div>
     <div class="kt-portlet kt-widget kt-widget--general-3">
         <div class="kt-portlet__body kt-portlet__body--fit">
-            <div class="kt-widget__top">
+            <div class="kt-widget__top" style="padding-left: 10px; padding-right: 10px">
                 <div class="kt-media kt-media--lg kt-media--circle">
                     <img v-show="user.avatar" :src="user.avatar" :alt="user.name">
                     <img v-if="!user.avatar" src="/img/profile.png" :alt="user.name">
@@ -170,10 +190,16 @@
                                     <i class="flaticon2-send  kt-font-success"></i> <a target="_blank" :href="'mailto:' +user.email">{{ user.email }} <i v-if="user.email_verified_at != null" class="flaticon2-correct kt-font-success"></i></a>
 
                                 </span>
+                        <span v-if="user.we_player" class="kt-widget__desc">
+                            <span class="fixed-ellipsis" style="max-width: 120px;"><i class="la la-chain"></i> {{ user.we_player.name }},</span>
+                            <span style="display: inline-block;">
+                            <i class="la la-home"></i> {{ user.we_player.bp_player.bp_club.team_name }}
+                            </span>
+                        </span>
 
                     </div>
-                    <div class="kt-widget__label" style="flex-direction: row;">
-                        <button v-if="user.we_player" class="btn btn-sm btn-outline-warning"><i class="la la-chain-broken"></i>&nbsp;Fjern spiller</button>
+                    <div class="kt-widget__label" style="flex-direction: row-reverse; margin-right: 0rem">
+                        <button @click="dissociate(user.player_id)" v-if="user.we_player" class="btn btn-sm btn-outline-warning"><i class="la la-chain-broken"></i>&nbsp;Ophæv</button>
                     </div>
 
                 </div>
@@ -183,12 +209,12 @@
 
     <hr />
 
-    <player-table @associate="associate" :user="user" :players="weplanPlayers" :type="'weplan'" :title="'Matchende spiller(e) i WePlan'"></player-table>
+    <player-table @dissociate="dissociate" @associate="associate" :user="user" :players="weplanPlayers" :type="'weplan'" :title="'Matchende spiller(e) i WePlan'"></player-table @dissociate="dissociate">
 
     <hr />
 
     <div v-show="bpPlayers && (!weplanPlayers || weplanPlayers.length == 0 || input.length < 9)">
-        <player-table @associate="createWeplanPlayer" :user="user" :players="bpPlayers" :type="'BD'" :title="'Matchende spiller(e) hos Badminton DK'"></player-table>
+        <player-table  @associate="createWeplanPlayer" :user="user" :players="bpPlayers" :type="'BD'" :title="'Matchende spiller(e) hos Badminton DK'"></player-table>
 
     </div>
 </div>

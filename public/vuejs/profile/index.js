@@ -113,7 +113,6 @@ var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "./node_modules/
 var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "./node_modules/axios/lib/helpers/parseHeaders.js");
 var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "./node_modules/axios/lib/helpers/isURLSameOrigin.js");
 var createError = __webpack_require__(/*! ../core/createError */ "./node_modules/axios/lib/core/createError.js");
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ "./node_modules/axios/lib/helpers/btoa.js");
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -125,22 +124,6 @@ module.exports = function xhrAdapter(config) {
     }
 
     var request = new XMLHttpRequest();
-    var loadEvent = 'onreadystatechange';
-    var xDomain = false;
-
-    // For IE 8/9 CORS support
-    // Only supports POST and GET calls and doesn't returns the response headers.
-    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if ( true &&
-        typeof window !== 'undefined' &&
-        window.XDomainRequest && !('withCredentials' in request) &&
-        !isURLSameOrigin(config.url)) {
-      request = new window.XDomainRequest();
-      loadEvent = 'onload';
-      xDomain = true;
-      request.onprogress = function handleProgress() {};
-      request.ontimeout = function handleTimeout() {};
-    }
 
     // HTTP basic authentication
     if (config.auth) {
@@ -155,8 +138,8 @@ module.exports = function xhrAdapter(config) {
     request.timeout = config.timeout;
 
     // Listen for ready state
-    request[loadEvent] = function handleLoad() {
-      if (!request || (request.readyState !== 4 && !xDomain)) {
+    request.onreadystatechange = function handleLoad() {
+      if (!request || request.readyState !== 4) {
         return;
       }
 
@@ -173,9 +156,8 @@ module.exports = function xhrAdapter(config) {
       var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
       var response = {
         data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
-        status: request.status === 1223 ? 204 : request.status,
-        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        status: request.status,
+        statusText: request.statusText,
         headers: responseHeaders,
         config: config,
         request: request
@@ -988,54 +970,6 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/helpers/btoa.js":
-/*!************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/btoa.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
-
-var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-
-function E() {
-  this.message = 'String contains an invalid character';
-}
-E.prototype = new Error;
-E.prototype.code = 5;
-E.prototype.name = 'InvalidCharacterError';
-
-function btoa(input) {
-  var str = String(input);
-  var output = '';
-  for (
-    // initialize result and counter
-    var block, charCode, idx = 0, map = chars;
-    // if the next str index does not exist:
-    //   change the mapping table to "="
-    //   check if d has no fractional digits
-    str.charAt(idx | 0) || (map = '=', idx % 1);
-    // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
-    output += map.charAt(63 & block >> 8 - idx % 1 * 8)
-  ) {
-    charCode = str.charCodeAt(idx += 3 / 4);
-    if (charCode > 0xFF) {
-      throw new E();
-    }
-    block = block << 8 | charCode;
-  }
-  return output;
-}
-
-module.exports = btoa;
-
-
-/***/ }),
-
 /***/ "./node_modules/axios/lib/helpers/buildURL.js":
 /*!****************************************************!*\
   !*** ./node_modules/axios/lib/helpers/buildURL.js ***!
@@ -1450,7 +1384,7 @@ module.exports = function spread(callback) {
 
 
 var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
-var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js");
+var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/axios/node_modules/is-buffer/index.js");
 
 /*global toString:true*/
 
@@ -1754,6 +1688,28 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/axios/node_modules/is-buffer/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/axios/node_modules/is-buffer/index.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+module.exports = function isBuffer (obj) {
+  return obj != null && obj.constructor != null &&
+    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/profile/components/step0Welcome.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/profile/components/step0Welcome.vue?vue&type=script&lang=js& ***!
@@ -1851,7 +1807,7 @@ __webpack_require__.r(__webpack_exports__);
             setTimeout(function () {
               this.next();
             }, 2000);
-          }).catch(function (e) {
+          })["catch"](function (e) {
             _this.form.digits = []; //refs.digit1.focus();
 
             document.querySelector(".activation-wrapper").classList.remove("success");
@@ -1872,7 +1828,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.notification = new _Notification__WEBPACK_IMPORTED_MODULE_2__["default"]();
 
         _this2.notification.send("info", data.message);
-      }).catch(function (e) {
+      })["catch"](function (e) {
         console.log(e);
       });
     },
@@ -1951,7 +1907,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.form.patch("/api/v1/user").then(function (data) {
         _this.next();
-      }).catch(function (e) {//TODO: add message flash
+      })["catch"](function (e) {//TODO: add message flash
       });
     },
     checkChars: function checkChars() {
@@ -2010,7 +1966,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.form.gdpr) {
         this.form.patch("/api/v1/user").then(function (data) {
           _this.next();
-        }).catch(function (e) {//I don't care about this
+        })["catch"](function (e) {//I don't care about this
         });
       }
     },
@@ -2082,7 +2038,7 @@ __webpack_require__.r(__webpack_exports__);
         headers: {
           Authorization: apiToken
         }
-      }).catch(function (error) {
+      })["catch"](function (error) {
         if (error.response) {
           console.log("Error code: " + error.response.status);
 
@@ -2204,7 +2160,7 @@ __webpack_require__.r(__webpack_exports__);
           event.target.classList.add("is-valid"); //this.form.playerId = data.player.dbf_id;
 
           _this.player = data.player;
-        }).catch(function (e) {
+        })["catch"](function (e) {
           _this.player = "";
           event.target.classList.add("is-invalid");
         });
@@ -2224,7 +2180,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(data);
 
         _this2.$emit("next");
-      }).catch(function (e) {
+      })["catch"](function (e) {
         // Do something
         console.log(e);
       });
@@ -2334,7 +2290,7 @@ __webpack_require__.r(__webpack_exports__);
         if (newVal.state) {
           this.form.post("/api/v1/user/complete").then(function (data) {
             _this.states.submit.disabled = 0;
-          }).catch(function (e) {
+          })["catch"](function (e) {
             console.log(e);
             _this.states.submit.disabled = 0;
           });
@@ -2445,7 +2401,7 @@ __webpack_require__.r(__webpack_exports__);
     axios__WEBPACK_IMPORTED_MODULE_10___default.a.get("/api/v1/user/status").then(function (data) {
       _this.steps = data.data;
       console.log(_this.steps);
-    }).catch(function (e) {
+    })["catch"](function (e) {
       console.log("Der skete en fejl: " + e);
     });
   },
@@ -2513,7 +2469,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.kt-checkbox[data-v-c6a7d094] {\n    font-size: 1.6rem;\n    padding-left:3rem;\n}\n.kt-checkbox>span[data-v-c6a7d094] {\n    border-radius: 3px;\n    background: none;\n    position: absolute;\n    top: 1px;\n    left: 0;\n    height: 30px;\n    width: 30px;\n}\n.kt-checkbox>span[data-v-c6a7d094]:after {\n    content: '';\n    position: absolute;\n    display: none;\n    top: 50%;\n    left: 50%;\n    margin-left: -4px;\n    margin-top: -11px;\n    width: 10px;\n    height: 20px;\n    border-width: 0 2px 2px 0/*rtl:ignore*/ !important;\n    -webkit-transform: rotate(45deg);\n    transform: rotate(45deg)/*rtl:ignore*/;\n}\n", ""]);
+exports.push([module.i, "\n.kt-checkbox[data-v-c6a7d094] {\n    font-size: 1.6rem;\n    padding-left:3rem;\n}\n.kt-checkbox>span[data-v-c6a7d094] {\n    border-radius: 3px;\n    background: none;\n    position: absolute;\n    top: 1px;\n    left: 0;\n    height: 30px;\n    width: 30px;\n}\n.kt-checkbox>span[data-v-c6a7d094]:after {\n    content: '';\n    position: absolute;\n    display: none;\n    top: 50%;\n    left: 50%;\n    margin-left: -4px;\n    margin-top: -11px;\n    width: 10px;\n    height: 20px;\n    border-width: 0 2px 2px 0/*rtl:ignore*/ !important;\n    transform: rotate(45deg)/*rtl:ignore*/;\n}\n", ""]);
 
 // exports
 
@@ -2697,38 +2653,6 @@ function toComment(sourceMap) {
 	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
 
 	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/is-buffer/index.js":
-/*!*****************************************!*\
-  !*** ./node_modules/is-buffer/index.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-// The _isBuffer check is for Safari 5-7 support, because it's missing
-// Object.prototype.constructor. Remove this eventually
-module.exports = function (obj) {
-  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
-}
-
-function isBuffer (obj) {
-  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
-// For Node v0.10 support. Remove this eventually.
-function isSlowBuffer (obj) {
-  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
 
@@ -17787,7 +17711,7 @@ function () {
           _this.onSuccess(response.data);
 
           resolve(response.data);
-        }).catch(function (error) {
+        })["catch"](function (error) {
           if (error.response) {
             _this.onFail(error.response.data.errors); //console.log(error.response.data);
 

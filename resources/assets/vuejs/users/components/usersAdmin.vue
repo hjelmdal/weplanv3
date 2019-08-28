@@ -31,7 +31,7 @@
                   console.log("Er tilknyttet: " + user.we_player.dbf_id);
                   this.modalData.suggested_id = user.we_player.dbf_id;
               } else {
-                  this.modalData.suggested_id = id;
+                  this.modalData.suggested_id = user.suggested_player;
               }
           },
             getAllUsers() {
@@ -79,6 +79,7 @@
             },
             refresh() {
                 document.querySelector(".kt-nav__item .active").click();
+                console.log("refreshed!");
             },
             toggleView(view) {
                 this.view = view;
@@ -89,7 +90,7 @@
             this.$root.$on('modalClose', data => {
                 this.refresh();
             });
-            this.$root.$on('userAssociated', data => {
+            this.$root.$on('refreshUsers', data => {
                 this.refresh();
             });
         },
@@ -199,9 +200,9 @@
                 <thead>
                 <th width="40"></th>
                 <th>Bruger</th>
-                <th>Status</th>
-                <th>Spiller</th>
-                <th>#</th>
+                <th width="75">Status</th>
+                <th width="60" class="d-none d-sm-table-cell">Spiller</th>
+                <th width="155">#</th>
                 </thead>
                 <tbody>
                 <tr v-for="(user,index) in filteredUsers">
@@ -212,7 +213,7 @@
                                 <img v-if="!user.avatar" src="/img/profile.png" :alt="user.name">
                             </div>
                     </td>
-                    <td>
+                    <td class="td-ellipsis" style="max-width: 30%">
                             {{ user.name }}<br>
                             <span class="kt-widget__desc">
                                 <i class="flaticon2-send  kt-font-success"></i> <a target="_blank" :href="'mailto:' +user.email">{{ user.email }} <i v-if="user.email_verified_at != null" class="flaticon2-correct kt-font-success"></i></a>
@@ -234,7 +235,7 @@
                             </div>
                         </div>
                     </td>
-                    <td class="align-middle">
+                    <td class="align-middle d-none d-sm-table-cell">
                         <span v-if="user.we_player">
                             <span class="float-left fa fa-stack fa-lg"> <i class="fa fa-certificate fa-stack-1x kt-font-brand"></i> <i class="fa fa-check fa-stack-1x fa-sm fa-inverse"></i>
                             </span>

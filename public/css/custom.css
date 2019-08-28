@@ -539,6 +539,22 @@ body::before {
   white-space: nowrap;
 }
 
+td.td-ellipsis {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fixed-ellipsis {
+  max-width: 100px;
+  vertical-align: top;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 @media (max-width: 575px) {
   .kt-content {
     padding: 15px 0px 15px 0px;

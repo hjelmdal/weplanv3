@@ -200,23 +200,14 @@ class UserAPI extends Controller
 
         try {
             $users = User::all();
-            $users->load(["roles","UserStatus","WePlayer"]);
+            $users->load(["roles","UserStatus","WePlayer.BpPlayer.BpClub"]);
         } catch (ModelNotFoundException $e) {
             return response()->json(["errors" => ["form" => "No users found"]],404);
         }
         $array = array();
         foreach($users as $user) {
             if($user->UserStatus->count() > 0) {
-                foreach ($user->UserStatus as $status) {
-                    if($status->type == "player") {
-                        $user->suggested_player = $status->data;
-                        $user->matched_weplayer = WePlayer::where("dbf_id",$user->suggested_player)->first();
-
-                        if(!$user->matched_weplayer) {
-                            $user->matched_bpplayer = BpPlayer::where("dbf_id",$user->suggested_player)->first();
-                        }
-                    }
-                }
+                $user = $this->setStatuses($user);
             }
             if($filter == "activated" && $user->email_verified_at) {
                 $array[] = $user;
@@ -231,6 +222,22 @@ class UserAPI extends Controller
             return response()->json($array,200);
         }
         return response()->json($users,200);
+    }
+
+    private function setStatuses(User $user) {
+        if($user->UserStatus->count() > 0) {
+            foreach ($user->UserStatus as $status) {
+                if ($status->type == "player") {
+                    $user->suggested_player = $status->data;
+                    $user->matched_weplayer = WePlayer::where("dbf_id", $user->suggested_player)->first();
+
+                    if (!$user->matched_weplayer) {
+                        $user->matched_bpplayer = BpPlayer::where("dbf_id", $user->suggested_player)->first();
+                    }
+                }
+            }
+        }
+        return $user;
     }
 
     public function filteredUsers(Request $request) {
@@ -258,8 +265,28 @@ class UserAPI extends Controller
             $this->user = User::findOrFail($request->userId);
 
             $this->user->player_id = $request->playerId;
+            $this->user->assignRole('player');
             $this->user->save();
-            $this->user->load("WePlayer");
+            $this->user->load(["WePlayer.BpPlayer.BpClub"]);
+        }
+        return response()->json($this->user,200);
+    }
+
+    public function dissociatePlayer(Request $request) {
+        if(!$request->playerId || !$request->userId) {
+            return $this->badRequest();
+        } else {
+
+            $this->user = User::findOrFail($request->userId);
+
+            if($this->user->player_id != $request->playerId) {
+                return $this->badRequest();
+            }
+            $this->user->player_id = null;
+            $this->user->removeRole('player');
+            $this->user->save();
+            $this->user->load(["UserStatus"]);
+            $this->user = $this->setStatuses($this->user);
         }
         return response()->json($this->user,200);
     }
@@ -376,5 +403,9 @@ class UserAPI extends Controller
 
         return response()->json($status,200);
 
+    }
+
+    private function badRequest($data = null) {
+        return response()->json(["errors" => ["form" => "Bad request"],"data" => $data], 400);
     }
 }

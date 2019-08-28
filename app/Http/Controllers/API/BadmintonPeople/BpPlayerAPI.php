@@ -95,7 +95,7 @@ class BpPlayerAPI extends Controller
 
     public function find($id) {
         try {
-            $player = BpPlayer::where('dbf_id', 'like', '%' . $id . '%')->with("BpClub")->get();
+            $player = BpPlayer::where('dbf_id', 'like', '%' . $id . '%')->with(["BpClub","WePlayer"])->get();
         } catch (ModelNotFoundException $e) {
             return response()->json(["errors" => ["form" => "Player not found"]],404);
         }
