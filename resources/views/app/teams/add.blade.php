@@ -133,7 +133,7 @@
                         var s = e["user"];
                         if(s) {
                             if(s.avatar) {
-                                var pic = "{{asset('storage/')}}/"+s.avatar;
+                                var pic = s.avatar;
                             } else {
                                 var pic = "/img/profile.png";
                             }

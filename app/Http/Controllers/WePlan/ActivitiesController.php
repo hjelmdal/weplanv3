@@ -21,7 +21,7 @@ class ActivitiesController extends Controller
     {
         //$activities = new WeActivitiesAPI();
         //$activities = $activities->index();
-        return view("app.activities.index",["date" => $date]);
+        return view("app.activities.index2",["date" => $date]);
     }
 
     public function admin($date = null) {

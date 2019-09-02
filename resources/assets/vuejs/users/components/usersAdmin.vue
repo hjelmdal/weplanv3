@@ -24,7 +24,7 @@
             }
         },
         methods: {
-          associate(user,id) {
+          associateModal(user,id) {
               console.log("somebody touched me!");
               this.modalData.user = user;
               if(user.we_player) {
@@ -111,11 +111,7 @@
             padding: 1.1rem 1.65rem;
         }
     }
-.badge-sm {
-    font-size: 70%;
-    padding: 0.2em 0.4em;
-    margin-right: 0.3em;
-}
+
 .fa svg {
     width: 2rem;
     height: 2rem;
@@ -244,8 +240,8 @@
                     <td class="align-middle">
                         <div class="btn-group" role="group" aria-label="First group">
                             <button type="button" class="btn btn-sm btn-primary"><i class="la la-pencil-square-o"></i></button>
-                            <button data-toggle="modal" data-target="#modal3" v-if="user.player_id" @click="associate(user,0)" type="button" class="btn btn-sm btn-metal"><i class="la la-chain-broken"></i></button>
-                            <button data-toggle="modal" data-target="#modal3" v-if="!user.player_id"  @click="associate(user,0)" type="button" class="btn btn-sm btn-success"><i class="la la-chain"></i></button>
+                            <button data-toggle="modal" data-target="#modal3" v-if="user.player_id" @click="associateModal(user,0)" type="button" class="btn btn-sm btn-metal"><i class="la la-chain-broken"></i></button>
+                            <button data-toggle="modal" data-target="#modal3" v-if="!user.player_id"  @click="associateModal(user,0)" type="button" class="btn btn-sm btn-success"><i class="la la-chain"></i></button>
                             <button type="button" class="btn btn-sm btn-danger"><i class="la la-trash"></i></button>
                         </div>
                     </td>
@@ -282,7 +278,7 @@
                             <div class="kt-widget__progress">
                                 <div class="kt-widget__cont">
                                     <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" :class="{ 'btn-success' : user.complete, 'btn-warning' : !user.complete }" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <button type="button" :class="{ 'btn-success' : user.complete, 'btn-warning' : !user.complete }" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Status
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
@@ -299,7 +295,7 @@
 
                             <div class="kt-widget__stats">
                                 <template  v-for="status in user.user_status" v-if="status.type == 'player'">
-                                    <button data-toggle="modal" data-target="#modal3" v-if="status.data && !user.player_id"  @click="associate(user,status.data)" type="button" class="btn btn-primary btn-sm"><i class="fa">
+                                    <button data-toggle="modal" data-target="#modal3" v-if="status.data && !user.player_id"  @click="associateModal(user,status.data)" type="button" class="btn btn-primary btn-sm"><i class="fa">
 
                                         <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                              width="487.811px" height="487.81px" viewBox="0 0 487.811 487.81" style="enable-background:new 0 0 487.811 487.81;"

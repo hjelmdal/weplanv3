@@ -160,7 +160,7 @@ $user = Auth::user();
                 <div class="col-4 kt-padding-5 text-truncate weplayer-cell">
                     <div class="kt-user-card-v2" v-if="player.user">
                         <div class="kt-user-card-v2__pic">
-                            <img v-if="player.user.avatar" :src="'/storage/' + player.user.avatar" class="kt-img-rounded kt-marginless" alt="photo">
+                            <img v-if="player.user.avatar" :src="player.user.avatar" class="kt-img-rounded kt-marginless" alt="photo">
                         </div>
                         <div class="kt-user-card-v2__details text-truncate">
                             <span class="kt-user-card-v2__name text-truncate" v-text="player.name"></span>

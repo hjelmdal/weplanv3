@@ -85,7 +85,7 @@ class WeActivitiesAPI extends Controller
             } else {
                 $activities = WeActivity::where("start_date", ">=", $greater)->where("start_date", "<", $less)->orderBy("start_date", "ASC")->orderBy("start", "ASC")->get();
             }
-            $activities->load("type","players");
+            $activities->load(["type","players"]);
             foreach ($activities as $activity) {
                 $activity->my_activity = false;
                 $activity->response_timestamp = strtotime($activity->response_date . " " . $activity->response_time);

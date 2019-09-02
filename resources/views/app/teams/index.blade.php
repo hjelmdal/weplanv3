@@ -119,7 +119,7 @@ $img_url = "https://keenthemes.com/keen/preview/assets/media/users/100_";
                         <div class="kt-widget-12__members">
                             <template v-for="(player, index) in team.players">
                                 <a v-if="index < 3" href="#" class="kt-widget-12__member" data-toggle="kt-tooltip" data-skin="brand" data-placement="top" v-bind:title="player.name" v-tooltip:top="''">>
-                                    <img v-if="player.user && player.user.avatar" v-bind:src="'{{asset('storage/')}}/' +  player.user.avatar " v-bind:alt="player.name" />
+                                    <img v-if="player.user && player.user.avatar" v-bind:src="player.user.avatar " v-bind:alt="player.name" />
                                     <img v-else src="{{ $img_url }}1.jpg" alt="player.name"/>
                                 </a>
                                 <a v-if="index == 3" href="#" class="kt-widget-12__member kt-widget-12__member--last">

@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1983,7 +1983,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    associate: function associate(user, id) {
+    associateModal: function associateModal(user, id) {
       console.log("somebody touched me!");
       this.modalData.user = user;
 
@@ -2107,7 +2107,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n@media (max-width: 1024px) {\n.input-group-lg>.custom-select[data-v-3dcb04e5], .input-group-lg>.form-control[data-v-3dcb04e5], .input-group-lg>.input-group-append>.btn[data-v-3dcb04e5], .input-group-lg>.input-group-append>.input-group-text[data-v-3dcb04e5], .input-group-lg>.input-group-prepend>.btn[data-v-3dcb04e5], .input-group-lg>.input-group-prepend>.input-group-text[data-v-3dcb04e5] {\n            padding: 1.1rem 1.65rem;\n}\n}\n.badge-sm[data-v-3dcb04e5] {\n    font-size: 70%;\n    padding: 0.2em 0.4em;\n    margin-right: 0.3em;\n}\n.fa svg[data-v-3dcb04e5] {\n    width: 2rem;\n    height: 2rem;\n    fill: #fff;\n}\n.kt-svg-icon g [fill][data-v-3dcb04e5] {\n    fill: #5d78ff;\n}\n", ""]);
+exports.push([module.i, "\n@media (max-width: 1024px) {\n.input-group-lg>.custom-select[data-v-3dcb04e5], .input-group-lg>.form-control[data-v-3dcb04e5], .input-group-lg>.input-group-append>.btn[data-v-3dcb04e5], .input-group-lg>.input-group-append>.input-group-text[data-v-3dcb04e5], .input-group-lg>.input-group-prepend>.btn[data-v-3dcb04e5], .input-group-lg>.input-group-prepend>.input-group-text[data-v-3dcb04e5] {\n            padding: 1.1rem 1.65rem;\n}\n}\n.fa svg[data-v-3dcb04e5] {\n    width: 2rem;\n    height: 2rem;\n    fill: #fff;\n}\n.kt-svg-icon g [fill][data-v-3dcb04e5] {\n    fill: #5d78ff;\n}\n", ""]);
 
 // exports
 
@@ -22000,7 +22000,7 @@ var render = function() {
                                           },
                                           on: {
                                             click: function($event) {
-                                              return _vm.associate(user, 0)
+                                              return _vm.associateModal(user, 0)
                                             }
                                           }
                                         },
@@ -22024,7 +22024,7 @@ var render = function() {
                                           },
                                           on: {
                                             click: function($event) {
-                                              return _vm.associate(user, 0)
+                                              return _vm.associateModal(user, 0)
                                             }
                                           }
                                         },
@@ -22194,7 +22194,6 @@ var render = function() {
                                           "btn-warning": !user.complete
                                         },
                                         attrs: {
-                                          id: "btnGroupDrop1",
                                           type: "button",
                                           "data-toggle": "dropdown",
                                           "aria-haspopup": "true",
@@ -22318,7 +22317,7 @@ var render = function() {
                                                 },
                                                 on: {
                                                   click: function($event) {
-                                                    return _vm.associate(
+                                                    return _vm.associateModal(
                                                       user,
                                                       status.data
                                                     )
@@ -35466,7 +35465,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 6:
+/***/ 7:
 /*!*****************************************************!*\
   !*** multi ./resources/assets/vuejs/users/admin.js ***!
   \*****************************************************/
