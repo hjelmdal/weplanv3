@@ -2255,7 +2255,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.info-block[data-v-4e363bf4] {\n    height: 12px;\n    transform: rotate(90deg);\n    position: absolute;\n    left: -20px;\n    width: 34px;\n    max-width: 34px;\n    text-overflow: ellipsis;\n    overflow: hidden;\n    top: 14px;\n    display: inline-block;\n}\n.row-column[data-v-4e363bf4] {\n    margin-left:0.5rem;\n}\n.alarm-span[data-v-4e363bf4] {\n    margin-right: 1rem;\n}\n.div-time[data-v-4e363bf4] {\n    justify-content: space-between;\n}\n", ""]);
+exports.push([module.i, "\n.info-block[data-v-4e363bf4] {\n    height: 12px;\n    transform: rotate(90deg);\n    position: absolute;\n    left: -20px;\n    width: 34px;\n    max-width: 34px;\n    text-overflow: ellipsis;\n    overflow: hidden;\n    top: 14px;\n    display: inline-block;\n}\n.row-column[data-v-4e363bf4] {\n    margin-left:0.5rem;\n}\n.alarm-span[data-v-4e363bf4] {\n    margin-right: 1rem;\n}\n.div-time[data-v-4e363bf4] {\n    justify-content: space-between;\n}\n.div-row[data-v-4e363bf4] {\n    position: relative;\n}\n", ""]);
 
 // exports
 

@@ -58,6 +58,9 @@ export default {
     .div-time {
         justify-content: space-between;
     }
+    .div-row {
+        position: relative;
+    }
 </style>
 
 <template>
