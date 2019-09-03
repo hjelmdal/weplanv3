@@ -1955,11 +1955,12 @@ __webpack_require__.r(__webpack_exports__);
         this.url = this.calendar.prev;
         btn = "btnPrev";
       } else if (string == "reload" || string == "today") {
+        this.reload = 1;
+
         if (string == "today") {
           this.calendar.start_date = this.calendar.today;
+          this.reload = 0;
         }
-
-        this.reload = 1;
 
         if (this.calendar.start_date) {
           firstLoad = false;
