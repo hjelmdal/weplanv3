@@ -1773,6 +1773,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         return false;
       }
     }
+  },
+  ready: function ready() {
+    this.$nextTick(function () {});
   }
 });
 
@@ -2255,7 +2258,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.info-block[data-v-4e363bf4] {\n    height: 12px;\n    transform: rotate(90deg);\n    position: absolute;\n    left: -20px;\n    width: 34px;\n    max-width: 34px;\n    text-overflow: ellipsis;\n    overflow: hidden;\n    top: 14px;\n    display: inline-block;\n}\n.row-column[data-v-4e363bf4] {\n    margin-left:0.5rem;\n}\n.alarm-span[data-v-4e363bf4] {\n    margin-right: 1rem;\n}\n.div-time[data-v-4e363bf4] {\n    justify-content: space-between;\n}\n.div-row[data-v-4e363bf4] {\n    position: relative;\n}\n", ""]);
+exports.push([module.i, "\n.info-block[data-v-4e363bf4] {\n    height: 12px;\n    transform: rotate(90deg);\n    position: absolute;\n    left: -20px;\n    width: 34px;\n    max-width: 34px;\n    text-overflow: ellipsis;\n    overflow: hidden;\n    top: 15px;\n    display: inline-block;\n}\n.row-column[data-v-4e363bf4] {\n    margin-left:0.5rem;\n}\n.alarm-span[data-v-4e363bf4] {\n    margin-right: 1rem;\n}\n.div-time[data-v-4e363bf4] {\n    justify-content: space-between;\n}\n.div-row[data-v-4e363bf4] {\n    position: relative;\n}\n", ""]);
 
 // exports
 
@@ -21201,15 +21204,6 @@ var render = function() {
                         _c(
                           "span",
                           {
-                            directives: [
-                              {
-                                name: "tooltip",
-                                rawName: "v-tooltip:top",
-                                value: "",
-                                expression: "''",
-                                arg: "top"
-                              }
-                            ],
                             staticClass:
                               "badge kt-font-white badge-sm info-block",
                             class: {
@@ -21219,10 +21213,7 @@ var render = function() {
                               "badge-warning": activity.type_id == 4
                             },
                             staticStyle: { height: "12px" },
-                            attrs: {
-                              "data-toggle": "kt-tooltip",
-                              title: activity.type.name
-                            }
+                            attrs: { "data-toggle": "kt-tooltip" }
                           },
                           [_vm._v(_vm._s(activity.type.name))]
                         ),
@@ -21390,9 +21381,17 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "flex-center" }, [
-      _c("div", { staticClass: "div-row" }, [
-        _vm._v("Der blev ikke fundet nogle aktiviteter i denne uge!")
-      ])
+      _c(
+        "div",
+        {
+          staticClass: "div-row",
+          staticStyle: {
+            "background-color": "#fff",
+            "justify-content": "center"
+          }
+        },
+        [_vm._v("Der blev ikke fundet nogle aktiviteter i denne uge!")]
+      )
     ])
   }
 ]
@@ -21658,331 +21657,225 @@ var render = function() {
     [
       _c(
         "div",
-        { staticClass: "kt-portlet__head kt-portlet__head--noborder" },
+        { staticClass: "kt-portlet__body", staticStyle: { padding: "1rem" } },
         [
-          _c("div", { staticClass: "kt-portlet__head-label" }, [
-            _c("h3", { staticClass: "kt-portlet__head-title" }, [
-              _vm._v(
-                "\n                    " +
-                  _vm._s(_vm.activity.title) +
-                  "\n                "
-              )
-            ])
+          _c("div", { staticStyle: {} }, [
+            _c("div", { staticClass: "flex-left" }, [
+              _c("div", { staticClass: "div-date" }, [
+                _c("div", { staticClass: "p8-date" }, [
+                  _c("div", { staticClass: "p8-date-mon" }, [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("formatDate")(_vm.activity.start_date, "MMM")
+                      )
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "p8-date-num" }, [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("formatDate")(_vm.activity.start_date, "DD")
+                      )
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "p8-date-day" }, [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("formatDate")(_vm.activity.start_date, "ddd")
+                      )
+                    )
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "flex-center",
+                staticStyle: { width: "calc(100% - 90px)" }
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "div-row",
+                    class: {
+                      "overlay1-container":
+                        (_vm.activity.type && _vm.activity.type.signup == 1) ||
+                        _vm.activity.my_activity
+                    },
+                    attrs: { id: "elem-" + _vm.activity.id }
+                  },
+                  [
+                    _vm.activity.type
+                      ? _c(
+                          "div",
+                          {
+                            staticClass: "row-column",
+                            class: {
+                              "bef-brand": _vm.activity.type.signup == 1,
+                              "bef-warning":
+                                _vm.activity.my_activity &&
+                                _vm.activity.my_status == 1,
+                              "bef-danger":
+                                _vm.activity.my_activity &&
+                                _vm.activity.my_status == 0,
+                              "bef-success":
+                                _vm.activity.my_activity &&
+                                _vm.activity.my_status == 2,
+                              "bef-metal":
+                                _vm.activity.type.decline == 1 &&
+                                _vm.activity.my_activity == false
+                            }
+                          },
+                          [
+                            _c(
+                              "span",
+                              {
+                                staticClass: "div-text",
+                                staticStyle: { "font-size": "1.5rem" }
+                              },
+                              [_vm._v(_vm._s(_vm.activity.title))]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "div-time",
+                                staticStyle: { display: "flex" }
+                              },
+                              [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass: "badge kt-font-white badge-sm",
+                                    class: {
+                                      "badge-success":
+                                        _vm.activity.type_id == 1,
+                                      "badge-danger": _vm.activity.type_id == 2,
+                                      "badge-primary":
+                                        _vm.activity.type_id == 3,
+                                      "badge-warning": _vm.activity.type_id == 4
+                                    },
+                                    staticStyle: { height: "12px" },
+                                    attrs: {
+                                      "data-toggle": "kt-tooltip",
+                                      title: _vm.activity.type.name
+                                    }
+                                  },
+                                  [_vm._v(_vm._s(_vm.activity.type.name))]
+                                ),
+                                _vm._v(" "),
+                                _c("i", {
+                                  staticClass: "la la-clock-o",
+                                  staticStyle: { "font-size": "14px" }
+                                }),
+                                _vm._v(
+                                  " " +
+                                    _vm._s(
+                                      _vm._f("formatTime")(
+                                        _vm.activity.start,
+                                        "HH:mm"
+                                      )
+                                    ) +
+                                    " - " +
+                                    _vm._s(
+                                      _vm._f("formatTime")(
+                                        _vm.activity.end,
+                                        "HH:mm"
+                                      )
+                                    ) +
+                                    "\n                            "
+                                ),
+                                _vm.activity.my_activity ||
+                                _vm.activity.type.signup
+                                  ? _c("span", [
+                                      _c("img", {
+                                        attrs: {
+                                          src: "/img/activities/alarm_clock.svg"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(
+                                            _vm._f("dateString")(
+                                              _vm.activity.response_date +
+                                                " " +
+                                                _vm.activity.response_time,
+                                              "to"
+                                            )
+                                          )
+                                      )
+                                    ])
+                                  : _vm._e()
+                              ]
+                            )
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "div-right",
+                        staticStyle: {
+                          "align-self": "center",
+                          width: "40px",
+                          "text-align": "right"
+                        }
+                      },
+                      [
+                        _vm.activity.my_activity === true &&
+                        _vm.calendar.now < _vm.activity.response_timestamp
+                          ? _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "btn btn-sm btn-outline-success btn-icon btn-icon-md",
+                                attrs: { title: "RSVP" }
+                              },
+                              [_c("i", { staticClass: "la la-calendar-o" })]
+                            )
+                          : _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "btn btn-font-dark btn-outline-hover-brand btn-icon btn-icon-md",
+                                attrs: {
+                                  "data-toggle": "modal",
+                                  "data-target": "#" + _vm.activity.id,
+                                  href: "#",
+                                  title: "RSVP"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.activityShow(_vm.activity)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "la la-chevron-right" })]
+                            )
+                      ]
+                    )
+                  ]
+                )
+              ]
+            )
           ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "clearfix" }),
+          _vm._v(" "),
+          _c("hr"),
           _vm._v(" "),
           _vm._m(0)
         ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "kt-portlet__body" }, [
-        _c("div", { staticClass: "flex-left" }, [
-          _c("div", { staticClass: "div-date" }, [
-            _c("div", { staticClass: "p8-date" }, [
-              _c("div", { staticClass: "p8-date-mon" }, [
-                _vm._v(
-                  _vm._s(_vm._f("formatDate")(_vm.activity.start_date, "MMM"))
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "p8-date-num" }, [
-                _vm._v(
-                  _vm._s(_vm._f("formatDate")(_vm.activity.start_date, "DD"))
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "p8-date-day" }, [
-                _vm._v(
-                  _vm._s(_vm._f("formatDate")(_vm.activity.start_date, "ddd"))
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "flex-center",
-              staticStyle: { width: "calc(100% - 90px)" }
-            },
-            [
-              _c(
-                "div",
-                {
-                  staticClass: "div-row",
-                  class: {
-                    "overlay1-container":
-                      (_vm.activity.type && _vm.activity.type.signup == 1) ||
-                      _vm.activity.my_activity
-                  },
-                  attrs: { id: "elem-" + _vm.activity.id }
-                },
-                [
-                  _vm.activity.type
-                    ? _c(
-                        "div",
-                        {
-                          staticClass: "row-column",
-                          class: {
-                            "bef-brand": _vm.activity.type.signup == 1,
-                            "bef-warning":
-                              _vm.activity.my_activity &&
-                              _vm.activity.my_status == 1,
-                            "bef-danger":
-                              _vm.activity.my_activity &&
-                              _vm.activity.my_status == 0,
-                            "bef-success":
-                              _vm.activity.my_activity &&
-                              _vm.activity.my_status == 2,
-                            "bef-metal":
-                              _vm.activity.type.decline == 1 &&
-                              _vm.activity.my_activity == false
-                          }
-                        },
-                        [
-                          _c(
-                            "span",
-                            {
-                              staticClass: "div-text",
-                              staticStyle: { "font-size": "1.5rem" }
-                            },
-                            [_vm._v(_vm._s(_vm.activity.title))]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "div-time",
-                              staticStyle: { display: "flex" }
-                            },
-                            [
-                              _c(
-                                "span",
-                                {
-                                  directives: [
-                                    {
-                                      name: "tooltip",
-                                      rawName: "v-tooltip:top",
-                                      value: "",
-                                      expression: "''",
-                                      arg: "top"
-                                    }
-                                  ],
-                                  staticClass: "badge kt-font-white badge-sm",
-                                  class: {
-                                    "badge-success": _vm.activity.type_id == 1,
-                                    "badge-danger": _vm.activity.type_id == 2,
-                                    "badge-primary": _vm.activity.type_id == 3,
-                                    "badge-warning": _vm.activity.type_id == 4
-                                  },
-                                  staticStyle: { height: "12px" },
-                                  attrs: {
-                                    "data-toggle": "kt-tooltip",
-                                    title: _vm.activity.type.name
-                                  }
-                                },
-                                [_vm._v(_vm._s(_vm.activity.type.name))]
-                              ),
-                              _vm._v(" "),
-                              _c("i", {
-                                staticClass: "la la-clock-o",
-                                staticStyle: { "font-size": "14px" }
-                              }),
-                              _vm._v(
-                                " " +
-                                  _vm._s(
-                                    _vm._f("formatTime")(
-                                      _vm.activity.start,
-                                      "HH:mm"
-                                    )
-                                  ) +
-                                  " - " +
-                                  _vm._s(
-                                    _vm._f("formatTime")(
-                                      _vm.activity.end,
-                                      "HH:mm"
-                                    )
-                                  ) +
-                                  "\n                                    "
-                              ),
-                              _vm.activity.my_activity ||
-                              _vm.activity.type.signup
-                                ? _c("span", [
-                                    _c("img", {
-                                      attrs: {
-                                        src: "/img/activities/alarm_clock.svg"
-                                      }
-                                    }),
-                                    _vm._v(
-                                      " " +
-                                        _vm._s(
-                                          _vm._f("dateString")(
-                                            _vm.activity.response_date +
-                                              " " +
-                                              _vm.activity.response_time,
-                                            "to"
-                                          )
-                                        )
-                                    )
-                                  ])
-                                : _vm._e()
-                            ]
-                          )
-                        ]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "div-right",
-                      staticStyle: {
-                        "align-self": "center",
-                        width: "40px",
-                        "text-align": "right"
-                      }
-                    },
-                    [
-                      _vm.activity.my_activity === true &&
-                      _vm.calendar.now < _vm.activity.response_timestamp
-                        ? _c(
-                            "span",
-                            {
-                              staticClass:
-                                "btn btn-sm btn-outline-success btn-icon btn-icon-md",
-                              attrs: { title: "RSVP" }
-                            },
-                            [_c("i", { staticClass: "la la-calendar-o" })]
-                          )
-                        : _c(
-                            "span",
-                            {
-                              staticClass:
-                                "btn btn-font-dark btn-outline-hover-brand btn-icon btn-icon-md",
-                              attrs: {
-                                "data-toggle": "modal",
-                                "data-target": "#" + _vm.activity.id,
-                                href: "#",
-                                title: "RSVP"
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.activityShow(_vm.activity)
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "la la-chevron-right" })]
-                          )
-                    ]
-                  )
-                ]
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "clearfix" }),
-        _vm._v(" "),
-        _vm._m(1)
-      ])
+      )
     ]
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "kt-portlet__head-toolbar" }, [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-icon",
-          attrs: { href: "#", "data-toggle": "dropdown" }
-        },
-        [_c("i", { staticClass: "flaticon-more-1 kt-font-light" })]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "dropdown-menu dropdown-menu-fit dropdown-menu-right" },
-        [
-          _c("ul", { staticClass: "kt-nav" }, [
-            _c(
-              "li",
-              { staticClass: "kt-nav__section kt-nav__section--first" },
-              [
-                _c("span", { staticClass: "kt-nav__section-text" }, [
-                  _vm._v("Finance")
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("li", { staticClass: "kt-nav__item" }, [
-              _c("a", { staticClass: "kt-nav__link", attrs: { href: "#" } }, [
-                _c("i", { staticClass: "kt-nav__link-icon flaticon2-graph-1" }),
-                _vm._v(" "),
-                _c("span", { staticClass: "kt-nav__link-text" }, [
-                  _vm._v("Statistics")
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "kt-nav__item" }, [
-              _c("a", { staticClass: "kt-nav__link", attrs: { href: "#" } }, [
-                _c("i", {
-                  staticClass: "kt-nav__link-icon flaticon2-calendar-4"
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "kt-nav__link-text" }, [
-                  _vm._v("Events")
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "kt-nav__item" }, [
-              _c("a", { staticClass: "kt-nav__link", attrs: { href: "#" } }, [
-                _c("i", {
-                  staticClass: "kt-nav__link-icon flaticon2-layers-1"
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "kt-nav__link-text" }, [
-                  _vm._v("Reports")
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "kt-nav__section" }, [
-              _c("span", { staticClass: "kt-nav__section-text" }, [
-                _vm._v("Customers")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "kt-nav__item" }, [
-              _c("a", { staticClass: "kt-nav__link", attrs: { href: "#" } }, [
-                _c("i", {
-                  staticClass: "kt-nav__link-icon flaticon2-calendar-4"
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "kt-nav__link-text" }, [
-                  _vm._v("Notifications")
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "kt-nav__item" }, [
-              _c("a", { staticClass: "kt-nav__link", attrs: { href: "#" } }, [
-                _c("i", { staticClass: "kt-nav__link-icon flaticon2-file-1" }),
-                _vm._v(" "),
-                _c("span", { staticClass: "kt-nav__link-text" }, [
-                  _vm._v("Files")
-                ])
-              ])
-            ])
-          ])
-        ]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -34788,13 +34681,6 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('dateString', function (value)
   } else if (type === "from") {
     return moment__WEBPACK_IMPORTED_MODULE_3___default()().from(value);
   }
-});
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.directive('tooltip', function (el, binding) {
-  $(el).tooltip({
-    title: binding.value,
-    placement: binding.arg,
-    trigger: 'hover'
-  });
 });
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   components: {

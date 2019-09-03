@@ -25,19 +25,13 @@ Vue.filter('dateString', function (value,type = "to") {
     }
 });
 
-Vue.directive('tooltip', function(el, binding){
-    $(el).tooltip({
-        title: binding.value,
-        placement: binding.arg,
-        trigger: 'hover'
-    })
-});
 
 new Vue({
     components: {
         UserActivities,ActivitiesMyFilter
     },
-    el: "#kt_body"
+    el: "#kt_body",
+
 
 
 

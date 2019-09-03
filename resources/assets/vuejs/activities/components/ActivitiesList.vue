@@ -28,7 +28,12 @@ export default {
                 return false;
             }
         }
-    }
+    },
+    ready() {
+        this.$nextTick(() => {
+
+        });
+    },
 }
 </script>
 
@@ -46,7 +51,7 @@ export default {
         max-width: 34px;
         text-overflow: ellipsis;
         overflow: hidden;
-        top: 14px;
+        top: 15px;
         display: inline-block;
     }
     .row-column {
@@ -68,7 +73,7 @@ export default {
        <div v-if="days.length == 0" class="col-12 card1  kt-margin-b-20">
             <div class="flex-left"></div>
             <div class="flex-center">
-                <div class="div-row">Der blev ikke fundet nogle aktiviteter i denne uge!</div>
+                <div class="div-row" style="background-color: #fff; justify-content: center">Der blev ikke fundet nogle aktiviteter i denne uge!</div>
             </div>
         </div>
 
@@ -96,7 +101,7 @@ export default {
                 <div class="flex-center" style="width: calc(100% - 86px);">
                     <template v-for="activity in day.events">
                         <div v-bind:id="'elem-' + activity.id" class="div-row" @mouseover="hover = activity.id" @mouseleave="hover = 0" v-bind:class="{ 'overlay1-container':(activity.type && activity.type.signup == 1 || activity.my_activity), 'active':(hover == activity.id && (activity.my_activity || activity.type && activity.type.signup == 1))}">
-                            <span style="height:12px" data-toggle="kt-tooltip" :title="activity.type.name" v-tooltip:top="''" class="badge kt-font-white badge-sm info-block" v-bind:class="{'badge-success':(activity.type_id == 1), 'badge-danger':(activity.type_id == 2), 'badge-primary':(activity.type_id == 3), 'badge-warning':(activity.type_id == 4)}">{{ activity.type.name }}</span>
+                            <span style="height:12px" data-toggle="kt-tooltip"  class="badge kt-font-white badge-sm info-block" v-bind:class="{'badge-success':(activity.type_id == 1), 'badge-danger':(activity.type_id == 2), 'badge-primary':(activity.type_id == 3), 'badge-warning':(activity.type_id == 4)}">{{ activity.type.name }}</span>
                             <div class="row-column" v-bind:class="{'bef-brand':(activity.type.signup == 1), 'bef-warning':(activity.my_activity && activity.my_status == 1), 'bef-danger':(activity.my_activity && activity.my_status == 0), 'bef-success':(activity.my_activity && activity.my_status == 2), 'bef-metal':(activity.type.decline == 1 && activity.my_activity == false)}">
                                 <span class="div-text" style="font-size: 1.5rem;">{{ activity.title }}</span>
                                 <div class="div-time" style="display: flex;">

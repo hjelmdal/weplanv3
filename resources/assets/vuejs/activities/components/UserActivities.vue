@@ -189,6 +189,7 @@ export default {
 
         },
 
+
         confirmActivity(event,activity) {
             let btn = event.target;
             btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");

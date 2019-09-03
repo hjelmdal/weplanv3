@@ -230,10 +230,10 @@ body::before {
 
 }
 .div-row:nth-child(even)  {
-  background-color: #eee;
+  background-color: #fff;
 }
 .div-row:nth-child(odd)  {
-  background-color: #fff;
+  background-color: #eee;
 }
 .div-test {
   flex: 1 1 auto;
