@@ -160,7 +160,7 @@
             <div class="kt-separator kt-separator--border-dashed kt-margin-b-10"></div>
             <div style="display: flex;">
                 <div style="flex:1; width: 50%;">
-                    <div>
+                    <div v-if="activity.responsible">
                         <img src="/img/activities/coach.svg" width="26" height="26"> {{ activity.responsible.name }}
                     </div>
                     <div>

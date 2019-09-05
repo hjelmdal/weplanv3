@@ -21928,20 +21928,22 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticStyle: { display: "flex" } }, [
                   _c("div", { staticStyle: { flex: "1", width: "50%" } }, [
-                    _c("div", [
-                      _c("img", {
-                        attrs: {
-                          src: "/img/activities/coach.svg",
-                          width: "26",
-                          height: "26"
-                        }
-                      }),
-                      _vm._v(
-                        " " +
-                          _vm._s(_vm.activity.responsible.name) +
-                          "\n                    "
-                      )
-                    ]),
+                    _vm.activity.responsible
+                      ? _c("div", [
+                          _c("img", {
+                            attrs: {
+                              src: "/img/activities/coach.svg",
+                              width: "26",
+                              height: "26"
+                            }
+                          }),
+                          _vm._v(
+                            " " +
+                              _vm._s(_vm.activity.responsible.name) +
+                              "\n                    "
+                          )
+                        ])
+                      : _vm._e(),
                     _vm._v(" "),
                     _vm._m(0)
                   ]),
