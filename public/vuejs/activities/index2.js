@@ -1828,7 +1828,64 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ActivityInfoModal",
-  props: ["activity"]
+  props: ["activity"],
+  data: function data() {
+    return {
+      attend: null
+    };
+  },
+  methods: {
+    signup: function signup() {
+      this.attend = true;
+    },
+    decline: function decline() {
+      this.attend = false;
+    },
+    getPlayerStatus: function getPlayerStatus(player) {
+      var response = null;
+      console.log(player.pivot);
+      var pivot = player.pivot;
+
+      if (pivot) {
+        if (pivot.declined_at == null && pivot.confirmed_at == null) {
+          response = null;
+        } else if (pivot.declined_at) {
+          response = 'declined';
+        } else if (pivot.confirmed_at) {
+          response = 'confirmed';
+        }
+
+        console.log(response);
+        return response;
+      }
+
+      return false;
+    },
+    getStatusColor: function getStatusColor(player) {
+      var response = null;
+
+      if (player) {
+        switch (this.getPlayerStatus(player)) {
+          case 'null':
+            response = null;
+            break;
+
+          case 'declined':
+            response = 'bg-danger';
+            break;
+
+          case 'confirmed':
+            response = 'bg-success';
+            break;
+        }
+
+        console.log(response);
+        return response;
+      }
+
+      return false;
+    }
+  }
 });
 
 /***/ }),
@@ -2278,7 +2335,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.flex-container[data-v-30193576] {\n    display: flex;\n    align-items: center;\n}\n.truncate-text[data-v-30193576] {\n    display: inline-block;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n    font-size:2rem;\n    line-height: 2rem;\n}\n.flex-column[data-v-30193576] {\n    display: flex;\n    flex-direction: column;\n    width:calc(100% - 80px);\n    position: relative;\n}\n", ""]);
+exports.push([module.i, "\n.circle[data-v-30193576] {\n    display: inline-block;\n    width: 7px;\n    height: 7px;\n    border-radius: 500px;\n    margin: 0 .5em;\n    background-color: #ddd;\n    vertical-align: baseline;\n    border: 2px solid transparent;\n}\n.circle-lg[data-v-30193576] {\n    width: 11px;\n    height: 11px;\n}\n.flex-container[data-v-30193576] {\n    display: flex;\n    align-items: center;\n}\n.truncate-text[data-v-30193576] {\n    display: inline-block;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n    font-size:2rem;\n    line-height: 2.3rem;\n}\n.flex-column[data-v-30193576] {\n    display: flex;\n    flex-direction: column;\n    width:calc(100% - 80px);\n    position: relative;\n}\n.flex-row[data-v-30193576] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n}\n", ""]);
 
 // exports
 
@@ -21762,22 +21819,46 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", [
-                  _c(
-                    "span",
-                    {
-                      staticClass: "badge kt-font-white info-block",
-                      class: {
-                        "badge-success": _vm.activity.type_id == 1,
-                        "badge-danger": _vm.activity.type_id == 2,
-                        "badge-primary": _vm.activity.type_id == 3,
-                        "badge-warning": _vm.activity.type_id == 4
-                      },
-                      attrs: { "data-toggle": "kt-tooltip" }
-                    },
-                    [_vm._v(_vm._s(_vm.activity.type.name))]
-                  )
+                  _vm.activity.type
+                    ? _c(
+                        "span",
+                        {
+                          staticClass: "badge kt-font-white info-block",
+                          class: {
+                            "badge-success": _vm.activity.type_id == 1,
+                            "badge-danger": _vm.activity.type_id == 2,
+                            "badge-primary": _vm.activity.type_id == 3,
+                            "badge-warning": _vm.activity.type_id == 4
+                          },
+                          attrs: { "data-toggle": "kt-tooltip" }
+                        },
+                        [_vm._v(_vm._s(_vm.activity.type.name))]
+                      )
+                    : _vm._e()
                 ])
               ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "flex-row" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success kt-margin-10",
+                  attrs: { type: "button" },
+                  on: { click: _vm.signup }
+                },
+                [_c("i", { staticClass: "fa fa-check" }), _vm._v(" Tilmeld")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-danger kt-margin-10",
+                  attrs: { type: "button" },
+                  on: { click: _vm.decline }
+                },
+                [_c("i", { staticClass: "fa fa-door-open" }), _vm._v(" Afmeld")]
+              )
             ])
           ]
         )
@@ -21788,9 +21869,118 @@ var render = function() {
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
-    _vm._m(0),
+    _vm.attend === true
+      ? _c("div", { staticClass: "card card-default" }, [
+          _c("div", { staticClass: "card-body text-center" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "tab-content" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane fade active show",
+                  attrs: { id: "kt_tabs_8_1", role: "tabpanel" }
+                },
+                [
+                  _vm._v(
+                    "\n                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged\n                            "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane fade",
+                  attrs: { id: "kt_tabs_8_2", role: "tabpanel" }
+                },
+                [
+                  _c(
+                    "table",
+                    {
+                      staticClass:
+                        "table table-ellipsis table-striped table-v-middle table-left"
+                    },
+                    [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.activity.players, function(player) {
+                          return _vm.activity.players.length > 0
+                            ? _c("tr", [
+                                _c("td", { attrs: { valign: "middle" } }, [
+                                  _c("div", {
+                                    staticClass: "circle circle-lg",
+                                    class: _vm.getStatusColor(player),
+                                    attrs: {
+                                      "data-toggle": "tooltip",
+                                      "data-title": "User connected",
+                                      "data-original-title": "",
+                                      title: ""
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("td", { staticClass: "text-left" }, [
+                                  _c("img", {
+                                    staticClass:
+                                      "align-self-center mr-2 rounded-circle img-thumbnail thumb32",
+                                    attrs: {
+                                      src:
+                                        player.user &&
+                                        player.user.avatar != null
+                                          ? player.user.avatar
+                                          : "/img/profile.png",
+                                      alt: player.name,
+                                      title: player.name
+                                    }
+                                  }),
+                                  _vm._v(" " + _vm._s(player.name))
+                                ])
+                              ])
+                            : _vm._e()
+                        }),
+                        0
+                      )
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane fade",
+                  attrs: { id: "kt_tabs_8_3", role: "tabpanel" }
+                },
+                [
+                  _vm._v(
+                    "\n                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n                            "
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("img", {
+              staticClass: "mb-2 img-fluid rounded-circle thumb64",
+              attrs: { src: "/base/media//users/100_4.jpg", alt: "Contact" }
+            }),
+            _vm._v(" "),
+            _c("h4", [_vm._v("Audrey Hunt")]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "Hello, I'm a just a dummy contact in your contact list and this is my presentation text. Have fun!"
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _vm._m(2)
+        ])
+      : _vm._e(),
     _vm._v(" "),
-    _vm._m(1)
+    _vm._m(3)
   ])
 }
 var staticRenderFns = [
@@ -21798,40 +21988,96 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card card-default" }, [
-      _c("div", { staticClass: "card-header" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body text-center" }, [
-        _c("img", {
-          staticClass: "mb-2 img-fluid rounded-circle thumb64",
-          attrs: { src: "/base/media//users/100_4.jpg", alt: "Contact" }
-        }),
-        _vm._v(" "),
-        _c("h4", [_vm._v("Audrey Hunt")]),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            "Hello, I'm a just a dummy contact in your contact list and this is my presentation text. Have fun!"
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-footer d-flex" }, [
-        _c("div", [
+    return _c(
+      "ul",
+      { staticClass: "nav nav-pills nav-tabs-btn", attrs: { role: "tablist" } },
+      [
+        _c("li", { staticClass: "nav-item" }, [
           _c(
             "a",
-            { staticClass: "btn btn-xs btn-primary", attrs: { href: "#" } },
-            [_vm._v("Send message")]
+            {
+              staticClass: "nav-link active",
+              attrs: { "data-toggle": "tab", href: "#kt_tabs_8_1", role: "tab" }
+            },
+            [
+              _c("span", { staticClass: "nav-link-icon" }, [
+                _c("i", { staticClass: "flaticon-information" })
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "nav-link-title" }, [_vm._v("Program")])
+            ]
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "ml-auto" }, [
+        _c("li", { staticClass: "nav-item" }, [
           _c(
             "a",
-            { staticClass: "btn btn-xs btn-secondary", attrs: { href: "#" } },
-            [_vm._v("View")]
+            {
+              staticClass: "nav-link",
+              attrs: { "data-toggle": "tab", href: "#kt_tabs_8_2", role: "tab" }
+            },
+            [
+              _c("span", { staticClass: "nav-link-icon" }, [
+                _c("i", { staticClass: "flaticon-users" })
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "nav-link-title" }, [
+                _vm._v("Deltagere")
+              ])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: { "data-toggle": "tab", href: "#kt_tabs_8_3", role: "tab" }
+            },
+            [
+              _c("span", { staticClass: "nav-link-icon" }, [
+                _c("i", { staticClass: "flaticon2-graph-2" })
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "nav-link-title" }, [_vm._v("Kampe")])
+            ]
           )
         ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { width: "20" } }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Navn")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer d-flex" }, [
+      _c("div", [
+        _c(
+          "a",
+          { staticClass: "btn btn-xs btn-primary", attrs: { href: "#" } },
+          [_vm._v("Send message")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "ml-auto" }, [
+        _c(
+          "a",
+          { staticClass: "btn btn-xs btn-secondary", attrs: { href: "#" } },
+          [_vm._v("View")]
+        )
       ])
     ])
   },
