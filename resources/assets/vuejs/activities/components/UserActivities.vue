@@ -3,6 +3,7 @@
 import ActivitiesNav from "./ActivitiesNav";
     import ActivitiesFilters from "./ActivitiesFilters";
     import ActivitiesList from "./ActivitiesList";
+    import Form from "../../Form";
 export default {
     name: "ActivitiesUser",
     components: {ActivitiesList, ActivitiesFilters, ActivitiesNav},
@@ -12,6 +13,9 @@ export default {
             url : '/api/v1/activities/get/' + moment().format("YYYY-MM-DD"),
             uri: '/api/v1/activities/get/',
             confirmUrl: '/api/v1/activities/confirm',
+            confirmForm: new Form({
+                activity_id: "",
+            }),
             declineUrl: '/api/v1/activities/decline',
             meta: document.querySelector('meta[name="start-date"]').getAttribute('content'),
             days:[],
@@ -195,19 +199,10 @@ export default {
         confirmActivity(event,activity) {
             let btn = event.target;
             btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
-            let postData = [];
-            console.log("activity: " + activity.id);
-            postData = {
-                "activity_id" : activity.id,
-                "start_date" : activity.start_date,
-                "players" : activity.players,
-            },
-                axios({
-                    method: 'post',
-                    url: this.confirmUrl,
-                    headers: {Authorization: document.querySelector('meta[name="api-token"]').getAttribute('content')},
-                    data: postData
-                }).catch(error => {
+            let postData = []
+            this.confirmForm.activity_id = activity.id;
+            this.confirmForm.post(this.confirmUrl)
+                .catch(error => {
                     if(error.response) {
                         console.log("Error code: " + error.response.status);
                         if(error.response.status == 401) {
@@ -215,14 +210,15 @@ export default {
                         }
                         btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
                     }
-                }).then((response) => {
-                    console.log(response.data);
+                })
+                .then(data => {
+                    console.log(data.data);
                     this.activitiesLoad("reload");
                     btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
                     this.toastr("Du er nu tilmeldt aktiviteten", "success");
-                    this.hideDeclineModal(activity.id);
-
                 });
+
+
 
         },
         declineActivity(event,activity) {
@@ -324,6 +320,10 @@ export default {
     mounted() {
         this.$root.$on('activitiesLoad', data => {
             this.activitiesLoad(data);
+        }),
+
+        this.$root.$on("confirmActivity", data => {
+            this.confirmActivity(data.event,data.activity);
         }),
 
         this.activitiesLoad("reload");

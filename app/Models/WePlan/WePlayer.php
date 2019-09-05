@@ -30,7 +30,7 @@ class WePlayer extends Model
 
     public function activities() {
         return $this->belongsToMany(WeActivity::class,'we_player_activities','player_id', 'activity_id')
-            ->withPivot("confirmed_at","declined_at")
+            ->withPivot("confirmed_at","declined_at","signed_up_at")
             ->withTimestamps();
     }
 

@@ -5,18 +5,25 @@
         data() {
             return {
                 attend: null,
+                playersCount: {
+                    males: 0,
+                    females: 0,
+                    maleDeclines: 0,
+                    femaleDeclines: 0
+                }
             }
         },
         methods: {
-            signup() {
+            signup(event,activity) {
                 this.attend = true;
+                this.$root.$emit("confirmActivity",{'event':event,'activity':activity })
             },
             decline() {
                 this.attend = false;
             },
             getPlayerStatus(player) {
                 let response = null;
-                console.log(player.pivot);
+                //console.log(player.pivot);
                 let pivot = player.pivot;
                 if(pivot) {
 
@@ -47,12 +54,39 @@
                             break;
 
                     }
-                    console.log(response);
+                    //console.log(response);
                     return response;
                 }
                 return false;
+            },
+            getPlayers() {
+                if(this.activity.players) {
+                    console.log("yes");
+                    this.activity.players.forEach(player => {
+                        if(player.gender == "M") {
+                            this.playersCount.males++;
+                        }
+                        if(player.gender == "K") {
+                            this.playersCount.females++;
+                        }
+                    })
+                }
             }
+        },
+        watch: {
+            activity: {
+                immediate: true,
+                handler (val, oldVal) {
+                    this.playersCount.males = 0;
+                    this.playersCount.females = 0;
+                    this.playersCount.maleDeclines = 0;
+                    this.playersCount.femaleDeclines = 0;
+                    this.getPlayers();
+                }
+            }
+
         }
+
     }
 </script>
 
@@ -98,7 +132,7 @@
 </style>
 
 <template>
-<div>
+<div v-if="activity && activity.id">
     <div class="kt-portlet kt-bg-brand kt-portlet--skin-solid kt-portlet--height-fluid">
 
         <div class="kt-portlet__body" style="padding:1rem">
@@ -121,10 +155,30 @@
                 </div>
 
 
+
+            </div>
+            <div class="kt-separator kt-separator--border-dashed kt-margin-b-10"></div>
+            <div style="display: flex;">
+                <div style="flex:1; width: 50%;">
+                    <div>
+                        <img src="/img/activities/coach.svg" width="26" height="26"> {{ activity.responsible.name }}
+                    </div>
+                    <div>
+                        <i class="la la-map-marker la-2x"></i> <span>Annexhallen</span>
+                    </div>
+                </div>
+                <div style="flex:1">
+                    <div>
+                        <i class="la la-2x la-male"></i> <span>{{ playersCount.males }}</span>
+                    </div>
+                    <div>
+                        <i class="la la-2x la-female"></i> <span>{{ playersCount.females }}</span>
+                    </div>
+                </div>
             </div>
             <div class="flex-row">
-            <button @click="signup" type="button" class="btn btn-success kt-margin-10"><i class="fa fa-check"></i> Tilmeld</button>
-            <button @click="decline" type="button" class="btn btn-danger kt-margin-10"><i class="fa fa-door-open"></i> Afmeld</button>
+            <button @click="signup($event,activity)" type="button" class="btn btn-success kt-margin-10"><i class="fa fa-check"></i> Tilmeld</button>
+            <button @click="decline" type="button" class="btn btn-danger kt-margin-10"><i class="fa fa-door-open"></i> Afbud</button>
             </div>
         </div>
     </div>
@@ -156,7 +210,13 @@
 
                         <div class="tab-content">
                             <div class="tab-pane fade active show" id="kt_tabs_8_1" role="tabpanel">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged
+                                <h4>Opvarmning</h4>
+                                <div>2 x rundt i 3 hjørner</div>
+                                <div>4 x fladt spil på kvart bane</div>
+                                <h4>Runder</h4>
+                                <div>2 x Runder a 25 minutter</div>
+                                <h4>Fysisk</h4>
+                                <div>bip test - 15 minutter</div>
                             </div>
                             <div class="tab-pane fade" id="kt_tabs_8_2" role="tabpanel">
                                 <table class="table table-ellipsis table-striped table-v-middle table-left">
@@ -171,6 +231,7 @@
                                             <td valign="middle"><div data-toggle="tooltip" data-title="User connected" class="circle circle-lg" :class="getStatusColor(player)" data-original-title="" title=""></div></td>
                                             <td class="text-left"><img class="align-self-center mr-2 rounded-circle img-thumbnail thumb32" :src="player.user && player.user.avatar != null ? player.user.avatar : '/img/profile.png'" :alt="player.name" :title="player.name" /> {{ player.name }}</td>
                                         </tr>
+                                        <tr v-if="activity.players.length == 0"><td colspan="2" class="text-center">Ingen spillere fundet.</td> </tr>
                                     </tbody>
 
                                 </table>
@@ -180,57 +241,9 @@
                             </div>
                         </div>
 
-                    <img class="mb-2 img-fluid rounded-circle thumb64" src="/base/media//users/100_4.jpg" alt="Contact">
-                    <h4>Audrey Hunt</h4>
-                    <p>Hello, I'm a just a dummy contact in your contact list and this is my presentation text. Have fun!</p>
+
                 </div>
-                <div class="card-footer d-flex">
-                    <div><a class="btn btn-xs btn-primary" href="#">Send message</a></div>
-                    <div class="ml-auto"><a class="btn btn-xs btn-secondary" href="#">View</a></div>
-                </div>
-            </div>
-            <div class="card card-default d-none d-lg-block">
-                <div class="card-header">
-                    <div class="card-title text-center">Recent contacts</div>
-                </div>
-                <div class="card-body">
-                    <div class="media">
-                        <img class="align-self-center mr-2 rounded-circle img-thumbnail thumb48" src="/base/media//users/100_4.jpg" alt="Contact">
-                        <div class="media-body py-2">
-                            <div class="text-bold">
-                                Floyd Ortiz
-                                <div class="text-sm text-muted">12m ago</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="media">
-                        <img class="align-self-center mr-2 rounded-circle img-thumbnail thumb48" src="/base/media//users/100_5.jpg" alt="Contact">
-                        <div class="media-body py-2">
-                            <div class="text-bold">
-                                Luis Vasquez
-                                <div class="text-sm text-muted">2h ago</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="media">
-                        <img class="align-self-center mr-2 rounded-circle img-thumbnail thumb48" src="/base/media//users/100_6.jpg" alt="Contact">
-                        <div class="media-body py-2">
-                            <div class="text-bold">
-                                Duane Mckinney
-                                <div class="text-sm text-muted">yesterday</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="media">
-                        <img class="align-self-center mr-2 rounded-circle img-thumbnail thumb24" src="/base/media//users/100_7.jpg" alt="Contact">
-                        <div class="media-body py-2">
-                            <div class="text-bold">
-                                Connie Lambert
-                                <div class="text-sm text-muted">2 weeks ago</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
 
             <!--end::Widget 7-->

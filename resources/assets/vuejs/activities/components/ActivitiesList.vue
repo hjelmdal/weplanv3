@@ -27,12 +27,36 @@ export default {
             } else {
                 return false;
             }
+        },
+        updateModal() {
+            let found = false;
+
+            if(this.days.length > 0) {
+
+                this.days.forEach(day => {
+                    if(day.events.length > 0) {
+
+                        day.events.forEach(event => {
+                            if (this.modalData.activity && event && this.modalData.activity.id == event.id) {
+                                this.modalData.activity = event;
+
+                            }
+                        })
+
+                    }
+                })
+            }
         }
     },
-    ready() {
-        this.$nextTick(() => {
-
-        });
+    watch: {
+        days: {
+            // the callback will be called immediately after the start of the observation
+            immediate: true,
+            handler (val, oldVal) {
+                this.updateModal();
+                console.log('Prop changed: ', val, ' | was: ', oldVal)
+            }
+        }
     },
 }
 </script>
@@ -115,7 +139,7 @@ export default {
 
                             </div>
                             <div class="div-right" style="align-self: center; width: 40px; text-align: right;">
-                            <span v-if="activity.my_activity === true && calendar.now < activity.response_timestamp"  class="btn btn-sm btn-outline-success btn-icon btn-icon-md" title="RSVP">
+                            <span v-if="(activity.my_activity === true || activity.type.signup) && calendar.now < activity.response_timestamp"  class="btn btn-outline-success btn-icon btn-icon-md" title="RSVP" @click="activityShow(activity)" data-toggle="modal" :data-target="'#'+modalData.id" href="#" >
                                 <i class="la la-calendar-o"></i>
                             </span>
                                 <span @click="activityShow(activity)" data-toggle="modal" :data-target="'#'+modalData.id" href="#" v-else class="btn btn-font-dark btn-outline-hover-brand btn-icon btn-icon-md" title="RSVP">

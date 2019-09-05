@@ -1772,10 +1772,34 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       } else {
         return false;
       }
+    },
+    updateModal: function updateModal() {
+      var _this = this;
+
+      var found = false;
+
+      if (this.days.length > 0) {
+        this.days.forEach(function (day) {
+          if (day.events.length > 0) {
+            day.events.forEach(function (event) {
+              if (_this.modalData.activity && event && _this.modalData.activity.id == event.id) {
+                _this.modalData.activity = event;
+              }
+            });
+          }
+        });
+      }
     }
   },
-  ready: function ready() {
-    this.$nextTick(function () {});
+  watch: {
+    days: {
+      // the callback will be called immediately after the start of the observation
+      immediate: true,
+      handler: function handler(val, oldVal) {
+        this.updateModal();
+        console.log('Prop changed: ', val, ' | was: ', oldVal);
+      }
+    }
   }
 });
 
@@ -1831,19 +1855,29 @@ __webpack_require__.r(__webpack_exports__);
   props: ["activity"],
   data: function data() {
     return {
-      attend: null
+      attend: null,
+      playersCount: {
+        males: 0,
+        females: 0,
+        maleDeclines: 0,
+        femaleDeclines: 0
+      }
     };
   },
   methods: {
-    signup: function signup() {
+    signup: function signup(event, activity) {
       this.attend = true;
+      this.$root.$emit("confirmActivity", {
+        'event': event,
+        'activity': activity
+      });
     },
     decline: function decline() {
       this.attend = false;
     },
     getPlayerStatus: function getPlayerStatus(player) {
-      var response = null;
-      console.log(player.pivot);
+      var response = null; //console.log(player.pivot);
+
       var pivot = player.pivot;
 
       if (pivot) {
@@ -1877,13 +1911,41 @@ __webpack_require__.r(__webpack_exports__);
           case 'confirmed':
             response = 'bg-success';
             break;
-        }
+        } //console.log(response);
 
-        console.log(response);
+
         return response;
       }
 
       return false;
+    },
+    getPlayers: function getPlayers() {
+      var _this = this;
+
+      if (this.activity.players) {
+        console.log("yes");
+        this.activity.players.forEach(function (player) {
+          if (player.gender == "M") {
+            _this.playersCount.males++;
+          }
+
+          if (player.gender == "K") {
+            _this.playersCount.females++;
+          }
+        });
+      }
+    }
+  },
+  watch: {
+    activity: {
+      immediate: true,
+      handler: function handler(val, oldVal) {
+        this.playersCount.males = 0;
+        this.playersCount.females = 0;
+        this.playersCount.maleDeclines = 0;
+        this.playersCount.femaleDeclines = 0;
+        this.getPlayers();
+      }
     }
   }
 });
@@ -1904,6 +1966,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ActivitiesNav__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ActivitiesNav */ "./resources/assets/vuejs/activities/components/ActivitiesNav.vue");
 /* harmony import */ var _ActivitiesFilters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ActivitiesFilters */ "./resources/assets/vuejs/activities/components/ActivitiesFilters.vue");
 /* harmony import */ var _ActivitiesList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ActivitiesList */ "./resources/assets/vuejs/activities/components/ActivitiesList.vue");
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Form */ "./resources/assets/vuejs/Form.js");
+
 
 
 
@@ -1921,6 +1985,9 @@ __webpack_require__.r(__webpack_exports__);
       url: '/api/v1/activities/get/' + moment().format("YYYY-MM-DD"),
       uri: '/api/v1/activities/get/',
       confirmUrl: '/api/v1/activities/confirm',
+      confirmForm: new _Form__WEBPACK_IMPORTED_MODULE_4__["default"]({
+        activity_id: ""
+      }),
       declineUrl: '/api/v1/activities/decline',
       meta: document.querySelector('meta[name="start-date"]').getAttribute('content'),
       days: [],
@@ -2114,19 +2181,8 @@ __webpack_require__.r(__webpack_exports__);
       var btn = event.target;
       btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
       var postData = [];
-      console.log("activity: " + activity.id);
-      postData = {
-        "activity_id": activity.id,
-        "start_date": activity.start_date,
-        "players": activity.players
-      }, axios__WEBPACK_IMPORTED_MODULE_0___default()({
-        method: 'post',
-        url: this.confirmUrl,
-        headers: {
-          Authorization: document.querySelector('meta[name="api-token"]').getAttribute('content')
-        },
-        data: postData
-      })["catch"](function (error) {
+      this.confirmForm.activity_id = activity.id;
+      this.confirmForm.post(this.confirmUrl)["catch"](function (error) {
         if (error.response) {
           console.log("Error code: " + error.response.status);
 
@@ -2136,16 +2192,14 @@ __webpack_require__.r(__webpack_exports__);
 
           btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
         }
-      }).then(function (response) {
-        console.log(response.data);
+      }).then(function (data) {
+        console.log(data.data);
 
         _this2.activitiesLoad("reload");
 
         btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
 
         _this2.toastr("Du er nu tilmeldt aktiviteten", "success");
-
-        _this2.hideDeclineModal(activity.id);
       });
     },
     declineActivity: function declineActivity(event, activity) {
@@ -2262,6 +2316,8 @@ __webpack_require__.r(__webpack_exports__);
 
     this.$root.$on('activitiesLoad', function (data) {
       _this4.activitiesLoad(data);
+    }), this.$root.$on("confirmActivity", function (data) {
+      _this4.confirmActivity(data.event, data.activity);
     }), this.activitiesLoad("reload");
   },
   created: function created() {
@@ -21419,14 +21475,25 @@ var render = function() {
                             }
                           },
                           [
-                            activity.my_activity === true &&
+                            (activity.my_activity === true ||
+                              activity.type.signup) &&
                             _vm.calendar.now < activity.response_timestamp
                               ? _c(
                                   "span",
                                   {
                                     staticClass:
-                                      "btn btn-sm btn-outline-success btn-icon btn-icon-md",
-                                    attrs: { title: "RSVP" }
+                                      "btn btn-outline-success btn-icon btn-icon-md",
+                                    attrs: {
+                                      title: "RSVP",
+                                      "data-toggle": "modal",
+                                      "data-target": "#" + _vm.modalData.id,
+                                      href: "#"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.activityShow(activity)
+                                      }
+                                    }
                                   },
                                   [_c("i", { staticClass: "la la-calendar-o" })]
                                 )
@@ -21755,235 +21822,302 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      {
-        staticClass:
-          "kt-portlet kt-bg-brand kt-portlet--skin-solid kt-portlet--height-fluid"
-      },
-      [
+  return _vm.activity && _vm.activity.id
+    ? _c("div", [
         _c(
           "div",
-          { staticClass: "kt-portlet__body", staticStyle: { padding: "1rem" } },
+          {
+            staticClass:
+              "kt-portlet kt-bg-brand kt-portlet--skin-solid kt-portlet--height-fluid"
+          },
           [
-            _c("div", { staticClass: "flex-container" }, [
-              _c("div", { staticClass: "flex-left" }, [
-                _c("div", { staticClass: "div-date" }, [
-                  _c("div", { staticClass: "p8-date" }, [
-                    _c("div", { staticClass: "p8-date-mon" }, [
+            _c(
+              "div",
+              {
+                staticClass: "kt-portlet__body",
+                staticStyle: { padding: "1rem" }
+              },
+              [
+                _c("div", { staticClass: "flex-container" }, [
+                  _c("div", { staticClass: "flex-left" }, [
+                    _c("div", { staticClass: "div-date" }, [
+                      _c("div", { staticClass: "p8-date" }, [
+                        _c("div", { staticClass: "p8-date-mon" }, [
+                          _vm._v(
+                            _vm._s(
+                              _vm._f("formatDate")(
+                                _vm.activity.start_date,
+                                "MMM"
+                              )
+                            )
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "p8-date-num" }, [
+                          _vm._v(
+                            _vm._s(
+                              _vm._f("formatDate")(
+                                _vm.activity.start_date,
+                                "DD"
+                              )
+                            )
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "p8-date-day" }, [
+                          _vm._v(
+                            _vm._s(
+                              _vm._f("formatDate")(
+                                _vm.activity.start_date,
+                                "ddd"
+                              )
+                            )
+                          )
+                        ])
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex-column" }, [
+                    _c("div", { staticClass: "truncate-text" }, [
+                      _vm._v(_vm._s(_vm.activity.title))
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("i", {
+                        staticClass: "la la-clock-o",
+                        staticStyle: { "font-size": "14px" }
+                      }),
                       _vm._v(
-                        _vm._s(
-                          _vm._f("formatDate")(_vm.activity.start_date, "MMM")
-                        )
+                        " " +
+                          _vm._s(
+                            _vm._f("formatTime")(_vm.activity.start, "HH:mm")
+                          ) +
+                          " - " +
+                          _vm._s(
+                            _vm._f("formatTime")(_vm.activity.end, "HH:mm")
+                          )
                       )
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "p8-date-num" }, [
-                      _vm._v(
-                        _vm._s(
-                          _vm._f("formatDate")(_vm.activity.start_date, "DD")
-                        )
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "p8-date-day" }, [
-                      _vm._v(
-                        _vm._s(
-                          _vm._f("formatDate")(_vm.activity.start_date, "ddd")
-                        )
-                      )
+                    _c("div", [
+                      _vm.activity.type
+                        ? _c(
+                            "span",
+                            {
+                              staticClass: "badge kt-font-white info-block",
+                              class: {
+                                "badge-success": _vm.activity.type_id == 1,
+                                "badge-danger": _vm.activity.type_id == 2,
+                                "badge-primary": _vm.activity.type_id == 3,
+                                "badge-warning": _vm.activity.type_id == 4
+                              },
+                              attrs: { "data-toggle": "kt-tooltip" }
+                            },
+                            [_vm._v(_vm._s(_vm.activity.type.name))]
+                          )
+                        : _vm._e()
                     ])
                   ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "flex-column" }, [
-                _c("div", { staticClass: "truncate-text" }, [
-                  _vm._v(_vm._s(_vm.activity.title))
                 ]),
                 _vm._v(" "),
-                _c("div", [
-                  _c("i", {
-                    staticClass: "la la-clock-o",
-                    staticStyle: { "font-size": "14px" }
-                  }),
-                  _vm._v(
-                    " " +
-                      _vm._s(
-                        _vm._f("formatTime")(_vm.activity.start, "HH:mm")
-                      ) +
-                      " - " +
-                      _vm._s(_vm._f("formatTime")(_vm.activity.end, "HH:mm"))
-                  )
-                ]),
+                _c("div", {
+                  staticClass:
+                    "kt-separator kt-separator--border-dashed kt-margin-b-10"
+                }),
                 _vm._v(" "),
-                _c("div", [
-                  _vm.activity.type
-                    ? _c(
-                        "span",
-                        {
-                          staticClass: "badge kt-font-white info-block",
-                          class: {
-                            "badge-success": _vm.activity.type_id == 1,
-                            "badge-danger": _vm.activity.type_id == 2,
-                            "badge-primary": _vm.activity.type_id == 3,
-                            "badge-warning": _vm.activity.type_id == 4
-                          },
-                          attrs: { "data-toggle": "kt-tooltip" }
-                        },
-                        [_vm._v(_vm._s(_vm.activity.type.name))]
+                _c("div", { staticStyle: { display: "flex" } }, [
+                  _c("div", { staticStyle: { flex: "1", width: "50%" } }, [
+                    _c("div", [
+                      _c("img", {
+                        attrs: {
+                          src: "/img/activities/coach.svg",
+                          width: "26",
+                          height: "26"
+                        }
+                      }),
+                      _vm._v(
+                        " " +
+                          _vm._s(_vm.activity.responsible.name) +
+                          "\n                    "
                       )
-                    : _vm._e()
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "flex-row" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-success kt-margin-10",
-                  attrs: { type: "button" },
-                  on: { click: _vm.signup }
-                },
-                [_c("i", { staticClass: "fa fa-check" }), _vm._v(" Tilmeld")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-danger kt-margin-10",
-                  attrs: { type: "button" },
-                  on: { click: _vm.decline }
-                },
-                [_c("i", { staticClass: "fa fa-door-open" }), _vm._v(" Afmeld")]
-              )
-            ])
-          ]
-        )
-      ]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "clearfix kt-margin-b-20" }),
-    _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
-    _vm.attend === true
-      ? _c("div", { staticClass: "card card-default" }, [
-          _c("div", { staticClass: "card-body text-center" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("div", { staticClass: "tab-content" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "tab-pane fade active show",
-                  attrs: { id: "kt_tabs_8_1", role: "tabpanel" }
-                },
-                [
-                  _vm._v(
-                    "\n                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged\n                            "
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "tab-pane fade",
-                  attrs: { id: "kt_tabs_8_2", role: "tabpanel" }
-                },
-                [
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(0)
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticStyle: { flex: "1" } }, [
+                    _c("div", [
+                      _c("i", { staticClass: "la la-2x la-male" }),
+                      _vm._v(" "),
+                      _c("span", [_vm._v(_vm._s(_vm.playersCount.males))])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("i", { staticClass: "la la-2x la-female" }),
+                      _vm._v(" "),
+                      _c("span", [_vm._v(_vm._s(_vm.playersCount.females))])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "flex-row" }, [
                   _c(
-                    "table",
+                    "button",
                     {
-                      staticClass:
-                        "table table-ellipsis table-striped table-v-middle table-left"
+                      staticClass: "btn btn-success kt-margin-10",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.signup($event, _vm.activity)
+                        }
+                      }
                     },
                     [
-                      _vm._m(1),
-                      _vm._v(" "),
+                      _c("i", { staticClass: "fa fa-check" }),
+                      _vm._v(" Tilmeld")
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger kt-margin-10",
+                      attrs: { type: "button" },
+                      on: { click: _vm.decline }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-door-open" }),
+                      _vm._v(" Afbud")
+                    ]
+                  )
+                ])
+              ]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "clearfix kt-margin-b-20" }),
+        _vm._v(" "),
+        _c("hr"),
+        _vm._v(" "),
+        _vm.attend === true
+          ? _c("div", { staticClass: "card card-default" }, [
+              _c("div", { staticClass: "card-body text-center" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c("div", { staticClass: "tab-content" }, [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "tab-pane fade",
+                      attrs: { id: "kt_tabs_8_2", role: "tabpanel" }
+                    },
+                    [
                       _c(
-                        "tbody",
-                        _vm._l(_vm.activity.players, function(player) {
-                          return _vm.activity.players.length > 0
-                            ? _c("tr", [
-                                _c("td", { attrs: { valign: "middle" } }, [
-                                  _c("div", {
-                                    staticClass: "circle circle-lg",
-                                    class: _vm.getStatusColor(player),
-                                    attrs: {
-                                      "data-toggle": "tooltip",
-                                      "data-title": "User connected",
-                                      "data-original-title": "",
-                                      title: ""
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("td", { staticClass: "text-left" }, [
-                                  _c("img", {
-                                    staticClass:
-                                      "align-self-center mr-2 rounded-circle img-thumbnail thumb32",
-                                    attrs: {
-                                      src:
-                                        player.user &&
-                                        player.user.avatar != null
-                                          ? player.user.avatar
-                                          : "/img/profile.png",
-                                      alt: player.name,
-                                      title: player.name
-                                    }
-                                  }),
-                                  _vm._v(" " + _vm._s(player.name))
-                                ])
-                              ])
-                            : _vm._e()
-                        }),
-                        0
+                        "table",
+                        {
+                          staticClass:
+                            "table table-ellipsis table-striped table-v-middle table-left"
+                        },
+                        [
+                          _vm._m(3),
+                          _vm._v(" "),
+                          _c(
+                            "tbody",
+                            [
+                              _vm._l(_vm.activity.players, function(player) {
+                                return _vm.activity.players.length > 0
+                                  ? _c("tr", [
+                                      _c(
+                                        "td",
+                                        { attrs: { valign: "middle" } },
+                                        [
+                                          _c("div", {
+                                            staticClass: "circle circle-lg",
+                                            class: _vm.getStatusColor(player),
+                                            attrs: {
+                                              "data-toggle": "tooltip",
+                                              "data-title": "User connected",
+                                              "data-original-title": "",
+                                              title: ""
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "text-left" }, [
+                                        _c("img", {
+                                          staticClass:
+                                            "align-self-center mr-2 rounded-circle img-thumbnail thumb32",
+                                          attrs: {
+                                            src:
+                                              player.user &&
+                                              player.user.avatar != null
+                                                ? player.user.avatar
+                                                : "/img/profile.png",
+                                            alt: player.name,
+                                            title: player.name
+                                          }
+                                        }),
+                                        _vm._v(" " + _vm._s(player.name))
+                                      ])
+                                    ])
+                                  : _vm._e()
+                              }),
+                              _vm._v(" "),
+                              _vm.activity.players.length == 0
+                                ? _c("tr", [
+                                    _c(
+                                      "td",
+                                      {
+                                        staticClass: "text-center",
+                                        attrs: { colspan: "2" }
+                                      },
+                                      [_vm._v("Ingen spillere fundet.")]
+                                    )
+                                  ])
+                                : _vm._e()
+                            ],
+                            2
+                          )
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "tab-pane fade",
+                      attrs: { id: "kt_tabs_8_3", role: "tabpanel" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n                            "
                       )
                     ]
                   )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "tab-pane fade",
-                  attrs: { id: "kt_tabs_8_3", role: "tabpanel" }
-                },
-                [
-                  _vm._v(
-                    "\n                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n                            "
-                  )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("img", {
-              staticClass: "mb-2 img-fluid rounded-circle thumb64",
-              attrs: { src: "/base/media//users/100_4.jpg", alt: "Contact" }
-            }),
-            _vm._v(" "),
-            _c("h4", [_vm._v("Audrey Hunt")]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "Hello, I'm a just a dummy contact in your contact list and this is my presentation text. Have fun!"
-              )
+                ])
+              ])
             ])
-          ]),
-          _vm._v(" "),
-          _vm._m(2)
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm._m(3)
-  ])
+          : _vm._e()
+      ])
+    : _vm._e()
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("i", { staticClass: "la la-map-marker la-2x" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Annexhallen")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -22051,123 +22185,38 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "tab-pane fade active show",
+        attrs: { id: "kt_tabs_8_1", role: "tabpanel" }
+      },
+      [
+        _c("h4", [_vm._v("Opvarmning")]),
+        _vm._v(" "),
+        _c("div", [_vm._v("2 x rundt i 3 hjørner")]),
+        _vm._v(" "),
+        _c("div", [_vm._v("4 x fladt spil på kvart bane")]),
+        _vm._v(" "),
+        _c("h4", [_vm._v("Runder")]),
+        _vm._v(" "),
+        _c("div", [_vm._v("2 x Runder a 25 minutter")]),
+        _vm._v(" "),
+        _c("h4", [_vm._v("Fysisk")]),
+        _vm._v(" "),
+        _c("div", [_vm._v("bip test - 15 minutter")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", { attrs: { width: "20" } }, [_vm._v("#")]),
         _vm._v(" "),
         _c("th", [_vm._v("Navn")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-footer d-flex" }, [
-      _c("div", [
-        _c(
-          "a",
-          { staticClass: "btn btn-xs btn-primary", attrs: { href: "#" } },
-          [_vm._v("Send message")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "ml-auto" }, [
-        _c(
-          "a",
-          { staticClass: "btn btn-xs btn-secondary", attrs: { href: "#" } },
-          [_vm._v("View")]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card card-default d-none d-lg-block" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _c("div", { staticClass: "card-title text-center" }, [
-          _vm._v("Recent contacts")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("div", { staticClass: "media" }, [
-          _c("img", {
-            staticClass:
-              "align-self-center mr-2 rounded-circle img-thumbnail thumb48",
-            attrs: { src: "/base/media//users/100_4.jpg", alt: "Contact" }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "media-body py-2" }, [
-            _c("div", { staticClass: "text-bold" }, [
-              _vm._v(
-                "\n                                Floyd Ortiz\n                                "
-              ),
-              _c("div", { staticClass: "text-sm text-muted" }, [
-                _vm._v("12m ago")
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "media" }, [
-          _c("img", {
-            staticClass:
-              "align-self-center mr-2 rounded-circle img-thumbnail thumb48",
-            attrs: { src: "/base/media//users/100_5.jpg", alt: "Contact" }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "media-body py-2" }, [
-            _c("div", { staticClass: "text-bold" }, [
-              _vm._v(
-                "\n                                Luis Vasquez\n                                "
-              ),
-              _c("div", { staticClass: "text-sm text-muted" }, [
-                _vm._v("2h ago")
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "media" }, [
-          _c("img", {
-            staticClass:
-              "align-self-center mr-2 rounded-circle img-thumbnail thumb48",
-            attrs: { src: "/base/media//users/100_6.jpg", alt: "Contact" }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "media-body py-2" }, [
-            _c("div", { staticClass: "text-bold" }, [
-              _vm._v(
-                "\n                                Duane Mckinney\n                                "
-              ),
-              _c("div", { staticClass: "text-sm text-muted" }, [
-                _vm._v("yesterday")
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "media" }, [
-          _c("img", {
-            staticClass:
-              "align-self-center mr-2 rounded-circle img-thumbnail thumb24",
-            attrs: { src: "/base/media//users/100_7.jpg", alt: "Contact" }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "media-body py-2" }, [
-            _c("div", { staticClass: "text-bold" }, [
-              _vm._v(
-                "\n                                Connie Lambert\n                                "
-              ),
-              _c("div", { staticClass: "text-sm text-muted" }, [
-                _vm._v("2 weeks ago")
-              ])
-            ])
-          ])
-        ])
       ])
     ])
   }
@@ -34460,6 +34509,320 @@ module.exports = function(module) {
 	}
 	return module;
 };
+
+
+/***/ }),
+
+/***/ "./resources/assets/vuejs/Errors.js":
+/*!******************************************!*\
+  !*** ./resources/assets/vuejs/Errors.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Errors; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Errors =
+/*#__PURE__*/
+function () {
+  /**
+   * Create a new Errors instance.
+   */
+  function Errors() {
+    _classCallCheck(this, Errors);
+
+    this.errors = {};
+  }
+  /**
+   * Determine if an errors exists for the given field.
+   *
+   * @param {string} field
+   */
+
+
+  _createClass(Errors, [{
+    key: "has",
+    value: function has(field) {
+      if (this.errors) {
+        return this.errors.hasOwnProperty(field);
+      } else {
+        return false;
+      }
+    }
+    /**
+     * Determine if we have any errors.
+     */
+
+  }, {
+    key: "any",
+    value: function any() {
+      return Object.keys(this.errors).length > 0;
+    }
+    /**
+     * Retrieve the error message for a field.
+     *
+     * @param {string} field
+     */
+
+  }, {
+    key: "get",
+    value: function get(field) {
+      var array = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+      if (this.errors[field]) {
+        if (array == true) {
+          return this.errors[field];
+        }
+
+        return this.errors[field][0];
+      }
+    }
+    /**
+     * Return the error messages for the entire object.
+     *
+     * @return {array} errors
+     */
+
+  }, {
+    key: "getAll",
+    value: function getAll() {
+      if (this.errors) {
+        return this.errors;
+      }
+
+      return false;
+    }
+    /**
+     * Record the new errors.
+     *
+     * @param {object} errors
+     */
+
+  }, {
+    key: "record",
+    value: function record(errors) {
+      this.errors = errors;
+    }
+    /**
+     * Clear one or all error fields.
+     *
+     * @param {string|null} field
+     */
+
+  }, {
+    key: "clear",
+    value: function clear(field) {
+      if (field) {
+        delete this.errors[field];
+        return;
+      }
+
+      this.errors = {};
+    }
+  }]);
+
+  return Errors;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/vuejs/Form.js":
+/*!****************************************!*\
+  !*** ./resources/assets/vuejs/Form.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Form; });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Errors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Errors */ "./resources/assets/vuejs/Errors.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var Form =
+/*#__PURE__*/
+function () {
+  /**
+   * Create a new Form instance.
+   *
+   * @param {object} data
+   */
+  function Form() {
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+    _classCallCheck(this, Form);
+
+    this.originalData = data;
+    this.resetOnSuccess = "true";
+
+    for (var field in data) {
+      this[field] = data[field];
+    }
+
+    this.errors = new _Errors__WEBPACK_IMPORTED_MODULE_1__["default"]();
+  }
+  /**
+   * Fetch all relevant data for the form.
+   */
+
+
+  _createClass(Form, [{
+    key: "data",
+    value: function data() {
+      var data = {};
+
+      for (var property in this.originalData) {
+        data[property] = this[property];
+      }
+
+      return data;
+    }
+    /**
+     * Reset the form fields.
+     */
+
+  }, {
+    key: "reset",
+    value: function reset() {
+      for (var field in this.originalData) {
+        this[field] = '';
+      }
+
+      this.errors.clear();
+    }
+    /**
+     * Send a POST request to the given URL.
+     * .
+     * @param {string} url
+     */
+
+  }, {
+    key: "post",
+    value: function post(url) {
+      return this.submit('post', url);
+    }
+    /**
+     * Send a PUT request to the given URL.
+     * .
+     * @param {string} url
+     */
+
+  }, {
+    key: "put",
+    value: function put(url) {
+      return this.submit('put', url);
+    }
+    /**
+     * Send a PATCH request to the given URL.
+     * .
+     * @param {string} url
+     */
+
+  }, {
+    key: "patch",
+    value: function patch(url) {
+      return this.submit('patch', url);
+    }
+    /**
+     * Send a DELETE request to the given URL.
+     * .
+     * @param {string} url
+     */
+
+  }, {
+    key: "delete",
+    value: function _delete(url) {
+      return this.submit('delete', url);
+    }
+    /**
+     * Send a GET request to the given URL.
+     * .
+     * @param {string} url
+     */
+
+  }, {
+    key: "get",
+    value: function get(url) {
+      return this.submit('get', url);
+    }
+    /**
+     * Submit the form.
+     *
+     * @param {string} requestType
+     * @param {string} url
+     */
+
+  }, {
+    key: "submit",
+    value: function submit(requestType, url) {
+      var _this = this;
+
+      return new Promise(function (resolve, reject) {
+        var instance = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({});
+        instance.defaults.headers.common['Authorization'] = apiToken;
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a[requestType](url, _this.data()).then(function (response) {
+          _this.onSuccess(response.data);
+
+          resolve(response.data);
+        })["catch"](function (error) {
+          if (error.response) {
+            _this.onFail(error.response.data.errors); //console.log(error.response.data);
+
+
+            reject(error.response);
+          } else {
+            reject("Service is down!");
+          }
+        });
+      });
+    }
+    /**
+     * Handle a successful form submission.
+     *
+     * @param {object} data
+     */
+
+  }, {
+    key: "onSuccess",
+    value: function onSuccess(data) {
+      if (this.resetOnSuccess == "true") {
+        this.reset();
+      }
+    }
+    /**
+     * Handle a failed form submission.
+     *
+     * @param {object} errors
+     */
+
+  }, {
+    key: "onFail",
+    value: function onFail(errors) {
+      this.errors.record(errors);
+    }
+  }]);
+
+  return Form;
+}();
+
 
 
 /***/ }),

@@ -31,8 +31,9 @@ class CreateWePlayersAndWeActivitiesTable extends Migration
         });
 
         Schema::create('we_activities', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->index('id');
+            $table->integer('responsible_user')->unsigned();
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->timeTz('start');
