@@ -202,20 +202,22 @@ export default {
             let postData = []
             this.confirmForm.activity_id = activity.id;
             this.confirmForm.post(this.confirmUrl)
-                .catch(error => {
-                    if(error.response) {
-                        console.log("Error code: " + error.response.status);
-                        if(error.response.status == 401) {
-                            location.reload();
-                        }
-                        btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
-                    }
-                })
                 .then(data => {
-                    console.log(data.data);
+                    console.log(data);
                     this.activitiesLoad("reload");
                     btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
                     this.toastr("Du er nu tilmeldt aktiviteten", "success");
+                })
+                .catch(error => {
+                    console.log(error);
+                    if(error.status) {
+                        if(error.status == 401) {
+                            location.reload();
+                        }
+                        btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+                        this.toastr("der opstod en fejl!", "error");
+                    }
+                    btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
                 });
 
 

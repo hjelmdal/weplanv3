@@ -4,22 +4,23 @@
         props:["activity"],
         data() {
             return {
-                attend: null,
                 playersCount: {
                     males: 0,
                     females: 0,
                     maleDeclines: 0,
-                    femaleDeclines: 0
+                    femaleDeclines: 0,
+                    maleConfirms: 0,
+                    femaleConfirms: 0
                 }
             }
         },
         methods: {
             signup(event,activity) {
-                this.attend = true;
+                this.respond = true;
                 this.$root.$emit("confirmActivity",{'event':event,'activity':activity })
             },
             decline() {
-                this.attend = false;
+                this.respond = true;
             },
             getPlayerStatus(player) {
                 let response = null;
@@ -34,11 +35,11 @@
                     } else if(pivot.confirmed_at) {
                         response = 'confirmed';
                     }
-                    console.log(response);
                     return response;
                 }
                 return false;
             },
+            //Status color for showing in table
             getStatusColor(player) {
                 let response = null;
                 if(player) {
@@ -59,6 +60,7 @@
                 }
                 return false;
             },
+            // Setting players count for the giving activity - resetting at component update (watch)
             getPlayers() {
                 if(this.activity.players) {
                     console.log("yes");
@@ -71,16 +73,21 @@
                         }
                     })
                 }
+            },
+            resetData() {
+                this.playersCount.males = 0;
+                this.playersCount.females = 0;
+                this.playersCount.maleDeclines = 0;
+                this.playersCount.femaleDeclines = 0;
+                this.playersCount.maleConfirms= 0;
+                this.playersCount.femaleConfirms = 0;
             }
         },
         watch: {
             activity: {
                 immediate: true,
                 handler (val, oldVal) {
-                    this.playersCount.males = 0;
-                    this.playersCount.females = 0;
-                    this.playersCount.maleDeclines = 0;
-                    this.playersCount.femaleDeclines = 0;
+                    this.resetData();
                     this.getPlayers();
                 }
             }
@@ -164,15 +171,15 @@
                         <img src="/img/activities/coach.svg" width="26" height="26"> {{ activity.responsible.name }}
                     </div>
                     <div>
-                        <i class="la la-map-marker la-2x"></i> <span>Annexhallen</span>
+                        <i class="la la-map-marker la-2x kt-valign-middle" style="vertical-align: middle;"></i> <span class="kt-font-xl">Annexhallen</span>
                     </div>
                 </div>
                 <div style="flex:1">
                     <div>
-                        <i class="la la-2x la-male"></i> <span>{{ playersCount.males }}</span>
+                        <i class="la la-2x la-male kt-valign-middle" style="vertical-align: middle"></i> <span>{{ playersCount.males }}</span>
                     </div>
                     <div>
-                        <i class="la la-2x la-female"></i> <span>{{ playersCount.females }}</span>
+                        <i class="la la-2x la-female kt-valign-middle"></i> <span>{{ playersCount.females }}</span>
                     </div>
                 </div>
             </div>
@@ -185,7 +192,7 @@
 
         <div class="clearfix kt-margin-b-20"></div>
             <hr />
-            <div v-if="attend === true" class="card card-default">
+            <div v-if="(activity.my_status && activity.my_status != 1) || activity.type.signup == 1 || (!activity.my_status && activity.type.decline == 1)" class="card card-default">
                 <div class="card-body text-center">
                         <ul class="nav nav-pills nav-tabs-btn" role="tablist">
                             <li class="nav-item">

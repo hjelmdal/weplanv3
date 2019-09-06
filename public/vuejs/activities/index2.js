@@ -1855,25 +1855,26 @@ __webpack_require__.r(__webpack_exports__);
   props: ["activity"],
   data: function data() {
     return {
-      attend: null,
       playersCount: {
         males: 0,
         females: 0,
         maleDeclines: 0,
-        femaleDeclines: 0
+        femaleDeclines: 0,
+        maleConfirms: 0,
+        femaleConfirms: 0
       }
     };
   },
   methods: {
     signup: function signup(event, activity) {
-      this.attend = true;
+      this.respond = true;
       this.$root.$emit("confirmActivity", {
         'event': event,
         'activity': activity
       });
     },
     decline: function decline() {
-      this.attend = false;
+      this.respond = true;
     },
     getPlayerStatus: function getPlayerStatus(player) {
       var response = null; //console.log(player.pivot);
@@ -1889,12 +1890,12 @@ __webpack_require__.r(__webpack_exports__);
           response = 'confirmed';
         }
 
-        console.log(response);
         return response;
       }
 
       return false;
     },
+    //Status color for showing in table
     getStatusColor: function getStatusColor(player) {
       var response = null;
 
@@ -1919,6 +1920,7 @@ __webpack_require__.r(__webpack_exports__);
 
       return false;
     },
+    // Setting players count for the giving activity - resetting at component update (watch)
     getPlayers: function getPlayers() {
       var _this = this;
 
@@ -1934,16 +1936,21 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       }
+    },
+    resetData: function resetData() {
+      this.playersCount.males = 0;
+      this.playersCount.females = 0;
+      this.playersCount.maleDeclines = 0;
+      this.playersCount.femaleDeclines = 0;
+      this.playersCount.maleConfirms = 0;
+      this.playersCount.femaleConfirms = 0;
     }
   },
   watch: {
     activity: {
       immediate: true,
       handler: function handler(val, oldVal) {
-        this.playersCount.males = 0;
-        this.playersCount.females = 0;
-        this.playersCount.maleDeclines = 0;
-        this.playersCount.femaleDeclines = 0;
+        this.resetData();
         this.getPlayers();
       }
     }
@@ -2182,24 +2189,28 @@ __webpack_require__.r(__webpack_exports__);
       btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
       var postData = [];
       this.confirmForm.activity_id = activity.id;
-      this.confirmForm.post(this.confirmUrl)["catch"](function (error) {
-        if (error.response) {
-          console.log("Error code: " + error.response.status);
-
-          if (error.response.status == 401) {
-            location.reload();
-          }
-
-          btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
-        }
-      }).then(function (data) {
-        console.log(data.data);
+      this.confirmForm.post(this.confirmUrl).then(function (data) {
+        console.log(data);
 
         _this2.activitiesLoad("reload");
 
         btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
 
         _this2.toastr("Du er nu tilmeldt aktiviteten", "success");
+      })["catch"](function (error) {
+        console.log(error);
+
+        if (error.status) {
+          if (error.status == 401) {
+            location.reload();
+          }
+
+          btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+
+          _this2.toastr("der opstod en fejl!", "error");
+        }
+
+        btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
       });
     },
     declineActivity: function declineActivity(event, activity) {
@@ -21950,13 +21961,18 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticStyle: { flex: "1" } }, [
                     _c("div", [
-                      _c("i", { staticClass: "la la-2x la-male" }),
+                      _c("i", {
+                        staticClass: "la la-2x la-male kt-valign-middle",
+                        staticStyle: { "vertical-align": "middle" }
+                      }),
                       _vm._v(" "),
                       _c("span", [_vm._v(_vm._s(_vm.playersCount.males))])
                     ]),
                     _vm._v(" "),
                     _c("div", [
-                      _c("i", { staticClass: "la la-2x la-female" }),
+                      _c("i", {
+                        staticClass: "la la-2x la-female kt-valign-middle"
+                      }),
                       _vm._v(" "),
                       _c("span", [_vm._v(_vm._s(_vm.playersCount.females))])
                     ])
@@ -22003,7 +22019,9 @@ var render = function() {
         _vm._v(" "),
         _c("hr"),
         _vm._v(" "),
-        _vm.attend === true
+        (_vm.activity.my_status && _vm.activity.my_status != 1) ||
+        _vm.activity.type.signup == 1 ||
+        (!_vm.activity.my_status && _vm.activity.type.decline == 1)
           ? _c("div", { staticClass: "card card-default" }, [
               _c("div", { staticClass: "card-body text-center" }, [
                 _vm._m(1),
@@ -22115,9 +22133,12 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", [
-      _c("i", { staticClass: "la la-map-marker la-2x" }),
+      _c("i", {
+        staticClass: "la la-map-marker la-2x kt-valign-middle",
+        staticStyle: { "vertical-align": "middle" }
+      }),
       _vm._v(" "),
-      _c("span", [_vm._v("Annexhallen")])
+      _c("span", { staticClass: "kt-font-xl" }, [_vm._v("Annexhallen")])
     ])
   },
   function() {
