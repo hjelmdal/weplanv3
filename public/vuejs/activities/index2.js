@@ -22065,9 +22065,12 @@ var render = function() {
                                         [
                                           _c("img", {
                                             attrs: {
-                                              src: "/img/profile.png",
                                               src:
-                                                _vm.activity.responsible.avatar,
+                                                _vm.activity.responsible
+                                                  .avatar != null
+                                                  ? _vm.activity.responsible
+                                                      .avatar
+                                                  : "/img/profile.png",
                                               alt: _vm.activity.responsible.name
                                             }
                                           })

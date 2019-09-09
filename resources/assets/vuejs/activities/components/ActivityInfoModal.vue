@@ -203,7 +203,7 @@
                             </div>
 
                             <div class="kt-widget-3__content-stats">
-                                <div class="truncate-text kt-font-white" style="display: flex; align-items: center"> <div class="kt-media kt-media--md kt-media--circle"><img src="/img/profile.png" :src="activity.responsible.avatar" :alt="activity.responsible.name"></div> <div> {{ activity.responsible.name }}<br><span class="kt-widget-3__content-desc">{{ activity.responsible.email }}</span></div>
+                                <div class="truncate-text kt-font-white" style="display: flex; align-items: center"> <div class="kt-media kt-media--md kt-media--circle"><img :src="activity.responsible.avatar != null ? activity.responsible.avatar : '/img/profile.png'" :alt="activity.responsible.name"></div> <div> {{ activity.responsible.name }}<br><span class="kt-widget-3__content-desc">{{ activity.responsible.email }}</span></div>
                                 </div>
                             </div>
                         </div>

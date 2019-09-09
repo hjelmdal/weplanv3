@@ -30,7 +30,7 @@ $factory->define(WeActivity::class, function (Faker $faker) {
         "end" => $end,
         "response_date" => $start_date,
         "response_time" => $res_time,
-        "type_id" => $faker->numberBetween(1,4)
+        "type_id" => $type_id
 
     ];
 });
