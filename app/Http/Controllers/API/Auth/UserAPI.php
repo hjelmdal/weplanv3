@@ -158,10 +158,12 @@ class UserAPI extends Controller
                 $this->user->notify(new SendNewActivationCode());
                 return response()->json(["message" => "En ny aktiveringskode er sendt til din email"],200);
             } catch (\Exception $exception) {
-
+                Log::error("Gensend aktiveringsmail fejlet:");
+                Log::error($exception);
+                return response()->json(["message" => "Der opstod en fejl"],400);
             }
-
         }
+        return response()->json(["message" => "Du har ikke adgang"],401);
     }
 
     public function complete(Request $request) {

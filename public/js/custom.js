@@ -401,8 +401,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/impact/.web/WePlanV3/resources/assets/js/custom.js */"./resources/assets/js/custom.js");
-module.exports = __webpack_require__(/*! /Users/impact/.web/WePlanV3/resources/assets/sass/custom.scss */"./resources/assets/sass/custom.scss");
+__webpack_require__(/*! /Users/hjelmdal/Pixel8/Websites/WePlan/WePlanV4/resources/assets/js/custom.js */"./resources/assets/js/custom.js");
+module.exports = __webpack_require__(/*! /Users/hjelmdal/Pixel8/Websites/WePlan/WePlanV4/resources/assets/sass/custom.scss */"./resources/assets/sass/custom.scss");
 
 
 /***/ })

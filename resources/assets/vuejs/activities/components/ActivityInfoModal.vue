@@ -121,6 +121,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.text-large {
     font-size:2rem;
     line-height: 2.3rem;
 }
@@ -135,6 +137,23 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+.kt-media {
+    vertical-align: middle;
+}
+
+.kt-widget-3 .kt-widget-3__content {
+    padding: 1rem;
+}
+.kt-widget-3 .kt-widget-3__content .kt-widget-3__content-info {
+    padding-bottom: 0;
+}
+.kt-media {
+    margin-right: 3px;
+}
+
+.kt-widget-3.kt-widget-3--primary {
+    background: #bbb;
 }
 </style>
 
@@ -156,7 +175,7 @@
                     </div>
                 </div>
                 <div class="flex-column">
-                    <div class="truncate-text">{{ activity.title }}</div>
+                    <div class="truncate-text text-large">{{ activity.title }}</div>
                     <div><i class="la la-clock-o" style="font-size: 14px;"></i> {{ activity.start | formatTime("HH:mm") }} - {{ activity.end | formatTime("HH:mm") }}</div>
                     <div><span v-if="activity.type" data-toggle="kt-tooltip"  class="badge kt-font-white info-block" v-bind:class="{'badge-success':(activity.type_id == 1), 'badge-danger':(activity.type_id == 2), 'badge-primary':(activity.type_id == 3), 'badge-warning':(activity.type_id == 4)}">{{ activity.type.name }}</span></div>
                 </div>
@@ -164,25 +183,58 @@
 
 
             </div>
+        </div>
+    </div>
+    <div>
+        <div>
             <div class="kt-separator kt-separator--border-dashed kt-margin-b-10"></div>
-            <div style="display: flex;">
-                <div style="flex:1; width: 50%;">
-                    <div v-if="activity.responsible">
-                        <img src="/img/activities/coach.svg" width="26" height="26"> {{ activity.responsible.name }}
-                    </div>
-                    <div>
-                        <i class="la la-map-marker la-2x kt-valign-middle" style="vertical-align: middle;"></i> <span class="kt-font-xl">Annexhallen</span>
-                    </div>
-                </div>
-                <div style="flex:1">
-                    <div>
-                        <i class="la la-2x la-male kt-valign-middle" style="vertical-align: middle"></i> <span>{{ playersCount.males }}</span>
-                    </div>
-                    <div>
-                        <i class="la la-2x la-female kt-valign-middle"></i> <span>{{ playersCount.females }}</span>
+
+            <div class="row">
+            <div class="col-6">
+            <div class="kt-portlet kt-portlet--fit kt-portlet--height-fluid">
+                <div class="kt-portlet__body kt-portlet__body--fluid">
+                    <div class="kt-widget-3 kt-widget-3--primary">
+                        <div class="kt-widget-3__content">
+                            <div class="kt-widget-3__content-info">
+                                <div class="kt-widget-3__content-section">
+                                    <div class="kt-widget-3__content-title">Ansvarlig</div>
+                                    <div class="kt-widget-3__content-desc">Kontaktoplysninger</div>
+                                </div>
+                            </div>
+
+                            <div class="kt-widget-3__content-stats">
+                                <div class="truncate-text kt-font-white" style="display: flex; align-items: center"> <div class="kt-media kt-media--md kt-media--circle"><img src="/img/profile.png" :src="activity.responsible.avatar" :alt="activity.responsible.name"></div> <div> {{ activity.responsible.name }}<br><span class="kt-widget-3__content-desc">{{ activity.responsible.email }}</span></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            </div>
+            <div class="col-6">
+            <div class="kt-portlet kt-portlet--fit kt-portlet--height-fluid">
+                <div class="kt-portlet__body kt-portlet__body--fluid">
+                    <div class="kt-widget-3 kt-widget-3--primary">
+                        <div class="kt-widget-3__content">
+                            <div class="kt-widget-3__content-info">
+                                <div class="kt-widget-3__content-section">
+                                    <div class="kt-widget-3__content-title">Placering</div>
+                                    <div class="kt-widget-3__content-desc">Adresse</div>
+                                </div>
+                            </div>
+
+                            <div class="kt-widget-3__content-stats">
+                                <div class="kt-font-white" style="display: flex; align-items: center"> <a href="#" class="kt-media kt-media--circle kt-media--brand">
+                                    <span><i class="la la-map-marker la-2x kt-valign-middle" style="vertical-align: middle;"></i></span></a> <div> Annexhallen<br><span class="kt-widget-3__content-desc  truncate-text" style="width: calc(100% - 50px);">Bethesdavej 29, 8200 Aarhus N</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </div>
+
             <div class="flex-row">
             <button @click="signup($event,activity)" type="button" class="btn btn-success kt-margin-10"><i class="fa fa-check"></i> Tilmeld</button>
             <button @click="decline" type="button" class="btn btn-danger kt-margin-10"><i class="fa fa-door-open"></i> Afbud</button>

@@ -113,6 +113,7 @@ var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "./node_modules/
 var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "./node_modules/axios/lib/helpers/parseHeaders.js");
 var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "./node_modules/axios/lib/helpers/isURLSameOrigin.js");
 var createError = __webpack_require__(/*! ../core/createError */ "./node_modules/axios/lib/core/createError.js");
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ "./node_modules/axios/lib/helpers/btoa.js");
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -124,6 +125,22 @@ module.exports = function xhrAdapter(config) {
     }
 
     var request = new XMLHttpRequest();
+    var loadEvent = 'onreadystatechange';
+    var xDomain = false;
+
+    // For IE 8/9 CORS support
+    // Only supports POST and GET calls and doesn't returns the response headers.
+    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
+    if ( true &&
+        typeof window !== 'undefined' &&
+        window.XDomainRequest && !('withCredentials' in request) &&
+        !isURLSameOrigin(config.url)) {
+      request = new window.XDomainRequest();
+      loadEvent = 'onload';
+      xDomain = true;
+      request.onprogress = function handleProgress() {};
+      request.ontimeout = function handleTimeout() {};
+    }
 
     // HTTP basic authentication
     if (config.auth) {
@@ -138,8 +155,8 @@ module.exports = function xhrAdapter(config) {
     request.timeout = config.timeout;
 
     // Listen for ready state
-    request.onreadystatechange = function handleLoad() {
-      if (!request || request.readyState !== 4) {
+    request[loadEvent] = function handleLoad() {
+      if (!request || (request.readyState !== 4 && !xDomain)) {
         return;
       }
 
@@ -156,8 +173,9 @@ module.exports = function xhrAdapter(config) {
       var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
       var response = {
         data: responseData,
-        status: request.status,
-        statusText: request.statusText,
+        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
+        status: request.status === 1223 ? 204 : request.status,
+        statusText: request.status === 1223 ? 'No Content' : request.statusText,
         headers: responseHeaders,
         config: config,
         request: request
@@ -970,6 +988,54 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
+/***/ "./node_modules/axios/lib/helpers/btoa.js":
+/*!************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/btoa.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
+
+var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+
+function E() {
+  this.message = 'String contains an invalid character';
+}
+E.prototype = new Error;
+E.prototype.code = 5;
+E.prototype.name = 'InvalidCharacterError';
+
+function btoa(input) {
+  var str = String(input);
+  var output = '';
+  for (
+    // initialize result and counter
+    var block, charCode, idx = 0, map = chars;
+    // if the next str index does not exist:
+    //   change the mapping table to "="
+    //   check if d has no fractional digits
+    str.charAt(idx | 0) || (map = '=', idx % 1);
+    // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
+    output += map.charAt(63 & block >> 8 - idx % 1 * 8)
+  ) {
+    charCode = str.charCodeAt(idx += 3 / 4);
+    if (charCode > 0xFF) {
+      throw new E();
+    }
+    block = block << 8 | charCode;
+  }
+  return output;
+}
+
+module.exports = btoa;
+
+
+/***/ }),
+
 /***/ "./node_modules/axios/lib/helpers/buildURL.js":
 /*!****************************************************!*\
   !*** ./node_modules/axios/lib/helpers/buildURL.js ***!
@@ -1384,7 +1450,7 @@ module.exports = function spread(callback) {
 
 
 var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
-var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/axios/node_modules/is-buffer/index.js");
+var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js");
 
 /*global toString:true*/
 
@@ -1684,28 +1750,6 @@ module.exports = {
   extend: extend,
   trim: trim
 };
-
-
-/***/ }),
-
-/***/ "./node_modules/axios/node_modules/is-buffer/index.js":
-/*!************************************************************!*\
-  !*** ./node_modules/axios/node_modules/is-buffer/index.js ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-module.exports = function isBuffer (obj) {
-  return obj != null && obj.constructor != null &&
-    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
 
 
 /***/ }),
@@ -2121,7 +2165,7 @@ __webpack_require__.r(__webpack_exports__);
         headers: {
           Authorization: document.querySelector('meta[name="api-token"]').getAttribute('content')
         }
-      })["catch"](function (error) {
+      }).catch(function (error) {
         if (error.response) {
           console.log("Error code: " + error.response.status);
 
@@ -2197,7 +2241,7 @@ __webpack_require__.r(__webpack_exports__);
         btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
 
         _this2.toastr("Du er nu tilmeldt aktiviteten", "success");
-      })["catch"](function (error) {
+      }).catch(function (error) {
         console.log(error);
 
         if (error.status) {
@@ -2231,7 +2275,7 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: document.querySelector('meta[name="api-token"]').getAttribute('content')
         },
         data: postData
-      })["catch"](function (error) {
+      }).catch(function (error) {
         if (error.response) {
           console.log("Error code: " + error.response.status);
 
@@ -2383,7 +2427,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.info-block[data-v-4e363bf4] {\n    height: 12px;\n    transform: rotate(90deg);\n    position: absolute;\n    left: -20px;\n    width: 34px;\n    max-width: 34px;\n    text-overflow: ellipsis;\n    overflow: hidden;\n    top: 15px;\n    display: inline-block;\n}\n.row-column[data-v-4e363bf4] {\n    margin-left:0.5rem;\n}\n.alarm-span[data-v-4e363bf4] {\n    margin-right: 1rem;\n}\n.div-time[data-v-4e363bf4] {\n    justify-content: space-between;\n}\n.div-row[data-v-4e363bf4] {\n    position: relative;\n}\n", ""]);
+exports.push([module.i, "\n.info-block[data-v-4e363bf4] {\n    height: 12px;\n    -webkit-transform: rotate(90deg);\n    transform: rotate(90deg);\n    position: absolute;\n    left: -20px;\n    width: 34px;\n    max-width: 34px;\n    text-overflow: ellipsis;\n    overflow: hidden;\n    top: 15px;\n    display: inline-block;\n}\n.row-column[data-v-4e363bf4] {\n    margin-left:0.5rem;\n}\n.alarm-span[data-v-4e363bf4] {\n    margin-right: 1rem;\n}\n.div-time[data-v-4e363bf4] {\n    justify-content: space-between;\n}\n.div-row[data-v-4e363bf4] {\n    position: relative;\n}\n", ""]);
 
 // exports
 
@@ -2402,7 +2446,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.circle[data-v-30193576] {\n    display: inline-block;\n    width: 7px;\n    height: 7px;\n    border-radius: 500px;\n    margin: 0 .5em;\n    background-color: #ddd;\n    vertical-align: baseline;\n    border: 2px solid transparent;\n}\n.circle-lg[data-v-30193576] {\n    width: 11px;\n    height: 11px;\n}\n.flex-container[data-v-30193576] {\n    display: flex;\n    align-items: center;\n}\n.truncate-text[data-v-30193576] {\n    display: inline-block;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n    font-size:2rem;\n    line-height: 2.3rem;\n}\n.flex-column[data-v-30193576] {\n    display: flex;\n    flex-direction: column;\n    width:calc(100% - 80px);\n    position: relative;\n}\n.flex-row[data-v-30193576] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.circle[data-v-30193576] {\r\n    display: inline-block;\r\n    width: 7px;\r\n    height: 7px;\r\n    border-radius: 500px;\r\n    margin: 0 .5em;\r\n    background-color: #ddd;\r\n    vertical-align: baseline;\r\n    border: 2px solid transparent;\n}\n.circle-lg[data-v-30193576] {\r\n    width: 11px;\r\n    height: 11px;\n}\n.flex-container[data-v-30193576] {\r\n    display: flex;\r\n    align-items: center;\n}\n.truncate-text[data-v-30193576] {\r\n    display: inline-block;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\n}\n.text-large[data-v-30193576] {\r\n    font-size:2rem;\r\n    line-height: 2.3rem;\n}\n.flex-column[data-v-30193576] {\r\n    display: flex;\r\n    flex-direction: column;\r\n    width:calc(100% - 80px);\r\n    position: relative;\n}\n.flex-row[data-v-30193576] {\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: center;\n}\n.kt-media[data-v-30193576] {\r\n    vertical-align: middle;\n}\n.kt-widget-3 .kt-widget-3__content[data-v-30193576] {\r\n    padding: 1rem;\n}\n.kt-widget-3 .kt-widget-3__content .kt-widget-3__content-info[data-v-30193576] {\r\n    padding-bottom: 0;\n}\n.kt-media[data-v-30193576] {\r\n    margin-right: 3px;\n}\n.kt-widget-3.kt-widget-3--primary[data-v-30193576] {\r\n    background: #bbb;\n}\r\n", ""]);
 
 // exports
 
@@ -2491,6 +2535,38 @@ function toComment(sourceMap) {
 	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
 
 	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/is-buffer/index.js":
+/*!*****************************************!*\
+  !*** ./node_modules/is-buffer/index.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+// The _isBuffer check is for Safari 5-7 support, because it's missing
+// Object.prototype.constructor. Remove this eventually
+module.exports = function (obj) {
+  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
+}
+
+function isBuffer (obj) {
+  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+// For Node v0.10 support. Remove this eventually.
+function isSlowBuffer (obj) {
+  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
 
@@ -21890,7 +21966,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "flex-column" }, [
-                    _c("div", { staticClass: "truncate-text" }, [
+                    _c("div", { staticClass: "truncate-text text-large" }, [
                       _vm._v(_vm._s(_vm.activity.title))
                     ]),
                     _vm._v(" "),
@@ -21930,90 +22006,140 @@ var render = function() {
                         : _vm._e()
                     ])
                   ])
-                ]),
-                _vm._v(" "),
-                _c("div", {
-                  staticClass:
-                    "kt-separator kt-separator--border-dashed kt-margin-b-10"
-                }),
-                _vm._v(" "),
-                _c("div", { staticStyle: { display: "flex" } }, [
-                  _c("div", { staticStyle: { flex: "1", width: "50%" } }, [
-                    _vm.activity.responsible
-                      ? _c("div", [
-                          _c("img", {
-                            attrs: {
-                              src: "/img/activities/coach.svg",
-                              width: "26",
-                              height: "26"
-                            }
-                          }),
-                          _vm._v(
-                            " " +
-                              _vm._s(_vm.activity.responsible.name) +
-                              "\n                    "
-                          )
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm._m(0)
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticStyle: { flex: "1" } }, [
-                    _c("div", [
-                      _c("i", {
-                        staticClass: "la la-2x la-male kt-valign-middle",
-                        staticStyle: { "vertical-align": "middle" }
-                      }),
-                      _vm._v(" "),
-                      _c("span", [_vm._v(_vm._s(_vm.playersCount.males))])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", [
-                      _c("i", {
-                        staticClass: "la la-2x la-female kt-valign-middle"
-                      }),
-                      _vm._v(" "),
-                      _c("span", [_vm._v(_vm._s(_vm.playersCount.females))])
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "flex-row" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-success kt-margin-10",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.signup($event, _vm.activity)
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "fa fa-check" }),
-                      _vm._v(" Tilmeld")
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger kt-margin-10",
-                      attrs: { type: "button" },
-                      on: { click: _vm.decline }
-                    },
-                    [
-                      _c("i", { staticClass: "fa fa-door-open" }),
-                      _vm._v(" Afbud")
-                    ]
-                  )
                 ])
               ]
             )
           ]
         ),
+        _vm._v(" "),
+        _c("div", [
+          _c("div", [
+            _c("div", {
+              staticClass:
+                "kt-separator kt-separator--border-dashed kt-margin-b-10"
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-6" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "kt-portlet kt-portlet--fit kt-portlet--height-fluid"
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "kt-portlet__body kt-portlet__body--fluid"
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "kt-widget-3 kt-widget-3--primary" },
+                          [
+                            _c("div", { staticClass: "kt-widget-3__content" }, [
+                              _vm._m(0),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "kt-widget-3__content-stats" },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "truncate-text kt-font-white",
+                                      staticStyle: {
+                                        display: "flex",
+                                        "align-items": "center"
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "kt-media kt-media--md kt-media--circle"
+                                        },
+                                        [
+                                          _c("img", {
+                                            attrs: {
+                                              src: "/img/profile.png",
+                                              src:
+                                                _vm.activity.responsible.avatar,
+                                              alt: _vm.activity.responsible.name
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("div", [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(
+                                              _vm.activity.responsible.name
+                                            )
+                                        ),
+                                        _c("br"),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "kt-widget-3__content-desc"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.activity.responsible.email
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ])
+                                    ]
+                                  )
+                                ]
+                              )
+                            ])
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._m(1)
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "flex-row" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success kt-margin-10",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.signup($event, _vm.activity)
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-check" }), _vm._v(" Tilmeld")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-danger kt-margin-10",
+                  attrs: { type: "button" },
+                  on: { click: _vm.decline }
+                },
+                [_c("i", { staticClass: "fa fa-door-open" }), _vm._v(" Afbud")]
+              )
+            ])
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "clearfix kt-margin-b-20" }),
         _vm._v(" "),
@@ -22024,10 +22150,10 @@ var render = function() {
         (!_vm.activity.my_status && _vm.activity.type.decline == 1)
           ? _c("div", { staticClass: "card card-default" }, [
               _c("div", { staticClass: "card-body text-center" }, [
-                _vm._m(1),
+                _vm._m(2),
                 _vm._v(" "),
                 _c("div", { staticClass: "tab-content" }, [
-                  _vm._m(2),
+                  _vm._m(3),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -22043,7 +22169,7 @@ var render = function() {
                             "table table-ellipsis table-striped table-v-middle table-left"
                         },
                         [
-                          _vm._m(3),
+                          _vm._m(4),
                           _vm._v(" "),
                           _c(
                             "tbody",
@@ -22116,7 +22242,7 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n                            "
+                        "\r\n                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\r\n                            "
                       )
                     ]
                   )
@@ -22132,13 +22258,96 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("i", {
-        staticClass: "la la-map-marker la-2x kt-valign-middle",
-        staticStyle: { "vertical-align": "middle" }
-      }),
-      _vm._v(" "),
-      _c("span", { staticClass: "kt-font-xl" }, [_vm._v("Annexhallen")])
+    return _c("div", { staticClass: "kt-widget-3__content-info" }, [
+      _c("div", { staticClass: "kt-widget-3__content-section" }, [
+        _c("div", { staticClass: "kt-widget-3__content-title" }, [
+          _vm._v("Ansvarlig")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "kt-widget-3__content-desc" }, [
+          _vm._v("Kontaktoplysninger")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-6" }, [
+      _c(
+        "div",
+        { staticClass: "kt-portlet kt-portlet--fit kt-portlet--height-fluid" },
+        [
+          _c(
+            "div",
+            { staticClass: "kt-portlet__body kt-portlet__body--fluid" },
+            [
+              _c("div", { staticClass: "kt-widget-3 kt-widget-3--primary" }, [
+                _c("div", { staticClass: "kt-widget-3__content" }, [
+                  _c("div", { staticClass: "kt-widget-3__content-info" }, [
+                    _c("div", { staticClass: "kt-widget-3__content-section" }, [
+                      _c("div", { staticClass: "kt-widget-3__content-title" }, [
+                        _vm._v("Placering")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "kt-widget-3__content-desc" }, [
+                        _vm._v("Adresse")
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "kt-widget-3__content-stats" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "kt-font-white",
+                        staticStyle: {
+                          display: "flex",
+                          "align-items": "center"
+                        }
+                      },
+                      [
+                        _c(
+                          "a",
+                          {
+                            staticClass:
+                              "kt-media kt-media--circle kt-media--brand",
+                            attrs: { href: "#" }
+                          },
+                          [
+                            _c("span", [
+                              _c("i", {
+                                staticClass:
+                                  "la la-map-marker la-2x kt-valign-middle",
+                                staticStyle: { "vertical-align": "middle" }
+                              })
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", [
+                          _vm._v(" Annexhallen"),
+                          _c("br"),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "kt-widget-3__content-desc  truncate-text",
+                              staticStyle: { width: "calc(100% - 50px)" }
+                            },
+                            [_vm._v("Bethesdavej 29, 8200 Aarhus N")]
+                          )
+                        ])
+                      ]
+                    )
+                  ])
+                ])
+              ])
+            ]
+          )
+        ]
+      )
     ])
   },
   function() {
@@ -34805,7 +35014,7 @@ function () {
           _this.onSuccess(response.data);
 
           resolve(response.data);
-        })["catch"](function (error) {
+        }).catch(function (error) {
           if (error.response) {
             _this.onFail(error.response.data.errors); //console.log(error.response.data);
 
@@ -35430,7 +35639,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/impact/.web/WePlanV3/resources/assets/vuejs/activities/index2.js */"./resources/assets/vuejs/activities/index2.js");
+module.exports = __webpack_require__(/*! /Users/hjelmdal/Pixel8/Websites/WePlan/WePlanV4/resources/assets/vuejs/activities/index2.js */"./resources/assets/vuejs/activities/index2.js");
 
 
 /***/ })
