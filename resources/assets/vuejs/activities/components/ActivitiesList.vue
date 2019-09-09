@@ -154,7 +154,7 @@ export default {
                 </div>
             </div>
             <Modal :title="'Vis aktivitet'" :modal-data="modalData">
-                <ActivityInfoModal :activity="modalData.activity"></ActivityInfoModal>
+                <ActivityInfoModal :calendar="calendar" :activity="modalData.activity"></ActivityInfoModal>
             </Modal>
         <div class="clearfix"></div>
 

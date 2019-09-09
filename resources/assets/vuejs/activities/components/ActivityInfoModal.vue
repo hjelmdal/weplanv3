@@ -1,7 +1,10 @@
 <script>
+    import ActivityInfoExtra from "./ActivityInfoExtra";
+    //import AttendeeStats from "./AttendeeStats";
     export default {
         name: "ActivityInfoModal",
-        props:["activity"],
+        components: {ActivityInfoExtra},
+        props:["activity","calendar"],
         data() {
             return {
                 playersCount: {
@@ -22,44 +25,7 @@
             decline() {
                 this.respond = true;
             },
-            getPlayerStatus(player) {
-                let response = null;
-                //console.log(player.pivot);
-                let pivot = player.pivot;
-                if(pivot) {
 
-                    if(pivot.declined_at == null && pivot.confirmed_at == null) {
-                        response = null;
-                    } else if(pivot.declined_at) {
-                        response = 'declined';
-                    } else if(pivot.confirmed_at) {
-                        response = 'confirmed';
-                    }
-                    return response;
-                }
-                return false;
-            },
-            //Status color for showing in table
-            getStatusColor(player) {
-                let response = null;
-                if(player) {
-                    switch(this.getPlayerStatus(player)) {
-                        case 'null':
-                            response = null;
-                            break;
-                        case 'declined':
-                            response = 'bg-danger';
-                            break;
-                        case 'confirmed':
-                            response = 'bg-success';
-                            break;
-
-                    }
-                    //console.log(response);
-                    return response;
-                }
-                return false;
-            },
             // Setting players count for the giving activity - resetting at component update (watch)
             getPlayers() {
                 if(this.activity.players) {
@@ -70,6 +36,22 @@
                         }
                         if(player.gender == "K") {
                             this.playersCount.females++;
+                        }
+                        if(player.pivot) {
+                            if(player.pivot.declined_at) {
+                                if(player.gender == "M") {
+                                    this.playersCount.maleDeclines++;
+                                } else if(player.gender == "K") {
+                                    this.playersCount.femaleDeclines++;
+                                }
+                            }
+                            if(player.pivot.confirmed_at) {
+                                if(player.gender == "M") {
+                                    this.playersCount.maleConfirms++;
+                                } else if(player.gender == "K") {
+                                    this.playersCount.femaleConfirms++;
+                                }
+                            }
                         }
                     })
                 }
@@ -98,20 +80,7 @@
 </script>
 
 <style scoped>
-.circle {
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    border-radius: 500px;
-    margin: 0 .5em;
-    background-color: #ddd;
-    vertical-align: baseline;
-    border: 2px solid transparent;
-}
-.circle-lg {
-    width: 11px;
-    height: 11px;
-}
+
 .flex-container {
     display: flex;
     align-items: center;
@@ -154,6 +123,45 @@
 
 .kt-widget-3.kt-widget-3--primary {
     background: #bbb;
+}
+.avatar-width {
+    width: calc(100% - 50px);
+}
+.kt-font-xl {
+    font-size: 3.5rem !important;
+}
+.count-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1rem;
+}
+@media (max-width: 767px) {
+    .avatar-width {
+        width: calc(100% - 25px);
+    }
+    .kt-media.kt-media--circle span {
+        height: 25px;
+        width: 25px;
+    }
+    .la-2x {
+        font-size: 1rem;
+    }
+
+    .col-6 {
+        padding:5px;
+    }
+    .kt-media.kt-media--md img {
+        width: 100%;
+        max-width: 25px;
+        height: 25px;
+    }
+    .kt-widget-3.kt-widget-3--primary .kt-widget-3__content-desc {
+        font-size: 0.9rem;
+        position:relative;
+        top:-3px;
+    }
+
 }
 </style>
 
@@ -203,7 +211,7 @@
                             </div>
 
                             <div class="kt-widget-3__content-stats">
-                                <div class="truncate-text kt-font-white" style="display: flex; align-items: center"> <div class="kt-media kt-media--md kt-media--circle"><img :src="activity.responsible.avatar != null ? activity.responsible.avatar : '/img/profile.png'" :alt="activity.responsible.name"></div> <div> {{ activity.responsible.name }}<br><span class="kt-widget-3__content-desc">{{ activity.responsible.email }}</span></div>
+                                <div class="truncate-text kt-font-white" style="display: flex; align-items: center"> <div class="kt-media kt-media--md kt-media--circle"><img :src="activity.responsible.avatar != null ? activity.responsible.avatar : '/img/profile.png'" :alt="activity.responsible.name"></div> <div class="truncate-text avatar-width"> {{ activity.responsible.name }}<br><span class="kt-widget-3__content-desc">{{ activity.responsible.email }}</span></div>
                                 </div>
                             </div>
                         </div>
@@ -225,7 +233,7 @@
 
                             <div class="kt-widget-3__content-stats">
                                 <div class="kt-font-white" style="display: flex; align-items: center"> <a href="#" class="kt-media kt-media--circle kt-media--brand">
-                                    <span><i class="la la-map-marker la-2x kt-valign-middle" style="vertical-align: middle;"></i></span></a> <div> Annexhallen<br><span class="kt-widget-3__content-desc  truncate-text" style="width: calc(100% - 50px);">Bethesdavej 29, 8200 Aarhus N</span></div>
+                                    <span><i class="la la-map-marker la-2x kt-valign-middle" style="vertical-align: middle;"></i></span></a> <div class="truncate-text avatar-width"> Annexhallen<br><span class="kt-widget-3__content-desc">Bethesdavej 29, 8200 Aarhus N</span></div>
                                 </div>
                             </div>
                         </div>
@@ -234,78 +242,58 @@
             </div>
             </div>
             </div>
+            <div class="kt-portlet kt-portlet--fit kt-portlet--height-fluid">
+                <div class="kt-portlet__body kt-portlet__body--fluid">
+                    <div class="kt-widget-3 kt-widget-3--primary">
+                        <div class="kt-widget-3__content">
+                            <div class="kt-widget-3__content-info">
+                                <div class="kt-widget-3__content-section">
+                                    <div class="kt-widget-3__content-title">Deltagere</div>
+                                    <div class="kt-widget-3__content-desc">Statistik</div>
+                                </div>
+                            </div>
 
-            <div class="flex-row">
-            <button @click="signup($event,activity)" type="button" class="btn btn-success kt-margin-10"><i class="fa fa-check"></i> Tilmeld</button>
+                            <div class="kt-widget-3__content-stats">
+                                <div class="kt-font-white" style="display: flex; align-items: center; justify-content:space-around">
+                                    <div style="display: flex; align-items: center"> <a href="#" class="kt-media kt-media--circle kt-media--brand">
+                                        <span><i class="la la-male la-2x kt-valign-middle" style="vertical-align: middle;"></i></span></a> <span class="truncate-text avatar-width kt-font-xl kt-font-boldest"> &nbsp;{{ playersCount.males - playersCount.maleDeclines }}</span>
+                                        <div class="count-info">
+                                        <span class="kt-font-sm kt-font-metal kt-font-boldest">{{ playersCount.males }}</span>
+                                        <span class="kt-font-sm kt-font-success kt-font-boldest">{{ playersCount.maleConfirms }}</span>
+                                        <span class="kt-font-sm kt-font-danger kt-font-boldest">{{ playersCount.maleDeclines }}</span>
+
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center">
+                                        <div class="count-info">
+                                            <span class="kt-font-sm kt-font-metal kt-font-boldest">{{ playersCount.females }}</span>
+                                            <span class="kt-font-sm kt-font-success kt-font-boldest">{{ playersCount.femaleConfirms }}</span>
+                                            <span class="kt-font-sm kt-font-danger kt-font-boldest">{{ playersCount.femaleDeclines }}</span>
+                                        </div>
+                                        <span class="truncate-text avatar-width kt-font-xl kt-font-boldest">{{ playersCount.females - playersCount.femaleDeclines }} &nbsp;</span>
+                                        <a href="#" class="kt-media kt-media--circle kt-media--danger">
+                                            <span><i class="la la-female la-2x kt-valign-middle" style="vertical-align: middle;"></i></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-row" v-if="calendar.now < activity.response_timestamp">
+            <button @click="signup($event,activity)" type="button" class="btn kt-margin-10" :disabled="activity.my_activity && activity.my_status == 2" :class="activity.my_activity && activity.my_status == 2 ? 'btn-metal' : 'btn-success'"><i class="fa fa-check"></i> Tilmeld</button>
             <button @click="decline" type="button" class="btn btn-danger kt-margin-10"><i class="fa fa-door-open"></i> Afbud</button>
             </div>
         </div>
     </div>
 
-        <div class="clearfix kt-margin-b-20"></div>
-            <hr />
-            <div v-if="(activity.my_status && activity.my_status != 1) || activity.type.signup == 1 || (!activity.my_status && activity.type.decline == 1)" class="card card-default">
-                <div class="card-body text-center">
-                        <ul class="nav nav-pills nav-tabs-btn" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#kt_tabs_8_1" role="tab">
-                                    <span class="nav-link-icon"><i class="flaticon-information"></i></span>
-                                    <span class="nav-link-title">Program</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tabs_8_2" role="tab">
-                                    <span class="nav-link-icon"><i class="flaticon-users"></i></span>
-                                    <span class="nav-link-title">Deltagere</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#kt_tabs_8_3" role="tab">
-                                    <span class="nav-link-icon"><i class="flaticon2-graph-2"></i></span>
-                                    <span class="nav-link-title">Kampe</span>
-                                </a>
-                            </li>
-                        </ul>
+        <div class="clearfix"></div>
+    <div class="kt-separator kt-separator--border-dashed kt-margin-b-10"></div>
 
-                        <div class="tab-content">
-                            <div class="tab-pane fade active show" id="kt_tabs_8_1" role="tabpanel">
-                                <h4>Opvarmning</h4>
-                                <div>2 x rundt i 3 hjørner</div>
-                                <div>4 x fladt spil på kvart bane</div>
-                                <h4>Runder</h4>
-                                <div>2 x Runder a 25 minutter</div>
-                                <h4>Fysisk</h4>
-                                <div>bip test - 15 minutter</div>
-                            </div>
-                            <div class="tab-pane fade" id="kt_tabs_8_2" role="tabpanel">
-                                <table class="table table-ellipsis table-striped table-v-middle table-left">
-                                    <thead>
-                                        <tr>
-                                            <th width="20">#</th>
-                                            <th>Navn</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-if="activity.players.length > 0" v-for="player in activity.players">
-                                            <td valign="middle"><div data-toggle="tooltip" data-title="User connected" class="circle circle-lg" :class="getStatusColor(player)" data-original-title="" title=""></div></td>
-                                            <td class="text-left"><img class="align-self-center mr-2 rounded-circle img-thumbnail thumb32" :src="player.user && player.user.avatar != null ? player.user.avatar : '/img/profile.png'" :alt="player.name" :title="player.name" /> {{ player.name }}</td>
-                                        </tr>
-                                        <tr v-if="activity.players.length == 0"><td colspan="2" class="text-center">Ingen spillere fundet.</td> </tr>
-                                    </tbody>
-
-                                </table>
-                            </div>
-                            <div class="tab-pane fade" id="kt_tabs_8_3" role="tabpanel">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                            </div>
-                        </div>
-
-
-                </div>
-
-            </div>
-
-            <!--end::Widget 7-->
+    <div v-if="(activity.my_status && activity.my_status != 1) || activity.type.signup == 1 || (!activity.my_status && activity.type.decline == 1)|| calendar.now > activity.response_timestamp ">
+            <activity-info-extra :activity="activity"></activity-info-extra>
+    </div>
 
 </div>
 </template>
