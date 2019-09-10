@@ -1817,6 +1817,25 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         return false;
       }
     },
+    getBgClass: function getBgClass(activity) {
+      if (activity.my_activity == true) {
+        if (activity.my_status) {
+          var pivot = activity.my_status;
+
+          if (pivot == 0) {
+            return "kt-bg-light-danger";
+          } else if (pivot == 2) {
+            return "kt-bg-light-success";
+          } else if (pivot == 1) {
+            return "kt-bg-light-warning";
+          }
+        }
+      } else if (activity.type && activity.type.signup == 1) {
+        return "kt-bg-light-brand";
+      }
+
+      return false;
+    },
     updateModal: function updateModal() {
       var _this = this;
 
@@ -52829,24 +52848,8 @@ var render = function() {
                       "div",
                       {
                         staticClass: "div-row",
-                        class: {
-                          "overlay1-container":
-                            (activity.type && activity.type.signup == 1) ||
-                            activity.my_activity,
-                          active:
-                            _vm.hover == activity.id &&
-                            (activity.my_activity ||
-                              (activity.type && activity.type.signup == 1))
-                        },
-                        attrs: { id: "elem-" + activity.id },
-                        on: {
-                          mouseover: function($event) {
-                            _vm.hover = activity.id
-                          },
-                          mouseleave: function($event) {
-                            _vm.hover = 0
-                          }
-                        }
+                        class: _vm.getBgClass(activity),
+                        attrs: { id: "elem-" + activity.id }
                       },
                       [
                         _c(
@@ -53726,7 +53729,10 @@ var render = function() {
                                         "div",
                                         {
                                           staticClass:
-                                            "kt-media kt-media--md kt-media--circle"
+                                            "kt-media kt-media--md kt-media--circle",
+                                          staticStyle: {
+                                            border: "1px solid #dee2e6"
+                                          }
                                         },
                                         [
                                           _c("img", {

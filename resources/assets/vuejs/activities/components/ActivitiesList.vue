@@ -28,6 +28,23 @@ export default {
                 return false;
             }
         },
+        getBgClass(activity) {
+            if(activity.my_activity == true) {
+                if(activity.my_status) {
+                    let pivot = activity.my_status;
+                    if(pivot == 0) {
+                        return "kt-bg-light-danger";
+                    } else if(pivot == 2) {
+                        return "kt-bg-light-success";
+                    } else if(pivot == 1) {
+                        return "kt-bg-light-warning";
+                    }
+                }
+            } else if(activity.type && activity.type.signup == 1) {
+                return "kt-bg-light-brand";
+            }
+            return false;
+        },
         updateModal() {
             let found = false;
 
@@ -124,7 +141,7 @@ export default {
                 </div>
                 <div class="flex-center" style="width: calc(100% - 86px);">
                     <template v-for="activity in day.events">
-                        <div v-bind:id="'elem-' + activity.id" class="div-row" @mouseover="hover = activity.id" @mouseleave="hover = 0" v-bind:class="{ 'overlay1-container':(activity.type && activity.type.signup == 1 || activity.my_activity), 'active':(hover == activity.id && (activity.my_activity || activity.type && activity.type.signup == 1))}">
+                        <div v-bind:id="'elem-' + activity.id" class="div-row" :class="getBgClass(activity)">
                             <span style="height:12px" data-toggle="kt-tooltip"  class="badge kt-font-white badge-sm info-block" v-bind:class="{'badge-success':(activity.type_id == 1), 'badge-danger':(activity.type_id == 2), 'badge-primary':(activity.type_id == 3), 'badge-warning':(activity.type_id == 4)}">{{ activity.type.name }}</span>
                             <div class="row-column" v-bind:class="{'bef-brand':(activity.type.signup == 1), 'bef-warning':(activity.my_activity && activity.my_status == 1), 'bef-danger':(activity.my_activity && activity.my_status == 0), 'bef-success':(activity.my_activity && activity.my_status == 2), 'bef-metal':(activity.type.decline == 1 && activity.my_activity == false)}">
                                 <span class="div-text" style="font-size: 1.5rem;">{{ activity.title }}</span>
