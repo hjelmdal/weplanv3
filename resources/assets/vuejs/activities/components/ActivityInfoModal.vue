@@ -1,82 +1,82 @@
 <script>
-    import ActivityInfoExtra from "./ActivityInfoExtra";
-    //import AttendeeStats from "./AttendeeStats";
-    export default {
-        name: "ActivityInfoModal",
-        components: {ActivityInfoExtra},
-        props:["activity","calendar"],
-        data() {
-            return {
-                playersCount: {
-                    males: 0,
-                    females: 0,
-                    maleDeclines: 0,
-                    femaleDeclines: 0,
-                    maleConfirms: 0,
-                    femaleConfirms: 0
-                }
+import ActivityInfoExtra from "./ActivityInfoExtra";
+//import AttendeeStats from "./AttendeeStats";
+export default {
+    name: "ActivityInfoModal",
+    components: {ActivityInfoExtra},
+    props:["activity","calendar"],
+    data() {
+        return {
+            playersCount: {
+                males: 0,
+                females: 0,
+                maleDeclines: 0,
+                femaleDeclines: 0,
+                maleConfirms: 0,
+                femaleConfirms: 0
             }
+        }
+    },
+    methods: {
+        signup(event,activity) {
+            this.respond = true;
+            this.$root.$emit("confirmActivity",{'event':event,'activity':activity })
         },
-        methods: {
-            signup(event,activity) {
-                this.respond = true;
-                this.$root.$emit("confirmActivity",{'event':event,'activity':activity })
-            },
-            decline() {
-                this.respond = true;
-            },
+        decline() {
+            this.respond = true;
+        },
 
-            // Setting players count for the giving activity - resetting at component update (watch)
-            getPlayers() {
-                if(this.activity.players) {
-                    console.log("yes");
-                    this.activity.players.forEach(player => {
-                        if(player.gender == "M") {
-                            this.playersCount.males++;
-                        }
-                        if(player.gender == "K") {
-                            this.playersCount.females++;
-                        }
-                        if(player.pivot) {
-                            if(player.pivot.declined_at) {
-                                if(player.gender == "M") {
-                                    this.playersCount.maleDeclines++;
-                                } else if(player.gender == "K") {
-                                    this.playersCount.femaleDeclines++;
-                                }
-                            }
-                            if(player.pivot.confirmed_at) {
-                                if(player.gender == "M") {
-                                    this.playersCount.maleConfirms++;
-                                } else if(player.gender == "K") {
-                                    this.playersCount.femaleConfirms++;
-                                }
+        // Setting players count for the giving activity - resetting at component update (watch)
+        getPlayers() {
+            if(this.activity.players) {
+                console.log("yes");
+                this.activity.players.forEach(player => {
+                    if(player.gender == "M") {
+                        this.playersCount.males++;
+                    }
+                    if(player.gender == "K") {
+                        this.playersCount.females++;
+                    }
+                    if(player.pivot) {
+                        if(player.pivot.declined_at) {
+                            if(player.gender == "M") {
+                                this.playersCount.maleDeclines++;
+                            } else if(player.gender == "K") {
+                                this.playersCount.femaleDeclines++;
                             }
                         }
-                    })
-                }
-            },
-            resetData() {
-                this.playersCount.males = 0;
-                this.playersCount.females = 0;
-                this.playersCount.maleDeclines = 0;
-                this.playersCount.femaleDeclines = 0;
-                this.playersCount.maleConfirms= 0;
-                this.playersCount.femaleConfirms = 0;
+                        if(player.pivot.confirmed_at) {
+                            if(player.gender == "M") {
+                                this.playersCount.maleConfirms++;
+                            } else if(player.gender == "K") {
+                                this.playersCount.femaleConfirms++;
+                            }
+                        }
+                    }
+                })
             }
         },
-        watch: {
-            activity: {
-                immediate: true,
-                handler (val, oldVal) {
-                    this.resetData();
-                    this.getPlayers();
-                }
+        resetData() {
+            this.playersCount.males = 0;
+            this.playersCount.females = 0;
+            this.playersCount.maleDeclines = 0;
+            this.playersCount.femaleDeclines = 0;
+            this.playersCount.maleConfirms= 0;
+            this.playersCount.femaleConfirms = 0;
+        }
+    },
+    watch: {
+        activity: {
+            immediate: true,
+            handler (val, oldVal) {
+                this.resetData();
+                this.getPlayers();
             }
-
         }
 
     }
+
+}
 </script>
 
 <style scoped>
@@ -133,22 +133,29 @@
 .count-info {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: baseline;
     line-height: 1rem;
+    white-space: nowrap;
+}
+.count-info.right {
+    align-items: flex-end;
 }
 @media (max-width: 767px) {
     .avatar-width {
         width: calc(100% - 25px);
     }
-    .kt-media.kt-media--circle span {
+    .kt-media.kt-media--md.kt-media--circle span {
         height: 25px;
         width: 25px;
     }
-    .la-2x {
+    .la-2x.la-shrink {
         font-size: 1rem;
     }
 
     .col-6 {
+        padding:5px;
+    }
+    .col-12 {
         padding:5px;
     }
     .kt-media.kt-media--md img {
@@ -161,17 +168,25 @@
         position:relative;
         top:-3px;
     }
+    .text-right {
+        margin-right: -14px;
+    }
+
+    .text-left {
+        margin-left:-10px;
+    }
 
 }
 </style>
 
 <template>
 <div v-if="activity && activity.id">
-    <div class="kt-portlet kt-bg-brand kt-portlet--skin-solid kt-portlet--height-fluid">
-
-        <div class="kt-portlet__body" style="padding:1rem">
+    <div class="row">
+        <div class="col-12">
+            <div class="kt-portlet kt-bg-brand kt-portlet--skin-solid kt-portlet--height-fluid">
+                <div class="kt-portlet__body" style="padding:1rem 0rem">
             <!--begin::Widget 7-->
-            <div class="flex-container">
+            <div class="flex-container" style="margin-left: -5px;">
                 <div class="flex-left">
                     <div class="div-date">
                         <div class="p8-date">
@@ -183,13 +198,18 @@
                     </div>
                 </div>
                 <div class="flex-column">
-                    <div class="truncate-text text-large">{{ activity.title }}</div>
+                    <div class="truncate-text text-large" id="tooltip1">{{ activity.title }}</div>
+                    <b-tooltip target="tooltip1" triggers="hover">
+                        {{ activity.title }}
+                    </b-tooltip>
                     <div><i class="la la-clock-o" style="font-size: 14px;"></i> {{ activity.start | formatTime("HH:mm") }} - {{ activity.end | formatTime("HH:mm") }}</div>
                     <div><span v-if="activity.type" data-toggle="kt-tooltip"  class="badge kt-font-white info-block" v-bind:class="{'badge-success':(activity.type_id == 1), 'badge-danger':(activity.type_id == 2), 'badge-primary':(activity.type_id == 3), 'badge-warning':(activity.type_id == 4)}">{{ activity.type.name }}</span></div>
                 </div>
 
 
 
+            </div>
+        </div>
             </div>
         </div>
     </div>
@@ -232,8 +252,8 @@
                             </div>
 
                             <div class="kt-widget-3__content-stats">
-                                <div class="kt-font-white" style="display: flex; align-items: center"> <a href="#" class="kt-media kt-media--circle kt-media--brand">
-                                    <span><i class="la la-map-marker la-2x kt-valign-middle" style="vertical-align: middle;"></i></span></a> <div class="truncate-text avatar-width"> Annexhallen<br><span class="kt-widget-3__content-desc">Bethesdavej 29, 8200 Aarhus N</span></div>
+                                <div class="kt-font-white" style="display: flex; align-items: center"> <a href="#" class="kt-media kt-media--md kt-media--circle kt-media--brand">
+                                    <span><i class="la la-map-marker la-2x la-shrink kt-valign-middle" style="vertical-align: middle;"></i></span></a> <div class="truncate-text avatar-width"> Annexhallen<br><span class="kt-widget-3__content-desc">Bethesdavej 29, 8200 Aarhus N</span></div>
                                 </div>
                             </div>
                         </div>
@@ -242,7 +262,9 @@
             </div>
             </div>
             </div>
-            <div class="kt-portlet kt-portlet--fit kt-portlet--height-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="kt-portlet kt-portlet--fit kt-portlet--height-fluid">
                 <div class="kt-portlet__body kt-portlet__body--fluid">
                     <div class="kt-widget-3 kt-widget-3--primary">
                         <div class="kt-widget-3__content">
@@ -254,23 +276,23 @@
                             </div>
 
                             <div class="kt-widget-3__content-stats">
-                                <div class="kt-font-white" style="display: flex; align-items: center; justify-content:space-around">
+                                <div class="kt-font-white" style="display: flex; align-items: center; justify-content:space-between">
                                     <div style="display: flex; align-items: center"> <a href="#" class="kt-media kt-media--circle kt-media--brand">
-                                        <span><i class="la la-male la-2x kt-valign-middle" style="vertical-align: middle;"></i></span></a> <span class="truncate-text avatar-width kt-font-xl kt-font-boldest"> &nbsp;{{ playersCount.males - playersCount.maleDeclines }}</span>
+                                        <span><i class="la la-male la-2x kt-valign-middle" style="vertical-align: middle;"></i></span></a> <span class="kt-font-xl kt-font-boldest text-left"> &nbsp;{{ playersCount.males - playersCount.maleDeclines }}</span>
                                         <div class="count-info">
-                                        <span class="kt-font-sm kt-font-metal kt-font-boldest">{{ playersCount.males }}</span>
-                                        <span class="kt-font-sm kt-font-success kt-font-boldest">{{ playersCount.maleConfirms }}</span>
-                                        <span class="kt-font-sm kt-font-danger kt-font-boldest">{{ playersCount.maleDeclines }}</span>
+                                        <span class="kt-font-sm kt-font-metal kt-font-boldest">{{ playersCount.males }} I alt</span>
+                                        <span class="kt-font-sm kt-font-success kt-font-boldest">{{ playersCount.maleConfirms }} Bekræftet</span>
+                                        <span class="kt-font-sm kt-font-danger kt-font-boldest">{{ playersCount.maleDeclines }} Afbud</span>
 
                                         </div>
                                     </div>
                                     <div style="display: flex; align-items: center">
-                                        <div class="count-info">
-                                            <span class="kt-font-sm kt-font-metal kt-font-boldest">{{ playersCount.females }}</span>
-                                            <span class="kt-font-sm kt-font-success kt-font-boldest">{{ playersCount.femaleConfirms }}</span>
-                                            <span class="kt-font-sm kt-font-danger kt-font-boldest">{{ playersCount.femaleDeclines }}</span>
+                                        <div class="count-info right">
+                                            <span class="kt-font-sm kt-font-metal kt-font-boldest">I alt {{ playersCount.females }}</span>
+                                            <span class="kt-font-sm kt-font-success kt-font-boldest">Bekræftet {{ playersCount.femaleConfirms }}</span>
+                                            <span class="kt-font-sm kt-font-danger kt-font-boldest">Afbud {{ playersCount.femaleDeclines }}</span>
                                         </div>
-                                        <span class="truncate-text avatar-width kt-font-xl kt-font-boldest">{{ playersCount.females - playersCount.femaleDeclines }} &nbsp;</span>
+                                        <span class="kt-font-xl kt-font-boldest text-right">{{ playersCount.females - playersCount.femaleDeclines }} &nbsp;</span>
                                         <a href="#" class="kt-media kt-media--circle kt-media--danger">
                                             <span><i class="la la-female la-2x kt-valign-middle" style="vertical-align: middle;"></i></span></a>
                                     </div>
@@ -280,9 +302,11 @@
                     </div>
                 </div>
             </div>
+                </div>
+            </div>
 
             <div class="flex-row" v-if="calendar.now < activity.response_timestamp">
-            <button @click="signup($event,activity)" type="button" class="btn kt-margin-10" :disabled="activity.my_activity && activity.my_status == 2" :class="activity.my_activity && activity.my_status == 2 ? 'btn-metal' : 'btn-success'"><i class="fa fa-check"></i> Tilmeld</button>
+            <button @click="signup($event,activity)" type="button" class="btn kt-margin-10" :disabled="activity.my_activity && activity.my_status == 2" :class="activity.my_activity && activity.my_status == 2 ? 'btn-metal' : 'btn-success'"><i class="fa fa-check"></i> {{ activity.my_activity && activity.my_status == 2 ? 'Tilmeldt' : 'Tilmeld' }}</button>
             <button @click="decline" type="button" class="btn btn-danger kt-margin-10"><i class="fa fa-door-open"></i> Afbud</button>
             </div>
         </div>
@@ -291,8 +315,10 @@
         <div class="clearfix"></div>
     <div class="kt-separator kt-separator--border-dashed kt-margin-b-10"></div>
 
-    <div v-if="(activity.my_status && activity.my_status != 1) || activity.type.signup == 1 || (!activity.my_status && activity.type.decline == 1)|| calendar.now > activity.response_timestamp ">
+    <div class="row" v-if="(activity.my_status && activity.my_status != 1) || activity.type.signup == 1 || (!activity.my_status && activity.type.decline == 1)|| calendar.now > activity.response_timestamp " cl>
+        <div class="col-12">
             <activity-info-extra :activity="activity"></activity-info-extra>
+        </div>
     </div>
 
 </div>

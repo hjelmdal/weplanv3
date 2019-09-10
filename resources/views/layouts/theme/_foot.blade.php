@@ -40,6 +40,7 @@
 <!-- end::Global Config -->
 <!--begin::Global Theme Bundle(used by all pages) -->
 <script src="{{ config("app.keen_assets") }}/vendors/global/vendors.bundle.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
+
 <script src="{{ config("app.keen_assets") }}/js/demo5/scripts.bundle.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
 <!--end::Global Theme Bundle -->
 <!--begin::Page Vendors(used by this page) -->
@@ -55,6 +56,7 @@
 @yield("scripts")
 <script src="/js/custom.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
 <script src="/js/fullscreen.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
+
 @if ($errors->any())
     <script>
 
