@@ -1817,6 +1817,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ["step"],
   data: function data() {
     return {
+      notification: "",
       states: {
         next: {
           display: "block",
@@ -1848,14 +1849,20 @@ __webpack_require__.r(__webpack_exports__);
         if (this.form.code.length == 6) {
           this.form.post("/api/v1/user/activate").then(function (data) {
             document.querySelector(".activation-wrapper").classList.add("success");
-            setTimeout(function () {
-              this.next();
-            }, 2000);
+
+            _this.notification.send("success", data.message);
+
+            _this.$emit("next");
           }).catch(function (e) {
+            if (e.data) {
+              _this.notification.send("error", e.data.errors.form);
+            }
+
             _this.form.digits = []; //refs.digit1.focus();
 
             document.querySelector(".activation-wrapper").classList.remove("success");
             document.querySelector(".activation-wrapper").classList.add("failure");
+            refs["digit1"][0].focus();
           });
           setTimeout(function () {
             document.querySelector(".activation-wrapper").classList.remove("success");
@@ -1868,35 +1875,59 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.form.post("/api/v1/user/activate/resend").then(function (data) {
-        console.log(data);
+        //console.log(data);
         _this2.notification = new _Notification__WEBPACK_IMPORTED_MODULE_2__["default"]();
 
         _this2.notification.send("info", data.message);
-      }).catch(function (e) {
-        console.log(e);
+      }).catch(function (e) {//console.log(e);
       });
     },
     isNumber: function isNumber(event, refs, index) {
-      event = event ? event : window.event;
-      var charCode = event.which ? event.which : event.keyCode;
+      var val = event.target.value;
+      var trueIndex = index - 1;
+      var next = "digit" + (index + 1); // Index for key used if the input should go back
 
-      if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46) {
-        event.preventDefault();
-        event.target.value = "";
-      } else if (!isNaN(event.target.value)) {
-        this.submitForm(refs);
+      var same = "digit" + index;
+      var prevent = false;
+      var key = event.keyCode; // is input a number?
+
+      if (key >= 48 && key <= 57) {
+        this.submitForm(refs); //If last input, focus to first
 
         if (index == 6) {
-          index = 0;
-        }
+          index = 1;
+          next = "digit" + (index + 1);
+          same = "digit" + index;
+        } //If value is empty - stay focus on same input
 
-        var str = "digit" + (index + 1);
-        setTimeout(function () {
-          refs[str][0].focus();
-        }, 10); //event.target.focus()
+
+        if (!this.form.digits[trueIndex]) {
+          //console.log("undef");
+          setTimeout(function () {
+            //console.log("same " + same);
+            refs[same][0].focus();
+          }, 10); //If input is filled correct, set focus to next input
+        } else {
+          setTimeout(function () {
+            //console.log("next " + next);
+            refs[next][0].focus();
+          }, 10);
+        } //console.log("form: " + this.form.digits[index-1] + " Input: " + val);
+        //event.target.focus()
         //this.getRef(index);
+
       } else {
+        //If not integer, reset value of input and form object
         event.target.value = "";
+        this.form.digits[trueIndex] = null;
+      }
+
+      if (event.shiftKey && event.keyCode == 9) {
+        //console.log("Back tab");//shift was down when tab was pressed
+        prevent = true;
+      } else if (event.keyCode == 9) {
+        //console.log("Tab");
+        prevent = true;
       }
     }
   },
@@ -4113,7 +4144,7 @@ var render = function() {
                             type: "tel",
                             id: "char0",
                             "aria-label":
-                              "Please enter the verification digits Digit 1",
+                              "Please enter the verification digits",
                             placeholder: ""
                           },
                           domProps: { value: _vm.form.digits[index] },
@@ -17863,6 +17894,9 @@ function () {
     key: "send",
     value: function send(type, message) {
       var title = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      this.message = message;
+      this.title = title;
+      this.type = type;
       toastr.options.closeButton = true;
       toastr.options.positionClass = "toast-top-center";
       toastr.options.showMethod = "fadeIn";
@@ -17871,6 +17905,10 @@ function () {
 
       if (type == "info") {
         toastr.info(message, title);
+      } else if (type == "error") {
+        toastr.error(message, title);
+      } else if (type == "success") {
+        toastr.success(message, title);
       } //toastr.{{ Session::get('message-type','info') }}('{{ Session::get('message') . session('status') }}', '{{ Session::get('message-title',Session::get('title')) }}');
 
     }

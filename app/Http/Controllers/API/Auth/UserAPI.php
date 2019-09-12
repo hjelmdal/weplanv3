@@ -138,15 +138,21 @@ class UserAPI extends Controller
     public function activateEmail(Request $request) {
         if($request->code) {
             $this->userFromApiToken($request);
-            $hashed = $this->user->UserActivation->activation_hashed;
-            if (password_verify($request->code, $hashed)) {
-                $this->user->email_verified_at = now();
-                $this->user->save();
-
-                return response()->json(["input" => $request->code, "output" => $hashed], 200);
-
+            if($this->user->UserActivation) {
+                $hashed = $this->user->UserActivation->activation_hashed;
+                if (password_verify($request->code, $hashed)) {
+                    $this->user->email_verified_at = now();
+                    $this->user->UserActivation->delete();
+                    $this->user->save();
+                    $msg = "Tillykke - din email er nu aktiveret!";
+                    return response()->json(["message" => $msg, "output" => $hashed], 200);
+                    
+                }
+                else {
+                    return response()->json(["errors" => ["form" => "Forkert aktiveringskode"]], 400);
+                }
             } else {
-                return response()->json(["errors" => ["Bad input" => "Forkert aktiveringskode"]], 400);
+                return response()->json(["errors" => ["form" => "Din mailadresse er allerede aktiveret"]], 400);
             }
         }
         return response()->json("none", 404);
