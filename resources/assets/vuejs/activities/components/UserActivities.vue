@@ -223,22 +223,21 @@ export default {
 
 
         },
-        declineActivity(event,activity) {
-            let btn = document.getElementById("declineSubmit");
+        declineActivity(event,formData) {
+            let btn = event.target;
             btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+            let activity = formData.activity;
+            let declineData = formData.declineData;
             let postData = [];
             postData = {
-                "activity_id" : this.decline_activity,
-                "start_date" : this.decline_start_date,
-                "end_date" : this.decline_end_date,
-                "players" : this.decline_players,
-            },
-                axios({
-                    method: 'post',
-                    url: this.declineUrl,
-                    headers: {Authorization: document.querySelector('meta[name="api-token"]').getAttribute('content')},
-                    data: postData
-                }).catch(error => {
+                "activity_id" : activity.decline_activity,
+                "start_date" : activity.decline_start_date,
+                "end_date" : activity.decline_end_date,
+                "players" : activity.decline_players,
+            };
+            let form = new Form(postData);
+            form.post(this.declineUrl)
+                .catch(error => {
                     if(error.response) {
                         console.log("Error code: " + error.response.status);
                         if(error.response.status == 401) {
@@ -246,7 +245,8 @@ export default {
                         }
                         btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
                     }
-                }).then((response) => {
+                })
+                .then((response) => {
                     console.log(response.data);
                     btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
                     this.activitiesLoad("reload");
@@ -326,6 +326,10 @@ export default {
 
         this.$root.$on("confirmActivity", data => {
             this.confirmActivity(data.event,data.activity);
+        }),
+
+        this.$root.$on("declineActivity", data => {
+            this.declineActivity(data.event,data.data);
         }),
 
         this.activitiesLoad("reload");

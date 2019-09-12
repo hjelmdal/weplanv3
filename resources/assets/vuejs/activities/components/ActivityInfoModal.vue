@@ -22,14 +22,15 @@ export default {
             this.respond = true;
             this.$root.$emit("confirmActivity",{'event':event,'activity':activity })
         },
-        decline() {
+        decline(event,data) {
             this.respond = true;
+            this.$root.$emit("declineActivity",{'event': event,'formData':data})
         },
 
         // Setting players count for the giving activity - resetting at component update (watch)
         getPlayers() {
             if(this.activity.players) {
-                console.log("yes");
+                //console.log("yes");
                 this.activity.players.forEach(player => {
                     if(player.gender == "M") {
                         this.playersCount.males++;
@@ -55,6 +56,21 @@ export default {
                     }
                 })
             }
+        },
+        canSeeInfo() {
+            if(this.activity.my_activity) {
+                let status = this.activity.my_status;
+                if(status == 1) {
+                    return "respond";
+                } else if(status == 0 || status == 2) {
+                    return "responded";
+                }
+            } else if(this.activity.type && this.activity.type.signup == 1) {
+                return "signup";
+            } else if(calendar.now > this.activity.response_timestamp) {
+                return "overdue";
+            }
+            return false;
         },
         resetData() {
             this.playersCount.males = 0;
@@ -185,31 +201,36 @@ export default {
         <div class="col-12">
             <div class="kt-portlet kt-bg-brand kt-portlet--skin-solid kt-portlet--height-fluid">
                 <div class="kt-portlet__body" style="padding:1rem 0rem">
-            <!--begin::Widget 7-->
-            <div class="flex-container" style="margin-left: -5px;">
-                <div class="flex-left">
-                    <div class="div-date">
-                        <div class="p8-date">
-                            <div class="p8-date-mon">{{activity.start_date | formatDate("MMM")}}</div>
-                            <div class="p8-date-num">{{activity.start_date | formatDate("DD")}}</div>
-                            <div class="p8-date-day">{{activity.start_date | formatDate("ddd")}}</div>
+                    <!--begin::Flex container-->
+                    <div class="flex-container" style="margin-left: -5px;">
+                        <div class="flex-left">
+                            <div class="div-date">
+                                <div class="p8-date">
+                                    <div class="p8-date-mon">{{activity.start_date | formatDate("MMM")}}</div>
+                                    <div class="p8-date-num">{{activity.start_date | formatDate("DD")}}</div>
+                                    <div class="p8-date-day">{{activity.start_date | formatDate("ddd")}}</div>
 
+                                </div>
+                            </div>
                         </div>
+                        <div class="flex-column">
+                            <div class="truncate-text text-large" id="tooltip1">{{ activity.title }}</div>
+                            <b-tooltip target="tooltip1" triggers="hover">
+                                {{ activity.title }}
+                            </b-tooltip>
+                            <div><i class="la la-clock-o" style="font-size: 14px;"></i> {{ activity.start | formatTime("HH:mm") }} - {{ activity.end | formatTime("HH:mm") }}</div>
+                            <div><span v-if="activity.type" id="actType" class="badge kt-font-white info-block" v-bind:class="{'badge-success':(activity.type_id == 1), 'badge-danger':(activity.type_id == 2), 'badge-primary':(activity.type_id == 3), 'badge-warning':(activity.type_id == 4)}">{{ activity.type.name }}</span></div>
+                            <b-tooltip v-if="activity.type" target="actType" triggers="hover">{{ activity.type.name }}</b-tooltip>
+                        </div>
+                        <!--end::Flex container-->
+                    </div>
+                    <div class="kt-separator kt-separator--border-dashed kt-margin-10"></div>
+                    <div class="flex-row" v-if="calendar.now < activity.response_timestamp">
+                        <button @click="signup($event,activity)" type="button" class="btn kt-margin-10" :disabled="activity.my_activity && activity.my_status == 2" :class="activity.my_activity && activity.my_status == 2 ? 'btn-metal' : 'btn-success'"><i class="fa fa-check"></i> {{ activity.my_activity && activity.my_status == 2 ? 'Tilmeldt' : 'Tilmeld' }}</button>
+                        <button @click="decline" type="button" class="btn btn-danger kt-margin-10"><i class="fa fa-door-open"></i> Afbud</button>
                     </div>
                 </div>
-                <div class="flex-column">
-                    <div class="truncate-text text-large" id="tooltip1">{{ activity.title }}</div>
-                    <b-tooltip target="tooltip1" triggers="hover">
-                        {{ activity.title }}
-                    </b-tooltip>
-                    <div><i class="la la-clock-o" style="font-size: 14px;"></i> {{ activity.start | formatTime("HH:mm") }} - {{ activity.end | formatTime("HH:mm") }}</div>
-                    <div><span v-if="activity.type" data-toggle="kt-tooltip"  class="badge kt-font-white info-block" v-bind:class="{'badge-success':(activity.type_id == 1), 'badge-danger':(activity.type_id == 2), 'badge-primary':(activity.type_id == 3), 'badge-warning':(activity.type_id == 4)}">{{ activity.type.name }}</span></div>
-                </div>
 
-
-
-            </div>
-        </div>
             </div>
         </div>
     </div>
@@ -262,7 +283,7 @@ export default {
             </div>
             </div>
             </div>
-            <div class="row">
+            <div v-if="canSeeInfo == 'responded'" class="row">
                 <div class="col-12">
                     <div class="kt-portlet kt-portlet--fit kt-portlet--height-fluid">
                 <div class="kt-portlet__body kt-portlet__body--fluid">
@@ -305,10 +326,7 @@ export default {
                 </div>
             </div>
 
-            <div class="flex-row" v-if="calendar.now < activity.response_timestamp">
-            <button @click="signup($event,activity)" type="button" class="btn kt-margin-10" :disabled="activity.my_activity && activity.my_status == 2" :class="activity.my_activity && activity.my_status == 2 ? 'btn-metal' : 'btn-success'"><i class="fa fa-check"></i> {{ activity.my_activity && activity.my_status == 2 ? 'Tilmeldt' : 'Tilmeld' }}</button>
-            <button @click="decline" type="button" class="btn btn-danger kt-margin-10"><i class="fa fa-door-open"></i> Afbud</button>
-            </div>
+
         </div>
     </div>
 

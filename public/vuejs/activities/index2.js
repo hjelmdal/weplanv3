@@ -2004,15 +2004,19 @@ __webpack_require__.r(__webpack_exports__);
         'activity': activity
       });
     },
-    decline: function decline() {
+    decline: function decline(event, data) {
       this.respond = true;
+      this.$root.$emit("declineActivity", {
+        'event': event,
+        'formData': data
+      });
     },
     // Setting players count for the giving activity - resetting at component update (watch)
     getPlayers: function getPlayers() {
       var _this = this;
 
       if (this.activity.players) {
-        console.log("yes");
+        //console.log("yes");
         this.activity.players.forEach(function (player) {
           if (player.gender == "M") {
             _this.playersCount.males++;
@@ -2041,6 +2045,23 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       }
+    },
+    canSeeInfo: function canSeeInfo() {
+      if (this.activity.my_activity) {
+        var status = this.activity.my_status;
+
+        if (status == 1) {
+          return "respond";
+        } else if (status == 0 || status == 2) {
+          return "responded";
+        }
+      } else if (this.activity.type && this.activity.type.signup == 1) {
+        return "signup";
+      } else if (calendar.now > this.activity.response_timestamp) {
+        return "overdue";
+      }
+
+      return false;
     },
     resetData: function resetData() {
       this.playersCount.males = 0;
@@ -2318,25 +2339,22 @@ __webpack_require__.r(__webpack_exports__);
         btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
       });
     },
-    declineActivity: function declineActivity(event, activity) {
+    declineActivity: function declineActivity(event, formData) {
       var _this3 = this;
 
-      var btn = document.getElementById("declineSubmit");
+      var btn = event.target;
       btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
+      var activity = formData.activity;
+      var declineData = formData.declineData;
       var postData = [];
       postData = {
-        "activity_id": this.decline_activity,
-        "start_date": this.decline_start_date,
-        "end_date": this.decline_end_date,
-        "players": this.decline_players
-      }, axios__WEBPACK_IMPORTED_MODULE_0___default()({
-        method: 'post',
-        url: this.declineUrl,
-        headers: {
-          Authorization: document.querySelector('meta[name="api-token"]').getAttribute('content')
-        },
-        data: postData
-      }).catch(function (error) {
+        "activity_id": activity.decline_activity,
+        "start_date": activity.decline_start_date,
+        "end_date": activity.decline_end_date,
+        "players": activity.decline_players
+      };
+      var form = new _Form__WEBPACK_IMPORTED_MODULE_4__["default"](postData);
+      form.post(this.declineUrl).catch(function (error) {
         if (error.response) {
           console.log("Error code: " + error.response.status);
 
@@ -2434,6 +2452,8 @@ __webpack_require__.r(__webpack_exports__);
       _this4.activitiesLoad(data);
     }), this.$root.$on("confirmActivity", function (data) {
       _this4.confirmActivity(data.event, data.activity);
+    }), this.$root.$on("declineActivity", function (data) {
+      _this4.declineActivity(data.event, data.data);
     }), this.activitiesLoad("reload");
   },
   created: function created() {
@@ -53616,9 +53636,9 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\r\n                        " +
+                                  "\r\n                                " +
                                     _vm._s(_vm.activity.title) +
-                                    "\r\n                    "
+                                    "\r\n                            "
                                 )
                               ]
                             ),
@@ -53663,17 +53683,87 @@ var render = function() {
                                         "badge-warning":
                                           _vm.activity.type_id == 4
                                       },
-                                      attrs: { "data-toggle": "kt-tooltip" }
+                                      attrs: { id: "actType" }
                                     },
                                     [_vm._v(_vm._s(_vm.activity.type.name))]
                                   )
                                 : _vm._e()
-                            ])
+                            ]),
+                            _vm._v(" "),
+                            _vm.activity.type
+                              ? _c(
+                                  "b-tooltip",
+                                  {
+                                    attrs: {
+                                      target: "actType",
+                                      triggers: "hover"
+                                    }
+                                  },
+                                  [_vm._v(_vm._s(_vm.activity.type.name))]
+                                )
+                              : _vm._e()
                           ],
                           1
                         )
                       ]
-                    )
+                    ),
+                    _vm._v(" "),
+                    _c("div", {
+                      staticClass:
+                        "kt-separator kt-separator--border-dashed kt-margin-10"
+                    }),
+                    _vm._v(" "),
+                    _vm.calendar.now < _vm.activity.response_timestamp
+                      ? _c("div", { staticClass: "flex-row" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn kt-margin-10",
+                              class:
+                                _vm.activity.my_activity &&
+                                _vm.activity.my_status == 2
+                                  ? "btn-metal"
+                                  : "btn-success",
+                              attrs: {
+                                type: "button",
+                                disabled:
+                                  _vm.activity.my_activity &&
+                                  _vm.activity.my_status == 2
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.signup($event, _vm.activity)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-check" }),
+                              _vm._v(
+                                " " +
+                                  _vm._s(
+                                    _vm.activity.my_activity &&
+                                      _vm.activity.my_status == 2
+                                      ? "Tilmeldt"
+                                      : "Tilmeld"
+                                  )
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-danger kt-margin-10",
+                              attrs: { type: "button" },
+                              on: { click: _vm.decline }
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-door-open" }),
+                              _vm._v(" Afbud")
+                            ]
+                          )
+                        ])
+                      : _vm._e()
                   ]
                 )
               ]
@@ -53795,274 +53885,242 @@ var render = function() {
               _vm._m(1)
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-12" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "kt-portlet kt-portlet--fit kt-portlet--height-fluid"
-                  },
-                  [
+            _vm.canSeeInfo == "responded"
+              ? _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-12" }, [
                     _c(
                       "div",
                       {
-                        staticClass: "kt-portlet__body kt-portlet__body--fluid"
+                        staticClass:
+                          "kt-portlet kt-portlet--fit kt-portlet--height-fluid"
                       },
                       [
                         _c(
                           "div",
-                          { staticClass: "kt-widget-3 kt-widget-3--primary" },
+                          {
+                            staticClass:
+                              "kt-portlet__body kt-portlet__body--fluid"
+                          },
                           [
-                            _c("div", { staticClass: "kt-widget-3__content" }, [
-                              _vm._m(2),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "kt-widget-3__content-stats" },
-                                [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass: "kt-font-white",
-                                      staticStyle: {
-                                        display: "flex",
-                                        "align-items": "center",
-                                        "justify-content": "space-between"
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticStyle: {
-                                            display: "flex",
-                                            "align-items": "center"
-                                          }
-                                        },
-                                        [
-                                          _vm._m(3),
-                                          _vm._v(" "),
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "kt-font-xl kt-font-boldest text-left"
-                                            },
-                                            [
-                                              _vm._v(
-                                                "  " +
-                                                  _vm._s(
-                                                    _vm.playersCount.males -
-                                                      _vm.playersCount
-                                                        .maleDeclines
-                                                  )
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "div",
-                                            { staticClass: "count-info" },
-                                            [
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "kt-font-sm kt-font-metal kt-font-boldest"
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    _vm._s(
-                                                      _vm.playersCount.males
-                                                    ) + " I alt"
-                                                  )
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "kt-font-sm kt-font-success kt-font-boldest"
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    _vm._s(
-                                                      _vm.playersCount
-                                                        .maleConfirms
-                                                    ) + " Bekræftet"
-                                                  )
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "kt-font-sm kt-font-danger kt-font-boldest"
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    _vm._s(
-                                                      _vm.playersCount
-                                                        .maleDeclines
-                                                    ) + " Afbud"
-                                                  )
-                                                ]
-                                              )
-                                            ]
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticStyle: {
-                                            display: "flex",
-                                            "align-items": "center"
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "div",
-                                            { staticClass: "count-info right" },
-                                            [
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "kt-font-sm kt-font-metal kt-font-boldest"
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "I alt " +
-                                                      _vm._s(
-                                                        _vm.playersCount.females
-                                                      )
-                                                  )
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "kt-font-sm kt-font-success kt-font-boldest"
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "Bekræftet " +
+                            _c(
+                              "div",
+                              {
+                                staticClass: "kt-widget-3 kt-widget-3--primary"
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "kt-widget-3__content" },
+                                  [
+                                    _vm._m(2),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "kt-widget-3__content-stats"
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass: "kt-font-white",
+                                            staticStyle: {
+                                              display: "flex",
+                                              "align-items": "center",
+                                              "justify-content": "space-between"
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              {
+                                                staticStyle: {
+                                                  display: "flex",
+                                                  "align-items": "center"
+                                                }
+                                              },
+                                              [
+                                                _vm._m(3),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass:
+                                                      "kt-font-xl kt-font-boldest text-left"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "  " +
+                                                        _vm._s(
+                                                          _vm.playersCount
+                                                            .males -
+                                                            _vm.playersCount
+                                                              .maleDeclines
+                                                        )
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "div",
+                                                  { staticClass: "count-info" },
+                                                  [
+                                                    _c(
+                                                      "span",
+                                                      {
+                                                        staticClass:
+                                                          "kt-font-sm kt-font-metal kt-font-boldest"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(
+                                                            _vm.playersCount
+                                                              .males
+                                                          ) + " I alt"
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      {
+                                                        staticClass:
+                                                          "kt-font-sm kt-font-success kt-font-boldest"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(
+                                                            _vm.playersCount
+                                                              .maleConfirms
+                                                          ) + " Bekræftet"
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      {
+                                                        staticClass:
+                                                          "kt-font-sm kt-font-danger kt-font-boldest"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(
+                                                            _vm.playersCount
+                                                              .maleDeclines
+                                                          ) + " Afbud"
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticStyle: {
+                                                  display: "flex",
+                                                  "align-items": "center"
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "count-info right"
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "span",
+                                                      {
+                                                        staticClass:
+                                                          "kt-font-sm kt-font-metal kt-font-boldest"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "I alt " +
+                                                            _vm._s(
+                                                              _vm.playersCount
+                                                                .females
+                                                            )
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      {
+                                                        staticClass:
+                                                          "kt-font-sm kt-font-success kt-font-boldest"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "Bekræftet " +
+                                                            _vm._s(
+                                                              _vm.playersCount
+                                                                .femaleConfirms
+                                                            )
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      {
+                                                        staticClass:
+                                                          "kt-font-sm kt-font-danger kt-font-boldest"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "Afbud " +
+                                                            _vm._s(
+                                                              _vm.playersCount
+                                                                .femaleDeclines
+                                                            )
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass:
+                                                      "kt-font-xl kt-font-boldest text-right"
+                                                  },
+                                                  [
+                                                    _vm._v(
                                                       _vm._s(
                                                         _vm.playersCount
-                                                          .femaleConfirms
-                                                      )
-                                                  )
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "kt-font-sm kt-font-danger kt-font-boldest"
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "Afbud " +
-                                                      _vm._s(
-                                                        _vm.playersCount
-                                                          .femaleDeclines
-                                                      )
-                                                  )
-                                                ]
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "kt-font-xl kt-font-boldest text-right"
-                                            },
-                                            [
-                                              _vm._v(
-                                                _vm._s(
-                                                  _vm.playersCount.females -
-                                                    _vm.playersCount
-                                                      .femaleDeclines
-                                                ) + "  "
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _vm._m(4)
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            ])
+                                                          .females -
+                                                          _vm.playersCount
+                                                            .femaleDeclines
+                                                      ) + "  "
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _vm._m(4)
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
                           ]
                         )
                       ]
                     )
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _vm.calendar.now < _vm.activity.response_timestamp
-              ? _c("div", { staticClass: "flex-row" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn kt-margin-10",
-                      class:
-                        _vm.activity.my_activity && _vm.activity.my_status == 2
-                          ? "btn-metal"
-                          : "btn-success",
-                      attrs: {
-                        type: "button",
-                        disabled:
-                          _vm.activity.my_activity &&
-                          _vm.activity.my_status == 2
-                      },
-                      on: {
-                        click: function($event) {
-                          return _vm.signup($event, _vm.activity)
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "fa fa-check" }),
-                      _vm._v(
-                        " " +
-                          _vm._s(
-                            _vm.activity.my_activity &&
-                              _vm.activity.my_status == 2
-                              ? "Tilmeldt"
-                              : "Tilmeld"
-                          )
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger kt-margin-10",
-                      attrs: { type: "button" },
-                      on: { click: _vm.decline }
-                    },
-                    [
-                      _c("i", { staticClass: "fa fa-door-open" }),
-                      _vm._v(" Afbud")
-                    ]
-                  )
+                  ])
                 ])
               : _vm._e()
           ])
