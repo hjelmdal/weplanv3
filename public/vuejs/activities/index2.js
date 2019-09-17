@@ -67507,7 +67507,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     UserActivities: _components_UserActivities__WEBPACK_IMPORTED_MODULE_3__["default"],
     ActivitiesMyFilter: _components_ActivitiesMyFilter__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
-  el: "#kt_body"
+  el: "#vuejs"
 });
 
 /***/ }),

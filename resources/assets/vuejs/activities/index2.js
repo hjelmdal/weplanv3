@@ -36,7 +36,7 @@ new Vue({
     components: {
         UserActivities,ActivitiesMyFilter
     },
-    el: "#kt_body",
+    el: "#vuejs",
 
 
 

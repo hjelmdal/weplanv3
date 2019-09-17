@@ -29,6 +29,7 @@
             if('href' in clickedLink && !clickedLink.getAttribute("data-toggle") && !clickedLink.getAttribute("data-target") &&( clickedLink.href.indexOf('http') || ~clickedLink.href.indexOf(location.host) ) ) {
                 event.preventDefault();
                 location.href = clickedLink.href;
+                console.log(location.href);
             }
         },false);
     }
