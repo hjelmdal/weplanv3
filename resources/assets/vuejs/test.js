@@ -1,2 +1,9 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import './bootstrapper';
+import router from './routes';
+
+
+new Vue({
+    el: '#vuejs',
+
+    router
+});

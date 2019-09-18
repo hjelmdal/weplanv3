@@ -113,7 +113,6 @@ var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "./node_modules/
 var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "./node_modules/axios/lib/helpers/parseHeaders.js");
 var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "./node_modules/axios/lib/helpers/isURLSameOrigin.js");
 var createError = __webpack_require__(/*! ../core/createError */ "./node_modules/axios/lib/core/createError.js");
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ "./node_modules/axios/lib/helpers/btoa.js");
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -125,22 +124,6 @@ module.exports = function xhrAdapter(config) {
     }
 
     var request = new XMLHttpRequest();
-    var loadEvent = 'onreadystatechange';
-    var xDomain = false;
-
-    // For IE 8/9 CORS support
-    // Only supports POST and GET calls and doesn't returns the response headers.
-    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if ( true &&
-        typeof window !== 'undefined' &&
-        window.XDomainRequest && !('withCredentials' in request) &&
-        !isURLSameOrigin(config.url)) {
-      request = new window.XDomainRequest();
-      loadEvent = 'onload';
-      xDomain = true;
-      request.onprogress = function handleProgress() {};
-      request.ontimeout = function handleTimeout() {};
-    }
 
     // HTTP basic authentication
     if (config.auth) {
@@ -155,8 +138,8 @@ module.exports = function xhrAdapter(config) {
     request.timeout = config.timeout;
 
     // Listen for ready state
-    request[loadEvent] = function handleLoad() {
-      if (!request || (request.readyState !== 4 && !xDomain)) {
+    request.onreadystatechange = function handleLoad() {
+      if (!request || request.readyState !== 4) {
         return;
       }
 
@@ -173,9 +156,8 @@ module.exports = function xhrAdapter(config) {
       var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
       var response = {
         data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
-        status: request.status === 1223 ? 204 : request.status,
-        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        status: request.status,
+        statusText: request.statusText,
         headers: responseHeaders,
         config: config,
         request: request
@@ -988,54 +970,6 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/helpers/btoa.js":
-/*!************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/btoa.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
-
-var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-
-function E() {
-  this.message = 'String contains an invalid character';
-}
-E.prototype = new Error;
-E.prototype.code = 5;
-E.prototype.name = 'InvalidCharacterError';
-
-function btoa(input) {
-  var str = String(input);
-  var output = '';
-  for (
-    // initialize result and counter
-    var block, charCode, idx = 0, map = chars;
-    // if the next str index does not exist:
-    //   change the mapping table to "="
-    //   check if d has no fractional digits
-    str.charAt(idx | 0) || (map = '=', idx % 1);
-    // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
-    output += map.charAt(63 & block >> 8 - idx % 1 * 8)
-  ) {
-    charCode = str.charCodeAt(idx += 3 / 4);
-    if (charCode > 0xFF) {
-      throw new E();
-    }
-    block = block << 8 | charCode;
-  }
-  return output;
-}
-
-module.exports = btoa;
-
-
-/***/ }),
-
 /***/ "./node_modules/axios/lib/helpers/buildURL.js":
 /*!****************************************************!*\
   !*** ./node_modules/axios/lib/helpers/buildURL.js ***!
@@ -1813,7 +1747,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.setReadOnly();
 
         _this.$root.$emit('refreshUsers');
-      }).catch(function (e) {// nothing now
+      })["catch"](function (e) {// nothing now
       });
     },
     dissociate: function dissociate(playerId) {
@@ -1832,7 +1766,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.setReadOnly();
 
         _this2.$root.$emit('refreshUsers');
-      }).catch(function (e) {// nothing now
+      })["catch"](function (e) {// nothing now
       });
     },
     createWeplanPlayer: function createWeplanPlayer(playerId) {
@@ -1845,7 +1779,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(data.message);
 
         _this3.getWePlanPlayer();
-      }).catch(function (e) {//nothing
+      })["catch"](function (e) {//nothing
       });
     },
     getWePlanPlayer: function getWePlanPlayer() {
@@ -1853,7 +1787,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.form.get("/api/v1/players/find/" + this.input).then(function (data) {
         _this4.weplanPlayers = data;
-      }).catch(function (errors) {
+      })["catch"](function (errors) {
         _this4.weplanPlayers = null; //console.log(errors);
       });
     },
@@ -1862,7 +1796,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.form.get("/api/v1/BP/players/find/" + this.input).then(function (data) {
         _this5.bpPlayers = data; //console.log(data);
-      }).catch(function (errors) {
+      })["catch"](function (errors) {
         _this5.bpPlayers = null; //console.log(errors);
       });
     },
@@ -1954,21 +1888,21 @@ __webpack_require__.r(__webpack_exports__);
     getInitials: function getInitials(name) {
       if (name) {
         var nameSplit = name.split(" ");
-        var final = "";
+        var _final = "";
         nameSplit.forEach(function (i, idx, array) {
           i = i.substr(0, 1);
 
           if (idx == 0) {
-            final = final + i;
+            _final = _final + i;
           }
 
           if (idx === array.length - 1 && i.substr(0, 1) != '(') {
-            final = final + i;
+            _final = _final + i;
           } else if (idx === array.length - 1 && array.length > 2) {
-            final = final + array[idx - 1].substr(0, 1);
+            _final = _final + array[idx - 1].substr(0, 1);
           }
         });
-        return final;
+        return _final;
       }
     },
     associate: function associate(playerId) {
@@ -2259,19 +2193,9 @@ function toComment(sourceMap) {
  * @license  MIT
  */
 
-// The _isBuffer check is for Safari 5-7 support, because it's missing
-// Object.prototype.constructor. Remove this eventually
-module.exports = function (obj) {
-  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
-}
-
-function isBuffer (obj) {
-  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
-// For Node v0.10 support. Remove this eventually.
-function isSlowBuffer (obj) {
-  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
+module.exports = function isBuffer (obj) {
+  return obj != null && obj.constructor != null &&
+    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
 }
 
 
@@ -21086,9 +21010,9 @@ var render = function() {
                       { staticClass: "kt-widget__title", attrs: { href: "#" } },
                       [
                         _vm._v(
-                          "\r\n                            " +
+                          "\n                            " +
                             _vm._s(_vm.user.name) +
-                            "\r\n                        "
+                            "\n                        "
                         )
                       ]
                     ),
@@ -21144,7 +21068,7 @@ var render = function() {
                                     _vm.user.we_player.bp_player.bp_club
                                       .team_name
                                   ) +
-                                  "\r\n                            "
+                                  "\n                            "
                               )
                             ]
                           )
@@ -35142,7 +35066,7 @@ function () {
           _this.onSuccess(response.data);
 
           resolve(response.data);
-        }).catch(function (error) {
+        })["catch"](function (error) {
           if (error.response) {
             _this.onFail(error.response.data.errors); //console.log(error.response.data);
 
@@ -35548,7 +35472,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/hjelmdal/Pixel8/Websites/WePlan/WePlanV4/resources/assets/vuejs/users/admin.js */"./resources/assets/vuejs/users/admin.js");
+module.exports = __webpack_require__(/*! /Users/stephanhjelmdalnielsen/.web/WePlan V3/http/resources/assets/vuejs/users/admin.js */"./resources/assets/vuejs/users/admin.js");
 
 
 /***/ })

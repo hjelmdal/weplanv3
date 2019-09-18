@@ -1,4 +1,5 @@
 <?php
+$dir = "/weplan";
 ?>
 <!-- begin::Offcanvas Toolbar Search -->
 <div id="kt_offcanvas_toolbar_search" class="kt-offcanvas-panel" style="opacity: 1;">
@@ -26,7 +27,7 @@
                     <div class="kt-quick-search__section">
                         <div class="kt-quick-search__item">
                             <div class="kt-quick-search__item-img kt-quick-search__item-img--file">
-                                <img src="/metronic/themes/metronic/theme/default/demo1/dist/assets/media/files/doc.svg" alt="">
+                                <img src="{{ $dir }}/media/files/doc.svg" alt="">
                             </div>
                             <div class="kt-quick-search__item-wrapper">
                                 <a href="#" class="kt-quick-search__item-title">
@@ -40,7 +41,7 @@
 
                         <div class="kt-quick-search__item">
                             <div class="kt-quick-search__item-img kt-quick-search__item-img--file">
-                                <img src="/metronic/themes/metronic/theme/default/demo1/dist/assets/media/files/pdf.svg" alt="">
+                                <img src="{{ $dir }}/media/files/pdf.svg" alt="">
                             </div>
                             <div class="kt-quick-search__item-wrapper">
                                 <a href="#" class="kt-quick-search__item-title">
@@ -54,7 +55,7 @@
 
                         <div class="kt-quick-search__item">
                             <div class="kt-quick-search__item-img kt-quick-search__item-img--file">
-                                <img src="/metronic/themes/metronic/theme/default/demo1/dist/assets/media/files/zip.svg" alt="">
+                                <img src="{{ $dir }}/media/files/zip.svg" alt="">
                             </div>
                             <div class="kt-quick-search__item-wrapper">
                                 <a href="#" class="kt-quick-search__item-title">
@@ -68,7 +69,7 @@
 
                         <div class="kt-quick-search__item">
                             <div class="kt-quick-search__item-img kt-quick-search__item-img--file">
-                                <img src="/metronic/themes/metronic/theme/default/demo1/dist/assets/media/files/xml.svg" alt="">
+                                <img src="{{ $dir }}/media/files/xml.svg" alt="">
                             </div>
                             <div class="kt-quick-search__item-wrapper">
                                 <a href="#" class="kt-quick-search__item-title">
@@ -87,7 +88,7 @@
                     <div class="kt-quick-search__section">
                         <div class="kt-quick-search__item">
                             <div class="kt-quick-search__item-img">
-                                <img src="/metronic/themes/metronic/theme/default/demo1/dist/assets/media/users/300_11.jpg" alt="">
+                                <img src="{{ $dir }}/media/users/300_11.jpg" alt="">
                             </div>
                             <div class="kt-quick-search__item-wrapper">
                                 <a href="#" class="kt-quick-search__item-title">
@@ -101,7 +102,7 @@
 
                         <div class="kt-quick-search__item">
                             <div class="kt-quick-search__item-img">
-                                <img src="/metronic/themes/metronic/theme/default/demo1/dist/assets/media/users/300_16.jpg" alt="">
+                                <img src="{{ $dir }}/media/users/300_16.jpg" alt="">
                             </div>
                             <div class="kt-quick-search__item-wrapper">
                                 <a href="#" class="kt-quick-search__item-title">
@@ -115,7 +116,7 @@
 
                         <div class="kt-quick-search__item">
                             <div class="kt-quick-search__item-img">
-                                <img src="/metronic/themes/metronic/theme/default/demo1/dist/assets/media/users/300_22.jpg" alt="">
+                                <img src="{{ $dir }}/media/users/300_22.jpg" alt="">
                             </div>
                             <div class="kt-quick-search__item-wrapper">
                                 <a href="#" class="kt-quick-search__item-title">
@@ -129,7 +130,7 @@
 
                         <div class="kt-quick-search__item">
                             <div class="kt-quick-search__item-img">
-                                <img src="/metronic/themes/metronic/theme/default/demo1/dist/assets/media/users/300_5.jpg" alt="">
+                                <img src="{{ $dir }}/media/users/300_5.jpg" alt="">
                             </div>
                             <div class="kt-quick-search__item-wrapper">
                                 <a href="#" class="kt-quick-search__item-title">
