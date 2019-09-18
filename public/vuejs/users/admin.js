@@ -21732,333 +21732,356 @@ var render = function() {
           _vm.view == "table"
             ? _c("div", { staticClass: "kt-portlet" }, [
                 _c("div", { staticClass: "kt-portlet__body" }, [
-                  _c("table", { staticClass: "table table-striped" }, [
-                    _vm._m(5),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      [
-                        _vm._l(_vm.filteredUsers, function(user, index) {
-                          return _c("tr", [
-                            _c(
-                              "td",
-                              { staticStyle: { padding: "0.75rem 5px" } },
-                              [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "kt-media kt-media--sm kt-media--circle"
-                                  },
-                                  [
-                                    _c("img", {
-                                      directives: [
-                                        {
-                                          name: "show",
-                                          rawName: "v-show",
-                                          value: user.avatar,
-                                          expression: "user.avatar"
-                                        }
-                                      ],
-                                      attrs: {
-                                        src: user.avatar,
-                                        alt: user.name
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    !user.avatar
-                                      ? _c("img", {
-                                          attrs: {
-                                            src: "/img/profile.png",
-                                            alt: user.name
-                                          }
-                                        })
-                                      : _vm._e()
-                                  ]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              {
-                                staticClass: "td-ellipsis",
-                                staticStyle: { "max-width": "30%" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                            " +
-                                    _vm._s(user.name)
-                                ),
-                                _c("br"),
-                                _vm._v(" "),
-                                _c(
-                                  "span",
-                                  { staticClass: "kt-widget__desc" },
-                                  [
-                                    _c("i", {
-                                      staticClass:
-                                        "flaticon2-send  kt-font-success"
-                                    }),
-                                    _vm._v(" "),
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          target: "_blank",
-                                          href: "mailto:" + user.email
-                                        }
-                                      },
-                                      [
-                                        _vm._v(_vm._s(user.email) + " "),
-                                        user.email_verified_at != null
-                                          ? _c("i", {
-                                              staticClass:
-                                                "flaticon2-correct kt-font-success"
-                                            })
-                                          : _vm._e()
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("br"),
-                                    _vm._v(" "),
-                                    _vm._l(user.roles, function(role) {
-                                      return _c(
-                                        "span",
-                                        {
-                                          staticClass:
-                                            "badge badge-secondary badge-sm"
-                                        },
-                                        [_vm._v(_vm._s(role.name))]
-                                      )
-                                    })
-                                  ],
-                                  2
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "align-middle" }, [
+                  _c(
+                    "table",
+                    { staticClass: "table table-striped table-responsive-sm" },
+                    [
+                      _vm._m(5),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        [
+                          _vm._l(_vm.filteredUsers, function(user, index) {
+                            return _c("tr", [
                               _c(
-                                "div",
-                                {
-                                  staticClass: "btn-group",
-                                  attrs: { role: "group" }
-                                },
+                                "td",
+                                { staticStyle: { padding: "0.75rem 5px" } },
                                 [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-sm dropdown-toggle",
-                                      class: {
-                                        "btn-outline-brand": user.complete,
-                                        "btn-warning": !user.complete
-                                      },
-                                      attrs: {
-                                        id: "btnGroupDrop1",
-                                        type: "button",
-                                        "data-toggle": "dropdown",
-                                        "aria-haspopup": "true",
-                                        "aria-expanded": "false"
-                                      }
-                                    },
-                                    [
-                                      user.complete
-                                        ? _c("i", {
-                                            staticClass: "fa fa-check"
-                                          })
-                                        : _c("i", {
-                                            staticClass:
-                                              "fa fa-clock fa-inverse"
-                                          })
-                                    ]
-                                  ),
-                                  _vm._v(" "),
                                   _c(
                                     "div",
                                     {
-                                      staticClass: "dropdown-menu",
-                                      staticStyle: {
-                                        position: "absolute",
-                                        "will-change": "transform",
-                                        top: "0px",
-                                        left: "0px",
-                                        transform: "translate3d(0px, 38px, 0px)"
-                                      },
-                                      attrs: {
-                                        "aria-labelledby": "btnGroupDrop1",
-                                        "x-placement": "bottom-start"
-                                      }
+                                      staticClass:
+                                        "kt-media kt-media--md kt-media--circle"
                                     },
                                     [
-                                      user.email_verified_at
-                                        ? _c(
-                                            "a",
-                                            {
-                                              staticClass:
-                                                "text-success dropdown-item text-capitalize",
-                                              attrs: { href: "#" }
-                                            },
-                                            [
-                                              _c("i", {
-                                                staticClass:
-                                                  "fa fa-check text-success"
-                                              }),
-                                              _vm._v(" Email")
-                                            ]
-                                          )
-                                        : _c(
-                                            "a",
-                                            {
-                                              staticClass:
-                                                "dropdown-item text-capitalize",
-                                              attrs: { href: "#" }
-                                            },
-                                            [
-                                              _c("i", {
-                                                staticClass: "fa fa-clock"
-                                              }),
-                                              _vm._v(" Email")
-                                            ]
-                                          ),
+                                      _c("img", {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: user.avatar,
+                                            expression: "user.avatar"
+                                          }
+                                        ],
+                                        staticStyle: {
+                                          width: "45px",
+                                          border: "1px solid #ddd",
+                                          padding: "1px"
+                                        },
+                                        attrs: {
+                                          src: user.avatar,
+                                          alt: user.name
+                                        }
+                                      }),
                                       _vm._v(" "),
-                                      _vm._l(user.user_status, function(
-                                        status,
-                                        key
-                                      ) {
+                                      !user.avatar
+                                        ? _c("img", {
+                                            staticStyle: {
+                                              width: "45px",
+                                              border: "1px solid #ddd",
+                                              padding: "1px"
+                                            },
+                                            attrs: {
+                                              src: "/img/profile.png",
+                                              alt: user.name
+                                            }
+                                          })
+                                        : _vm._e()
+                                    ]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                {
+                                  staticClass: "td-ellipsis",
+                                  staticStyle: { "max-width": "30%" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(user.name)
+                                  ),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "kt-widget__desc" },
+                                    [
+                                      _c("i", {
+                                        staticClass:
+                                          "flaticon2-send  kt-font-success"
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            target: "_blank",
+                                            href: "mailto:" + user.email
+                                          }
+                                        },
+                                        [
+                                          _vm._v(_vm._s(user.email) + " "),
+                                          user.email_verified_at != null
+                                            ? _c("i", {
+                                                staticClass:
+                                                  "flaticon2-correct kt-font-success"
+                                              })
+                                            : _vm._e()
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("br"),
+                                      _vm._v(" "),
+                                      _vm._l(user.roles, function(role) {
                                         return _c(
-                                          "a",
+                                          "span",
                                           {
                                             staticClass:
-                                              "dropdown-item text-capitalize",
-                                            class: {
-                                              "text-success":
-                                                status.confirmed_at,
-                                              "text-muted": !status.confirmed_at
-                                            },
-                                            attrs: { href: "#" }
+                                              "badge badge-secondary badge-sm"
                                           },
-                                          [
-                                            status.confirmed_at
-                                              ? _c("i", {
-                                                  staticClass: "fa fa-check",
-                                                  class: {
-                                                    "text-success":
-                                                      status.confirmed_at,
-                                                    "text-muted": !status.confirmed_at
-                                                  }
-                                                })
-                                              : _c("i", {
-                                                  staticClass: "fa fa-clock"
-                                                }),
-                                            _vm._v(" " + _vm._s(status.type))
-                                          ]
+                                          [_vm._v(_vm._s(role.name))]
                                         )
                                       })
                                     ],
                                     2
                                   )
                                 ]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              {
-                                staticClass:
-                                  "align-middle d-none d-sm-table-cell"
-                              },
-                              [
-                                user.we_player
-                                  ? _c("span", [_vm._m(6, true)])
-                                  : _vm._e()
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "align-middle" }, [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "btn-group",
-                                  attrs: {
-                                    role: "group",
-                                    "aria-label": "First group"
-                                  }
-                                },
-                                [
-                                  _vm._m(7, true),
-                                  _vm._v(" "),
-                                  user.player_id
-                                    ? _c(
-                                        "button",
-                                        {
-                                          staticClass: "btn btn-sm btn-metal",
-                                          attrs: {
-                                            "data-toggle": "modal",
-                                            "data-target": "#modal3",
-                                            type: "button"
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.associateModal(user, 0)
-                                            }
-                                          }
+                              ),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "align-middle" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "btn-group",
+                                    attrs: { role: "group" }
+                                  },
+                                  [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "btn btn-sm dropdown-toggle",
+                                        class: {
+                                          "btn-outline-brand": user.complete,
+                                          "btn-warning": !user.complete
                                         },
-                                        [
-                                          _c("i", {
-                                            staticClass: "la la-chain-broken"
-                                          })
-                                        ]
-                                      )
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  !user.player_id
-                                    ? _c(
-                                        "button",
-                                        {
-                                          staticClass: "btn btn-sm btn-success",
-                                          attrs: {
-                                            "data-toggle": "modal",
-                                            "data-target": "#modal3",
-                                            type: "button"
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.associateModal(user, 0)
-                                            }
-                                          }
+                                        attrs: {
+                                          id: "btnGroupDrop1",
+                                          type: "button",
+                                          "data-toggle": "dropdown",
+                                          "aria-haspopup": "true",
+                                          "aria-expanded": "false"
+                                        }
+                                      },
+                                      [
+                                        user.complete
+                                          ? _c("i", {
+                                              staticClass: "fa fa-check"
+                                            })
+                                          : _c("i", {
+                                              staticClass:
+                                                "fa fa-clock fa-inverse"
+                                            })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "dropdown-menu",
+                                        staticStyle: {
+                                          position: "absolute",
+                                          "will-change": "transform",
+                                          top: "0px",
+                                          left: "0px",
+                                          transform:
+                                            "translate3d(0px, 38px, 0px)"
                                         },
-                                        [
-                                          _c("i", {
-                                            staticClass: "la la-chain"
-                                          })
-                                        ]
-                                      )
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  _vm._m(8, true)
-                                ]
-                              )
-                            ])
-                          ])
-                        }),
-                        _vm._v(" "),
-                        _vm.filteredUsers.length < 1
-                          ? _c("tr", [
+                                        attrs: {
+                                          "aria-labelledby": "btnGroupDrop1",
+                                          "x-placement": "bottom-start"
+                                        }
+                                      },
+                                      [
+                                        user.email_verified_at
+                                          ? _c(
+                                              "a",
+                                              {
+                                                staticClass:
+                                                  "text-success dropdown-item text-capitalize",
+                                                attrs: { href: "#" }
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass:
+                                                    "fa fa-check text-success"
+                                                }),
+                                                _vm._v(" Email")
+                                              ]
+                                            )
+                                          : _c(
+                                              "a",
+                                              {
+                                                staticClass:
+                                                  "dropdown-item text-capitalize",
+                                                attrs: { href: "#" }
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass: "fa fa-clock"
+                                                }),
+                                                _vm._v(" Email")
+                                              ]
+                                            ),
+                                        _vm._v(" "),
+                                        _vm._l(user.user_status, function(
+                                          status,
+                                          key
+                                        ) {
+                                          return _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "dropdown-item text-capitalize",
+                                              class: {
+                                                "text-success":
+                                                  status.confirmed_at,
+                                                "text-muted": !status.confirmed_at
+                                              },
+                                              attrs: { href: "#" }
+                                            },
+                                            [
+                                              status.confirmed_at
+                                                ? _c("i", {
+                                                    staticClass: "fa fa-check",
+                                                    class: {
+                                                      "text-success":
+                                                        status.confirmed_at,
+                                                      "text-muted": !status.confirmed_at
+                                                    }
+                                                  })
+                                                : _c("i", {
+                                                    staticClass: "fa fa-clock"
+                                                  }),
+                                              _vm._v(" " + _vm._s(status.type))
+                                            ]
+                                          )
+                                        })
+                                      ],
+                                      2
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
                               _c(
                                 "td",
                                 {
-                                  staticClass: "text-center",
-                                  attrs: { colspan: "5" }
+                                  staticClass:
+                                    "align-middle d-none d-sm-table-cell"
                                 },
-                                [_vm._v("Ingen brugere blev fundet.")]
-                              )
+                                [
+                                  user.we_player
+                                    ? _c("span", [_vm._m(6, true)])
+                                    : _vm._e()
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "align-middle" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "btn-group",
+                                    attrs: {
+                                      role: "group",
+                                      "aria-label": "First group"
+                                    }
+                                  },
+                                  [
+                                    _vm._m(7, true),
+                                    _vm._v(" "),
+                                    user.player_id
+                                      ? _c(
+                                          "button",
+                                          {
+                                            staticClass: "btn btn-sm btn-metal",
+                                            attrs: {
+                                              "data-toggle": "modal",
+                                              "data-target": "#modal3",
+                                              type: "button"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.associateModal(
+                                                  user,
+                                                  0
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "la la-chain-broken"
+                                            })
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    !user.player_id
+                                      ? _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-sm btn-success",
+                                            attrs: {
+                                              "data-toggle": "modal",
+                                              "data-target": "#modal3",
+                                              type: "button"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.associateModal(
+                                                  user,
+                                                  0
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "la la-chain"
+                                            })
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _vm._m(8, true)
+                                  ]
+                                )
+                              ])
                             ])
-                          : _vm._e()
-                      ],
-                      2
-                    )
-                  ])
+                          }),
+                          _vm._v(" "),
+                          _vm.filteredUsers.length < 1
+                            ? _c("tr", [
+                                _c(
+                                  "td",
+                                  {
+                                    staticClass: "text-center",
+                                    attrs: { colspan: "5" }
+                                  },
+                                  [_vm._v("Ingen brugere blev fundet.")]
+                                )
+                              ])
+                            : _vm._e()
+                        ],
+                        2
+                      )
+                    ]
+                  )
                 ])
               ])
             : _vm._e(),
@@ -22576,7 +22599,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
-      _c("th", { attrs: { width: "40" } }),
+      _c("th"),
       _vm._v(" "),
       _c("th", [_vm._v("Bruger")]),
       _vm._v(" "),

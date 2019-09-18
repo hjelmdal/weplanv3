@@ -7,7 +7,10 @@
         </router-link>
 
         <router-link tag="li" to="/activities">
-            <a>About</a>
+            <a>Activities</a>
+        </router-link>
+        <router-link tag="li" to="/users">
+            <a>Users</a>
         </router-link>
 
     </ul>

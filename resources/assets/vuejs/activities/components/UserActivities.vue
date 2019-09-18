@@ -186,7 +186,7 @@ export default {
                     this.calendar.next = response.data.next_week_url;
                     this.calendar.prev = response.data.prev_week_url;
                     if(this.reload === 0) {
-                        //history.pushState(null, "", "/activities/date/" + this.calendar.start_date);
+                        history.pushState(null, "", "/activities/date/" + this.calendar.start_date);
                     }
                     this.setLoadingSpinner(false,btn);
                 })

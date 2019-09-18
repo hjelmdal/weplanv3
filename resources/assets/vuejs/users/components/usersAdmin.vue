@@ -192,9 +192,9 @@
             </div>
             <div class="clearfix"></div>
             <div v-if="view == 'table'" class="kt-portlet"><div class="kt-portlet__body">
-            <table class="table table-striped">
+            <table class="table table-striped table-responsive-sm">
                 <thead>
-                <th width="40"></th>
+                <th></th>
                 <th>Bruger</th>
                 <th width="75">Status</th>
                 <th width="60" class="d-none d-sm-table-cell">Spiller</th>
@@ -202,11 +202,11 @@
                 </thead>
                 <tbody>
                 <tr v-for="(user,index) in filteredUsers">
-                    <td style="padding:0.75rem 5px ;">
+                    <td style="padding:0.75rem 5px;">
 
-                            <div class="kt-media kt-media--sm kt-media--circle">
-                                <img v-show="user.avatar" :src="user.avatar" :alt="user.name">
-                                <img v-if="!user.avatar" src="/img/profile.png" :alt="user.name">
+                            <div class="kt-media kt-media--md kt-media--circle">
+                                <img v-show="user.avatar" :src="user.avatar" :alt="user.name"  style="width: 45px; border: 1px solid #ddd; padding:1px">
+                                <img v-if="!user.avatar" src="/img/profile.png" :alt="user.name"  style="width: 45px; border: 1px solid #ddd; padding:1px">
                             </div>
                     </td>
                     <td class="td-ellipsis" style="max-width: 30%">
