@@ -241,7 +241,7 @@ export default {
             <div class="row">
             <div class="col-6">
             <div class="kt-portlet kt-portlet--fit kt-portlet--height-fluid">
-                <div class="kt-portlet__body kt-portlet__body--fluid">
+                <div class="kt-portlet__body">
                     <div class="kt-widget-3 kt-widget-3--primary">
                         <div class="kt-widget-3__content">
                             <div class="kt-widget-3__content-info">
@@ -262,7 +262,7 @@ export default {
             </div>
             <div class="col-6">
             <div class="kt-portlet kt-portlet--fit kt-portlet--height-fluid">
-                <div class="kt-portlet__body kt-portlet__body--fluid">
+                <div class="kt-portlet__body">
                     <div class="kt-widget-3 kt-widget-3--primary">
                         <div class="kt-widget-3__content">
                             <div class="kt-widget-3__content-info">

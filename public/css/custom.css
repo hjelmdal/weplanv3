@@ -398,7 +398,6 @@ body::before {
   background-clip: border-box;
   border: 1px solid #ebedf2;
   border-radius: 0.25rem;
-  display: flex;
   position: relative;
   overflow: hidden;
 }
@@ -605,6 +604,12 @@ td.td-ellipsis {
 .table-left th,
 .table-left td {
   text-align: left;
+}
+
+@media (max-width: 1024px) {
+  .kt-header-mobile {
+    background-color: #2f2e38;
+  }
 }
 
 @media (max-width: 575px) {

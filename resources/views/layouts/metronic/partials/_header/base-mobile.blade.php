@@ -3,7 +3,7 @@
 <div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
 	<div class="kt-header-mobile__logo">
 		<a href="index.html">
-			<img alt="Logo" src="/weplan/media/logos/logo-light.png" />
+			<img alt="Logo" src="/img/WePlan-logo.jpg" height="30"/>
 		</a>
 	</div>
 	<div class="kt-header-mobile__toolbar">

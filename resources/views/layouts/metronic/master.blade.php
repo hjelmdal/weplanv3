@@ -90,7 +90,7 @@ $user = Auth::user();
 
 <!-- begin::Body -->
 <body class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--fixed kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
-<div id="vuejs" style="display:flex;height: 100%;">
+<div id="vuejs" style="height: 100%;">
 @include("layouts.metronic._layout")
 </div>
 <!-- begin::Global Config(global config for global JS sciprts) -->

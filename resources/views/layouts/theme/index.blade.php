@@ -16,7 +16,7 @@ $firstname = $names[0];
     <!-- end::Head -->
     <!-- begin::Body -->
     <body class="kt-header--fixed kt-header-mobile--fixed kt-aside--enabled kt-aside--fixed kt-aside--offcanvas-default kt-page--loading">
-
+        <div id="vuejs" style="height:100%">
 
         @include("layouts.theme.partials._layout-page-loader")
 
@@ -24,7 +24,7 @@ $firstname = $names[0];
         @yield("modal")
 
         @include("layouts.theme._foot")
-
+        </div>
     </body>
     <!-- end::Body -->
 </html>

@@ -53709,97 +53709,90 @@ var render = function() {
                       "kt-portlet kt-portlet--fit kt-portlet--height-fluid"
                   },
                   [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "kt-portlet__body kt-portlet__body--fluid"
-                      },
-                      [
-                        _c(
-                          "div",
-                          { staticClass: "kt-widget-3 kt-widget-3--primary" },
-                          [
-                            _c("div", { staticClass: "kt-widget-3__content" }, [
-                              _vm._m(0),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "kt-widget-3__content-stats" },
-                                [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "truncate-text kt-font-white",
-                                      staticStyle: {
-                                        display: "flex",
-                                        "align-items": "center"
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "kt-media kt-media--md kt-media--circle",
-                                          staticStyle: {
-                                            border: "1px solid #dee2e6"
+                    _c("div", { staticClass: "kt-portlet__body" }, [
+                      _c(
+                        "div",
+                        { staticClass: "kt-widget-3 kt-widget-3--primary" },
+                        [
+                          _c("div", { staticClass: "kt-widget-3__content" }, [
+                            _vm._m(0),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "kt-widget-3__content-stats" },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "truncate-text kt-font-white",
+                                    staticStyle: {
+                                      display: "flex",
+                                      "align-items": "center"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "kt-media kt-media--md kt-media--circle",
+                                        staticStyle: {
+                                          border: "1px solid #dee2e6"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src:
+                                              _vm.activity.responsible.avatar !=
+                                              null
+                                                ? _vm.activity.responsible
+                                                    .avatar
+                                                : "/img/profile.png",
+                                            alt: _vm.activity.responsible.name
                                           }
-                                        },
-                                        [
-                                          _c("img", {
-                                            attrs: {
-                                              src:
-                                                _vm.activity.responsible
-                                                  .avatar != null
-                                                  ? _vm.activity.responsible
-                                                      .avatar
-                                                  : "/img/profile.png",
-                                              alt: _vm.activity.responsible.name
-                                            }
-                                          })
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "truncate-text avatar-width"
-                                        },
-                                        [
-                                          _vm._v(
-                                            " " +
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "truncate-text avatar-width"
+                                      },
+                                      [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(
+                                              _vm.activity.responsible.name
+                                            )
+                                        ),
+                                        _c("br"),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "kt-widget-3__content-desc"
+                                          },
+                                          [
+                                            _vm._v(
                                               _vm._s(
-                                                _vm.activity.responsible.name
+                                                _vm.activity.responsible.email
                                               )
-                                          ),
-                                          _c("br"),
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "kt-widget-3__content-desc"
-                                            },
-                                            [
-                                              _vm._v(
-                                                _vm._s(
-                                                  _vm.activity.responsible.email
-                                                )
-                                              )
-                                            ]
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            ])
-                          ]
-                        )
-                      ]
-                    )
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ])
+                        ]
+                      )
+                    ])
                   ]
                 )
               ]),
@@ -54100,73 +54093,62 @@ var staticRenderFns = [
         "div",
         { staticClass: "kt-portlet kt-portlet--fit kt-portlet--height-fluid" },
         [
-          _c(
-            "div",
-            { staticClass: "kt-portlet__body kt-portlet__body--fluid" },
-            [
-              _c("div", { staticClass: "kt-widget-3 kt-widget-3--primary" }, [
-                _c("div", { staticClass: "kt-widget-3__content" }, [
-                  _c("div", { staticClass: "kt-widget-3__content-info" }, [
-                    _c("div", { staticClass: "kt-widget-3__content-section" }, [
-                      _c("div", { staticClass: "kt-widget-3__content-title" }, [
-                        _vm._v("Placering")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "kt-widget-3__content-desc" }, [
-                        _vm._v("Adresse")
-                      ])
+          _c("div", { staticClass: "kt-portlet__body" }, [
+            _c("div", { staticClass: "kt-widget-3 kt-widget-3--primary" }, [
+              _c("div", { staticClass: "kt-widget-3__content" }, [
+                _c("div", { staticClass: "kt-widget-3__content-info" }, [
+                  _c("div", { staticClass: "kt-widget-3__content-section" }, [
+                    _c("div", { staticClass: "kt-widget-3__content-title" }, [
+                      _vm._v("Placering")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "kt-widget-3__content-desc" }, [
+                      _vm._v("Adresse")
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "kt-widget-3__content-stats" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "kt-font-white",
-                        staticStyle: {
-                          display: "flex",
-                          "align-items": "center"
-                        }
-                      },
-                      [
-                        _c(
-                          "a",
-                          {
-                            staticClass:
-                              "kt-media kt-media--md kt-media--circle kt-media--brand",
-                            attrs: { href: "#" }
-                          },
-                          [
-                            _c("span", [
-                              _c("i", {
-                                staticClass:
-                                  "la la-map-marker la-2x la-shrink kt-valign-middle",
-                                staticStyle: { "vertical-align": "middle" }
-                              })
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "truncate-text avatar-width" },
-                          [
-                            _vm._v(" Annexhallen"),
-                            _c("br"),
-                            _c(
-                              "span",
-                              { staticClass: "kt-widget-3__content-desc" },
-                              [_vm._v("Bethesdavej 29, 8200 Aarhus N")]
-                            )
-                          ]
-                        )
-                      ]
-                    )
                   ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "kt-widget-3__content-stats" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "kt-font-white",
+                      staticStyle: { display: "flex", "align-items": "center" }
+                    },
+                    [
+                      _c(
+                        "a",
+                        {
+                          staticClass:
+                            "kt-media kt-media--md kt-media--circle kt-media--brand",
+                          attrs: { href: "#" }
+                        },
+                        [
+                          _c("span", [
+                            _c("i", {
+                              staticClass:
+                                "la la-map-marker la-2x la-shrink kt-valign-middle",
+                              staticStyle: { "vertical-align": "middle" }
+                            })
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "truncate-text avatar-width" }, [
+                        _vm._v(" Annexhallen"),
+                        _c("br"),
+                        _c(
+                          "span",
+                          { staticClass: "kt-widget-3__content-desc" },
+                          [_vm._v("Bethesdavej 29, 8200 Aarhus N")]
+                        )
+                      ])
+                    ]
+                  )
                 ])
               ])
-            ]
-          )
+            ])
+          ])
         ]
       )
     ])
