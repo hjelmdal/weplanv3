@@ -7,7 +7,7 @@
  */
 
 ?>
-@extends("layouts.metronic.master")
+@extends("layouts.theme.index")
 @section("scripts")
     <script src="{{ route("index") }}/vuejs/activities/index2.js?v={{ Helpers::gitVersion()->getVersion() }}"></script>
 

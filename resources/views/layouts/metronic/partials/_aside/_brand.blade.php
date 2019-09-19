@@ -1,9 +1,9 @@
 
 <!-- begin:: Aside -->
-<div class="kt-aside__brand kt-grid__item " id="kt_aside_brand">
+<div class="kt-aside__brand kt-grid__item " id="kt_aside_brand" style="background: #2f2e38">
 	<div class="kt-aside__brand-logo">
-		<a href="index.html">
-			<img alt="Logo" src="assets/media/logos/logo-light.png" />
+		<a href="{{ route("index") }}">
+			<img alt="Logo" src="/img/WePlan-logo.jpg" height="40" />
 		</a>
 	</div>
 	<div class="kt-aside__brand-tools">
