@@ -16,12 +16,9 @@
                     <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
                         <!--Begin::Dashboard 1-->
                         <!--Begin::Row-->
-                        <div class="row">
-                            <div class="col-12">
                                 @yield("content")
                                 <router-view></router-view>
-                            </div>
-                        </div>
+
                     </div>
             </div>
 

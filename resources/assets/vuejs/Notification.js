@@ -21,6 +21,8 @@ export default class Notification {
                 toastr.error(message,title);
             } else if(type == "success") {
                 toastr.success(message,title);
+            } else if(type == "warning") {
+            toastr.warning(message,title);
             }
             //toastr.{{ Session::get('message-type','info') }}('{{ Session::get('message') . session('status') }}', '{{ Session::get('message-title',Session::get('title')) }}');
     }

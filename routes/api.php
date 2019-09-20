@@ -26,12 +26,10 @@ Route::name('api.')->group(function () {
             Route::post('/logout','Auth\AuthController@postLogout');
         });
 
-        Route::middleware('api.role:super-admin')->get('/user', function (Request $request) {
-            $user = \App\Models\User::first();
-            $user->revoke();
-        });
+
 
         Route::namespace('Auth')->middleware("api.token")->group(function () {
+            Route::post('user/roles',"UserAPI@authRoles")->name("auth-roles");
             Route::get('user',"UserAPI@getMyUser")->name("my-user");
             Route::patch('user',"UserAPI@patch");
             Route::post('user',"UserAPI@saveAvatar");

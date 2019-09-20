@@ -5,16 +5,20 @@ import moment from "moment";
 import BootstrapVue from "bootstrap-vue";
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import { BTooltip } from "bootstrap-vue";
+import Form from "./Form";
+import Notify from "./Notification";
 moment.locale("da");
 window.moment = require('moment');
 
 window.Vue = Vue;
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
-
+window.Form = Form;
+window.Notify = Notify;
 window.axios = axios;
 window.axios.defaults.headers.common = {
-    'X-Requested-With': 'XMLHttpRequest'
+    'X-Requested-With': 'XMLHttpRequest',
+    'Authorization': apiToken
 };
 
 

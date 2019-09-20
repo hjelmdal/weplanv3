@@ -22,9 +22,9 @@ $firstname = $names[0];
 
         @include("layouts.theme._layout")
         @yield("modal")
-
-        @include("layouts.theme._foot")
         </div>
+        @include("layouts.theme._foot")
+
     </body>
     <!-- end::Body -->
 </html>

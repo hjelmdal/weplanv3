@@ -32,10 +32,13 @@ class UserAPI extends Controller
     private function userFromApiToken(Request $request)
     {
         if ($request->header('Authorization')) {
-            $this->user = User::where('api_token', $request->header("Authorization"))->with("userStatus")->first();
+            $this->user = User::where('api_token', $request->header("Authorization"))->with("userStatus","roles")->first();
             //$this->userStatus = $this->user->load("UserStatus");
             if (!$this->user) {
                 return response()->json(["message" => 'Unauthorized'], 401);
+            }
+            if(!$this->user->avatar) {
+                $this->user->avatar = "/img/profile.png";
             }
             //$user = Auth::loginUsingId($user->id);
         }
@@ -45,10 +48,19 @@ class UserAPI extends Controller
     public function getMyUser(Request $request) {
         $user = $this->userFromApiToken($request);
 
-        if(!$user->avatar) {
-            $user->avatar = "/img/profile.png";
-        }
         return response()->json(["message" => "OK", "user" => $user,"status" => $user->setStatus()]);
+    }
+
+    public function authRoles(Request $request) {
+        $user = $this->userFromApiToken($request);
+        if(!$request->roles) {
+            return response()->json("Bad input",400);
+        }
+        if($user->hasAnyRole($request->roles)) {
+            return response()->json("OK",200);
+        }
+        return response()->json("Forbidden!",403);
+
     }
 
     public function patch(Request $request)
@@ -72,13 +84,13 @@ class UserAPI extends Controller
             $this->user->save();
             $cont = $this->user->name . " har sat sit password";
             $this->updateUserStatus("password",$cont);
-            
+
             return response()->json("Password er succesfuldt opdateret!", 200);
         }
 
         if($request->gdpr) {
             $now = Carbon::parse(now());
-            
+
             $cont = $this->user->name.' har givet samtykke til behandling af dennes data d. '.$now->format("d. M Y H:i");
             $this->updateUserStatus("consent",$cont);
             return response()->json("Tak for dit samtykke!", 200);
@@ -89,22 +101,22 @@ class UserAPI extends Controller
             $this->updateUserStatus("player",$cont, $request->playerId);
             return response()->json("jaah!",200);
         }
-        
+
 
 
         return response()->json(["errors" => ["form" => [0 => "Du har ikke udfyldt felterne"]]], 400);
 
 
     }
-    
+
     public function saveAvatar(Request $request) {
         $user = $this->userFromApiToken($request);
         //$file = $request->file->storeAs('logos', $request->file->getClientOriginalName());
         $fileName = tempnam(sys_get_temp_dir(), 'profile-pic');
         copy($request->file, $fileName);
         $file = Storage::disk('public')->putFile('profile', new File($request->file));
-        
-        
+
+
         if($user) {
             $old_avatar = $user->avatar;
 
@@ -113,14 +125,14 @@ class UserAPI extends Controller
             $user->save();
             $this->updateUserStatus("avatar",$user->name.' har uploadet en ny avatar til godkendelse',$user->avatar,$old_avatar);
             return response()->json(["status" => "success", "url" =>  "/storage/".$file, "request" => $file]);
-    
+
         }
-    
+
         return response()->json(["status" => "error", "message" => "Bad request!"],400);
-    
+
     }
-    
-    
+
+
     private function updateUserStatus($type,$content = null,$data = null, $data_old = null) {
         try {
 
@@ -146,7 +158,7 @@ class UserAPI extends Controller
                     $this->user->save();
                     $msg = "Tillykke - din email er nu aktiveret!";
                     return response()->json(["message" => $msg, "output" => $hashed], 200);
-                    
+
                 }
                 else {
                     return response()->json(["errors" => ["form" => "Forkert aktiveringskode"]], 400);

@@ -5,6 +5,7 @@
         components: {
             playerTable
         },
+
         name: "associateUser",
         props:["formData","id","now"],
         data: function(){

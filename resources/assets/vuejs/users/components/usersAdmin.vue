@@ -100,7 +100,7 @@
                     return user.name.toLowerCase().includes(this.search.toLowerCase()) || user.email.toLowerCase().includes(this.search.toLowerCase());
                 });
             }
-        }
+        },
     }
 
 </script>

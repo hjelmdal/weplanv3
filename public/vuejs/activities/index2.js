@@ -66768,6 +66768,8 @@ function () {
         var instance = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({});
         instance.defaults.headers.common['Authorization'] = apiToken;
         axios__WEBPACK_IMPORTED_MODULE_0___default.a[requestType](url, _this.data()).then(function (response) {
+          //localStorage.setItem("token",apiToken);
+          //console.log(apiToken);
           _this.onSuccess(response.data);
 
           resolve(response.data);

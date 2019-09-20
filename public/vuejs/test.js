@@ -71912,6 +71912,8 @@ function () {
         var instance = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({});
         instance.defaults.headers.common['Authorization'] = apiToken;
         axios__WEBPACK_IMPORTED_MODULE_0___default.a[requestType](url, _this.data()).then(function (response) {
+          //localStorage.setItem("token",apiToken);
+          //console.log(apiToken);
           _this.onSuccess(response.data);
 
           resolve(response.data);
@@ -71954,6 +71956,66 @@ function () {
   }]);
 
   return Form;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/vuejs/Notification.js":
+/*!************************************************!*\
+  !*** ./resources/assets/vuejs/Notification.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Notification; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Notification =
+/*#__PURE__*/
+function () {
+  function Notification() {
+    _classCallCheck(this, Notification);
+
+    this.message = "";
+    this.title = "";
+    this.type = "";
+  }
+
+  _createClass(Notification, [{
+    key: "send",
+    value: function send(type, message) {
+      var title = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      this.message = message;
+      this.title = title;
+      this.type = type;
+      toastr.options.closeButton = true;
+      toastr.options.positionClass = "toast-top-center";
+      toastr.options.showMethod = "fadeIn";
+      toastr.options.showDuration = 1000;
+      toastr.options.extendedTimeOut = 100000;
+
+      if (type == "info") {
+        toastr.info(message, title);
+      } else if (type == "error") {
+        toastr.error(message, title);
+      } else if (type == "success") {
+        toastr.success(message, title);
+      } else if (type == "warning") {
+        toastr.warning(message, title);
+      } //toastr.{{ Session::get('message-type','info') }}('{{ Session::get('message') . session('status') }}', '{{ Session::get('message-title',Session::get('title')) }}');
+
+    }
+  }]);
+
+  return Notification;
 }();
 
 
@@ -72447,6 +72509,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/esm/index.js");
 /* harmony import */ var bootstrap_vue_dist_bootstrap_vue_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! bootstrap-vue/dist/bootstrap-vue.css */ "./node_modules/bootstrap-vue/dist/bootstrap-vue.css");
 /* harmony import */ var bootstrap_vue_dist_bootstrap_vue_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(bootstrap_vue_dist_bootstrap_vue_css__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Form */ "./resources/assets/vuejs/Form.js");
+/* harmony import */ var _Notification__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Notification */ "./resources/assets/vuejs/Notification.js");
+
+
 
 
 
@@ -72459,9 +72525,12 @@ window.moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.
 window.Vue = vue__WEBPACK_IMPORTED_MODULE_0___default.a;
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_4__["default"]);
+window.Form = _Form__WEBPACK_IMPORTED_MODULE_6__["default"];
+window.Notify = _Notification__WEBPACK_IMPORTED_MODULE_7__["default"];
 window.axios = axios__WEBPACK_IMPORTED_MODULE_2___default.a;
 window.axios.defaults.headers.common = {
-  'X-Requested-With': 'XMLHttpRequest'
+  'X-Requested-With': 'XMLHttpRequest',
+  'Authorization': apiToken
 };
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('formatTime', function (value) {
   var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "HH:mm";
@@ -72572,18 +72641,61 @@ __webpack_require__.r(__webpack_exports__);
 
 var routes = [{
   path: '/',
-  component: __webpack_require__(/*! ./views/test */ "./resources/assets/vuejs/views/test.vue")["default"]
+  component: __webpack_require__(/*! ./views/test */ "./resources/assets/vuejs/views/test.vue")["default"],
+  meta: {
+    access: "public"
+  }
 }, {
   path: '/activities',
-  component: __webpack_require__(/*! ./activities/components/UserActivities */ "./resources/assets/vuejs/activities/components/UserActivities.vue")["default"]
+  component: __webpack_require__(/*! ./activities/components/UserActivities */ "./resources/assets/vuejs/activities/components/UserActivities.vue")["default"],
+  meta: {
+    access: "protected"
+  }
 }, {
   path: '/users',
-  component: __webpack_require__(/*! ./users/components/usersAdmin */ "./resources/assets/vuejs/users/components/usersAdmin.vue")["default"]
+  component: __webpack_require__(/*! ./users/components/usersAdmin */ "./resources/assets/vuejs/users/components/usersAdmin.vue")["default"],
+  meta: {
+    access: "protected",
+    roles: ["super-admin", "player"]
+  }
 }];
-/* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   routes: routes,
   linkActiveClass: 'is-active'
-}));
+});
+router.beforeEach(function (to, from, next) {
+  var access = to.meta.access;
+  var roles = to.meta.roles;
+  var notify = new Notify();
+
+  if (access) {
+    if (access == "public") {
+      console.log("public route");
+      next();
+    } else if (access == "protected" && !roles) {
+      axios.get("/api/v1/user").then(function (data) {
+        console.log("Authorized");
+        next();
+      })["catch"](function (e) {
+        notify.send("warning", "Du er ikke logget ind!"); //next("/login");
+      });
+    } else if (access == "protected" && roles) {
+      var form = new Form({
+        roles: to.meta.roles
+      });
+      form.post("/api/v1/user/roles").then(function (data) {
+        next();
+      })["catch"](function (e) {
+        if (e.status == 403) {
+          notify.send("warning", "Du har ikke de krævede rettigheder til at se denne side!");
+        }
+      });
+    }
+  } else {
+    console.log("Route access is not set!");
+  }
+});
+/* harmony default export */ __webpack_exports__["default"] = (router);
 
 /***/ }),
 

@@ -106,8 +106,9 @@ export default class Form {
             instance.defaults.headers.common['Authorization'] = apiToken;
             axios[requestType](url, this.data())
                 .then(response => {
+                    //localStorage.setItem("token",apiToken);
+                    //console.log(apiToken);
                     this.onSuccess(response.data);
-
                     resolve(response.data);
                 })
                 .catch(error => {
