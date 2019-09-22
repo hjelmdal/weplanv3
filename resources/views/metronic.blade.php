@@ -3,7 +3,7 @@
 
 
 @section("scripts")
-    <script src="/vuejs/test.js"></script>
+    <script src="/vuejs/test.js?v={{ Helpers::gitVersion()->getVersion() }}"></script>
 @endsection
 
 @section("meta")
