@@ -2,6 +2,7 @@ import VueRouter from 'vue-router';
 
 let routes = [
     {
+        name: "Home",
         path: '/',
         component: require('./views/test').default,
         meta: {
@@ -9,23 +10,28 @@ let routes = [
         }
     },
     {
+        name: "Aktiviteter",
         path: '/activities',
         component: require('./activities/components/UserActivities').default,
         meta: {
             access: "protected",
+            icon: "flaticon2-calendar-8"
         }
 
     },
     {
+        name: "Brugere",
         path: '/users',
         component: require('./users/components/usersAdmin').default,
         meta: {
             access: "protected",
-            roles: ["super-admin","player"]
+            roles: ["super-admin","player"],
+            icon: "flaticon-users"
         }
     },
 
 ];
+window.routes = routes;
 const router = new VueRouter({
     routes,
     linkActiveClass: 'is-active'

@@ -2386,6 +2386,26 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/components/AdminNav.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/components/AdminNav.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "AdminNav",
+  data: function data() {
+    return {
+      routes: this.$router.options.routes
+    };
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/components/modal.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/components/modal.vue?vue&type=script&lang=js& ***!
@@ -2794,8 +2814,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "test"
+  name: "test",
+  data: function data() {
+    return {
+      routes: this.$router.options.routes
+    };
+  }
 });
 
 /***/ }),
@@ -54642,6 +54676,109 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/components/AdminNav.vue?vue&type=template&id=eb34d18e&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/components/AdminNav.vue?vue&type=template&id=eb34d18e&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "ul",
+    { staticClass: "kt-menu__nav" },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _vm._l(_vm.routes, function(route) {
+        return [
+          _c("router-link", {
+            attrs: { to: route.path },
+            scopedSlots: _vm._u(
+              [
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var href = ref.href
+                    var route = ref.route
+                    var navigate = ref.navigate
+                    var isActive = ref.isActive
+                    var isExactActive = ref.isExactActive
+                    return [
+                      _c(
+                        "li",
+                        {
+                          staticClass: "kt-menu__item",
+                          class: [
+                            isActive && " ",
+                            isExactActive && "kt-menu__item--active"
+                          ],
+                          attrs: { "aria-haspopup": "true" }
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "kt-menu__link",
+                              attrs: { href: href },
+                              on: { click: navigate }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "kt-menu__link-icon flaticon-home",
+                                class: route.meta.icon
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                { staticClass: "kt-menu__link-text" },
+                                [_vm._v(_vm._s(route.name))]
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    ]
+                  }
+                }
+              ],
+              null,
+              true
+            )
+          })
+        ]
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "kt-menu__section " }, [
+      _c("h4", { staticClass: "kt-menu__section-text" }, [
+        _vm._v("Admin sider")
+      ]),
+      _vm._v(" "),
+      _c("i", { staticClass: "kt-menu__section-icon flaticon-more-v2" })
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/components/modal.vue?vue&type=template&id=031e02b8&scoped=true&":
 /*!******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/components/modal.vue?vue&type=template&id=031e02b8&scoped=true& ***!
@@ -56606,7 +56743,35 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("This is the route!")])
+  return _c("div", [
+    _c(
+      "ul",
+      { staticClass: "kt-nav" },
+      _vm._l(_vm.routes, function(route) {
+        return _c(
+          "li",
+          { staticClass: "kt-nav__item" },
+          [
+            _c(
+              "router-link",
+              { staticClass: "kt-nav__link", attrs: { to: route.path } },
+              [
+                route.meta.icon
+                  ? _c("i", { staticClass: "kt-nav__link-icon" })
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("span", { staticClass: "kt-nav__link-text" }, [
+                  _vm._v(_vm._s(route.name))
+                ])
+              ]
+            )
+          ],
+          1
+        )
+      }),
+      0
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -72559,6 +72724,75 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('b-tooltip', bootstrap_vue_
 
 /***/ }),
 
+/***/ "./resources/assets/vuejs/components/AdminNav.vue":
+/*!********************************************************!*\
+  !*** ./resources/assets/vuejs/components/AdminNav.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AdminNav_vue_vue_type_template_id_eb34d18e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminNav.vue?vue&type=template&id=eb34d18e&scoped=true& */ "./resources/assets/vuejs/components/AdminNav.vue?vue&type=template&id=eb34d18e&scoped=true&");
+/* harmony import */ var _AdminNav_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminNav.vue?vue&type=script&lang=js& */ "./resources/assets/vuejs/components/AdminNav.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AdminNav_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AdminNav_vue_vue_type_template_id_eb34d18e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AdminNav_vue_vue_type_template_id_eb34d18e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "eb34d18e",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/assets/vuejs/components/AdminNav.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/assets/vuejs/components/AdminNav.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/assets/vuejs/components/AdminNav.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminNav_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./AdminNav.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/components/AdminNav.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminNav_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/assets/vuejs/components/AdminNav.vue?vue&type=template&id=eb34d18e&scoped=true&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/assets/vuejs/components/AdminNav.vue?vue&type=template&id=eb34d18e&scoped=true& ***!
+  \***************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminNav_vue_vue_type_template_id_eb34d18e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./AdminNav.vue?vue&type=template&id=eb34d18e&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/components/AdminNav.vue?vue&type=template&id=eb34d18e&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminNav_vue_vue_type_template_id_eb34d18e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminNav_vue_vue_type_template_id_eb34d18e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/assets/vuejs/components/modal.vue":
 /*!*****************************************************!*\
   !*** ./resources/assets/vuejs/components/modal.vue ***!
@@ -72640,25 +72874,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 
 var routes = [{
+  name: "Home",
   path: '/',
   component: __webpack_require__(/*! ./views/test */ "./resources/assets/vuejs/views/test.vue")["default"],
   meta: {
     access: "public"
   }
 }, {
+  name: "Aktiviteter",
   path: '/activities',
   component: __webpack_require__(/*! ./activities/components/UserActivities */ "./resources/assets/vuejs/activities/components/UserActivities.vue")["default"],
   meta: {
-    access: "protected"
+    access: "protected",
+    icon: "flaticon2-calendar-8"
   }
 }, {
+  name: "Brugere",
   path: '/users',
   component: __webpack_require__(/*! ./users/components/usersAdmin */ "./resources/assets/vuejs/users/components/usersAdmin.vue")["default"],
   meta: {
     access: "protected",
-    roles: ["super-admin", "player"]
+    roles: ["super-admin", "player"],
+    icon: "flaticon-users"
   }
 }];
+window.routes = routes;
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   routes: routes,
   linkActiveClass: 'is-active'
@@ -72710,9 +72950,14 @@ router.beforeEach(function (to, from, next) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrapper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrapper */ "./resources/assets/vuejs/bootstrapper.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./routes */ "./resources/assets/vuejs/routes.js");
+/* harmony import */ var _components_AdminNav__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/AdminNav */ "./resources/assets/vuejs/components/AdminNav.vue");
+
 
 
 new Vue({
+  components: {
+    AdminNav: _components_AdminNav__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
   el: '#vuejs',
   router: _routes__WEBPACK_IMPORTED_MODULE_1__["default"]
 });

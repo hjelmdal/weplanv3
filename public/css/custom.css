@@ -639,13 +639,13 @@ td.td-ellipsis {
 }
 
 @media (min-width: 1025px) {
-  .kt-header--fixed .kt-page {
-    padding-top: 60px;
+  /*.kt-header--fixed .kt-page {
+      padding-top: 60px;
   }
 
   #kt_header {
-    height: 60px;
-  }
+      height:60px;
+  }*/
 }
 
 @media (max-width: 768px) {
