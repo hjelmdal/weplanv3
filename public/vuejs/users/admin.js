@@ -1957,7 +1957,8 @@ __webpack_require__.r(__webpack_exports__);
         id: "modal3",
         user: "",
         suggested_id: ""
-      }
+      },
+      aside: false
     };
   },
   methods: {
@@ -2040,6 +2041,12 @@ __webpack_require__.r(__webpack_exports__);
     this.$root.$on('refreshUsers', function (data) {
       _this3.refresh();
     });
+    new KTOffcanvas('kt_user_profile_aside', {
+      overlay: true,
+      baseClass: 'kt-app__aside',
+      closeBy: 'kt_user_profile_aside_close',
+      toggleBy: 'kt_subheader_mobile_toggle'
+    });
   },
   computed: {
     filteredUsers: function filteredUsers() {
@@ -2085,7 +2092,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n@media (max-width: 1024px) {\n.input-group-lg>.custom-select[data-v-3dcb04e5], .input-group-lg>.form-control[data-v-3dcb04e5], .input-group-lg>.input-group-append>.btn[data-v-3dcb04e5], .input-group-lg>.input-group-append>.input-group-text[data-v-3dcb04e5], .input-group-lg>.input-group-prepend>.btn[data-v-3dcb04e5], .input-group-lg>.input-group-prepend>.input-group-text[data-v-3dcb04e5] {\n            padding: 1.1rem 1.65rem;\n}\n}\n.fa svg[data-v-3dcb04e5] {\n    width: 2rem;\n    height: 2rem;\n    fill: #fff;\n}\n.kt-svg-icon g [fill][data-v-3dcb04e5] {\n    fill: #5d78ff;\n}\n", ""]);
+exports.push([module.i, "\n@media (max-width: 1024px) {\n.input-group-lg>.custom-select[data-v-3dcb04e5], .input-group-lg>.form-control[data-v-3dcb04e5], .input-group-lg>.input-group-append>.btn[data-v-3dcb04e5], .input-group-lg>.input-group-append>.input-group-text[data-v-3dcb04e5], .input-group-lg>.input-group-prepend>.btn[data-v-3dcb04e5], .input-group-lg>.input-group-prepend>.input-group-text[data-v-3dcb04e5] {\n            padding: 1.1rem 1.65rem;\n}\n}\n.fa svg[data-v-3dcb04e5] {\n    width: 2rem;\n    height: 2rem;\n    fill: #fff;\n}\n.kt-svg-icon g [fill][data-v-3dcb04e5] {\n    fill: #5d78ff;\n}\n@media (max-width: 1024px) {\n.kt-app__aside[data-v-3dcb04e5] {\n        z-index: 1001;\n        position: fixed;\n        -webkit-overflow-scrolling: touch;\n        top: 0;\n        bottom: 0;\n        overflow-y: auto;\n        -webkit-transform: translate3d(0, 0, 0);\n        backface-visibility: hidden;\n        -webkit-backface-visibility: hidden;\n        width: 300px !important;\n        transition: left 0.3s ease, right 0.3s ease;\n        left: -320px;\n}\n.kt-app__aside.kt-app__aside--on[data-v-3dcb04e5] {\n        transition: left 0.3s ease, right 0.3s ease;\n        left: 0;\n}\n.kt-app__aside--on .kt-app__aside-close[data-v-3dcb04e5] {\n        transition: left 0.3s ease, right 0.3s ease;\n        left: 274px;\n}\n}\n", ""]);
 
 // exports
 
@@ -21449,19 +21456,17 @@ var render = function() {
       staticStyle: { width: "100%" }
     },
     [
-      _vm._m(0),
-      _vm._v(" "),
       _c(
         "div",
         {
           staticClass:
             "kt-grid__item kt-app__toggle kt-app__aside kt-app__aside--sm kt-app__aside--fit",
-          attrs: { id: "kt_users_aside" }
+          attrs: { id: "kt_user_profile_aside" }
         },
         [
+          _vm._m(0),
+          _vm._v(" "),
           _c("div", { staticClass: "kt-portlet" }, [
-            _c("div", { staticClass: "kt-portlet__separator" }),
-            _vm._v(" "),
             _c("div", { staticClass: "kt-portlet__body" }, [
               _c(
                 "ul",
@@ -21688,6 +21693,8 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
+          _vm._m(5),
+          _vm._v(" "),
           _c(
             "div",
             {
@@ -21736,7 +21743,7 @@ var render = function() {
                     "table",
                     { staticClass: "table table-striped table-responsive-sm" },
                     [
-                      _vm._m(5),
+                      _vm._m(6),
                       _vm._v(" "),
                       _c(
                         "tbody",
@@ -21985,7 +21992,7 @@ var render = function() {
                                 },
                                 [
                                   user.we_player
-                                    ? _c("span", [_vm._m(6, true)])
+                                    ? _c("span", [_vm._m(7, true)])
                                     : _vm._e()
                                 ]
                               ),
@@ -22001,7 +22008,7 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _vm._m(7, true),
+                                    _vm._m(8, true),
                                     _vm._v(" "),
                                     user.player_id
                                       ? _c(
@@ -22058,7 +22065,7 @@ var render = function() {
                                         )
                                       : _vm._e(),
                                     _vm._v(" "),
-                                    _vm._m(8, true)
+                                    _vm._m(9, true)
                                   ]
                                 )
                               ])
@@ -22516,7 +22523,7 @@ var render = function() {
                             ])
                           ]),
                           _vm._v(" "),
-                          _vm._m(9, true)
+                          _vm._m(10, true)
                         ])
                       ]
                     )
@@ -22557,7 +22564,7 @@ var staticRenderFns = [
       "button",
       {
         staticClass: "kt-app__aside-close",
-        attrs: { id: "kt_users_aside_close" }
+        attrs: { id: "kt_user_profile_aside_close" }
       },
       [_c("i", { staticClass: "la la-close" })]
     )
@@ -22593,6 +22600,20 @@ var staticRenderFns = [
     return _c("span", { staticClass: "kt-nav__link-icon" }, [
       _c("i", { staticClass: "flaticon2-chart2" })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass:
+          "btn btn-primary kt-visible-mobile kt-visible-tablet float-left",
+        attrs: { id: "kt_subheader_mobile_toggle", type: "button" }
+      },
+      [_c("i", { staticClass: "fa flaticon2-console kt-p0" })]
+    )
   },
   function() {
     var _vm = this

@@ -1,107 +1,116 @@
 <script>
-    import Form from "./../../Form";
-    import modal from "./modal";
-    import associateUser from "./associateUser";
+import Form from "./../../Form";
+import modal from "./modal";
+import associateUser from "./associateUser";
 
-    export default {
-        name: "usersAdmin",
-        components: {
-            modal,
-            associateUser
-        },
-        data: function() {
-            return {
-                view: "table",
-                search:"",
-                test: "yay",
-                users: [],
-                usersGet: new Form(),
-                modalData: {
-                    id: "modal3",
-                    user: "",
-                    suggested_id:""
-                }
+export default {
+    name: "usersAdmin",
+    components: {
+        modal,
+        associateUser
+    },
+    data: function() {
+        return {
+            view: "table",
+            search:"",
+            test: "yay",
+            users: [],
+            usersGet: new Form(),
+            modalData: {
+                id: "modal3",
+                user: "",
+                suggested_id:""
+            },
+            aside: false,
+        }
+    },
+    methods: {
+        associateModal(user,id) {
+            console.log("somebody touched me!");
+            this.modalData.user = user;
+            if(user.we_player) {
+              console.log("Er tilknyttet: " + user.we_player.dbf_id);
+              this.modalData.suggested_id = user.we_player.dbf_id;
+            } else {
+              this.modalData.suggested_id = user.suggested_player;
             }
         },
-        methods: {
-          associateModal(user,id) {
-              console.log("somebody touched me!");
-              this.modalData.user = user;
-              if(user.we_player) {
-                  console.log("Er tilknyttet: " + user.we_player.dbf_id);
-                  this.modalData.suggested_id = user.we_player.dbf_id;
-              } else {
-                  this.modalData.suggested_id = user.suggested_player;
-              }
-          },
-            getAllUsers() {
-                this.usersGet.get("/api/v1/users")
-                    .then((response) =>  {
-                        this.users = response;
-                    })
-            },
-            getFilteredUsers(filter) {
-              let param = null;
-
-                switch(filter) {
-                    case "activated":
-                        param = "activated"
-                        break;
-                    case "all":
-                        this.getAllUsers();
-                        break;
-                    case "incomplete":
-                        param = "incomplete"
-                        break;
-                    case "dissociated":
-                        param = "dissociated"
-                        break;
-                    default:
-                    // code block
-                }
-              if(param) {
-                  this.usersGet.get("/api/v1/users/filter/" + param)
-                      .then((data) => {
-                          this.users = data;
-                      })
-              }
-            },
-            filterUsers(event,filter) {
-              let elems = document.querySelectorAll("#usersNav .kt-nav__item");
-                [].forEach.call(elems, function(el) {
-                    el.classList.remove("active");
-                });
-                document.querySelectorAll("#usersNav .kt-nav__item .kt-nav__link").forEach(e => { e.classList.remove("active") });
-                event.currentTarget.parentElement.classList.add("active");
-
-                this.getFilteredUsers(filter);
-
-            },
-            refresh() {
-                document.querySelector(".kt-nav__item .active").click();
-                console.log("refreshed!");
-            },
-            toggleView(view) {
-                this.view = view;
-            }
+        getAllUsers() {
+            this.usersGet.get("/api/v1/users")
+                .then((response) =>  {
+                    this.users = response;
+                })
         },
-        mounted() {
-            this.getAllUsers();
-            this.$root.$on('modalClose', data => {
-                this.refresh();
+        getFilteredUsers(filter) {
+          let param = null;
+
+            switch(filter) {
+                case "activated":
+                    param = "activated"
+                    break;
+                case "all":
+                    this.getAllUsers();
+                    break;
+                case "incomplete":
+                    param = "incomplete"
+                    break;
+                case "dissociated":
+                    param = "dissociated"
+                    break;
+                default:
+                // code block
+            }
+          if(param) {
+              this.usersGet.get("/api/v1/users/filter/" + param)
+                  .then((data) => {
+                      this.users = data;
+                  })
+          }
+        },
+        filterUsers(event,filter) {
+          let elems = document.querySelectorAll("#usersNav .kt-nav__item");
+            [].forEach.call(elems, function(el) {
+                el.classList.remove("active");
             });
-            this.$root.$on('refreshUsers', data => {
-                this.refresh();
+            document.querySelectorAll("#usersNav .kt-nav__item .kt-nav__link").forEach(e => { e.classList.remove("active") });
+            event.currentTarget.parentElement.classList.add("active");
+
+            this.getFilteredUsers(filter);
+
+        },
+        refresh() {
+            document.querySelector(".kt-nav__item .active").click();
+            console.log("refreshed!");
+        },
+        toggleView(view) {
+            this.view = view;
+        }
+    },
+    mounted() {
+        this.getAllUsers();
+        this.$root.$on('modalClose', data => {
+            this.refresh();
+        });
+        this.$root.$on('refreshUsers', data => {
+            this.refresh();
+        });
+
+
+        new KTOffcanvas('kt_user_profile_aside', {
+            overlay: true,
+            baseClass: 'kt-app__aside',
+            closeBy: 'kt_user_profile_aside_close',
+            toggleBy: 'kt_subheader_mobile_toggle'
+        });
+    },
+    computed: {
+        filteredUsers() {
+            return this.users.filter((user) => {
+                return user.name.toLowerCase().includes(this.search.toLowerCase()) || user.email.toLowerCase().includes(this.search.toLowerCase());
             });
-        },
-        computed: {
-            filteredUsers() {
-                return this.users.filter((user) => {
-                    return user.name.toLowerCase().includes(this.search.toLowerCase()) || user.email.toLowerCase().includes(this.search.toLowerCase());
-                });
-            }
-        },
-    }
+        }
+    },
+}
 
 </script>
 
@@ -120,23 +129,52 @@
 .kt-svg-icon g [fill] {
     fill: #5d78ff;
 }
+@media (max-width: 1024px) {
+    .kt-app__aside {
+        z-index: 1001;
+        position: fixed;
+        -webkit-overflow-scrolling: touch;
+        top: 0;
+        bottom: 0;
+        overflow-y: auto;
+        -webkit-transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        width: 300px !important;
+        -webkit-transition: left 0.3s ease, right 0.3s ease;
+        transition: left 0.3s ease, right 0.3s ease;
+        left: -320px;
+    }
+    .kt-app__aside.kt-app__aside--on {
+        -webkit-transition: left 0.3s ease, right 0.3s ease;
+        transition: left 0.3s ease, right 0.3s ease;
+        left: 0;
+    }
+    .kt-app__aside--on .kt-app__aside-close {
+        -webkit-transition: left 0.3s ease, right 0.3s ease;
+        transition: left 0.3s ease, right 0.3s ease;
+        left: 274px;
+    }
+}
 </style>
 
 <template>
     <!--Begin::App-->
     <div class="kt-grid kt-grid--desktop kt-grid--ver kt-grid--ver-desktop kt-app" style="width: 100%;">
         <!--Begin:: App Aside Mobile Toggle-->
-        <button class="kt-app__aside-close" id="kt_users_aside_close">
-            <i class="la la-close"></i>
-        </button>
+
         <!--End:: App Aside Mobile Toggle-->
 
         <!--Begin:: App Aside-->
-        <div class="kt-grid__item kt-app__toggle kt-app__aside kt-app__aside--sm kt-app__aside--fit" id="kt_users_aside">
+        <div class="kt-grid__item kt-app__toggle kt-app__aside kt-app__aside--sm kt-app__aside--fit" id="kt_user_profile_aside">
+
+            <button class="kt-app__aside-close" id="kt_user_profile_aside_close">
+                <i class="la la-close"></i>
+            </button>
             <div class="kt-portlet">
 
 
-                <div class="kt-portlet__separator"></div>
+
 
                 <div class="kt-portlet__body">
                     <ul class="kt-nav kt-nav--bolder kt-nav--fit-ver kt-nav--v4" role="tablist" id="usersNav">
@@ -185,7 +223,7 @@
 </svg></span></div>
                 <input type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon1" v-model="search">
             </div>
-
+            <button id="kt_subheader_mobile_toggle" type="button" class="btn btn-primary kt-visible-mobile kt-visible-tablet float-left"><i class="fa flaticon2-console kt-p0"></i></button>
             <div class="btn-group btn-group-sm kt-margin-b-10 float-right" role="group" aria-label="Small group">
                 <button @click="toggleView('table')" type="button" :class="{'active' : view == 'table'}" class="btn btn-success"><i class="fa flaticon2-indent-dots"></i> </button>
                 <button @click="toggleView('grid')" type="button" :class="{'active' : view == 'grid'}" class="btn btn-success"><i class="fa flaticon2-layers"></i> </button>

@@ -83,6 +83,13 @@ $user = Auth::user();
     <!--begin::Custom styling(by Pixel8) -->
     @yield("styles")
     <link href="/css/custom.css?v={{ Helpers::gitVersion()->getVersion() }}" rel="stylesheet" type="text/css" />
+    <style>
+        @media (min-width: 768px) {
+            #vuejs {
+                display:flex;
+            }
+        }
+    </style>
     <!--end::Custom styling(by Pixel8) -->
 </head>
 
