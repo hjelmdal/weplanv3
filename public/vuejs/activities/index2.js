@@ -2046,6 +2046,7 @@ __webpack_require__.r(__webpack_exports__);
     ActivitiesFilters: _ActivitiesFilters__WEBPACK_IMPORTED_MODULE_2__["default"],
     ActivitiesNav: _ActivitiesNav__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  props: ["spaDate", "isSpa"],
   data: function data() {
     return {
       activities: [],
@@ -2236,7 +2237,11 @@ __webpack_require__.r(__webpack_exports__);
         _this.calendar.prev = response.data.prev_week_url;
 
         if (_this.reload === 0) {
-          history.pushState(null, "", "/activities/date/" + _this.calendar.start_date);
+          if (!_this.isSpa) {
+            history.pushState(null, "", "/activities/date/" + _this.calendar.start_date);
+          } else {
+            history.pushState(null, "", "/#/activities/date/" + _this.calendar.start_date);
+          }
         }
 
         _this.setLoadingSpinner(false, btn);
@@ -2377,7 +2382,12 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         toastr.info(message);
       }
-    })
+    }),
+    setSpaDate: function setSpaDate() {
+      if (this.spaDate) {
+        this.meta = this.spaDate;
+      }
+    }
   },
   mounted: function mounted() {
     var _this4 = this;
@@ -2388,7 +2398,8 @@ __webpack_require__.r(__webpack_exports__);
       _this4.confirmActivity(data.event, data.activity);
     }), this.$root.$on("declineActivity", function (data) {
       _this4.declineActivity(data.event, data.data);
-    }), this.activitiesLoad("reload");
+    }), this.setSpaDate();
+    this.activitiesLoad("reload");
   },
   created: function created() {
     var _this5 = this;

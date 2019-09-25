@@ -6,19 +6,44 @@ let routes = [
         path: '/',
         component: require('./views/test').default,
         meta: {
-            access: "public"
+            access: "public",
+            icon: "flaticon-home",
+            title: "Home",
         }
     },
     {
-        name: "Aktiviteter",
         path: '/activities',
-        component: require('./activities/components/UserActivities').default,
+        component: require('./components/EmptyRouterView').default,
         meta: {
             access: "protected",
-            icon: "flaticon2-calendar-8"
-        }
+            icon: "flaticon2-calendar-8",
+        },
 
+        children: [
+            {
+                name: "Aktiviteter",
+                path: '/',
+                component: require('./activities/components/UserActivities').default,
+                meta: {
+                    access: "protected",
+                    icon: "flaticon2-calendar-8",
+                    title: "Aktiviteter",
+                }
+            },
+            {
+                name: "Aktivitet",
+                path: 'date/:spaDate',
+                component: require('./activities/components/UserActivities').default,
+                props:true,
+                meta: {
+                    access: "protected",
+                    icon: "flaticon2-calendar-8",
+                    title: null,
+                }
+            }
+        ]
     },
+
     {
         name: "Brugere",
         path: '/users',
@@ -26,7 +51,8 @@ let routes = [
         meta: {
             access: "protected",
             roles: ["super-admin","player"],
-            icon: "flaticon-users"
+            icon: "flaticon-users",
+            title: "Brugere"
         }
     },
 

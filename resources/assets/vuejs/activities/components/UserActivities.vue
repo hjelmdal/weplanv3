@@ -7,6 +7,7 @@ import ActivitiesNav from "./ActivitiesNav";
 export default {
     name: "ActivitiesUser",
     components: {ActivitiesList, ActivitiesFilters, ActivitiesNav},
+    props: ["spaDate","isSpa"],
     data() {
         return {
             activities: [],
@@ -186,7 +187,11 @@ export default {
                     this.calendar.next = response.data.next_week_url;
                     this.calendar.prev = response.data.prev_week_url;
                     if(this.reload === 0) {
-                        history.pushState(null, "", "/activities/date/" + this.calendar.start_date);
+                        if(!this.isSpa) {
+                            history.pushState(null, "", "/activities/date/" + this.calendar.start_date);
+                        } else {
+                            history.pushState(null, "", "/#/activities/date/" + this.calendar.start_date);
+                        }
                     }
                     this.setLoadingSpinner(false,btn);
                 })
@@ -314,6 +319,11 @@ export default {
                 toastr.info(message);
             }
         },
+        setSpaDate() {
+            if(this.spaDate) {
+                this.meta = this.spaDate;
+            }
+        }
 
     },
 
@@ -331,6 +341,8 @@ export default {
         this.$root.$on("declineActivity", data => {
             this.declineActivity(data.event,data.data);
         }),
+
+        this.setSpaDate();
 
         this.activitiesLoad("reload");
 

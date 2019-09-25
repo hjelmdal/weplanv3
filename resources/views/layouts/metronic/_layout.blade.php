@@ -17,7 +17,7 @@
                         <!--Begin::Dashboard 1-->
                         <!--Begin::Row-->
                                 @yield("content")
-                                <router-view></router-view>
+                                <router-view :isSpa="true"></router-view>
 
                     </div>
             </div>

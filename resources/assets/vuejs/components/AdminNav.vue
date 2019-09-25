@@ -20,11 +20,11 @@
             <router-link :to="route.path" v-slot="{ href, route, navigate, isActive, isExactActive }">
 
                 <li class="kt-menu__item"
-                    :class="[isActive && ' ', isExactActive && 'kt-menu__item--active']"
+                    :class="[isActive && !isExactActive && route.path!= '/' && 'kt-menu__item--active', isExactActive && 'kt-menu__item--active']"
                     aria-haspopup="true">
                     <a class="kt-menu__link" :href="href" @click="navigate">
-                        <i class="kt-menu__link-icon flaticon-home" :class="route.meta.icon"></i>
-                        <span class="kt-menu__link-text">{{ route.name }}</span>
+                        <i class="kt-menu__link-icon" :class="route.meta.icon"></i>
+                        <span class="kt-menu__link-text">{{ route.meta.title }}</span>
                     </a>
                 </li>
             </router-link>
