@@ -636,3 +636,24 @@ td.td-ellipsis {
     padding: 0 3px;
   }
 }
+
+
+.modal:nth-of-type(even) {
+    z-index: 1053 !important;
+}
+.modal:nth-of-type(odd) {
+    z-index: 1051 !important;
+}
+.modal-backdrop.show:nth-of-type(odd) {
+    z-index: 1051 !important;
+}
+.modal-backdrop.show:nth-of-type(even) {
+    z-index: 1050 !important;
+}
+
+.modal .modal-content .modal-header .modal-title {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

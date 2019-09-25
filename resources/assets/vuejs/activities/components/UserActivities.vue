@@ -231,14 +231,15 @@ export default {
         declineActivity(event,formData) {
             let btn = event.target;
             btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
-            let activity = formData.activity;
-            let declineData = formData.declineData;
+            let activity = formData;
+            console.log("id: " + formData);
+            //let declineData = formData.declineData;
             let postData = [];
             postData = {
-                "activity_id" : activity.decline_activity,
-                "start_date" : activity.decline_start_date,
-                "end_date" : activity.decline_end_date,
-                "players" : activity.decline_players,
+                "activity_id" : activity.id,
+                "start_date" : activity.start_date,
+                "end_date" : activity.end_date,
+                "players" : activity.players,
             };
             let form = new Form(postData);
             form.post(this.declineUrl)
@@ -256,38 +257,16 @@ export default {
                     btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light");
                     this.activitiesLoad("reload");
                     this.toastr("Dit afbud er registreret!", "error");
-                    $('#modal1').hide();
-                    $('.modal-backdrop').hide();
-                    this.hideDeclineModal(this.decline_activity);
+                    $('#declineModal1').modal('toggle');
+
+
                 });
         },
 
 
-        showDeclineModal(event,activity) {
-            this.decline_activity = activity.id;
-            this.decline_start_date = activity.start_date;
-            this.decline_end_date = activity.end_date;
-            this.decline_players = activity.players;
-        },
-
-        hideDeclineModal(id,timeout = false) {
-            //this.hover = false;
-            let timeout1 = timeout;
-            if(!timeout1) {
-                timeout1 = 500;
-            }
-            console.log("hide modal id: " + id);
-            let item = document.getElementById("elem-" + id);
-            this.hover = 0;
-            this.hover = id;
-            item.classList.add("active");
 
 
-        },
 
-        hideMouseOver() {
-            this.hover = 0;
-        },
 
         toastr(message,type = false) {
             toastr.options = {
@@ -339,7 +318,7 @@ export default {
         }),
 
         this.$root.$on("declineActivity", data => {
-            this.declineActivity(data.event,data.data);
+            this.declineActivity(data.event,data.formData);
         }),
 
         this.setSpaDate();

@@ -14,7 +14,8 @@ export default {
                 femaleDeclines: 0,
                 maleConfirms: 0,
                 femaleConfirms: 0
-            }
+            },
+
         }
     },
     methods: {
@@ -25,6 +26,7 @@ export default {
         decline(event,data) {
             this.respond = true;
             this.$root.$emit("declineActivity",{'event': event,'formData':data})
+            console.log(data);
         },
 
         // Setting players count for the giving activity - resetting at component update (watch)
@@ -193,6 +195,7 @@ export default {
     }
 
 }
+
 </style>
 
 <template>
@@ -227,7 +230,7 @@ export default {
                     <div class="kt-separator kt-separator--border-dashed kt-margin-10"></div>
                     <div class="flex-row" v-if="calendar.now < activity.response_timestamp">
                         <button @click="signup($event,activity)" type="button" class="btn kt-margin-10" :disabled="activity.my_activity && activity.my_status == 2" :class="activity.my_activity && activity.my_status == 2 ? 'btn-metal' : 'btn-success'"><i class="fa fa-check"></i> {{ activity.my_activity && activity.my_status == 2 ? 'Tilmeldt' : 'Tilmeld' }}</button>
-                        <button @click="decline" type="button" class="btn btn-danger kt-margin-10"><i class="fa fa-door-open"></i> Afbud</button>
+                        <button data-toggle="modal" :data-target="'#declineModal1'" type="button" class="btn btn-danger kt-margin-10"><i class="fa fa-door-open"></i> Afbud</button>
                     </div>
                 </div>
 

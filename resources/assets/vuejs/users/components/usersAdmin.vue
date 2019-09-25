@@ -1,6 +1,6 @@
 <script>
 import Form from "./../../Form";
-import modal from "./modal";
+import modal from "./../../components/modal";
 import associateUser from "./associateUser";
 
 export default {

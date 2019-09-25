@@ -1,9 +1,11 @@
 <script>
 import Modal from "../../components/modal"
 import ActivityInfoModal from "./ActivityInfoModal";
+import DeclineModalContent from "./DeclineModalContent";
 export default {
     name: "ActivitiesList",
     components: {
+        DeclineModalContent,
         ActivityInfoModal,
         Modal
     },
@@ -17,6 +19,12 @@ export default {
                 title:"",
                 activity:Object
             },
+            declineModal: {
+                id:"declineModal1",
+                title:"",
+                activity:Object
+            }
+
         }
     },
     methods: {
@@ -24,22 +32,24 @@ export default {
             if (typeof activity === 'object') {
                 this.modalData.title = activity.title;
                 this.modalData.activity = activity;
+                this.declineModal.title = "Afbud til " + activity.title;
+                this.declineModal.activity = activity;
             } else {
                 return false;
             }
         },
         getBgClass(activity) {
-            if(activity.my_activity == true) {
-                if(activity.my_status) {
-                    let pivot = activity.my_status;
-                    if(pivot == 0) {
-                        return "kt-bg-light-danger";
-                    } else if(pivot == 2) {
-                        return "kt-bg-light-success";
-                    } else if(pivot == 1) {
-                        return "kt-bg-light-warning";
-                    }
+            if(activity.my_activity) {
+
+                let pivot = activity.my_status;
+                if(pivot == 0) {
+                    return "kt-bg-light-danger";
+                } else if(pivot == 2) {
+                    return "kt-bg-light-success";
+                } else if(pivot == 1) {
+                    return "kt-bg-light-warning";
                 }
+
             } else if(activity.type && activity.type.signup == 1) {
                 return "kt-bg-light-brand";
             }
@@ -172,6 +182,9 @@ export default {
             </div>
             <Modal :title="'Vis aktivitet'" :modal-data="modalData">
                 <ActivityInfoModal :calendar="calendar" :activity="modalData.activity"></ActivityInfoModal>
+            </Modal>
+            <Modal :title="declineModal.title" :modal-data="declineModal">
+                <DeclineModalContent calendar="calendar" :activity="declineModal.activity"></DeclineModalContent>
             </Modal>
         <div class="clearfix"></div>
 
