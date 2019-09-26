@@ -2452,7 +2452,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "modal",
-  props: ["modalData", "title", "modalClass", "submitFunc", "closeFunc"],
+  props: ["modalData", "title", "modalClass", "submitFunc", "closeFunc", "styles"],
   data: function data() {
     return {
       test: "yay"
@@ -53480,10 +53480,16 @@ var render = function() {
       _vm._v(" "),
       _c(
         "Modal",
-        { attrs: { title: "Vis aktivitet", "modal-data": _vm.modalData } },
+        {
+          attrs: {
+            title: _vm.declineModal.title,
+            "modal-data": _vm.declineModal,
+            styles: "z-index:1054 !important"
+          }
+        },
         [
-          _c("ActivityInfoModal", {
-            attrs: { calendar: _vm.calendar, activity: _vm.modalData.activity }
+          _c("DeclineModalContent", {
+            attrs: { calendar: "calendar", activity: _vm.declineModal.activity }
           })
         ],
         1
@@ -53491,15 +53497,10 @@ var render = function() {
       _vm._v(" "),
       _c(
         "Modal",
-        {
-          attrs: {
-            title: _vm.declineModal.title,
-            "modal-data": _vm.declineModal
-          }
-        },
+        { attrs: { title: "Vis aktivitet", "modal-data": _vm.modalData } },
         [
-          _c("DeclineModalContent", {
-            attrs: { calendar: "calendar", activity: _vm.declineModal.activity }
+          _c("ActivityInfoModal", {
+            attrs: { calendar: _vm.calendar, activity: _vm.modalData.activity }
           })
         ],
         1
@@ -54897,6 +54898,7 @@ var render = function() {
     {
       staticClass: "pModal modal fade",
       staticStyle: { display: "none" },
+      style: _vm.styles,
       attrs: {
         id: _vm.modalData.id,
         tabindex: "-1",
@@ -73058,10 +73060,12 @@ router.beforeEach(function (to, from, next) {
   if (access) {
     if (access == "public") {
       console.log("public route");
+      document.querySelector("#kt_aside_close_btn").click();
       next();
     } else if (access == "protected" && !roles) {
       axios.get("/api/v1/user").then(function (data) {
         console.log("Authorized");
+        document.querySelector("#kt_aside_close_btn").click();
         next();
       })["catch"](function (e) {
         notify.send("warning", "Du er ikke logget ind!"); //next("/login");
@@ -73071,6 +73075,7 @@ router.beforeEach(function (to, from, next) {
         roles: to.meta.roles
       });
       form.post("/api/v1/user/roles").then(function (data) {
+        document.querySelector("#kt_aside_close_btn").click();
         next();
       })["catch"](function (e) {
         if (e.status == 403) {

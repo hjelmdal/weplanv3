@@ -187,12 +187,14 @@ export default {
                     </template>
                 </div>
             </div>
+            <Modal :title="declineModal.title" :modal-data="declineModal" :styles="'z-index:1054 !important'">
+                <DeclineModalContent calendar="calendar" :activity="declineModal.activity"></DeclineModalContent>
+            </Modal>
             <Modal :title="'Vis aktivitet'" :modal-data="modalData">
                 <ActivityInfoModal :calendar="calendar" :activity="modalData.activity"></ActivityInfoModal>
             </Modal>
-            <Modal :title="declineModal.title" :modal-data="declineModal">
-                <DeclineModalContent calendar="calendar" :activity="declineModal.activity"></DeclineModalContent>
-            </Modal>
+
+
         <div class="clearfix"></div>
 
     </div>

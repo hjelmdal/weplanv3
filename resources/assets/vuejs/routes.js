@@ -71,12 +71,14 @@ router.beforeEach((to, from, next) => {
     if(access) {
         if (access == "public") {
             console.log("public route");
+            document.querySelector("#kt_aside_close_btn").click();
             next();
         } else if(access == "protected" && !roles) {
             axios.get("/api/v1/user")
                 .then(data => {
                     console.log("Authorized");
-                        next();
+                    document.querySelector("#kt_aside_close_btn").click();
+                    next();
 
                 })
                 .catch(e => {
@@ -89,6 +91,7 @@ router.beforeEach((to, from, next) => {
             })
             form.post("/api/v1/user/roles")
                 .then(data => {
+                    document.querySelector("#kt_aside_close_btn").click();
                     next();
                 })
                 .catch(e => {

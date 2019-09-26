@@ -1699,7 +1699,7 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "modal",
-  props: ["modalData", "title", "modalClass", "submitFunc", "closeFunc"],
+  props: ["modalData", "title", "modalClass", "submitFunc", "closeFunc", "styles"],
   data: function data() {
     return {
       test: "yay"
@@ -20886,6 +20886,7 @@ var render = function() {
     {
       staticClass: "pModal modal fade",
       staticStyle: { display: "none" },
+      style: _vm.styles,
       attrs: {
         id: _vm.modalData.id,
         tabindex: "-1",

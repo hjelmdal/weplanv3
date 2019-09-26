@@ -1,7 +1,7 @@
 <script>
     export default {
         name: "modal",
-        props: ["modalData","title","modalClass","submitFunc","closeFunc"],
+        props: ["modalData","title","modalClass","submitFunc","closeFunc","styles"],
         data: function() {
             return {
                 test: "yay"
@@ -36,7 +36,7 @@
 </style>
 
 <template>
-    <div @close="modalClose" class="pModal modal fade" :id="modalData.id" tabindex="-1" role="dialog" :aria-labelledby="title" aria-hidden="true" style="display: none;">
+    <div @close="modalClose" class="pModal modal fade" :id="modalData.id" tabindex="-1" role="dialog" :aria-labelledby="title" aria-hidden="true" style="display: none;" :style="styles">
     <div class="modal-dialog" :class="modalClass" role="document">
         <div class="modal-content">
             <div class="modal-header">
