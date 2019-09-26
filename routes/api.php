@@ -52,6 +52,7 @@ Route::name('api.')->group(function () {
             Route::post('/activities/enroll','WeActivitiesAPI@enroll')->name("activities.enroll");
             Route::post('/activities/confirm','WeActivitiesAPI@confirm')->name("activities.confirm");
             Route::post('/activities/decline','WeActivitiesAPI@decline')->name("activities.decline");
+            Route::get('declines/categories',"WeDeclineApi@categories")->name("declines.categories");
 
             Route::get('/teams/{id}/players',"WeTeamAPI@players")->name("teams.players");
             Route::apiResource('teams','WeTeamAPI');
