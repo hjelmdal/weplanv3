@@ -30902,7 +30902,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.info-block[data-v-4e363bf4] {\n    height: 12px;\n    transform: rotate(90deg);\n    position: absolute;\n    left: -20px;\n    width: 34px;\n    max-width: 34px;\n    text-overflow: ellipsis;\n    overflow: hidden;\n    top: 15px;\n    display: inline-block;\n}\n.row-column[data-v-4e363bf4] {\n    margin-left:0.5rem;\n}\n.alarm-span[data-v-4e363bf4] {\n    margin-right: 1rem;\n}\n.div-time[data-v-4e363bf4] {\n    justify-content: space-between;\n}\n.div-row[data-v-4e363bf4] {\n    position: relative;\n}\n", ""]);
+exports.push([module.i, "\n.info-block[data-v-4e363bf4] {\n    height: 12px;\n    transform: rotate(90deg);\n    position: absolute;\n    left: -20px;\n    width: 34px;\n    max-width: 34px;\n    text-overflow: ellipsis;\n    overflow: hidden;\n    top: 15px;\n    display: inline-block;\n}\n.row-column[data-v-4e363bf4] {\n    margin-left:0.5rem;\n}\n.alarm-span[data-v-4e363bf4] {\n    margin-right: 1rem;\n}\n.div-time[data-v-4e363bf4] {\n    justify-content: space-between;\n}\n.div-row[data-v-4e363bf4] {\n    position: relative;\n}\n.modal[data-v-4e363bf4]:nth-of-type(even) {\n    z-index: 1053 !important;\n}\n.modal[data-v-4e363bf4]:nth-of-type(odd) {\n    z-index: 1051 !important;\n}\n\n", ""]);
 
 // exports
 
@@ -54895,7 +54895,7 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "modal fade",
+      staticClass: "pModal modal fade",
       staticStyle: { display: "none" },
       attrs: {
         id: _vm.modalData.id,

@@ -36,7 +36,7 @@
 </style>
 
 <template>
-    <div @close="modalClose" class="modal fade" :id="modalData.id" tabindex="-1" role="dialog" :aria-labelledby="title" aria-hidden="true" style="display: none;">
+    <div @close="modalClose" class="pModal modal fade" :id="modalData.id" tabindex="-1" role="dialog" :aria-labelledby="title" aria-hidden="true" style="display: none;">
     <div class="modal-dialog" :class="modalClass" role="document">
         <div class="modal-content">
             <div class="modal-header">

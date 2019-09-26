@@ -117,6 +117,13 @@ export default {
     .div-row {
         position: relative;
     }
+    .modal:nth-of-type(even) {
+        z-index: 1053 !important;
+    }
+    .modal:nth-of-type(odd) {
+        z-index: 1051 !important;
+    }
+
 </style>
 
 <template>

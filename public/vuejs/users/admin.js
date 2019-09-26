@@ -20884,7 +20884,7 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "modal fade",
+      staticClass: "pModal modal fade",
       staticStyle: { display: "none" },
       attrs: {
         id: _vm.modalData.id,
