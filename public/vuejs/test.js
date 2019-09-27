@@ -73891,7 +73891,7 @@ router.beforeEach(function (to, from, next) {
       document.querySelector("#kt_aside_close_btn").click();
       next();
     } else if (access == "protected" && !roles) {
-      axios.get("/api/v1/user").then(function (data) {
+      axios.get("/api/v1/auth/user").then(function (data) {
         console.log("Authorized");
         document.querySelector("#kt_aside_close_btn").click();
         next();
@@ -73902,7 +73902,7 @@ router.beforeEach(function (to, from, next) {
       var form = new Form({
         roles: to.meta.roles
       });
-      form.post("/api/v1/user/roles").then(function (data) {
+      form.post("/api/v1/auth/user/roles").then(function (data) {
         document.querySelector("#kt_aside_close_btn").click();
         next();
       })["catch"](function (e) {

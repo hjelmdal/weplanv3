@@ -51,6 +51,12 @@ class UserAPI extends Controller
         return response()->json(["message" => "OK", "user" => $user,"status" => $user->setStatus()]);
     }
 
+    public function authUser(Request $request) {
+        $user = $this->userFromApiToken($request);
+
+        return response()->json(["message" => "OK"]);
+    }
+
     public function authRoles(Request $request) {
         $user = $this->userFromApiToken($request);
         if(!$request->roles) {

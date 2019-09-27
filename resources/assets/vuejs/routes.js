@@ -74,7 +74,7 @@ router.beforeEach((to, from, next) => {
             document.querySelector("#kt_aside_close_btn").click();
             next();
         } else if(access == "protected" && !roles) {
-            axios.get("/api/v1/user")
+            axios.get("/api/v1/auth/user")
                 .then(data => {
                     console.log("Authorized");
                     document.querySelector("#kt_aside_close_btn").click();
@@ -89,7 +89,7 @@ router.beforeEach((to, from, next) => {
             let form = new Form({
                 roles: to.meta.roles
             })
-            form.post("/api/v1/user/roles")
+            form.post("/api/v1/auth/user/roles")
                 .then(data => {
                     document.querySelector("#kt_aside_close_btn").click();
                     next();

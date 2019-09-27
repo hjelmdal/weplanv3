@@ -29,7 +29,8 @@ Route::name('api.')->group(function () {
 
 
         Route::namespace('Auth')->middleware("api.token")->group(function () {
-            Route::post('user/roles',"UserAPI@authRoles")->name("auth-roles");
+            Route::post('auth/user/roles',"UserAPI@authRoles")->name("auth-roles");
+            Route::get('auth/user',"UserAPI@authUser")->name("auth-user");
             Route::get('user',"UserAPI@getMyUser")->name("my-user");
             Route::patch('user',"UserAPI@patch");
             Route::post('user',"UserAPI@saveAvatar");
@@ -52,7 +53,7 @@ Route::name('api.')->group(function () {
             Route::post('/activities/enroll','WeActivitiesAPI@enroll')->name("activities.enroll");
             Route::post('/activities/confirm','WeActivitiesAPI@confirm')->name("activities.confirm");
             Route::post('/activities/decline','WeActivitiesAPI@decline')->name("activities.decline");
-            Route::get('declines/categories',"WeDeclineApi@categories")->name("declines.categories");
+            Route::get('declines/categories',"WeDeclineAPI@categories")->name("declines.categories");
 
             Route::get('/teams/{id}/players',"WeTeamAPI@players")->name("teams.players");
             Route::apiResource('teams','WeTeamAPI');
