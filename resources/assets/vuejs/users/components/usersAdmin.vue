@@ -84,6 +84,11 @@ export default {
         },
         toggleView(view) {
             this.view = view;
+        },
+        highlight(string) {
+            const pattern = this.search;
+            const re = new RegExp(pattern, "gi");
+            return string.replace(re, "<strong>$&</strong>");
         }
     },
     mounted() {
@@ -240,17 +245,16 @@ export default {
                 </thead>
                 <tbody>
                 <tr v-for="(user,index) in filteredUsers">
-                    <td style="padding:0.75rem 5px;">
+                    <td style="padding:0.75rem 5px; width:50px !important;">
 
                             <div class="kt-media kt-media--md kt-media--circle">
                                 <img v-show="user.avatar" :src="user.avatar" :alt="user.name"  style="width: 45px; border: 1px solid #ddd; padding:1px">
                                 <img v-if="!user.avatar" src="/img/profile.png" :alt="user.name"  style="width: 45px; border: 1px solid #ddd; padding:1px">
                             </div>
                     </td>
-                    <td class="td-ellipsis" style="max-width: 30%">
-                            {{ user.name }}<br>
+                    <td class="td-ellipsis" style="max-width: 30%"><span v-html="highlight(user.name)"></span><br>
                             <span class="kt-widget__desc">
-                                <i class="flaticon2-send  kt-font-success"></i> <a target="_blank" :href="'mailto:' +user.email">{{ user.email }} <i v-if="user.email_verified_at != null" class="flaticon2-correct kt-font-success"></i></a>
+                                <i class="flaticon2-send  kt-font-success"></i> <a target="_blank" :href="'mailto:' +user.email"><span v-html="highlight(user.email)"></span> <i v-if="user.email_verified_at != null" class="flaticon2-correct kt-font-success"></i></a>
                                 <br />
                             <span v-for="role in user.roles"  class="badge badge-secondary badge-sm">{{ role.name }}</span>
                            </span>

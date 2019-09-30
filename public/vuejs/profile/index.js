@@ -1784,9 +1784,8 @@ __webpack_require__.r(__webpack_exports__);
           this.form.post("/api/v1/user/activate").then(function (data) {
             document.querySelector(".activation-wrapper").classList.add("success");
 
-            _this.notification.send("success", data.message);
+            _this.notification.send("success", data.message); //this.$emit("next");
 
-            _this.$emit("next");
           })["catch"](function (e) {
             if (e.data) {
               _this.notification.send("error", e.data.errors.form);
@@ -2440,7 +2439,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.col-sm-1 input[data-v-2b1f8929] {\n    width: 45px;\n    height: 45px;\n    font-size: 24px;\n    padding: 0;\n    text-align: center;\n}\n.activation-wrapper.success .form-control[data-v-2b1f8929] {\n    border-color: #1dc9b7;\n}\n.activation-wrapper.failure .form-control[data-v-2b1f8929] {\n    border-color: #fd397a;\n}\n@media (max-width: 575px) {\n.col-sm-1[data-v-2b1f8929] {\n        width: 14% !important;\n}\n.col-sm-1 input[data-v-2b1f8929] {\n        width: 30px;\n        height: 45px;\n        font-size: 2rem;\n        padding: 0;\n        text-align: center;\n}\n}\n", ""]);
+exports.push([module.i, "\n.col-sm-1 input[data-v-2b1f8929] {\n    width: 45px;\n    height: 45px;\n    font-size: 24px;\n    padding: 0;\n    text-align: center;\n}\n.activation-wrapper.success .form-control[data-v-2b1f8929] {\n    border-color: #1dc9b7;\n}\n.activation-wrapper.failure .form-control[data-v-2b1f8929] {\n    border-color: #fd397a;\n}\n@media (max-width: 575px) {\n.col-sm-1[data-v-2b1f8929] {\n        width: 14% !important;\n}\n.col-sm-1 input[data-v-2b1f8929] {\n        width: 30px;\n        height: 45px;\n        font-size: 2rem;\n        padding: 0;\n        text-align: center;\n}\n}\n.activation-wrapper[data-v-2b1f8929] {\n    max-width: 630px;\n    margin: 0 auto;\n}\n", ""]);
 
 // exports
 
@@ -4018,7 +4017,7 @@ var render = function() {
       },
       [
         _c("div", { staticClass: "verify-device fade-in " }, [
-          _c("div", {}, [
+          _c("div", { staticStyle: { "text-align": "center" } }, [
             _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "activation-wrapper" }, [
