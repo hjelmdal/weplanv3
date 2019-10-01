@@ -2,9 +2,12 @@
 import stepActions from "./stepActions";
 import Form from "../../Form"
 import Notification from "../../Notification";
+import VueCountryCode from "vue-country-code";
+import {TheMask} from "vue-the-mask";
+import "vue-country-code/dist/vue-country-code.css";
 export default {
     components: {
-        stepActions
+        stepActions, VueCountryCode, TheMask
     },
     name: "step1Activate",
     props: ["step"],
@@ -23,18 +26,55 @@ export default {
                 digits: [],
                 code: ""
 
+            }),
+            telForm: new Form({
+                resetOnSuccess: false,
+                tel_country: "",
+                tel_iso:"",
+                tel_dialcode:"",
+                tel_number:"",
+                tel_number1:"",
+                show: false
             })
         }
 
     },
     methods: {
         next() {
-            this.$emit("next");
+            this.telForm.patch("/api/v1/user/info")
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    // Do something
+                })
+            //this.$emit("next");
+        },
+
+        onSelect({name, iso2, dialCode}) {
+            this.telForm.tel_country = name;
+            this.telForm.tel_iso = iso2;
+            this.telForm.tel_dialcode = dialCode;
+        },
+        showTelform() {
+            this.telForm.show = true;
+            setTimeout(function () {
+                document.querySelector("#telInput").focus();
+            },500);
+
+        },
+
+        submitTel(event) {
+            event.target.classList.remove("is-valid", "is-invalid");
+            if(this.telForm.tel_number1.length > 10) {
+                this.telForm.tel_number = this.telForm.tel_number1.split(" ").join("");
+                event.target.classList.add("is-valid");
+                this.states.next.disabled = 0;
+            }
         },
         submitForm(refs) {
             if(this.form.digits.length == 6) {
                 this.notification = new Notification();
-                this.states.next.disabled = 0;
                 this.form.code = "";
                 this.form.digits.forEach(item => {
                     this.form.code = this.form.code + item;
@@ -45,7 +85,7 @@ export default {
                             document.querySelector(".activation-wrapper").classList.add("success");
                             this.notification.send("success",data.message);
                             //this.$emit("next");
-
+                            this.showTelform();
                         })
                         .catch(e => {
                             if(e.data) {
@@ -140,7 +180,16 @@ export default {
     }
 }
 </script>
-
+<style>
+    .vue-country-select .current:focus,.vue-country-select .dropdown.open:focus,.vue-country-select .dropdown:focus,.vue-country-select:focus, .vue-country-select .dropdown:focus, .vue-country-select:focus {
+        outline: none !important;
+    }
+    .vue-country-select .dropdown-item, .vue-country-select .dropdown-item strong {
+        padding: 1.15rem;
+        font-size: 1.5rem;
+        font-weight: normal !important;
+    }
+</style>
 <style scoped>
     .col-sm-1 input {
         width: 45px;
@@ -171,6 +220,10 @@ export default {
     .activation-wrapper {
         max-width: 630px;
         margin: 0 auto;
+    }
+    .tel-input {
+        font-size: 2rem;
+        height: 52px;
     }
 </style>
 <template>
@@ -210,6 +263,22 @@ export default {
                         Har du ikke modtaget en aktiveringskode fra os? - klik her!
                     </a>
                     <div class="spinner-container verifying-code" id="verifying-code"></div>
+                    <div class="form-group" v-if="telForm.show">
+
+                        <h1 style="text-align: center;" tabindex="-1">
+                            Telefonnummer
+                        </h1>
+
+                        <div class="row">
+                        <div class="col-1">
+                        <vue-country-code @onSelect="onSelect" :disabledFetchingCountry="true" :defaultCountry="'dk'" :preferredCountries="['dk']" class="" style="height: 52px; border: 1px solid #e2e5ec"></vue-country-code>
+                        </div>
+                        <div class="col-sm-11 offset-sm-0 col-10 offset-1">
+
+                            <TheMask @keyup.native="submitTel($event)" mask="## ## ## ##" type="tel" placeholder="Mobilnummer" :masked="true" class="form-control form-control-lg tel-input"  v-model="telForm.tel_number1" id="telInput" />
+                        </div>
+                        </div>
+                    </div>
                 </div>
 
 

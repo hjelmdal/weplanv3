@@ -22569,7 +22569,101 @@ var render = function() {
                   ]
                 )
               : _vm._e()
-          })
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            [
+              _c(
+                "b-button",
+                {
+                  directives: [
+                    {
+                      name: "b-modal",
+                      rawName: "v-b-modal.modal-multi-1",
+                      modifiers: { "modal-multi-1": true }
+                    }
+                  ]
+                },
+                [_vm._v("Open First Modal")]
+              ),
+              _vm._v(" "),
+              _c(
+                "b-modal",
+                {
+                  attrs: {
+                    id: "modal-multi-1",
+                    size: "lg",
+                    title: "First Modal",
+                    "ok-only": "",
+                    "no-stacking": ""
+                  }
+                },
+                [
+                  _c("p", { staticClass: "my-2" }, [_vm._v("First Modal")]),
+                  _vm._v(" "),
+                  _c(
+                    "b-button",
+                    {
+                      directives: [
+                        {
+                          name: "b-modal",
+                          rawName: "v-b-modal.modal-multi-2",
+                          modifiers: { "modal-multi-2": true }
+                        }
+                      ]
+                    },
+                    [_vm._v("Open Second Modal")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-modal",
+                {
+                  attrs: {
+                    id: "modal-multi-2",
+                    title: "Second Modal",
+                    "ok-only": ""
+                  }
+                },
+                [
+                  _c("p", { staticClass: "my-2" }, [_vm._v("Second Modal")]),
+                  _vm._v(" "),
+                  _c(
+                    "b-button",
+                    {
+                      directives: [
+                        {
+                          name: "b-modal",
+                          rawName: "v-b-modal.modal-multi-3",
+                          modifiers: { "modal-multi-3": true }
+                        }
+                      ],
+                      attrs: { size: "sm" }
+                    },
+                    [_vm._v("Open Third Modal")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-modal",
+                {
+                  attrs: {
+                    id: "modal-multi-3",
+                    size: "sm",
+                    title: "Third Modal",
+                    "ok-only": ""
+                  }
+                },
+                [_c("p", { staticClass: "my-1" }, [_vm._v("Third Modal")])]
+              )
+            ],
+            1
+          )
         ],
         2
       ),
@@ -35467,15 +35561,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************************************!*\
   !*** ./resources/assets/vuejs/users/components/usersAdmin.vue ***!
   \****************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _usersAdmin_vue_vue_type_template_id_3dcb04e5_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./usersAdmin.vue?vue&type=template&id=3dcb04e5&scoped=true& */ "./resources/assets/vuejs/users/components/usersAdmin.vue?vue&type=template&id=3dcb04e5&scoped=true&");
 /* harmony import */ var _usersAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./usersAdmin.vue?vue&type=script&lang=js& */ "./resources/assets/vuejs/users/components/usersAdmin.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _usersAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _usersAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _usersAdmin_vue_vue_type_style_index_0_id_3dcb04e5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./usersAdmin.vue?vue&type=style&index=0&id=3dcb04e5&scoped=true&lang=css& */ "./resources/assets/vuejs/users/components/usersAdmin.vue?vue&type=style&index=0&id=3dcb04e5&scoped=true&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var _usersAdmin_vue_vue_type_style_index_0_id_3dcb04e5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./usersAdmin.vue?vue&type=style&index=0&id=3dcb04e5&scoped=true&lang=css& */ "./resources/assets/vuejs/users/components/usersAdmin.vue?vue&type=style&index=0&id=3dcb04e5&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -35507,7 +35600,7 @@ component.options.__file = "resources/assets/vuejs/users/components/usersAdmin.v
 /*!*****************************************************************************************!*\
   !*** ./resources/assets/vuejs/users/components/usersAdmin.vue?vue&type=script&lang=js& ***!
   \*****************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

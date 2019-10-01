@@ -5,14 +5,20 @@ import moment from "moment";
 import BootstrapVue from "bootstrap-vue";
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import { BTooltip } from "bootstrap-vue";
+import { BModal } from "bootstrap-vue";
+import { BButton } from "bootstrap-vue";
 import Form from "./Form";
 import Notify from "./Notification";
+import VueCountryCode from "vue-country-code";
 moment.locale("da");
 window.moment = require('moment');
 
 window.Vue = Vue;
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
+Vue.use(VueCountryCode);
+
+
 window.Form = Form;
 window.Notify = Notify;
 window.axios = axios;
@@ -42,3 +48,5 @@ Vue.filter('dateString', function (value,type = "to") {
 });
 
 Vue.component('b-tooltip', BTooltip);
+Vue.component('b-modal', BModal);
+Vue.component('b-button',BButton);

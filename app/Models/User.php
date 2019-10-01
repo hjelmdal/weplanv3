@@ -52,11 +52,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function facebook(){
         return $this->hasOne(Facebook::class);
     }
-    
+
     public function google(){
         return $this->hasOne(Google::class);
     }
-    
+
     public function isSuperAdmin()
     {
         return $this->hasRole('super-admin');
@@ -64,6 +64,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function WePlayer() {
         return $this->belongsTo(WePlayer::class,'player_id','id');
+    }
+
+    public function UserInfo() {
+        return $this->hasOne(UserInfo::class,'user_id','id');
     }
 
     public function revoke() {
@@ -136,7 +140,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return 'https://hooks.slack.com/services/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';
     }
-    
+
     public function sendEmailVerificationNotification()
     {
         Log::error("TEST");

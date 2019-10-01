@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Auth;
 
 use App\Models\BadmintonPeople\BpPlayer;
 use App\Models\User;
+use App\Models\UserInfo;
 use App\Models\UserStatus;
 use App\Models\WePlan\WePlayer;
 use App\Notifications\Auth\SendNewActivationCode;
@@ -32,7 +33,7 @@ class UserAPI extends Controller
     private function userFromApiToken(Request $request)
     {
         if ($request->header('Authorization')) {
-            $this->user = User::where('api_token', $request->header("Authorization"))->with("userStatus","roles")->first();
+            $this->user = User::where('api_token', $request->header("Authorization"))->with("userStatus","roles","UserInfo")->first();
             //$this->userStatus = $this->user->load("UserStatus");
             if (!$this->user) {
                 return response()->json(["message" => 'Unauthorized'], 401);
@@ -67,6 +68,22 @@ class UserAPI extends Controller
         }
         return response()->json("Forbidden!",403);
 
+    }
+
+    public function patchInfo(Request $request) {
+        $this->userFromApiToken($request);
+
+        if($request->tel_country && $request->tel_iso && $request->tel_dialcode && $request->tel_number) {
+
+            try {
+                UserInfo::updateOrCreate(["user_id" => $this->user->id], ["user_id" => $this->user->id, "tel_iso" => $request->tel_iso, "tel_country" => $request->tel_country, "tel_dialcode" => $request->tel_dialcode, "tel_number" => $request->tel_number]);
+            } catch (QueryException $e) {
+                return response()->json("Bad input",400);
+            }
+            return response()->json("YES");
+        } else {
+            return response()->json("Bad input",400);
+        }
     }
 
     public function patch(Request $request)
@@ -159,9 +176,7 @@ class UserAPI extends Controller
             if($this->user->UserActivation) {
                 $hashed = $this->user->UserActivation->activation_hashed;
                 if (password_verify($request->code, $hashed)) {
-                    $this->user->email_verified_at = now();
-                    $this->user->UserActivation->delete();
-                    $this->user->save();
+
                     $msg = "Tillykke - din email er nu aktiveret!";
                     return response()->json(["message" => $msg, "output" => $hashed], 200);
 

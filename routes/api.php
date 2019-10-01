@@ -33,6 +33,7 @@ Route::name('api.')->group(function () {
             Route::get('auth/user',"UserAPI@authUser")->name("auth-user");
             Route::get('user',"UserAPI@getMyUser")->name("my-user");
             Route::patch('user',"UserAPI@patch");
+            Route::patch('user/info',"UserAPI@patchInfo");
             Route::post('user',"UserAPI@saveAvatar");
             Route::post('user/associate',"UserAPI@associatePlayer");
             Route::post('user/dissociate',"UserAPI@dissociatePlayer");

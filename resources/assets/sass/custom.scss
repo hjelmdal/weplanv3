@@ -590,7 +590,7 @@ td.td-ellipsis {
 }
 
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .modal-lg, .modal-xl {
         max-width: calc(100% - 1rem);
     }
