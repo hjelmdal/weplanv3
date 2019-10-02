@@ -44,6 +44,7 @@ export default {
             this.telForm.patch("/api/v1/user/info")
                 .then(data => {
                     console.log(data);
+                    this.$emit("next");
                 })
                 .catch(error => {
                     // Do something

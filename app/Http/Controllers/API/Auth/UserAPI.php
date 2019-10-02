@@ -176,7 +176,9 @@ class UserAPI extends Controller
             if($this->user->UserActivation) {
                 $hashed = $this->user->UserActivation->activation_hashed;
                 if (password_verify($request->code, $hashed)) {
-
+                    $this->user->email_verified_at = now();
+                    $this->user->UserActivation->delete();
+                    $this->user->save();
                     $msg = "Tillykke - din email er nu aktiveret!";
                     return response()->json(["message" => $msg, "output" => $hashed], 200);
 

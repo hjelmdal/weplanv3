@@ -1,4 +1,5 @@
 import Vue from "vue";
+import axios from "axios";
 import BootstrapVue from "bootstrap-vue";
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import { BTooltip } from "bootstrap-vue";
@@ -7,7 +8,11 @@ import ActivitiesMyFilter from "./components/ActivitiesMyFilter";
 import moment from "moment";
 moment.locale("da");
 window.moment = require('moment');
-
+window.axios = axios;
+window.axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'Authorization': apiToken
+};
 window.Event = new Vue();
 Vue.use(BootstrapVue);
 Vue.filter('formatTime', function(value,format = "HH:mm") {
