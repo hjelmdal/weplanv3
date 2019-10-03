@@ -271,10 +271,10 @@ export default {
                         </h1>
 
                         <div class="row">
-                        <div class="col-1">
+                        <div class="col-1 offset-sm-4">
                         <vue-country-code @onSelect="onSelect" :disabledFetchingCountry="true" :defaultCountry="'dk'" :preferredCountries="['dk']" class="" style="height: 52px; border: 1px solid #e2e5ec"></vue-country-code>
                         </div>
-                        <div class="col-sm-11 offset-sm-0 col-10 offset-1">
+                        <div class="col-sm-3 offset-sm-0 col-10 offset-1">
 
                             <TheMask @keyup.native="submitTel($event)" mask="## ## ## ##" type="tel" placeholder="Mobilnummer" :masked="true" class="form-control form-control-lg tel-input"  v-model="telForm.tel_number1" id="telInput" />
                         </div>
