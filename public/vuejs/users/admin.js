@@ -2094,7 +2094,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n@media (max-width: 1024px) {\n.input-group-lg>.custom-select[data-v-655fce8a], .input-group-lg>.form-control[data-v-655fce8a], .input-group-lg>.input-group-append>.btn[data-v-655fce8a], .input-group-lg>.input-group-append>.input-group-text[data-v-655fce8a], .input-group-lg>.input-group-prepend>.btn[data-v-655fce8a], .input-group-lg>.input-group-prepend>.input-group-text[data-v-655fce8a] {\n        padding: 1.1rem 1.65rem;\n}\n}\n.kt-svg-icon g [fill][data-v-655fce8a] {\n    fill: #5d78ff;\n}\n.table td[data-v-655fce8a], .table th[data-v-655fce8a] {\n    vertical-align:middle;\n}\n", ""]);
+exports.push([module.i, "\n@media (max-width: 1024px) {\n.input-group-lg>.custom-select[data-v-655fce8a], .input-group-lg>.form-control[data-v-655fce8a], .input-group-lg>.input-group-append>.btn[data-v-655fce8a], .input-group-lg>.input-group-append>.input-group-text[data-v-655fce8a], .input-group-lg>.input-group-prepend>.btn[data-v-655fce8a], .input-group-lg>.input-group-prepend>.input-group-text[data-v-655fce8a] {\n        padding: 1.1rem 1.65rem;\n}\n}\n.kt-svg-icon g [fill][data-v-655fce8a] {\n    fill: #5d78ff;\n}\n.table td[data-v-655fce8a], .table th[data-v-655fce8a] {\n    vertical-align:middle;\n}\n.kt-widget.kt-widget--general-3 .kt-widget__top[data-v-655fce8a] {\n    display: flex;\n    flex-wrap: wrap;\n    align-items: center;\n    justify-content: space-between;\n    margin-top:1rem;\n}\n.kt-widget.kt-widget--general-3 .kt-widget__top .kt-widget__wrapper[data-v-655fce8a] {\n    display: flex;\n    align-items: center;\n    flex-wrap: wrap;\n    flex: 1;\n}\n.kt-widget.kt-widget--general-3 .kt-widget__top .kt-widget__wrapper .kt-widget__label[data-v-655fce8a] {\n    display: flex;\n    flex-direction: column;\n    margin-right: 2rem;\n    flex-grow: 1;\n    padding: .5rem 0;\n}\n.kt-widget.kt-widget--general-3 .kt-widget__top .kt-widget__wrapper .kt-widget__label .kt-widget__title[data-v-655fce8a] {\n    font-size: 1.2rem;\n    font-weight: 600;\n    color: #3d4465;\n    transition: color .3s ease;\n}\n.kt-widget.kt-widget--general-3 .kt-widget__top .kt-widget__wrapper .kt-widget__label .kt-widget__desc[data-v-655fce8a] {\n    font-size: 1rem;\n    font-weight: 400;\n    color: #a1a8c3;\n}\n\n", ""]);
 
 // exports
 
@@ -21114,7 +21114,9 @@ var render = function() {
             [
               _c(
                 "div",
-                { staticClass: "kt-media kt-media--lg kt-media--circle" },
+                {
+                  staticClass: "kt-media kt-media--lg kt-media--circle kt-mr-10"
+                },
                 [
                   _c("img", {
                     directives: [
@@ -22053,12 +22055,18 @@ var render = function() {
                                       ? _c(
                                           "button",
                                           {
+                                            directives: [
+                                              {
+                                                name: "b-modal",
+                                                rawName:
+                                                  "v-b-modal.modal-multi-1",
+                                                modifiers: {
+                                                  "modal-multi-1": true
+                                                }
+                                              }
+                                            ],
                                             staticClass: "btn btn-sm btn-metal",
-                                            attrs: {
-                                              "data-toggle": "modal",
-                                              "data-target": "#modal3",
-                                              type: "button"
-                                            },
+                                            attrs: { type: "button" },
                                             on: {
                                               click: function($event) {
                                                 return _vm.associateModal(
@@ -22080,13 +22088,19 @@ var render = function() {
                                       ? _c(
                                           "button",
                                           {
+                                            directives: [
+                                              {
+                                                name: "b-modal",
+                                                rawName:
+                                                  "v-b-modal.modal-multi-1",
+                                                modifiers: {
+                                                  "modal-multi-1": true
+                                                }
+                                              }
+                                            ],
                                             staticClass:
                                               "btn btn-sm btn-success",
-                                            attrs: {
-                                              "data-toggle": "modal",
-                                              "data-target": "#modal3",
-                                              type: "button"
-                                            },
+                                            attrs: { type: "button" },
                                             on: {
                                               click: function($event) {
                                                 return _vm.associateModal(
@@ -22593,28 +22607,48 @@ var render = function() {
                 {
                   attrs: {
                     id: "modal-multi-1",
-                    size: "lg",
+                    size: "md",
                     title: "First Modal",
-                    "ok-only": "",
                     "no-stacking": ""
-                  }
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "modal-footer",
+                      fn: function(ref) {
+                        var cancel = ref.cancel
+                        return [
+                          _c(
+                            "b-button",
+                            {
+                              attrs: {
+                                size: "sm",
+                                variant: "outline-secondary"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return cancel()
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            Luk\n                        "
+                              )
+                            ]
+                          )
+                        ]
+                      }
+                    }
+                  ])
                 },
                 [
-                  _c("p", { staticClass: "my-2" }, [_vm._v("First Modal")]),
-                  _vm._v(" "),
-                  _c(
-                    "b-button",
-                    {
-                      directives: [
-                        {
-                          name: "b-modal",
-                          rawName: "v-b-modal.modal-multi-2",
-                          modifiers: { "modal-multi-2": true }
-                        }
-                      ]
-                    },
-                    [_vm._v("Open Second Modal")]
-                  )
+                  _c("associate-user", {
+                    attrs: {
+                      now: _vm.modalData.user,
+                      "form-data": _vm.modalData,
+                      id: _vm.modalData.suggested_id
+                    }
+                  })
                 ],
                 1
               ),

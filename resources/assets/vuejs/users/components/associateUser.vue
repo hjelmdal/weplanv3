@@ -158,6 +158,63 @@
     .table td, .table th {
         vertical-align:middle;
     }
+
+
+    .kt-widget.kt-widget--general-3 .kt-widget__top {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        margin-top:1rem;
+    }
+
+    .kt-widget.kt-widget--general-3 .kt-widget__top .kt-widget__wrapper {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+    }
+    .kt-widget.kt-widget--general-3 .kt-widget__top .kt-widget__wrapper .kt-widget__label {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        margin-right: 2rem;
+        -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+        flex-grow: 1;
+        padding: .5rem 0;
+    }
+    .kt-widget.kt-widget--general-3 .kt-widget__top .kt-widget__wrapper .kt-widget__label .kt-widget__title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #3d4465;
+        -webkit-transition: color .3s ease;
+        transition: color .3s ease;
+    }
+    .kt-widget.kt-widget--general-3 .kt-widget__top .kt-widget__wrapper .kt-widget__label .kt-widget__desc {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #a1a8c3;
+    }
+
 </style>
 
 <template>
@@ -178,7 +235,7 @@
     <div class="kt-portlet kt-widget kt-widget--general-3">
         <div class="kt-portlet__body kt-portlet__body--fit">
             <div class="kt-widget__top" style="padding-left: 10px; padding-right: 10px">
-                <div class="kt-media kt-media--lg kt-media--circle">
+                <div class="kt-media kt-media--lg kt-media--circle kt-mr-10">
                     <img v-show="user.avatar" :src="user.avatar" :alt="user.name">
                     <img v-if="!user.avatar" src="/img/profile.png" :alt="user.name">
                 </div>

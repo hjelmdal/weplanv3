@@ -55,6 +55,17 @@ let routes = [
             title: "Brugere"
         }
     },
+    {
+        name: "Trupper",
+        path: '/teams',
+        component: require('./teams/components/teamsAdmin').default,
+        meta: {
+            access: "protected",
+            roles: ["super-admin","player"],
+            icon: "flaticon-users",
+            title: "Trupper"
+        }
+    },
 
 ];
 window.routes = routes;

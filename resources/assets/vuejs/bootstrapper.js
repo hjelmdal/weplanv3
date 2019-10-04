@@ -4,6 +4,7 @@ import axios from 'axios';
 import moment from "moment";
 import BootstrapVue from "bootstrap-vue";
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import '../sass/spa.scss';
 import { BTooltip } from "bootstrap-vue";
 import { BModal } from "bootstrap-vue";
 import { BButton } from "bootstrap-vue";

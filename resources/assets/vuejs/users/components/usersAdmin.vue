@@ -282,8 +282,8 @@ export default {
                     <td class="align-middle">
                         <div class="btn-group" role="group" aria-label="First group">
                             <button type="button" class="btn btn-sm btn-primary"><i class="la la-pencil-square-o"></i></button>
-                            <button data-toggle="modal" data-target="#modal3" v-if="user.player_id" @click="associateModal(user,0)" type="button" class="btn btn-sm btn-metal"><i class="la la-chain-broken"></i></button>
-                            <button data-toggle="modal" data-target="#modal3" v-if="!user.player_id"  @click="associateModal(user,0)" type="button" class="btn btn-sm btn-success"><i class="la la-chain"></i></button>
+                            <button v-b-modal.modal-multi-1 v-if="user.player_id" @click="associateModal(user,0)" type="button" class="btn btn-sm btn-metal"><i class="la la-chain-broken"></i></button>
+                            <button v-b-modal.modal-multi-1 v-if="!user.player_id"  @click="associateModal(user,0)" type="button" class="btn btn-sm btn-success"><i class="la la-chain"></i></button>
                             <button type="button" class="btn btn-sm btn-danger"><i class="la la-trash"></i></button>
                         </div>
                     </td>
@@ -428,9 +428,13 @@ export default {
             <div>
                 <b-button v-b-modal.modal-multi-1>Open First Modal</b-button>
 
-                <b-modal id="modal-multi-1" size="lg" title="First Modal" ok-only no-stacking>
-                    <p class="my-2">First Modal</p>
-                    <b-button v-b-modal.modal-multi-2>Open Second Modal</b-button>
+                <b-modal id="modal-multi-1" size="md" title="First Modal" no-stacking>
+                    <associate-user :now="modalData.user" :form-data="modalData" :id="modalData.suggested_id"></associate-user>
+                    <template v-slot:modal-footer="{ cancel }">
+                        <b-button size="sm" variant="outline-secondary" @click="cancel()">
+                            Luk
+                        </b-button>
+                    </template>
                 </b-modal>
 
                 <b-modal id="modal-multi-2" title="Second Modal" ok-only>
