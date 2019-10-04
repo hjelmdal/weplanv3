@@ -359,7 +359,7 @@ class UserAPI extends Controller
             $status[$i]["icon"] = "";
             $status[$i]["stepInfo"] = array();
             $status[$i]["stepInfo"]["title"] = "Opsætning af brugerkonto!";
-            $status[$i]["stepInfo"]["text"] = "Færdiggør venligst din profil og udfyld dit BadmintonDanmark ID, så du kan blive tilknyttet træninger mv.";
+            $status[$i]["stepInfo"]["text"] = "Aktivér din email adresse";
             $status[$i]["stepInfo"]["svg"] = "/img/yes.svg";
             $status[$i]["contentComponent"] = "step1Activate";
             $i++;
