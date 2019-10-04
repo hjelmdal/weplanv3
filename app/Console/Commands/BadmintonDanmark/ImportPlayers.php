@@ -106,6 +106,7 @@ class ImportPlayers extends Command
                         if ($id) {
                             $bpPlayer = BpPlayer::updateOrCreate(['dbf_id' => $id], ['club_id' => $club_id, 'name' => $name, 'gender' => $gender, 'birthday' => $birthdate, 'age_group' => $group]);
                             //$bpClub = BpClub::updateOrCreate(['id' => $id],['club_id' => $id, 'name' => $name, 'team_name' => $team_name, 'address' => $address, 'postal_code' => $postal_code, 'city' => $city, 'contact_email' => $email, 'email' => $email, 'association' => $association, 'area' => $area]);
+                            $this->info($id . ": " . $name . " - " . $club_id);
                             if ($bpPlayer->wasRecentlyCreated) {
                                 $new++;
                             } elseif ($bpPlayer->wasChanged()) {

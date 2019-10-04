@@ -13,7 +13,7 @@ class CreateBpPlayersTable extends Migration
      */
     public function up()
     {
-        Schema::create('bp_players', function (Blueprint $table) {
+        Schema::connection('shared')->create('bp_players', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('dbf_id');
             $table->integer('bp_id')->nullable();

@@ -55001,8 +55001,15 @@ var render = function() {
                                           [
                                             _vm._v(
                                               _vm._s(
-                                                _vm.activity.responsible.email
-                                              )
+                                                "+" +
+                                                  _vm.activity.responsible
+                                                    .user_info.tel_dialcode
+                                              ) +
+                                                " " +
+                                                _vm._s(
+                                                  _vm.activity.responsible
+                                                    .user_info.tel_number
+                                                )
                                             )
                                           ]
                                         )
