@@ -255,7 +255,7 @@ export default {
                             </div>
 
                             <div class="kt-widget-3__content-stats">
-                                <div class="truncate-text kt-font-white" style="display: flex; align-items: center"> <div class="kt-media kt-media--md kt-media--circle" style="border: 1px solid #dee2e6;"><img :src="activity.responsible.avatar != null ? activity.responsible.avatar : '/img/profile.png'" :alt="activity.responsible.name"></div> <div class="truncate-text avatar-width"> {{ activity.responsible.name }}<br><span class="kt-widget-3__content-desc">{{ '+' + activity.responsible.user_info.tel_dialcode }} {{ activity.responsible.user_info.tel_number }}</span></div>
+                                <div class="truncate-text kt-font-white" style="display: flex; align-items: center"> <div class="kt-media kt-media--md kt-media--circle" style="border: 1px solid #dee2e6;"><img :src="activity.responsible.avatar != null ? activity.responsible.avatar : '/img/profile.png'" :alt="activity.responsible.name"></div> <div class="truncate-text avatar-width"> {{ activity.responsible.name }}<br><span v-if="activity.responsible.user_info" class="kt-widget-3__content-desc">{{ '+' + activity.responsible.user_info.tel_dialcode }} {{ activity.responsible.user_info.tel_number }}</span></div>
                                 </div>
                             </div>
                         </div>
