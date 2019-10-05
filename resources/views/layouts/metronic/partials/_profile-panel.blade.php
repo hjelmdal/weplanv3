@@ -11,7 +11,7 @@
     <div class="kt-offcanvas-panel__body kt-scroll ps ps--active-y" style="height: 784px; overflow: hidden;">
         <div class="kt-user-card-v3 kt-margin-b-30">
             <div class="kt-user-card-v3__avatar">
-                <img src="/metronic/themes/metronic/theme/default/demo1/dist/assets/media/users/300_21.jpg" alt="">
+                <img src="/weplan/media/users/300_21.jpg" alt="">
             </div>
             <div class="kt-user-card-v3__detalis">
                 <a href="#" class="kt-user-card-v3__name">
@@ -119,7 +119,7 @@
                     <div class="kt-widget-4__itek-content">
                         <div class="kt-widget-4__itek-section">
                             <div class="kt-widget-4__item-pic">
-                                <img class="" src="/metronic/themes/metronic/theme/default/demo1/dist/assets/media/product-logos/logo1.png" alt="">
+                                <img class="" src="weplan/media/project-logos/1.png" alt="">
                             </div>
                             <div class="kt-widget-4__item-info">
                                 <a href="#">
@@ -141,7 +141,7 @@
                     <div class="kt-widget-4__itek-content">
                         <div class="kt-widget-4__itek-section">
                             <div class="kt-widget-4__item-pic">
-                                <img class="" src="/metronic/themes/metronic/theme/default/demo1/dist/assets/media/product-logos/logo2.png" alt="">
+                                <img class="" src="/weplan/media/project-logos/2.png" alt="">
                             </div>
                             <div class="kt-widget-4__item-info">
                                 <a href="#">
@@ -163,7 +163,7 @@
                     <div class="kt-widget-4__itek-content">
                         <div class="kt-widget-4__itek-section">
                             <div class="kt-widget-4__item-pic">
-                                <img class="" src="/metronic/themes/metronic/theme/default/demo1/dist/assets/media/product-logos/logo3.png" alt="">
+                                <img class="" src="/weplan/media/project-logos/3.png" alt="">
                             </div>
                             <div class="kt-widget-4__item-info">
                                 <a href="#">
