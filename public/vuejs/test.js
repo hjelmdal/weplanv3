@@ -55185,79 +55185,95 @@ var render = function() {
                               "div",
                               { staticClass: "kt-widget-3__content-stats" },
                               [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "truncate-text kt-font-white",
-                                    staticStyle: {
-                                      display: "flex",
-                                      "align-items": "center"
-                                    }
-                                  },
-                                  [
-                                    _c(
+                                _vm.activity.responsible
+                                  ? _c(
                                       "div",
                                       {
                                         staticClass:
-                                          "kt-media kt-media--md kt-media--circle",
+                                          "truncate-text kt-font-white",
                                         staticStyle: {
-                                          border: "1px solid #dee2e6"
+                                          display: "flex",
+                                          "align-items": "center"
                                         }
                                       },
                                       [
-                                        _c("img", {
-                                          attrs: {
-                                            src:
-                                              _vm.activity.responsible.avatar !=
-                                              null
-                                                ? _vm.activity.responsible
-                                                    .avatar
-                                                : "/img/profile.png",
-                                            alt: _vm.activity.responsible.name
-                                          }
-                                        })
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "truncate-text avatar-width"
-                                      },
-                                      [
-                                        _vm._v(
-                                          " " +
-                                            _vm._s(
-                                              _vm.activity.responsible.name
-                                            )
-                                        ),
-                                        _c("br"),
                                         _c(
-                                          "span",
+                                          "div",
                                           {
                                             staticClass:
-                                              "kt-widget-3__content-desc"
+                                              "kt-media kt-media--md kt-media--circle",
+                                            staticStyle: {
+                                              border: "1px solid #dee2e6"
+                                            }
+                                          },
+                                          [
+                                            _c("img", {
+                                              attrs: {
+                                                src:
+                                                  _vm.activity.responsible
+                                                    .avatar != null
+                                                    ? _vm.activity.responsible
+                                                        .avatar
+                                                    : "/img/profile.png",
+                                                alt:
+                                                  _vm.activity.responsible.name
+                                              }
+                                            })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "truncate-text avatar-width"
                                           },
                                           [
                                             _vm._v(
-                                              _vm._s(
-                                                "+" +
-                                                  _vm.activity.responsible
-                                                    .user_info.tel_dialcode
-                                              ) +
-                                                " " +
+                                              " " +
                                                 _vm._s(
-                                                  _vm.activity.responsible
-                                                    .user_info.tel_number
+                                                  _vm.activity.responsible.name
                                                 )
-                                            )
+                                            ),
+                                            _c("br"),
+                                            _vm._v(" "),
+                                            _vm.activity.responsible
+                                              .user_info &&
+                                            _vm.activity.responsible.user_info
+                                              .tel_dialcode &&
+                                            _vm.activity.responsible.user_info
+                                              .tel_number
+                                              ? _c(
+                                                  "span",
+                                                  {
+                                                    staticClass:
+                                                      "kt-widget-3__content-desc"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        "+" +
+                                                          _vm.activity
+                                                            .responsible
+                                                            .user_info
+                                                            .tel_dialcode
+                                                      ) +
+                                                        " " +
+                                                        _vm._s(
+                                                          _vm.activity
+                                                            .responsible
+                                                            .user_info
+                                                            .tel_number
+                                                        )
+                                                    )
+                                                  ]
+                                                )
+                                              : _vm._e()
                                           ]
                                         )
                                       ]
                                     )
-                                  ]
-                                )
+                                  : _vm._e()
                               ]
                             )
                           ])
