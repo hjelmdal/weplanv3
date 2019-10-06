@@ -2775,6 +2775,7 @@ __webpack_require__.r(__webpack_exports__);
     activitiesLoad: function activitiesLoad(string) {
       var _this = this;
 
+      KTApp.blockPage();
       var btn = "null";
       var firstLoad = false;
 
@@ -2889,6 +2890,8 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         _this.setLoadingSpinner(false, btn);
+
+        KTApp.unblockPage();
       });
     },
     confirmActivity: function confirmActivity(event, activity) {
@@ -53576,12 +53579,29 @@ var render = function() {
                       {
                         staticClass: "div-row",
                         class: _vm.getBgClass(activity),
-                        attrs: { id: "elem-" + activity.id }
+                        attrs: {
+                          "data-toggle": "modal",
+                          "data-target": "#" + _vm.modalData.id,
+                          href: "#",
+                          id: "elem-" + activity.id
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.activityShow(activity)
+                          }
+                        }
                       },
                       [
                         _c(
                           "span",
                           {
+                            directives: [
+                              {
+                                name: "b-tooltip",
+                                rawName: "v-b-tooltip.hover",
+                                modifiers: { hover: true }
+                              }
+                            ],
                             staticClass:
                               "badge kt-font-white badge-sm info-block",
                             class: {
@@ -53591,7 +53611,7 @@ var render = function() {
                               "badge-warning": activity.type_id == 4
                             },
                             staticStyle: { height: "12px" },
-                            attrs: { "data-toggle": "kt-tooltip" }
+                            attrs: { title: activity.type.name }
                           },
                           [_vm._v(_vm._s(activity.type.name))]
                         ),

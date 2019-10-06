@@ -158,8 +158,8 @@ export default {
                 </div>
                 <div class="flex-center" style="width: calc(100% - 86px);">
                     <template v-for="activity in day.events">
-                        <div v-bind:id="'elem-' + activity.id" class="div-row" :class="getBgClass(activity)">
-                            <span style="height:12px" data-toggle="kt-tooltip"  class="badge kt-font-white badge-sm info-block" v-bind:class="{'badge-success':(activity.type_id == 1), 'badge-danger':(activity.type_id == 2), 'badge-primary':(activity.type_id == 3), 'badge-warning':(activity.type_id == 4)}">{{ activity.type.name }}</span>
+                        <div @click="activityShow(activity)" data-toggle="modal" :data-target="'#'+modalData.id" href="#" v-bind:id="'elem-' + activity.id" class="div-row" :class="getBgClass(activity)">
+                            <span style="height:12px" v-b-tooltip.hover :title="activity.type.name" class="badge kt-font-white badge-sm info-block" v-bind:class="{'badge-success':(activity.type_id == 1), 'badge-danger':(activity.type_id == 2), 'badge-primary':(activity.type_id == 3), 'badge-warning':(activity.type_id == 4)}">{{ activity.type.name }}</span>
                             <div class="row-column" v-bind:class="{'bef-brand':(activity.type.signup == 1), 'bef-warning':(activity.my_activity && activity.my_status == 1), 'bef-danger':(activity.my_activity && activity.my_status == 0), 'bef-success':(activity.my_activity && activity.my_status == 2), 'bef-metal':(activity.type.decline == 1 && activity.my_activity == false)}">
                                 <span class="div-text" style="font-size: 1.5rem;">{{ activity.title }}</span>
                                 <div class="div-time" style="display: flex;">

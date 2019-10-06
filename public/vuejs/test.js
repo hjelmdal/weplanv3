@@ -2760,6 +2760,7 @@ __webpack_require__.r(__webpack_exports__);
     activitiesLoad: function activitiesLoad(string) {
       var _this = this;
 
+      KTApp.blockPage();
       var btn = "null";
       var firstLoad = false;
 
@@ -2874,6 +2875,8 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         _this.setLoadingSpinner(false, btn);
+
+        KTApp.unblockPage();
       });
     },
     confirmActivity: function confirmActivity(event, activity) {
@@ -31670,7 +31673,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".modal .modal-content .modal-header .close:before {\n  content: none;\n}\n\n.modal .modal-content .modal-header .close {\n  font-size: 2rem;\n  padding: 1rem;\n}", ""]);
+exports.push([module.i, ".modal .modal-content .modal-header .close:before {\n  content: none;\n}\n\n.modal .modal-content .modal-header .close {\n  font-size: 2rem;\n  padding: 0.8rem 1rem 0rem 1rem;\n}", ""]);
 
 // exports
 
@@ -54316,12 +54319,29 @@ var render = function() {
                       {
                         staticClass: "div-row",
                         class: _vm.getBgClass(activity),
-                        attrs: { id: "elem-" + activity.id }
+                        attrs: {
+                          "data-toggle": "modal",
+                          "data-target": "#" + _vm.modalData.id,
+                          href: "#",
+                          id: "elem-" + activity.id
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.activityShow(activity)
+                          }
+                        }
                       },
                       [
                         _c(
                           "span",
                           {
+                            directives: [
+                              {
+                                name: "b-tooltip",
+                                rawName: "v-b-tooltip.hover",
+                                modifiers: { hover: true }
+                              }
+                            ],
                             staticClass:
                               "badge kt-font-white badge-sm info-block",
                             class: {
@@ -54331,7 +54351,7 @@ var render = function() {
                               "badge-warning": activity.type_id == 4
                             },
                             staticStyle: { height: "12px" },
-                            attrs: { "data-toggle": "kt-tooltip" }
+                            attrs: { title: activity.type.name }
                           },
                           [_vm._v(_vm._s(activity.type.name))]
                         ),
@@ -58211,20 +58231,6 @@ var render = function() {
             "div",
             [
               _c(
-                "b-button",
-                {
-                  directives: [
-                    {
-                      name: "b-modal",
-                      rawName: "v-b-modal.modal-multi-1",
-                      modifiers: { "modal-multi-1": true }
-                    }
-                  ]
-                },
-                [_vm._v("Open First Modal")]
-              ),
-              _vm._v(" "),
-              _c(
                 "b-modal",
                 {
                   attrs: {
@@ -58273,49 +58279,6 @@ var render = function() {
                   })
                 ],
                 1
-              ),
-              _vm._v(" "),
-              _c(
-                "b-modal",
-                {
-                  attrs: {
-                    id: "modal-multi-2",
-                    title: "Second Modal",
-                    "ok-only": ""
-                  }
-                },
-                [
-                  _c("p", { staticClass: "my-2" }, [_vm._v("Second Modal")]),
-                  _vm._v(" "),
-                  _c(
-                    "b-button",
-                    {
-                      directives: [
-                        {
-                          name: "b-modal",
-                          rawName: "v-b-modal.modal-multi-3",
-                          modifiers: { "modal-multi-3": true }
-                        }
-                      ],
-                      attrs: { size: "sm" }
-                    },
-                    [_vm._v("Open Third Modal")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "b-modal",
-                {
-                  attrs: {
-                    id: "modal-multi-3",
-                    size: "sm",
-                    title: "Third Modal",
-                    "ok-only": ""
-                  }
-                },
-                [_c("p", { staticClass: "my-1" }, [_vm._v("Third Modal")])]
               )
             ],
             1

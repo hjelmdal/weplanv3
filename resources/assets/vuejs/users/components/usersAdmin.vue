@@ -426,7 +426,7 @@ export default {
                 </div>
             </div>
             <div>
-                <b-button v-b-modal.modal-multi-1>Open First Modal</b-button>
+
 
                 <b-modal id="modal-multi-1" size="md" title="First Modal" no-stacking>
                     <associate-user :now="modalData.user" :form-data="modalData" :id="modalData.suggested_id"></associate-user>
@@ -436,68 +436,8 @@ export default {
                         </b-button>
                     </template>
                 </b-modal>
-
-                <b-modal id="modal-multi-2" title="Second Modal" ok-only>
-                    <p class="my-2">Second Modal</p>
-                    <b-button v-b-modal.modal-multi-3 size="sm">Open Third Modal</b-button>
-                </b-modal>
-
-                <b-modal id="modal-multi-3" size="sm" title="Third Modal" ok-only>
-                    <p class="my-1">Third Modal</p>
-                </b-modal>
             </div>
-            <!--end::Portlet-->
 
-            <!--begin: Pagination-->
-            <!--div class="kt-pagination kt-pagination--brand kt-margin-t-10">
-                <ul class="kt-pagination__links">
-                    <li class="kt-pagination__link--first">
-                        <a href="#"><i class="fa fa-angle-double-left"></i></a>
-                    </li>
-                    <li class="kt-pagination__link--next">
-                        <a href="#"><i class="fa fa-angle-left"></i></a>
-                    </li>
-
-                    <li>
-                        <a href="#">...</a>
-                    </li>
-                    <li>
-                        <a href="#">29</a>
-                    </li>
-                    <li>
-                        <a href="#">30</a>
-                    </li>
-                    <li class="kt-pagination__link--active">
-                        <a href="#">32</a>
-                    </li>
-                    <li>
-                        <a href="#">34</a>
-                    </li>
-                    <li>
-                        <a href="#">...</a>
-                    </li>
-
-                    <li class="kt-pagination__link--prev">
-                        <a href="#"><i class="fa fa-angle-right"></i></a>
-                    </li>
-                    <li class="kt-pagination__link--last">
-                        <a href="#"><i class="fa fa-angle-double-right"></i></a>
-                    </li>
-                </ul>
-                <div class="kt-pagination__toolbar">
-                    <select class="form-control" style="width: 60px;">
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
-                    <span class="pagination__desc">
-                    10 of 230
-                </span>
-                </div>
-            </div-->
-            <!--end: Pagination-->
         </div>
         <!--End:: App Content-->
         <modal :modal-data="modalData" :title="modalData.user.name">

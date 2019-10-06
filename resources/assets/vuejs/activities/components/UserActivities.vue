@@ -90,6 +90,7 @@ export default {
             return true;
         },
         activitiesLoad(string) {
+            KTApp.blockPage();
             let btn = "null";
             let firstLoad = false;
             if(!document.querySelector('meta[name="api-token"]').getAttribute('content')) {
@@ -194,6 +195,7 @@ export default {
                         }
                     }
                     this.setLoadingSpinner(false,btn);
+                    KTApp.unblockPage();
                 })
 
 

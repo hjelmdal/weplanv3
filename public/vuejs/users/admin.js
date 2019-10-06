@@ -22589,20 +22589,6 @@ var render = function() {
             "div",
             [
               _c(
-                "b-button",
-                {
-                  directives: [
-                    {
-                      name: "b-modal",
-                      rawName: "v-b-modal.modal-multi-1",
-                      modifiers: { "modal-multi-1": true }
-                    }
-                  ]
-                },
-                [_vm._v("Open First Modal")]
-              ),
-              _vm._v(" "),
-              _c(
                 "b-modal",
                 {
                   attrs: {
@@ -22651,49 +22637,6 @@ var render = function() {
                   })
                 ],
                 1
-              ),
-              _vm._v(" "),
-              _c(
-                "b-modal",
-                {
-                  attrs: {
-                    id: "modal-multi-2",
-                    title: "Second Modal",
-                    "ok-only": ""
-                  }
-                },
-                [
-                  _c("p", { staticClass: "my-2" }, [_vm._v("Second Modal")]),
-                  _vm._v(" "),
-                  _c(
-                    "b-button",
-                    {
-                      directives: [
-                        {
-                          name: "b-modal",
-                          rawName: "v-b-modal.modal-multi-3",
-                          modifiers: { "modal-multi-3": true }
-                        }
-                      ],
-                      attrs: { size: "sm" }
-                    },
-                    [_vm._v("Open Third Modal")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "b-modal",
-                {
-                  attrs: {
-                    id: "modal-multi-3",
-                    size: "sm",
-                    title: "Third Modal",
-                    "ok-only": ""
-                  }
-                },
-                [_c("p", { staticClass: "my-1" }, [_vm._v("Third Modal")])]
               )
             ],
             1
