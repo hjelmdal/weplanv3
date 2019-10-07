@@ -88,7 +88,7 @@ $dir = "/weplan";
                     <div class="kt-quick-search__section">
                         <div class="kt-quick-search__item">
                             <div class="kt-quick-search__item-img">
-                                <img src="{{ $dir }}/media/users/300_11.jpg" alt="">
+                                <img src="{{ $dir }}/media/users/100_11.jpg" alt="">
                             </div>
                             <div class="kt-quick-search__item-wrapper">
                                 <a href="#" class="kt-quick-search__item-title">
@@ -102,7 +102,7 @@ $dir = "/weplan";
 
                         <div class="kt-quick-search__item">
                             <div class="kt-quick-search__item-img">
-                                <img src="{{ $dir }}/media/users/300_16.jpg" alt="">
+                                <img src="{{ $dir }}/media/users/100_12.jpg" alt="">
                             </div>
                             <div class="kt-quick-search__item-wrapper">
                                 <a href="#" class="kt-quick-search__item-title">
@@ -116,7 +116,7 @@ $dir = "/weplan";
 
                         <div class="kt-quick-search__item">
                             <div class="kt-quick-search__item-img">
-                                <img src="{{ $dir }}/media/users/300_22.jpg" alt="">
+                                <img src="{{ $dir }}/media/users/100_8.jpg" alt="">
                             </div>
                             <div class="kt-quick-search__item-wrapper">
                                 <a href="#" class="kt-quick-search__item-title">
@@ -130,7 +130,7 @@ $dir = "/weplan";
 
                         <div class="kt-quick-search__item">
                             <div class="kt-quick-search__item-img">
-                                <img src="{{ $dir }}/media/users/300_5.jpg" alt="">
+                                <img src="{{ $dir }}/media/users/100_5.jpg" alt="">
                             </div>
                             <div class="kt-quick-search__item-wrapper">
                                 <a href="#" class="kt-quick-search__item-title">
