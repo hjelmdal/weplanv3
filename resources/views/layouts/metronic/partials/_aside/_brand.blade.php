@@ -3,7 +3,10 @@
 <div class="kt-aside__brand kt-grid__item " id="kt_aside_brand" style="background: #2f2e38">
 	<div class="kt-aside__brand-logo">
 		<a href="{{ route("index") }}">
-			<img alt="Logo" src="/img/WePlan-logo.jpg" height="40" />
+            <picture>
+                <img src="/img/WePlan-logo-40px.jpg" srcset="/img/WePlan-logo-80px.jpg 2x, /img/WePlan-logo.jpg 3x" alt="WePlan logo">
+            </picture>
+			<!--img alt="Logo" src="/img/WePlan-logo.jpg" height="40" /-->
 		</a>
 	</div>
 	<div class="kt-aside__brand-tools">
