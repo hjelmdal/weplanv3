@@ -149,10 +149,10 @@ export default {
                     </div>
                     <div class="div-date">
                         <div v-if="day.events.length > 1" class="p8-date kt-align-center" style="border:0px">
-                            <img src="/img/activities/palm_tree.svg">
+                            <img src="/img/activities/palm_tree.svg" alt="Ferie">
                         </div>
                         <div v-else class="p8-date kt-align-center" style="border:0px">
-                            <img src="/img/activities/injury.svg">
+                            <img src="/img/activities/injury.svg" alt="Skadet">
                         </div>
                     </div>
                 </div>
@@ -166,7 +166,7 @@ export default {
                                     <span class="time-span">
                                         <i class="la la-clock-o" style="font-size: 14px;"></i> {{ activity.start | formatTime("HH:mm") }} - {{ activity.end | formatTime("HH:mm") }}
                                     </span>
-                                    <span class="alarm-span" v-if="activity.my_activity || activity.type.signup"><img src="/img/activities/alarm_clock.svg"> {{ activity.response_date + " " + activity.response_time | dateString("to") }}</span>
+                                    <span class="alarm-span" v-if="activity.my_activity || activity.type.signup"><img src="/img/activities/alarm_clock.svg" alt="Senest respons"> {{ activity.response_date + " " + activity.response_time | dateString("to") }}</span>
 
 
                                 </div>

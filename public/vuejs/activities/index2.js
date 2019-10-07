@@ -53546,7 +53546,10 @@ var render = function() {
                       },
                       [
                         _c("img", {
-                          attrs: { src: "/img/activities/palm_tree.svg" }
+                          attrs: {
+                            src: "/img/activities/palm_tree.svg",
+                            alt: "Ferie"
+                          }
                         })
                       ]
                     )
@@ -53558,7 +53561,10 @@ var render = function() {
                       },
                       [
                         _c("img", {
-                          attrs: { src: "/img/activities/injury.svg" }
+                          attrs: {
+                            src: "/img/activities/injury.svg",
+                            alt: "Skadet"
+                          }
                         })
                       ]
                     )
@@ -53678,7 +53684,9 @@ var render = function() {
                                   ? _c("span", { staticClass: "alarm-span" }, [
                                       _c("img", {
                                         attrs: {
-                                          src: "/img/activities/alarm_clock.svg"
+                                          src:
+                                            "/img/activities/alarm_clock.svg",
+                                          alt: "Senest respons"
                                         }
                                       }),
                                       _vm._v(

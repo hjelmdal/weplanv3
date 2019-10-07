@@ -32,6 +32,16 @@
                     return final;
                 }
             },
+            getGender(player) {
+                if(player && player.gender) {
+                    if(player.gender == "M") {
+                        return "kt-media--brand";
+                    } else if(player.gender == "K") {
+                        return "kt-media--danger";
+                    }
+                }
+                return false;
+            },
             editTeam(team) {
                 this.modalTeam = team;
                 this.$bvModal.show("editTeam");
@@ -164,7 +174,7 @@
                             <div class="col-6 m--valign-middle">
                                 <div class="kt-media-group">
                                     <template  v-for="(player, index) in team.players">
-                                        <a v-if="index < 3" href="#" class="kt-media kt-media--sm kt-media--circle" :class="player.gender = 'M' ? ' kt-media--brand' : '  kt-media--danger'" v-b-tooltip.hover :title="player.name">
+                                        <a v-if="index < 3" href="#" class="kt-media kt-media--sm kt-media--circle" :class="getGender(player)" v-b-tooltip.hover :title="player.name">
                                             <img v-if="player.user && player.user.avatar" :src="player.user.avatar " :alt="player.name" />
                                             <span v-else>{{ getInitials(player.name) }}</span>
                                         </a>

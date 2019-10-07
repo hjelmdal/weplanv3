@@ -8,6 +8,7 @@ import '../sass/spa.scss';
 import { BTooltip } from "bootstrap-vue";
 import { BModal } from "bootstrap-vue";
 import { BButton } from "bootstrap-vue";
+import { BTab } from "bootstrap-vue";
 import Form from "./Form";
 import Notify from "./Notification";
 import VueCountryCode from "vue-country-code";
@@ -51,3 +52,4 @@ Vue.filter('dateString', function (value,type = "to") {
 Vue.component('b-tooltip', BTooltip);
 Vue.component('b-modal', BModal);
 Vue.component('b-button',BButton);
+

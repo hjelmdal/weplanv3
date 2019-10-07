@@ -143,9 +143,9 @@ $user = Auth::user();
 <!--end::Global Theme Bundle -->
 
 <!--begin::Page Vendors(used by this page) -->
-<script src="{{ $dir }}/plugins/custom/fullcalendar/fullcalendar.bundle.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
-<script src="//maps.google.com/maps/api/js?key=AIzaSyBTGnKT7dt597vo9QgeQ7BFhvSRP4eiMSM" type="text/javascript"></script>
-<script src="{{ $dir }}/plugins/custom/gmaps/gmaps.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript"></script>
+<script src="{{ $dir }}/plugins/custom/fullcalendar/fullcalendar.bundle.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript" async></script>
+<script src="//maps.google.com/maps/api/js?key=AIzaSyBTGnKT7dt597vo9QgeQ7BFhvSRP4eiMSM" type="text/javascript" async></script>
+<script src="{{ $dir }}/plugins/custom/gmaps/gmaps.js?v={{ Helpers::gitVersion()->getVersion() }}" type="text/javascript" async></script>
 
 <!--end::Page Vendors -->
 
