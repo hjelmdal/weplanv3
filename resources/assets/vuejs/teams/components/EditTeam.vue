@@ -56,7 +56,7 @@
                       var self = this;
                       setTimeout(function () {
                           self.$bvModal.hide("editTeam");
-                      },1500)
+                      },1500);
 
                   })
             },
