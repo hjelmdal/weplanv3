@@ -12,6 +12,8 @@ import { BTab } from "bootstrap-vue";
 import Form from "./Form";
 import Notify from "./Notification";
 import VueCountryCode from "vue-country-code";
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 moment.locale("da");
 window.moment = require('moment');
 
@@ -19,6 +21,11 @@ window.Vue = Vue;
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 Vue.use(VueCountryCode);
+const options = {
+    confirmButtonColor: '#5d78ff',
+    cancelButtonColor: '#fd397a'
+}
+Vue.use(VueSweetalert2,options);
 
 
 window.Form = Form;

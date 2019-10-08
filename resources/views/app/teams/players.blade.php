@@ -148,6 +148,7 @@
             if (dataObj) {
                 $.ajax({
                     url: "{{ route("api.v1.players.index") }}/" + dataObj.player_id,
+                    headers: { Authorization: document.querySelector('meta[name="api-token"]').getAttribute('content') },
                     type: "PATCH",
                     dataType: "json",
                     data: dataObj,

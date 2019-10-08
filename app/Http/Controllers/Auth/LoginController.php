@@ -54,8 +54,8 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
-    
+
+
     /**
      * Override Illuminate\Foundation\Auth\AuthenticatesUsers
      *
@@ -84,7 +84,7 @@ class LoginController extends Controller
         $request->session()->put('google-intent', 'login');
         return Socialite::driver('google')->redirect();
     }
-    
+
     public function redirectToGoogleCreate(Request $request){
         $request->session()->put('google-intent', 'create');
         return Socialite::driver('google')
@@ -92,11 +92,11 @@ class LoginController extends Controller
             ->with(["access_type" => "offline", "prompt" => "consent select_account"])
             ->redirect();
     }
-    
+
     public function handleGoogleCallback(Request $request){
         /** @var User $user */
         $user = Socialite::driver('google')->user();
-        
+
         $userObj = \App\Models\User::where('email', $user->getEmail())->whereHas('google', function(Builder $query) use ($user){
             $query->where('google_id', $user->getId());
         })->first();

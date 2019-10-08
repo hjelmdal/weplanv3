@@ -15,6 +15,6 @@ class WeTeam extends Model
     }
 
     public function players() {
-        return $this->hasMany(WePlayer::class,'team_id','id');
+        return $this->hasMany(WePlayer::class,'team_id','id')->orderBy("gender","ASC")->orderBy("name","ASC");
     }
 }

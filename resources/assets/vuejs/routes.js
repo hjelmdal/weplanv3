@@ -94,7 +94,7 @@ router.beforeEach((to, from, next) => {
                 })
                 .catch(e => {
                     notify.send("warning","Du er ikke logget ind!");
-                    //next("/login");
+                    window.location.href = "/login";
                 })
         } else if(access == "protected" && roles) {
             let form = new Form({
@@ -109,6 +109,13 @@ router.beforeEach((to, from, next) => {
                     if(e.status == 403) {
 
                         notify.send("warning","Du har ikke de krævede rettigheder til at se denne side!");
+                    }
+
+                    if(e.status == 401) {
+
+                        notify.send("warning","Du er ikke logget ind!!");
+
+                        window.location.href = "/login";
                     }
                 })
         }

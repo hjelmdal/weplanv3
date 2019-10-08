@@ -6,7 +6,9 @@
         props:["teams"],
         data() {
             return {
-                modalTeam: Object
+                modalTeam: Object,
+                modalPlayer: Object,
+                editTeamId: 1
             }
         },
 
@@ -44,9 +46,39 @@
             },
             editTeam(team) {
                 this.modalTeam = team;
+                console.log(team.id);
+                this.editTeamId = team.id;
                 this.$bvModal.show("editTeam");
 
+
+            },
+            setTeam(player) {
+                this.modalPlayer = player;
+                this.$bvModal.show("setTeam");
+            },
+            modalSetTeamSave() {
+                this.$root.$emit("modalTeamPlayerTrigger");
+                this.$bvModal.hide("setTeam");
+
+            },
+            setTeam1(id) {
+                console.log(this.$store.getters['teams/getTeamById'](id));
             }
+        },
+        mounted() {
+            this.$root.$on("teamPlayerModal", data => {
+                this.setTeam(data.player);
+            })
+            this.$root.$on("sendUpdateToTeamsList", data => {
+                let team = this.teams.find(function (x) {
+                    console.log(x.id);
+                    console.log(data.team);
+                    return x.id === data.team;
+                });
+
+                this.modalTeam = team;
+            })
+
         }
 
     }
@@ -137,7 +169,7 @@
                             <h3 class="kt-portlet__head-title" v-text="team.name"></h3>
 
                         </div>
-                        <span v-if="team.players.length > 0" style="display:flex; align-self:center; font-size:0.9rem; font-weight:500"><span v-bind:class="[team.players.length > team.max_players ? 'kt-font-danger' : '']">{{ team.players.length }}</span>&nbsp;/ {{ team.max_players }} spillere</span>
+                        <span v-if="team.players && team.players.length > 0" style="display:flex; align-self:center; font-size:0.9rem; font-weight:500"><span v-bind:class="[team.players.length > team.max_players ? 'kt-font-danger' : '']">{{ team.players.length }}</span>&nbsp;/ {{ team.max_players }} spillere</span>
                     </div>
                     <div class="kt-portlet__body">
 
@@ -185,27 +217,15 @@
                                 </div>
                             </div>
                             <div class="col-6 kt-align-right">
-                                <button @click="editTeam(team)" type="submit" class="btn btn-success">Edit</button>
-                                <button type="submit" class="btn btn-secondary">Cancel</button>
+                                <button @click="editTeam(team)" type="submit" class="btn btn-success btn-sm"><i class="la la-gears"></i> Redigér</button>
+                                <button @click="setTeam1(team.id)" type="submit" :disabled="team.players.length > 0" class="btn btn-secondary btn-sm" :class="team.players.length > 0 ? 'btn-secondary' : 'btn-danger'"><i class="la la-trash"></i>Slet</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!--end::Portlet-->
             </div>
-            <b-modal id="editTeam">
-                <template v-slot:modal-title>{{ modalTeam.name }}</template>
-                    <edit-team :team="modalTeam"></edit-team>
-                <template v-slot:modal-footer="{ ok, cancel }">
 
-                    <!-- Emulate built in modal footer ok and cancel button actions -->
-                    <b-button size="sm" variant="success" @click="ok()">
-                        OK
-                    </b-button>
-                    <b-button size="sm" variant="danger" @click="cancel()">
-                        Cancel
-                    </b-button>
-                </template>
-            </b-modal>
+           <edit-team :id="editTeamId"></edit-team>
     </div>
 </template>

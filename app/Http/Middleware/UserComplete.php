@@ -24,7 +24,7 @@ class UserComplete
                 try {
                     $token = $request->header("Authorization");
                     $user = User::where('api_token', $token)->firstOrFail();
-                } catch (ModelNotFoundException$e) {
+                } catch (ModelNotFoundException $e) {
                     Log::error("User with token: " . $token . " NOT FOUND");
                     return response()->json(["message" => 'Unauthorized! - Please log in!'], 401);
 
