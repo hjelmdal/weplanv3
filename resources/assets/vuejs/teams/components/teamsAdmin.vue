@@ -1,6 +1,5 @@
 <script>
 import TeamsList from "./TeamsList";
-import { mapState } from "vuex";
 export default {
     name: "teamsAdmin",
     components: {TeamsList},
@@ -20,21 +19,6 @@ export default {
 
 
         },
-        teamSetPlayerTeam(data) {
-            this.$store.dispatch('teams/setPlayerTeam', {data: data})
-                .then(data1 => {
-                    console.log("test" + data1);
-                    this.$swal({
-                        title: data1,
-                        timer: 1500,
-                        type: 'success',
-                        showConfirmButton: false,
-                    });
-
-                    //this.teamsLoad("reload");
-                    //this.$root.$emit("sendUpdateToTeamsList", {'team': data.player.team_id});
-                })
-        }
     },
     computed : {
         teams() {
@@ -44,14 +28,6 @@ export default {
     mounted: function () {
         this.teamsLoad("reload");
 
-        this.$root.$on("modalTeamPlayerUpdate",data => {
-            this.teamSetPlayerTeam(data);
-        })
-
-
-    },
-    created() {
-        //this.teamsLoad("reload")
     }
 }
 </script>

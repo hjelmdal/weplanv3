@@ -46,11 +46,8 @@
             },
             editTeam(team) {
                 this.modalTeam = team;
-                console.log(team.id);
                 this.editTeamId = team.id;
                 this.$bvModal.show("editTeam");
-
-
             },
             setTeam(player) {
                 this.modalPlayer = player;
@@ -66,18 +63,6 @@
             }
         },
         mounted() {
-            this.$root.$on("teamPlayerModal", data => {
-                this.setTeam(data.player);
-            })
-            this.$root.$on("sendUpdateToTeamsList", data => {
-                let team = this.teams.find(function (x) {
-                    console.log(x.id);
-                    console.log(data.team);
-                    return x.id === data.team;
-                });
-
-                this.modalTeam = team;
-            })
 
         }
 
@@ -206,11 +191,11 @@
                             <div class="col-6 m--valign-middle">
                                 <div class="kt-media-group">
                                     <template  v-for="(player, index) in team.players">
-                                        <a v-if="index < 3" href="#" class="kt-media kt-media--sm kt-media--circle" :class="getGender(player)" v-b-tooltip.hover :title="player.name">
+                                        <a v-if="index < 4" href="#" class="kt-media kt-media--sm kt-media--circle" :class="getGender(player)" v-b-tooltip.hover :title="player.name">
                                             <img v-if="player.user && player.user.avatar" :src="player.user.avatar " :alt="player.name" />
                                             <span v-else>{{ getInitials(player.name) }}</span>
                                         </a>
-                                        <a v-if="index == 3" href="#" class="kt-media kt-media--sm kt-media--circle kt-media--dark">
+                                        <a v-if="index == 4" href="#" class="kt-media kt-media--sm kt-media--circle kt-media--dark">
                                             <span>+{{ team.players.length-index }}</span>
                                         </a>
                                     </template>

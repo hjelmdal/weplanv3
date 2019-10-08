@@ -1,8 +1,6 @@
 <script>
-    import SetTeamModal from "./SetTeamModal";
     export default {
         name: "EditTeam",
-        components: {SetTeamModal},
         props:["id"],
         data() {
             return {
@@ -36,6 +34,7 @@
                                 title: data1,
                                 timer: 1500,
                                 type: 'success',
+                                position: 'top',
                                 showConfirmButton: false,
                             });
                         })
@@ -51,6 +50,7 @@
                           title: data.message,
                           timer: 1500,
                           type: 'success',
+                          position: 'top',
                           showConfirmButton: false,
                       });
                       var self = this;
@@ -182,7 +182,7 @@
             <b-button size="sm" class="btn btn-outline-metal" @click="cancel()">
                 Luk
             </b-button>
-            <b-button size="sm" variant="brand" @click="modalEditTeam">
+            <b-button tabindex="-1" size="sm" variant="brand" @click="modalEditTeam">
                 Gem
             </b-button>
         </template>
