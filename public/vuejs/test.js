@@ -60301,7 +60301,7 @@ var render = function() {
                         [
                           _c("b-table", {
                             attrs: {
-                              "show-empty": "true",
+                              "show-empty": "",
                               "empty-text":
                                 "Der er ikke tilknyttet nogen spillere til denne trup",
                               "sort-icon-left": "",

@@ -102,7 +102,7 @@
                 </b-tab>
                 <b-tab title="Spillere">
 
-                    <b-table show-empty="true" empty-text="Der er ikke tilknyttet nogen spillere til denne trup" sort-icon-left small :fields="teamPlayersFields" :items="team.players">
+                    <b-table show-empty empty-text="Der er ikke tilknyttet nogen spillere til denne trup" sort-icon-left small :fields="teamPlayersFields" :items="team.players">
                         <template v-slot:cell(index)="data">
                             {{ data.index + 1 }}
                         </template>
