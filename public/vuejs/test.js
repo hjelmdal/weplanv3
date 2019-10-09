@@ -3110,6 +3110,30 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/teams/components/AddPlayers.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/teams/components/AddPlayers.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "AddPlayers",
+  data: function data() {
+    return {
+      input: "",
+      readOnly: false
+    };
+  },
+  methods: {
+    submit: function submit() {}
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/teams/components/EditTeam.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/teams/components/EditTeam.vue?vue&type=script&lang=js& ***!
@@ -3120,10 +3144,13 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TeamForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TeamForm */ "./resources/assets/vuejs/teams/components/TeamForm.vue");
+/* harmony import */ var _AddPlayers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddPlayers */ "./resources/assets/vuejs/teams/components/AddPlayers.vue");
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "EditTeam",
   components: {
+    AddPlayers: _AddPlayers__WEBPACK_IMPORTED_MODULE_1__["default"],
     TeamForm: _TeamForm__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: ["id"],
@@ -60061,6 +60088,128 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/teams/components/AddPlayers.vue?vue&type=template&id=3475cc46&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/teams/components/AddPlayers.vue?vue&type=template&id=3475cc46&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "kt-searchbar" }, [
+    _c("div", { staticClass: "input-group input-group-lg" }, [
+      _c("div", { staticClass: "input-group-prepend" }, [
+        _c(
+          "span",
+          { staticClass: "input-group-text", attrs: { id: "basic-addon1" } },
+          [
+            _c(
+              "svg",
+              {
+                staticClass: "kt-svg-icon",
+                attrs: {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                  width: "24px",
+                  height: "24px",
+                  viewBox: "0 0 24 24",
+                  version: "1.1"
+                }
+              },
+              [
+                _c(
+                  "g",
+                  {
+                    attrs: {
+                      stroke: "none",
+                      "stroke-width": "1",
+                      fill: "none",
+                      "fill-rule": "evenodd"
+                    }
+                  },
+                  [
+                    _c("rect", {
+                      attrs: {
+                        id: "bound",
+                        x: "0",
+                        y: "0",
+                        width: "24",
+                        height: "24"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z",
+                        id: "Path-2",
+                        fill: "#000000",
+                        "fill-rule": "nonzero",
+                        opacity: "0.3"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z",
+                        id: "Path",
+                        fill: "#000000",
+                        "fill-rule": "nonzero"
+                      }
+                    })
+                  ]
+                )
+              ]
+            )
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.input,
+            expression: "input"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: {
+          type: "text",
+          placeholder: "Tilføj spillere",
+          "aria-describedby": "basic-addon1",
+          disabled: _vm.readOnly
+        },
+        domProps: { value: _vm.input },
+        on: {
+          keyup: _vm.submit,
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.input = $event.target.value
+          }
+        }
+      })
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/teams/components/EditTeam.vue?vue&type=template&id=39e93193&":
 /*!***************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/teams/components/EditTeam.vue?vue&type=template&id=39e93193& ***!
@@ -60152,6 +60301,9 @@ var render = function() {
                         [
                           _c("b-table", {
                             attrs: {
+                              "show-empty": "true",
+                              "empty-text":
+                                "Der er ikke tilknyttet nogen spillere til denne trup",
                               "sort-icon-left": "",
                               small: "",
                               fields: _vm.teamPlayersFields,
@@ -80724,6 +80876,75 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     players: _modules_players__WEBPACK_IMPORTED_MODULE_3__["default"]
   }
 }));
+
+/***/ }),
+
+/***/ "./resources/assets/vuejs/teams/components/AddPlayers.vue":
+/*!****************************************************************!*\
+  !*** ./resources/assets/vuejs/teams/components/AddPlayers.vue ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AddPlayers_vue_vue_type_template_id_3475cc46_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddPlayers.vue?vue&type=template&id=3475cc46&scoped=true& */ "./resources/assets/vuejs/teams/components/AddPlayers.vue?vue&type=template&id=3475cc46&scoped=true&");
+/* harmony import */ var _AddPlayers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddPlayers.vue?vue&type=script&lang=js& */ "./resources/assets/vuejs/teams/components/AddPlayers.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AddPlayers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AddPlayers_vue_vue_type_template_id_3475cc46_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AddPlayers_vue_vue_type_template_id_3475cc46_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "3475cc46",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/assets/vuejs/teams/components/AddPlayers.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/assets/vuejs/teams/components/AddPlayers.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/assets/vuejs/teams/components/AddPlayers.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddPlayers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./AddPlayers.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/teams/components/AddPlayers.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddPlayers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/assets/vuejs/teams/components/AddPlayers.vue?vue&type=template&id=3475cc46&scoped=true&":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/assets/vuejs/teams/components/AddPlayers.vue?vue&type=template&id=3475cc46&scoped=true& ***!
+  \***********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddPlayers_vue_vue_type_template_id_3475cc46_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./AddPlayers.vue?vue&type=template&id=3475cc46&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/teams/components/AddPlayers.vue?vue&type=template&id=3475cc46&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddPlayers_vue_vue_type_template_id_3475cc46_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddPlayers_vue_vue_type_template_id_3475cc46_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 

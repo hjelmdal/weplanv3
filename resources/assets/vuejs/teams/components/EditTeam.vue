@@ -1,8 +1,9 @@
 <script>
     import TeamForm from "./TeamForm";
+    import AddPlayers from "./AddPlayers";
     export default {
         name: "EditTeam",
-        components: {TeamForm},
+        components: {AddPlayers, TeamForm},
         props:["id"],
         data() {
             return {
@@ -100,7 +101,8 @@
                     <team-form ref="TeamForm" :team="team"></team-form>
                 </b-tab>
                 <b-tab title="Spillere">
-                    <b-table sort-icon-left small :fields="teamPlayersFields" :items="team.players">
+
+                    <b-table show-empty="true" empty-text="Der er ikke tilknyttet nogen spillere til denne trup" sort-icon-left small :fields="teamPlayersFields" :items="team.players">
                         <template v-slot:cell(index)="data">
                             {{ data.index + 1 }}
                         </template>
