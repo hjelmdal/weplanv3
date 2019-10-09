@@ -57,16 +57,30 @@ const actions = {
 
     updateTeam : async (context, {payload}) => {
         return new Promise((resolve, reject) => {
-            let form = new Form({
-                id: payload.id,
-                name: payload.name,
-                max_players: payload.max_players,
-                active: payload.active
-            });
-            form.put("/api/v1/teams/" + payload.id)
+            let type = "post";
+            if(payload.id) {
+                type = "put";
+            }
+                payload[type]("/api/v1/teams/" + payload.id)
+
                 .then(data => {
                     resolve(data);
                     context.dispatch('getAllTeams');
+                })
+        });
+    },
+    saveTeam : async (context, {payload}) => {
+        return new Promise((resolve, reject) => {
+            let form = new Form(payload);
+            form.post("/api/v1/teams")
+
+                .then(data => {
+
+                    context.dispatch('getAllTeams');
+                    resolve(data);
+                })
+                .catch(e => {
+                    reject(e.data);
                 })
         });
     }

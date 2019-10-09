@@ -1,8 +1,9 @@
 <script>
     import EditTeam from "./EditTeam";
+    import TeamForm from "./TeamForm";
     export default {
         name: "TeamsList",
-        components: {EditTeam},
+        components: {TeamForm, EditTeam},
         props:["teams"],
         data() {
             return {
@@ -58,6 +59,12 @@
                 this.$bvModal.hide("setTeam");
 
             },
+            createTeam() {
+                this.$bvModal.show("createTeam");
+            },
+            modalCreateTeam() {
+                this.$refs.createTeam.modalUpdateTeam();
+            },
             setTeam1(id) {
                 console.log(this.$store.getters['teams/getTeamById'](id));
             }
@@ -85,6 +92,9 @@
 </script>
 
 <style scoped>
+    .kt-media:hover {
+        cursor:pointer;
+    }
     .kt-widget-18 .kt-widget-18__item {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -130,8 +140,7 @@
                         </h3>
                     </div>
                     <div class="kt-portlet__head-toolbar">
-                        <button id="reload" v-on:click="teamsLoad('reload')" class="btn btn-brand btn-icon kt-margin-r-10"><i class="la la-refresh"></i></button>
-                        <a data-target="#modal-std" data-toggle="modal" href="#" class="btn btn-success"><i class="flaticon2-plus-1"></i> <span>Opret trup</span></a>
+                        <button @click="createTeam" class="btn btn-success"><i class="flaticon2-plus-1"></i> <span>Opret trup</span></button>
                     </div>
                 </div>
             </div>
@@ -191,13 +200,13 @@
                             <div class="col-6 m--valign-middle">
                                 <div class="kt-media-group">
                                     <template  v-for="(player, index) in team.players">
-                                        <a v-if="index < 4" href="#" class="kt-media kt-media--sm kt-media--circle" :class="getGender(player)" v-b-tooltip.hover :title="player.name">
+                                        <span v-if="index < 4" class="kt-media kt-media--sm kt-media--circle" :class="getGender(player)" v-b-tooltip.hover :title="player.name">
                                             <img v-if="player.user && player.user.avatar" :src="player.user.avatar " :alt="player.name" />
                                             <span v-else>{{ getInitials(player.name) }}</span>
-                                        </a>
-                                        <a v-if="index == 4" href="#" class="kt-media kt-media--sm kt-media--circle kt-media--dark">
+                                        </span>
+                                        <span v-if="index == 4" class="kt-media kt-media--sm kt-media--circle kt-media--dark">
                                             <span>+{{ team.players.length-index }}</span>
-                                        </a>
+                                        </span>
                                     </template>
                                 </div>
                             </div>
@@ -212,5 +221,18 @@
             </div>
 
            <edit-team :id="editTeamId"></edit-team>
+            <b-modal id="createTeam">
+                <template v-slot:modal-title>Opret ny trup</template>
+                <team-form ref="createTeam"></team-form>
+                <template v-slot:modal-footer="{ ok, cancel }">
+                    <!-- Emulate built in modal footer ok and cancel button actions -->
+                    <b-button size="sm" class="btn btn-outline-metal" @click="cancel()">
+                        Fortryd
+                    </b-button>
+                    <b-button tabindex="-1" size="sm" variant="brand" @click="modalCreateTeam" @keyup.enter="modalCreateTeam">
+                        Opret
+                    </b-button>
+                </template>
+            </b-modal>
     </div>
 </template>

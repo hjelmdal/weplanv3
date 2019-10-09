@@ -1,6 +1,8 @@
 <script>
+    import TeamForm from "./TeamForm";
     export default {
         name: "EditTeam",
+        components: {TeamForm},
         props:["id"],
         data() {
             return {
@@ -43,25 +45,14 @@
                 }
                 this.$bvModal.hide("setTeam");
             },
-            modalEditTeam() {
-              this.$store.dispatch('teams/updateTeam',{payload: this.team})
-                  .then(data => {
-                      this.$swal({
-                          title: data.message,
-                          timer: 1500,
-                          type: 'success',
-                          position: 'top',
-                          showConfirmButton: false,
-                      });
-                      var self = this;
-                      setTimeout(function () {
-                          self.$bvModal.hide("editTeam");
-                      },1500);
 
-                  })
-            },
+
             resetForm() {
                 this.selected = this.id;
+            },
+            modalUpdateTeam() {
+                console.log("Sent to child");
+                this.$refs.TeamForm.modalUpdateTeam();
             }
         },
 
@@ -81,7 +72,7 @@
                 })
                 return options;
             },
-        }
+        },
 
     }
 </script>
@@ -106,52 +97,7 @@
         <div v-if="team && team.id">
             <b-tabs content-class="mt-3">
                 <b-tab title="Info" active>
-                    <!--begin::Section-->
-                    <div class="kt-section kt-form__section--first">
-
-                        <!-- begin::form rows -->
-                        <div class="form-group kt-form__group row">
-                            <label class="col-form-label col-lg-3 col-sm-12">Navn</label>
-
-                            <div class="col-lg-6 col-md-9 col-sm-12">
-                                <input name="id" type="hidden" v-model="team.id" />
-                                <input name="name" class="form-control kt-input" id="name" autocomplete="new-password" type="text" placeholder="Trup navn" v-model="team.name">
-                                <span class="kt-form__help">Skriv et sigende navn for den trup du opretter</span>
-
-                            </div>
-
-                        </div>
-
-                        <div class="form-group kt-form__group row">
-
-
-                            <label class="col-form-label col-lg-3 col-sm-12">Max antal spillere</label>
-
-                            <div class="col-lg-6 col-md-9 col-sm-12">
-                                <input name="max_players" class="form-control kt-input" id="max_players" type="number" placeholder="20" v-model="team.max_players">
-                                <span class="kt-form__help">Hvor mange ønsker du max på denne trup?</span>
-
-                            </div>
-
-                        </div>
-                        <div class="form-group kt-form__group row">
-
-
-                            <label class="col-lg-3 col-sm-12">Aktiv?</label>
-
-                            <div class="col-lg-6 col-md-9 col-sm-12">
-                                <label class="kt-checkbox kt-checkbox--bold kt-checkbox--success">
-                                    <input name="active" v-model="team.active" value="1" type="checkbox" > Er truppen aktiv?
-                                    <span></span>
-                                </label>
-
-
-
-                            </div>
-
-                        </div>
-                    </div>
-                    <!--end::Section-->
+                    <team-form ref="TeamForm" :team="team"></team-form>
                 </b-tab>
                 <b-tab title="Spillere">
                     <b-table sort-icon-left small :fields="teamPlayersFields" :items="team.players">
@@ -182,7 +128,7 @@
             <b-button size="sm" class="btn btn-outline-metal" @click="cancel()">
                 Luk
             </b-button>
-            <b-button tabindex="-1" size="sm" variant="brand" @click="modalEditTeam">
+            <b-button tabindex="-1" size="sm" variant="brand" @click="modalUpdateTeam">
                 Gem
             </b-button>
         </template>
@@ -190,12 +136,12 @@
 
 
     <b-modal @show="resetForm" v-if="team && team.id" id="setTeam">
-        <template v-slot:modal-title>{{ team.name }}</template>
+        <template v-slot:modal-title>{{ modalPlayer.name }}</template>
         <div class="kt-section kt-form__section--first">
 
             <!-- begin::form rows -->
             <div class="form-group kt-form__group">
-                <h5>Sæt spilleren på en anden trup nedenfor.</h5>
+                <h5>Sæt {{ modalPlayer.name }} på en trup nedenfor.</h5>
                 <b-form-select v-model="selected" :options="teamsSelect"></b-form-select>
 
             </div>

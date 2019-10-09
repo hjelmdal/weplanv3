@@ -54,7 +54,7 @@ class WeTeamAPI extends Controller
             $status = 200;
         }
 
-        return response()->json($team,$status);
+        return response()->json(["team" => $team,"message" => "Truppen er oprettet!"],$status);
     }
 
     /**
