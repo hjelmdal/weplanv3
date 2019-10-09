@@ -14,6 +14,11 @@ const getters =  {
 const mutations = {
     SET_TEAMS : (state, teams) => {
         state.teams = teams;
+    },
+
+    DELETE_TEAM(state, id){
+        let index = state.teams.findIndex(team => team.id == id)
+        state.teams.splice(index, 1)
     }
 }
 
@@ -61,7 +66,8 @@ const actions = {
             if(payload.id) {
                 type = "put";
             }
-                payload[type]("/api/v1/teams/" + payload.id)
+            let form = new Form(payload);
+                form[type]("/api/v1/teams/" + payload.id)
 
                 .then(data => {
                     resolve(data);
@@ -83,8 +89,16 @@ const actions = {
                     reject(e.data);
                 })
         });
-    }
+    },
+    deleteTeam : async (context, {payload}) => {
+        return new Promise((resolve, reject) => {
+            let form = new Form(payload);
+            form.delete("/api/v1/teams/"+ payload);
 
+            context.commit('DELETE_TEAM',payload);
+
+        })
+    }
 
 }
 

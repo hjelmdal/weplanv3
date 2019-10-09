@@ -9,6 +9,7 @@ export default {
                 name:"",
                 max_players: "",
                 active: 1,
+                resetOnSuccess: false,
             }),
             errors:[]
         }

@@ -33,7 +33,7 @@ class WeTeamAPI extends Controller
     {
         $request->validate($this->validation());
 
-        if($request->active == "on") {
+        if($request->active == "on" || $request->active == 1) {
             $active = 1;
         } else {
             $active = 0;
@@ -132,7 +132,23 @@ class WeTeamAPI extends Controller
      */
     public function destroy($id)
     {
-        //
+        if($id > 0) {
+            try {
+                $team = WeTeam::findOrFail($id);
+                $team->load("players");
+                //return response()->json($team);
+                if(count($team->players) > 0) {
+                    return response()->json(["message" => "Truppen indeholder spillere og kan ikke slettes"], 400);
+                } else {
+                    $team->delete();
+                    return response()->json(["message" => "Truppen blev slettet korrekt"], 204);
+                }
+            } catch (ModelNotFoundException $e) {
+                return response()->json(["message" => "Truppen blev ikke fundet"], 404);
+            }
+        } else {
+            return response()->json(["message" => "Truppen blev ikke fundet!"], 404);
+        }
     }
 
     private function validation() {
