@@ -54,6 +54,9 @@
             modalUpdateTeam() {
                 console.log("Sent to child");
                 this.$refs.TeamForm.modalUpdateTeam();
+            },
+            setFocus() {
+                this.$refs.addPlayers.setFocus();
             }
         },
 
@@ -117,6 +120,9 @@
                             </div>
                         </template>
                     </b-table>
+                </b-tab>
+                <b-tab title="Tilføj.." @click="setFocus">
+                    <add-players ref="addPlayers" :team="team"></add-players>
                 </b-tab>
             </b-tabs>
 

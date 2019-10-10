@@ -19,9 +19,16 @@ const mutations = {
 }
 
 const actions = {
-    getPlayers: async (context) => {
-        var players = []; // Axios here
-        context.commit('setPlayers', players)
+    getAllPlayers: async (context) => {
+        let players = [];
+        return new Promise((resolve, reject) => {
+            axios.get("/api/v1/players")
+                .then(players => {
+                    context.commit('setPlayers', players.data.data);
+                })
+        })
+
+
     },
 
     setPlayerTeam : async (context, { payload }) => {
@@ -35,6 +42,7 @@ const actions = {
                 .then(data1 => {
 
                     context.dispatch('setTeams');
+                    context.dispatch('getAllPlayers');
                     resolve(data1)
                 })
         });
