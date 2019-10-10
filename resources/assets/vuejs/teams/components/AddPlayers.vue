@@ -12,9 +12,9 @@
                 readOnly: false,
                 playerFields: [
                     { key: "index", label: "#", sortable: false },
-                    { key: "name",label: "Navn", sortable: true, class: "text-ellipsis"},
+                    { key: "name",label: "Navn", sortable: true, class: "text-ellipsis ellipsis-name"},
                     { key: "gender", label:"Køn", sortable: true, class: "kt-align-center"},
-                    { key: "team.name",label:"Trup",sortable:true},
+                    { key: "team.name",label:"Trup",sortable:true, class: "kt-pr0-mobile"},
                     { key: "action", label:" ", sortable: false, class: "kt-align-right"}
                 ],
             }
@@ -141,6 +141,23 @@
 a.page-link {
     border-radius: 2px !important;
 }
+@media (max-width: 575px) {
+    .ellipsis-team {
+        max-width: 70px !important;
+    }
+    .ellipsis-name {
+        max-width: 150px !important;
+    }
+}
+@media (max-width: 320px) {
+    .ellipsis-team {
+        max-width: 60px !important;
+    }
+
+    .ellipsis-name {
+        max-width: 110px !important;
+    }
+}
 
 
 </style>
@@ -192,7 +209,7 @@ a.page-link {
                 <i v-if="data.value == 'K'" class="fa fa-2x fa-female kt-font-danger"></i>
             </template>
             <template v-slot:cell(team.name)="data">
-                <span class="badge badge-secondary badge-sm">{{ data.value }}</span>
+                <span v-b-tooltip.hover :title="data.value" class="badge badge-secondary badge-sm text-ellipsis ellipsis-team">{{ data.value }}</span>
             </template>
             <template v-slot:cell(action)="data">
                 <div class="btn-group" role="group" aria-label="...">
