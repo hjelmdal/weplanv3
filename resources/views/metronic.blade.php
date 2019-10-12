@@ -3,7 +3,7 @@
 
 
 @section("scripts")
-    <script src="/vuejs/test.js?v={{ Helpers::gitVersion()->getVersion() }}"></script>
+    <script src="/vuejs/app.js?v={{ Helpers::gitVersion()->getVersion() }}"></script>
 @endsection
 @section("content")
     {{ $_SERVER['QUERY_STRING'] }}

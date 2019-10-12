@@ -56,6 +56,17 @@ let routes = [
         }
     },
     {
+        name: "Spillere",
+        path: '/players',
+        component: require('./players/components/PlayersAdmin').default,
+        meta: {
+            access: "protected",
+            roles: ["super-admin","coach"],
+            icon: "flaticon-users",
+            title: "Spillere"
+        }
+    },
+    {
         name: "Trupper",
         path: '/teams',
         component: require('./teams/components/teamsAdmin').default,

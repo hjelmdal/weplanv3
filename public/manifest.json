@@ -1,0 +1,47 @@
+{
+    "name": "WePlan.dk",
+    "short_name": "WePlan",
+    "description": "Alle badmintonaktiviteter samlet på et sted",
+    "icons": [
+        {
+            "src": "/img/webapp/weplan-76x76.png",
+            "sizes": "76x76",
+            "type": "image/png"
+        },
+        {
+            "src": "/img/webapp/weplan-120x120.png",
+            "sizes": "120x120",
+            "type": "image/png"
+        },
+        {
+            "src": "/img/webapp/weplan-152x152.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "/img/webapp/weplan-152x152.png",
+            "sizes": "152x152",
+            "type": "image/png"
+        },
+        {
+            "src": "/img/webapp/weplan-167x167.png",
+            "sizes": "167x167",
+            "type": "image/png"
+        },
+        {
+            "src": "/img/webapp/weplan-180x180.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        },
+        {
+            "src": "/img/webapp/weplan-180x180.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+    ],
+    "start_url": "/#/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#5d78ff",
+    "lang": "en"
+}

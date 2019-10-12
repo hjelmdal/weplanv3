@@ -14,6 +14,11 @@ import Notify from "./Notification";
 import VueCountryCode from "vue-country-code";
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+//Vue-select
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
+
+
 moment.locale("da");
 window.moment = require('moment');
 
@@ -59,4 +64,6 @@ Vue.filter('dateString', function (value,type = "to") {
 Vue.component('b-tooltip', BTooltip);
 Vue.component('b-modal', BModal);
 Vue.component('b-button',BButton);
+Vue.component('v-select', vSelect);
+
 

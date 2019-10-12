@@ -497,7 +497,13 @@ body::before {
 .cursor-disabled:active {
   cursor: not-allowed  !important;
 }
-
+.table td.fit,
+.table th.fit {
+    white-space: nowrap;
+    width: 1%;
+    padding-left:1rem;
+    padding-right:1rem;
+}
 .table.table-ellipsis tbody td {
   max-width: 100px;
   overflow: hidden;

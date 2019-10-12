@@ -17,6 +17,7 @@ $user = Auth::user();
         </script>
     @endif
     @yield("meta")
+    <link rel="manifest" href="/manifest.json?v={{ Helpers::gitVersion()->getVersion() }}">
     <meta name="description" content="Badminton trainingssystem">
     <meta name="keywords" content="training, badminton, pixel8">
     <meta name="apple-mobile-web-app-title" content="{{ config('app.name') }}">

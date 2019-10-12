@@ -17,7 +17,7 @@ class WePlayerAPI extends Controller
     public function index()
     {
         try {
-            $players = WePlayer::all();
+            $players = WePlayer::orderBy("name")->get();
         } catch (ModelNotFoundException $e) {
             return response()->json("Not found",404);
         }

@@ -1,10 +1,14 @@
 const state = {
-    players: []
+    players: [],
+    playersUsers: []
 }
 
 const getters = {
     getAllPlayers: (state) => {
         return state.players;
+    },
+    getAllPlayersWithUsers: (state) => {
+        return state.playersUsers;
     },
 
     getObjById: (state) => (id) => {
@@ -15,6 +19,9 @@ const getters = {
 const mutations = {
     setPlayers: (state, players) => {
         state.players = players;
+    },
+    setPlayersUsers: (state, players) => {
+        state.playersUsers = players;
     }
 }
 
@@ -25,6 +32,17 @@ const actions = {
             axios.get("/api/v1/players")
                 .then(players => {
                     context.commit('setPlayers', players.data.data);
+                })
+        })
+
+
+    },
+    getAllPlayersWithUsers: async (context) => {
+        let players = [];
+        return new Promise((resolve, reject) => {
+            axios.get("/api/v1/players/byteam")
+                .then(players => {
+                    context.commit('setPlayersUsers', players.data.data);
                 })
         })
 

@@ -25,5 +25,5 @@ mix.sass('resources/assets/sass/custom.scss','public/css')
     .js('resources/assets/vuejs/profile/index.js', 'public/vuejs/profile')
     .js('resources/assets/vuejs/users/admin.js', 'public/vuejs/users')
     .js('resources/assets/vuejs/test/app.js', 'public/vuejs/test')
-    .js('resources/assets/vuejs/test.js', 'public/vuejs');
+    .js('resources/assets/vuejs/app.js', 'public/vuejs');
 
