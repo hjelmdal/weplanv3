@@ -15,8 +15,8 @@ import VueCountryCode from "vue-country-code";
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 //Vue-select
-import vSelect from 'vue-select';
-import 'vue-select/dist/vue-select.css';
+import vSelect from '@alfsnd/vue-bootstrap-select'
+
 
 
 moment.locale("da");

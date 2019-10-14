@@ -59,14 +59,15 @@ const actions = {
             form.patch("/api/v1/players/" + form.player_id)
                 .then(data1 => {
 
-                    context.dispatch('setTeams');
+                    context.dispatch('getTeams');
                     context.dispatch('getAllPlayers');
+                    context.dispatch('getAllPlayersWithUsers');
                     resolve(data1)
                 })
         });
 
     },
-    setTeams ({dispatch}) {
+    getTeams ({dispatch}) {
         dispatch('teams/getAllTeams',null,{root:true});
     }
 }
