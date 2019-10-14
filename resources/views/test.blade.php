@@ -7,6 +7,7 @@
  */
 ?>
 <?php
+use App\Helpers\BadmintonDanmark\PlayerParser;
 /**
  * Created by PhpStorm.
  * User: impact
@@ -27,9 +28,15 @@
 @section("meta")
 @endsection
 @section("content")
+<table>
+<?php
 
+$parser = new PlayerParser();
+$parser->getPlayers();
+//$parser->parsePlayers();
 
-test
+?>
+</table>
 @endsection
 @section("modal")
     @include("layouts.theme.blocks.modal1")

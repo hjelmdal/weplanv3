@@ -24,7 +24,6 @@ class APIToken
                 $token = $request->header("Authorization");
                 $user = User::where('api_token', $token)->firstOrFail();
             } catch (ModelNotFoundException$e) {
-                Log::error("NOT FOUND");
                 return response()->json(["message" => 'Unauthorized! Please log in', "header" => $request->header("Authorization")], 401);
 
             }

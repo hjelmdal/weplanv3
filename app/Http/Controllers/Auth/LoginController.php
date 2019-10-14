@@ -41,7 +41,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/user';
+    protected $redirectTo = '/#/';
 
     protected $loggedInRouteName = 'user.index';
 
@@ -63,9 +63,7 @@ class LoginController extends Controller
      */
     public function showLoginForm(Request $request)
     {
-        $cookie = cookie('name', 'value', 100);
 
-        Log::info($cookie);
         session(['url.intended' => url()->previous()]);
         return view("login/login2");
     }
@@ -75,7 +73,7 @@ class LoginController extends Controller
         if(session('url.intended')) {
             return redirect(session("url.intended"))->with($message);
         } else {
-            return redirect("/user")->with($message);
+            return redirect("/#/")->with($message);
         }
     }
 

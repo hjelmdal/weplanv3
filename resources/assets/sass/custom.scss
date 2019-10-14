@@ -657,3 +657,11 @@ td.td-ellipsis {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+// Bootstrap select component
+.v-dropdown-item:nth-child(odd) {
+    background-color: #f8f9fa;
+}
+.v-dropdown-item:hover:not(.default-option) {
+    background-color: #ebedf2 !important;
+}

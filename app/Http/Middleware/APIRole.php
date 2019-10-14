@@ -25,7 +25,6 @@ class APIRole
                 $user = User::where('api_token', $token)->firstOrFail();
 
             } catch (ModelNotFoundException $e) {
-                Log::error("NOT FOUND");
                 return $this->_401();
 
             }

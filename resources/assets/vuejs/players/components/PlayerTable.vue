@@ -75,6 +75,10 @@
                 }
             },
 
+            onClose(id) {
+                this.$refs['teamSet' + id].$emit('close');
+            },
+
 
         },
         computed: {
@@ -127,8 +131,13 @@
                         </div>
 
                         <b-popover :ref="'teamSet' + data.item.id" :target="'popover-target-' + data.item.id" triggers="click" placement="left">
-                        <template v-slot:title>Trup</template>
-                        <v-select :labelTitle="'- Vælg en trup -'" @input="test(data.item)" :options="teams" v-model="selected"></v-select>
+                        <template v-slot:title>
+                            <b-button @click="onClose(data.item.id)" class="close" aria-label="Close">
+                              <span class="d-inline-block" aria-hidden="true">&times;</span>
+                            </b-button>
+                            Interactive Content
+                          </template>
+                        <v-select :labelTitle="'- Vælg en trup nedenfor -'" @input="test(data.item)" :options="teams" v-model="selected"></v-select>
                     </b-popover>
                     </span>
             </div>

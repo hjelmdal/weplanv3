@@ -143,7 +143,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function sendEmailVerificationNotification()
     {
-        Log::error("TEST");
         $this->notify(new NewUserRegistered());
     }
 

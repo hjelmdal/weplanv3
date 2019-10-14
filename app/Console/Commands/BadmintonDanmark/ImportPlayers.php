@@ -9,6 +9,7 @@ use Illuminate\Console\Command;
 use App\Models\BadmintonPeople\BpClub;
 use App\Models\BadmintonPeople\BpPlayer;
 use Illuminate\Filesystem\FilesystemManager;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class ImportPlayers extends Command
@@ -57,6 +58,7 @@ class ImportPlayers extends Command
             $this->call('download:xml');
             if(!$this->filesystemManager->disk()->exists($file)) {
                 $this->error('could not find ' . $file);
+                Log::error($arguments["command"] . " - " . 'could not find ' . $file);
                 return;
             }
         }

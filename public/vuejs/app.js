@@ -3223,6 +3223,9 @@ __webpack_require__.r(__webpack_exports__);
           _this.$refs['teamSet' + player.id].$emit('close');
         });
       }
+    },
+    onClose: function onClose(id) {
+      this.$refs['teamSet' + id].$emit('close');
     }
   },
   computed: {
@@ -60617,7 +60620,33 @@ var render = function() {
                             {
                               key: "title",
                               fn: function() {
-                                return [_vm._v("Trup")]
+                                return [
+                                  _c(
+                                    "b-button",
+                                    {
+                                      staticClass: "close",
+                                      attrs: { "aria-label": "Close" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.onClose(data.item.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass: "d-inline-block",
+                                          attrs: { "aria-hidden": "true" }
+                                        },
+                                        [_vm._v("×")]
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(
+                                    "\n                        Interactive Content\n                      "
+                                  )
+                                ]
                               },
                               proxy: true
                             }
@@ -60630,7 +60659,7 @@ var render = function() {
                         _vm._v(" "),
                         _c("v-select", {
                           attrs: {
-                            labelTitle: "- Vælg en trup -",
+                            labelTitle: "- Vælg en trup nedenfor -",
                             options: _vm.teams
                           },
                           on: {

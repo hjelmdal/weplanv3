@@ -3,6 +3,7 @@
 namespace App\Console\Commands\BadmintonDanmark;
 
 use App\Helpers\Helpers;
+use App\Helpers\UUID;
 use App\Models\SystemJob;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
@@ -45,6 +46,8 @@ class UnzipXML extends Command
 
     public function handle()
     {
+        $arguments = $this->arguments();
+        $job_id = UUID::v4();
         $time = Helpers::elapsedTime();
         $file = "DBF_Downloads/DBF.zip";
         if(!$this->filesystemManager->disk()->exists($file)) {
@@ -64,7 +67,7 @@ class UnzipXML extends Command
             $errors = 0;
         }
         $runtime = $time->elapsed();
-        SystemJob::updateOrCreate(['id' => null],['job_id' => NULL,'handle' => $this->signature, 'updated_count' => null, 'created_count' => 1, 'errors_count' => $errors, 'runtime' => $runtime,'data_checksum' => $data_checksum]);
+        SystemJob::updateOrCreate(['id' => null],['job_id' => $job_id,'status'=> 'completed','command' => $arguments["command"], 'updated_count' => null, 'created_count' => 1, 'errors_count' => $errors, 'runtime' => $runtime,'data_checksum' => $data_checksum]);
 
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Console\Commands\BadmintonDanmark;
 
 use App\Helpers\Helpers;
+use App\Helpers\UUID;
 use App\Models\SystemJob;
 use GuzzleHttp\Client;
 use function GuzzleHttp\Psr7\stream_for;
@@ -32,6 +33,8 @@ class DownloadXML extends Command
      * @return mixed
      */
     public function handle(){
+        $arguments = $this->arguments();
+        $job_id = UUID::v4();
         $time = Helpers::elapsedTime();
         $bar = null;
         $errors = 1;
@@ -69,7 +72,7 @@ class DownloadXML extends Command
         $this->unzip();
 
         $runtime = $time->elapsed();
-        SystemJob::updateOrCreate(['id' => null],['job_id' => NULL,'handle' => $this->signature, 'updated_count' => 1, 'created_count' => null, 'errors_count' => $errors, 'runtime' => $runtime,'data_checksum' => $data_checksum]);
+        SystemJob::updateOrCreate(['id' => null],['job_id' => $job_id,'status'=> 'completed','command' => $arguments["command"], 'updated_count' => 1, 'created_count' => null, 'errors_count' => $errors, 'runtime' => $runtime,'data_checksum' => $data_checksum]);
 
     }
 

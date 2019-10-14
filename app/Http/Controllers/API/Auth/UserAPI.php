@@ -143,7 +143,6 @@ class UserAPI extends Controller
         if($user) {
             $old_avatar = $user->avatar;
 
-            Log::info("old". $old_avatar);
             $user->avatar = "/storage/" .$file;
             $user->save();
             $this->updateUserStatus("avatar",$user->name.' har uploadet en ny avatar til godkendelse',$user->avatar,$old_avatar);
