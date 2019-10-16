@@ -82,15 +82,7 @@
 </script>
 
 <style>
-    .b-table > tbody > tr > td {
-        vertical-align: middle;
-    }
-    .text-ellipsis {
-        max-width: 185px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap
-    }
+
 </style>
 
 <template>

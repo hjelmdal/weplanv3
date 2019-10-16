@@ -13,11 +13,11 @@
                 minInput:2,
                 readOnly: false,
                 importFields: [
-                    {key: "index", label: "#", sortable: false, class: "fit "},
+                    {key: "index", label: "#", sortable: false, class: "fit kt-pr0-mobile kt-pl0-mobile"},
                     {key: "name", label: "Navn", sortable: true, class: ""},
-                    {key: "gender", label: "Køn", sortable: true, class: "kt-align-center"},
+                    {key: "gender", label: "Køn", sortable: true, class: "kt-align-center d-none d-sm-table-cell"},
                     {key: "bp_club.team_name", label: "Klub", sortable: true, class: "kt-pr0-mobile fit"},
-                    {key: "action", label: " ", sortable: false, class: "kt-align-right"},
+                    {key: "action", label: " ", sortable: false, class: "kt-align-right fit"},
                 ]
             }
         },
@@ -98,11 +98,17 @@
     >>> .kt-checkbox {
         margin-bottom:0px;
     }
+
+@media (max-width: 575px) {
+    >>> .btn.btn-sm i {
+        padding-right: 0.1rem;
+    }
+}
 </style>
 
 <template>
 <div>
-    <div class="kt-searchbar">
+    <div class="kt-searchbar kt-p5-mobile">
         <div class="input-group input-group-lg kt-margin-b-10">
             <div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
@@ -115,7 +121,7 @@
             <input ref="search" autofocus type="search" class="form-control" placeholder="Søg spiller" aria-describedby="basic-addon1" v-model="filter">
         </div>
     </div>
-    <div class="kt-section">
+    <div class="kt-section kt-p5-mobile">
         <div v-if="filter.length < minInput" class="kt-section__content kt-section__content--solid">
             Brug søgefeltet til at tilføje spillere til truppen. Du kan fx. søge på:
             <ul>
@@ -126,7 +132,7 @@
             </ul>
         </div>
     </div>
-    <b-table
+    <b-table responsive
         :tbody-tr-class="rowClass"
         :fields="importFields"
         :items="bpPlayers"
@@ -144,7 +150,7 @@
             <table-player-name :filter="filter" :data="data"></table-player-name>
         </template>
         <template v-slot:cell(action)="data">
-            test
+            <button :disabled="data.item.we_player"  class="btn btn-sm btn-brand kt-p5-mobile"  role="button"><i class="la la-plus"></i></button>
         </template>
     </b-table>
     <div class="kt-pagination kt-pagination--brand kt-pull-right">

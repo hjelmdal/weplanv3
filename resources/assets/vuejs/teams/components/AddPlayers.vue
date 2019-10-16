@@ -141,23 +141,6 @@ export default {
 a.page-link {
     border-radius: 2px !important;
 }
-@media (max-width: 575px) {
-    .ellipsis-team {
-        max-width: 70px !important;
-    }
-    .ellipsis-name {
-        max-width: 150px !important;
-    }
-}
-@media (max-width: 320px) {
-    .ellipsis-team {
-        max-width: 60px !important;
-    }
-
-    .ellipsis-name {
-        max-width: 110px !important;
-    }
-}
 
 
 </style>

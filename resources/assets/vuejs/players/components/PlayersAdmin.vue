@@ -39,7 +39,7 @@ export default {
             <div class="kt-portlet__head-toolbar">
                 <button v-b-modal.importPlayers class="btn btn-success"><i class="flaticon2-plus-1"></i> <span>Importér spillere</span></button></div>
         </div>
-        <div class="kt-portlet__body">
+        <div class="kt-portlet__body kt-p5-mobile">
             <player-table :players="players"></player-table>
         </div>
         <div class="kt-portlet__foot kt-hidden">
@@ -55,7 +55,7 @@ export default {
         </div>
     </div>
 
-    <b-modal title="Importér fra BadmintonPlayer" id="importPlayers" size="lg">
+    <b-modal title="Importér fra BadmintonPlayer" id="importPlayers" size="lg" body-class="kt-pl0-mobile kt-pr0-mobile">
         <player-import-table></player-import-table>
         <template v-slot:modal-footer="{ ok, cancel }">
             <!-- Emulate built in modal footer ok and cancel button actions -->

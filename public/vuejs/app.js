@@ -3187,7 +3187,7 @@ __webpack_require__.r(__webpack_exports__);
         key: "index",
         label: "#",
         sortable: false,
-        "class": "fit "
+        "class": "fit kt-pr0-mobile kt-pl0-mobile"
       }, {
         key: "name",
         label: "Navn",
@@ -3197,7 +3197,7 @@ __webpack_require__.r(__webpack_exports__);
         key: "gender",
         label: "Køn",
         sortable: true,
-        "class": "kt-align-center"
+        "class": "kt-align-center d-none d-sm-table-cell"
       }, {
         key: "bp_club.team_name",
         label: "Klub",
@@ -3207,7 +3207,7 @@ __webpack_require__.r(__webpack_exports__);
         key: "action",
         label: " ",
         sortable: false,
-        "class": "kt-align-right"
+        "class": "kt-align-right fit"
       }]
     };
   },
@@ -3259,7 +3259,7 @@ __webpack_require__.r(__webpack_exports__);
         key: "index",
         label: "#",
         sortable: false,
-        "class": "fit"
+        "class": "fit d-none d-sm-table-cell"
       }, {
         key: "name",
         label: "Navn",
@@ -3269,7 +3269,7 @@ __webpack_require__.r(__webpack_exports__);
         key: "gender",
         label: "Køn",
         sortable: true,
-        "class": "kt-align-center"
+        "class": "kt-align-center d-none d-sm-table-cell"
       }, {
         key: "team.name",
         label: "Trup",
@@ -32440,7 +32440,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n[data-v-46be7030] .kt-pagination .kt-pagination__links li {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    margin-right: 0.5rem;\n    border-radius: 4px;\n}\n[data-v-46be7030] .kt-pagination .kt-pagination__links li span.page-link {\n    font-weight: 500;\n    color: #74788d;\n    font-size: 1rem;\n    padding: 0 0.2rem;\n    display: flex;\n    flex-wrap: wrap;\n    justify-content: center;\n    align-items: center;\n    min-width: 30px;\n    min-height: 30px;\n    margin: 0;\n    border-radius: 2px;\n}\n[data-v-46be7030] .page-item.active .page-link {\n    z-index: 1;\n    color: #fff;\n    background-color: #5867dd;\n    border-color: #5867dd;\n    width: 30px;\n    height: 30px;\n    border-radius: 2px;\n}\n[data-v-46be7030] a.page-link {\n    border-radius: 2px !important;\n}\n[data-v-46be7030] .kt-checkbox {\n    margin-bottom:0px;\n}\n", ""]);
+exports.push([module.i, "\n[data-v-46be7030] .kt-pagination .kt-pagination__links li {\n        display: flex;\n        justify-content: center;\n        align-items: center;\n        margin-right: 0.5rem;\n        border-radius: 4px;\n}\n[data-v-46be7030] .kt-pagination .kt-pagination__links li span.page-link {\n        font-weight: 500;\n        color: #74788d;\n        font-size: 1rem;\n        padding: 0 0.2rem;\n        display: flex;\n        flex-wrap: wrap;\n        justify-content: center;\n        align-items: center;\n        min-width: 30px;\n        min-height: 30px;\n        margin: 0;\n        border-radius: 2px;\n}\n[data-v-46be7030] .page-item.active .page-link {\n        z-index: 1;\n        color: #fff;\n        background-color: #5867dd;\n        border-color: #5867dd;\n        width: 30px;\n        height: 30px;\n        border-radius: 2px;\n}\n[data-v-46be7030] a.page-link {\n        border-radius: 2px !important;\n}\n[data-v-46be7030] .kt-checkbox {\n        margin-bottom:0px;\n}\n@media (max-width: 575px) {\n[data-v-46be7030] .btn.btn-sm i {\n        padding-right: 0.1rem;\n}\n}\n", ""]);
 
 // exports
 
@@ -32497,26 +32497,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.kt-pagination .kt-pagination__links li {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    margin-right: 0.5rem;\n    border-radius: 4px;\n}\n.kt-pagination .kt-pagination__links li span.page-link {\n    font-weight: 500;\n    color: #74788d;\n    font-size: 1rem;\n    padding: 0 0.2rem;\n    display: flex;\n    flex-wrap: wrap;\n    justify-content: center;\n    align-items: center;\n    min-width: 30px;\n    min-height: 30px;\n    margin: 0;\n    border-radius: 2px;\n}\n.page-item.active .page-link {\n    z-index: 1;\n    color: #fff;\n    background-color: #5867dd;\n    border-color: #5867dd;\n    width: 30px;\n    height: 30px;\n    border-radius: 2px;\n}\na.page-link {\n    border-radius: 2px !important;\n}\n@media (max-width: 575px) {\n.ellipsis-team {\n        max-width: 70px !important;\n}\n.ellipsis-name {\n        max-width: 150px !important;\n}\n}\n@media (max-width: 320px) {\n.ellipsis-team {\n        max-width: 60px !important;\n}\n.ellipsis-name {\n        max-width: 110px !important;\n}\n}\n\n\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/teams/components/EditTeam.vue?vue&type=style&index=0&lang=css&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/teams/components/EditTeam.vue?vue&type=style&index=0&lang=css& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.b-table > tbody > tr > td {\n    vertical-align: middle;\n}\n.text-ellipsis {\n    max-width: 185px;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap\n}\n", ""]);
+exports.push([module.i, "\n.kt-pagination .kt-pagination__links li {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    margin-right: 0.5rem;\n    border-radius: 4px;\n}\n.kt-pagination .kt-pagination__links li span.page-link {\n    font-weight: 500;\n    color: #74788d;\n    font-size: 1rem;\n    padding: 0 0.2rem;\n    display: flex;\n    flex-wrap: wrap;\n    justify-content: center;\n    align-items: center;\n    min-width: 30px;\n    min-height: 30px;\n    margin: 0;\n    border-radius: 2px;\n}\n.page-item.active .page-link {\n    z-index: 1;\n    color: #fff;\n    background-color: #5867dd;\n    border-color: #5867dd;\n    width: 30px;\n    height: 30px;\n    border-radius: 2px;\n}\na.page-link {\n    border-radius: 2px !important;\n}\n\n\n", ""]);
 
 // exports
 
@@ -54940,36 +54921,6 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/teams/components/EditTeam.vue?vue&type=style&index=0&lang=css&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/teams/components/EditTeam.vue?vue&type=style&index=0&lang=css& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--6-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--6-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./EditTeam.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/teams/components/EditTeam.vue?vue&type=style&index=0&lang=css&");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/teams/components/TeamsList.vue?vue&type=style&index=0&id=33e90f98&scoped=true&lang=css&":
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/teams/components/TeamsList.vue?vue&type=style&index=0&id=33e90f98&scoped=true&lang=css& ***!
@@ -60641,55 +60592,10 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "flex-row kt-pl10" }, [
       _c("div", { staticClass: "flex-column" }, [
-        _c("span", {
+        _c("div", {
           staticClass: " text-ellipsis ellipsis-name",
           domProps: { innerHTML: _vm._s(_vm.highlight(_vm.data.value)) }
-        }),
-        _vm._v(" "),
-        _vm.data.item.user
-          ? _c("i", { staticClass: "flaticon2-correct kt-font-brand" })
-          : _vm._e(),
-        _vm.data.item.bp_player && _vm.data.item.bp_player.bp_id
-          ? _c(
-              "a",
-              {
-                attrs: {
-                  target: "_blank",
-                  href:
-                    "https://www.badmintonplayer.dk/DBF/Spiller/VisSpiller/#" +
-                    _vm.data.item.bp_player.bp_id
-                }
-              },
-              [
-                _c(
-                  "span",
-                  { staticClass: "kt-badge kt-badge--success kt-badge--sm" },
-                  [_vm._v("BD")]
-                )
-              ]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.data.item.bp_id
-          ? _c(
-              "a",
-              {
-                attrs: {
-                  target: "_blank",
-                  href:
-                    "https://www.badmintonplayer.dk/DBF/Spiller/VisSpiller/#" +
-                    _vm.data.item.bp_id
-                }
-              },
-              [
-                _c(
-                  "span",
-                  { staticClass: "kt-badge kt-badge--success kt-badge--sm" },
-                  [_vm._v("BD")]
-                )
-              ]
-            )
-          : _vm._e()
+        })
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "flex-column" }, [
@@ -60698,6 +60604,55 @@ var render = function() {
           domProps: { innerHTML: _vm._s(_vm.highlight(_vm.data.item.dbf_id)) }
         })
       ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "flex-row kt-pl5 flex-push" }, [
+      _vm.data.item.user
+        ? _c("i", { staticClass: "flaticon2-correct kt-font-brand" })
+        : _vm._e()
+    ]),
+    _c("div", { staticClass: "flex-row kt-pl5" }, [
+      _vm.data.item.bp_player && _vm.data.item.bp_player.bp_id
+        ? _c(
+            "a",
+            {
+              attrs: {
+                target: "_blank",
+                href:
+                  "https://www.badmintonplayer.dk/DBF/Spiller/VisSpiller/#" +
+                  _vm.data.item.bp_player.bp_id
+              }
+            },
+            [
+              _c(
+                "span",
+                { staticClass: "kt-badge kt-badge--success kt-badge--sm" },
+                [_vm._v("BD")]
+              )
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.data.item.bp_id
+        ? _c(
+            "a",
+            {
+              attrs: {
+                target: "_blank",
+                href:
+                  "https://www.badmintonplayer.dk/DBF/Spiller/VisSpiller/#" +
+                  _vm.data.item.bp_id
+              }
+            },
+            [
+              _c(
+                "span",
+                { staticClass: "kt-badge kt-badge--success kt-badge--sm" },
+                [_vm._v("BD")]
+              )
+            ]
+          )
+        : _vm._e()
     ])
   ])
 }
@@ -60837,7 +60792,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("div", { staticClass: "kt-searchbar" }, [
+      _c("div", { staticClass: "kt-searchbar kt-p5-mobile" }, [
         _c(
           "div",
           { staticClass: "input-group input-group-lg kt-margin-b-10" },
@@ -60944,7 +60899,7 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "kt-section" }, [
+      _c("div", { staticClass: "kt-section kt-p5-mobile" }, [
         _vm.filter.length < _vm.minInput
           ? _c(
               "div",
@@ -60961,6 +60916,7 @@ var render = function() {
       _vm._v(" "),
       _c("b-table", {
         attrs: {
+          responsive: "",
           "tbody-tr-class": _vm.rowClass,
           fields: _vm.importFields,
           items: _vm.bpPlayers,
@@ -61042,7 +60998,16 @@ var render = function() {
           {
             key: "cell(action)",
             fn: function(data) {
-              return [_vm._v("\n            test\n        ")]
+              return [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-brand kt-p5-mobile",
+                    attrs: { disabled: data.item.we_player, role: "button" }
+                  },
+                  [_c("i", { staticClass: "la la-plus" })]
+                )
+              ]
             }
           }
         ])
@@ -61166,7 +61131,6 @@ var render = function() {
     attrs: {
       striped: "",
       "show-empty": "",
-      responsive: "",
       "empty-text": "Ingen spillere fundet",
       "sort-icon-left": "",
       small: "",
@@ -61442,7 +61406,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "kt-portlet__body" },
+          { staticClass: "kt-portlet__body kt-p5-mobile" },
           [_c("player-table", { attrs: { players: _vm.players } })],
           1
         ),
@@ -61456,7 +61420,8 @@ var render = function() {
           attrs: {
             title: "Importér fra BadmintonPlayer",
             id: "importPlayers",
-            size: "lg"
+            size: "lg",
+            "body-class": "kt-pl0-mobile kt-pr0-mobile"
           },
           scopedSlots: _vm._u([
             {
@@ -83288,9 +83253,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _EditTeam_vue_vue_type_template_id_39e93193___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditTeam.vue?vue&type=template&id=39e93193& */ "./resources/assets/vuejs/teams/components/EditTeam.vue?vue&type=template&id=39e93193&");
 /* harmony import */ var _EditTeam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditTeam.vue?vue&type=script&lang=js& */ "./resources/assets/vuejs/teams/components/EditTeam.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _EditTeam_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EditTeam.vue?vue&type=style&index=0&lang=css& */ "./resources/assets/vuejs/teams/components/EditTeam.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -83298,7 +83261,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _EditTeam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _EditTeam_vue_vue_type_template_id_39e93193___WEBPACK_IMPORTED_MODULE_0__["render"],
   _EditTeam_vue_vue_type_template_id_39e93193___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -83327,22 +83290,6 @@ component.options.__file = "resources/assets/vuejs/teams/components/EditTeam.vue
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditTeam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./EditTeam.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/teams/components/EditTeam.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditTeam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/assets/vuejs/teams/components/EditTeam.vue?vue&type=style&index=0&lang=css&":
-/*!***********************************************************************************************!*\
-  !*** ./resources/assets/vuejs/teams/components/EditTeam.vue?vue&type=style&index=0&lang=css& ***!
-  \***********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditTeam_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader??ref--6-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--6-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./EditTeam.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/teams/components/EditTeam.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditTeam_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditTeam_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditTeam_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditTeam_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EditTeam_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 

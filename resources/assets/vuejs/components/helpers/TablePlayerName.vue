@@ -52,12 +52,15 @@
         </div>
         <div class="flex-row kt-pl10">
             <div class="flex-column">
-                <span class=" text-ellipsis ellipsis-name" v-html="highlight(data.value)"></span> <i v-if="data.item.user" class="flaticon2-correct kt-font-brand"></i><a v-if="data.item.bp_player && data.item.bp_player.bp_id" target="_blank" :href="'https://www.badmintonplayer.dk/DBF/Spiller/VisSpiller/#'+data.item.bp_player.bp_id"><span class="kt-badge kt-badge--success kt-badge--sm">BD</span></a>
-                <a v-if="data.item.bp_id" target="_blank" :href="'https://www.badmintonplayer.dk/DBF/Spiller/VisSpiller/#'+data.item.bp_id"><span class="kt-badge kt-badge--success kt-badge--sm">BD</span></a>
+                <div class=" text-ellipsis ellipsis-name" v-html="highlight(data.value)"></div>
             </div>
             <div class="flex-column">
                 <span class="small text-muted" v-html="highlight(data.item.dbf_id)"></span>
             </div>
+
         </div>
+        <div class="flex-row kt-pl5 flex-push"><i v-if="data.item.user" class="flaticon2-correct kt-font-brand"></i></div><div class="flex-row kt-pl5">
+            <a v-if="data.item.bp_player && data.item.bp_player.bp_id" target="_blank" :href="'https://www.badmintonplayer.dk/DBF/Spiller/VisSpiller/#'+data.item.bp_player.bp_id"><span class="kt-badge kt-badge--success kt-badge--sm">BD</span></a>
+            <a v-if="data.item.bp_id" target="_blank" :href="'https://www.badmintonplayer.dk/DBF/Spiller/VisSpiller/#'+data.item.bp_id"><span class="kt-badge kt-badge--success kt-badge--sm">BD</span></a></div>
     </div>
 </template>

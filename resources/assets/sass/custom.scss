@@ -201,7 +201,9 @@ body::before {
   background-color: #fff !important;
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIUlEQVQYV2NkQAIWUa8bGGF8EOfEMlGIAIwDYjMic0ACAJyEDgJtFVQzAAAAAElFTkSuQmCC) repeat;
 }
-
+.flex-push {
+    margin-left: auto;
+}
 .flex-left {
   position:relative;
   display:inline;
@@ -664,4 +666,33 @@ td.td-ellipsis {
 }
 .v-dropdown-item:hover:not(.default-option) {
     background-color: #ebedf2 !important;
+}
+
+//Bootstrap table
+.b-table > tbody > tr > td {
+    vertical-align: middle;
+}
+.text-ellipsis {
+    max-width: 185px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+@media (max-width: 575px) {
+    .ellipsis-team {
+        max-width: 70px !important;
+    }
+    .ellipsis-name {
+        max-width: 110px !important;
+    }
+}
+@media (max-width: 320px) {
+    .ellipsis-team {
+        max-width: 60px !important;
+    }
+
+    .ellipsis-name {
+        max-width: 100px !important;
+    }
 }

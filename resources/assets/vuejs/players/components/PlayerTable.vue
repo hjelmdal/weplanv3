@@ -7,9 +7,9 @@
         data() {
             return {
                 playerFields: [
-                    {key: "index", label: "#", sortable: false, class: "fit"},
+                    {key: "index", label: "#", sortable: false, class: "fit d-none d-sm-table-cell"},
                     {key: "name", label: "Navn", sortable: true, class: ""},
-                    {key: "gender", label: "Køn", sortable: true, class: "kt-align-center"},
+                    {key: "gender", label: "Køn", sortable: true, class: "kt-align-center d-none d-sm-table-cell"},
                     {key: "team.name", label: "Trup", sortable: true, class: "kt-pr0-mobile fit"},
                     {key: "action", label: " ", sortable: false, class: "kt-align-right"},
                     {key: "dbf_id", label: "", sortable:false, class:"width-full"}
@@ -116,7 +116,7 @@
 </style>
 
 <template>
-    <b-table striped show-empty responsive empty-text="Ingen spillere fundet" sort-icon-left small :fields="playerFields" :items="players">
+    <b-table striped show-empty empty-text="Ingen spillere fundet" sort-icon-left small :fields="playerFields" :items="players">
         <template v-slot:cell(index)="data">
             {{ data.index + 1 }}
         </template>
