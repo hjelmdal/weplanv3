@@ -706,11 +706,11 @@ td.td-ellipsis {
 
 @media (max-width: 575px) {
   .ellipsis-team {
-    max-width: 70px !important;
+    max-width: 65px !important;
   }
 
   .ellipsis-name {
-    max-width: 110px !important;
+    max-width: 105px !important;
   }
 }
 
