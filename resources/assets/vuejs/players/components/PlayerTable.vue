@@ -1,16 +1,18 @@
 <script>
+    import TablePlayerName from "../../components/helpers/TablePlayerName";
     export default {
         name: "PlayerTable",
+        components: {TablePlayerName},
         props:["players"],
         data() {
             return {
                 playerFields: [
                     {key: "index", label: "#", sortable: false, class: "fit"},
-                    {key: "dbf_id", label: "ID", sortable: true, class: "fit"},
-                    {key: "name", label: "Navn", sortable: true, class: "text-ellipsis ellipsis-name"},
+                    {key: "name", label: "Navn", sortable: true, class: ""},
                     {key: "gender", label: "Køn", sortable: true, class: "kt-align-center"},
                     {key: "team.name", label: "Trup", sortable: true, class: "kt-pr0-mobile fit"},
-                    {key: "action", label: " ", sortable: false, class: "kt-align-right"}
+                    {key: "action", label: " ", sortable: false, class: "kt-align-right"},
+                    {key: "dbf_id", label: "", sortable:false, class:"width-full"}
                 ],
                 selected: ""
             }
@@ -37,7 +39,7 @@
                     return final;
                 }
             },
-            test(item) {
+            setTeam(item) {
                 console.log(item);
                 let value = "";
                 let close = false;
@@ -99,7 +101,18 @@
 </script>
 
 <style scoped>
+    >>> .flex-row {
+        align-self: center;
+        line-height: 0.9rem;
+    }
 
+    >>> .width-full {
+        width:100%;
+    }
+    >>> .kt-badge--sm {
+        font-size: 0.6rem;
+        font-weight:bold;
+    }
 </style>
 
 <template>
@@ -108,9 +121,7 @@
             {{ data.index + 1 }}
         </template>
         <template v-slot:cell(name)="data">
-            <div :class="{ 'kt-media--danger' : data.item.gender == 'K'}" class="kt-media kt-media--brand kt-media--sm kt-media--circle">
-                <span>{{ getInitials(data.value) }}</span>
-            </div> {{ data.value }} <i v-if="data.item.user" class="flaticon2-correct kt-font-brand"></i>
+            <table-player-name :data="data"></table-player-name>
         </template>
         <template v-slot:cell(gender)="data">
             <i v-if="data.value == 'M'" class="fa fa-2x fa-male kt-font-brand"></i>
@@ -137,10 +148,13 @@
                             </b-button>
                             Interactive Content
                           </template>
-                        <v-select :labelTitle="'- Vælg en trup nedenfor -'" @input="test(data.item)" :options="teams" v-model="selected"></v-select>
+                        <v-select :labelTitle="'- Vælg en trup nedenfor -'" @input="setTeam(data.item)" :options="teams" v-model="selected"></v-select>
                     </b-popover>
                     </span>
             </div>
+        </template>
+        <template v-slot:cell(dbf_id)="data">
+
         </template>
     </b-table>
 </template>

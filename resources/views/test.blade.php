@@ -28,15 +28,6 @@ use App\Helpers\BadmintonDanmark\PlayerParser;
 @section("meta")
 @endsection
 @section("content")
-<table>
-<?php
-
-$parser = new PlayerParser();
-$parser->getPlayers();
-//$parser->parsePlayers();
-
-?>
-</table>
 @endsection
 @section("modal")
     @include("layouts.theme.blocks.modal1")

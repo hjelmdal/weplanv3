@@ -1,19 +1,23 @@
 <script>
-    import PlayerTable from "./PlayerTable";
-    export default {
-        name: "PlayersAdmin",
-        components: {PlayerTable},
+import PlayerTable from "./PlayerTable";
+import TablePlayerName from "../../components/helpers/TablePlayerName";
+import PlayerImportTable from "./PlayerImportTable";
+export default {
+    name: "PlayersAdmin",
+    components: {PlayerImportTable, TablePlayerName, PlayerTable},
 
-        computed: {
-            players() {
-                return this.$store.getters["players/getAllPlayersWithUsers"];
-            }
+    computed: {
+        players() {
+            return this.$store.getters["players/getAllPlayersWithUsers"];
         },
-        mounted() {
-            this.$store.dispatch('players/getAllPlayersWithUsers');
-            this.$store.dispatch('teams/getAllTeams');
-        }
+
+    },
+    created() {
+        this.$store.dispatch('players/getAllPlayersWithUsers');
+        this.$store.dispatch('teams/getAllTeams');
+
     }
+}
 </script>
 
 <style scoped>
@@ -21,6 +25,7 @@
 </style>
 
 <template>
+<div>
     <div class="kt-portlet">
         <div class="kt-portlet__head">
             <div class="kt-portlet__head-label">
@@ -31,6 +36,8 @@
                     Spillere
                 </h3>
             </div>
+            <div class="kt-portlet__head-toolbar">
+                <button v-b-modal.importPlayers class="btn btn-success"><i class="flaticon2-plus-1"></i> <span>Importér spillere</span></button></div>
         </div>
         <div class="kt-portlet__body">
             <player-table :players="players"></player-table>
@@ -47,4 +54,18 @@
             </div>
         </div>
     </div>
+
+    <b-modal title="Importér fra BadmintonPlayer" id="importPlayers" size="lg">
+        <player-import-table></player-import-table>
+        <template v-slot:modal-footer="{ ok, cancel }">
+            <!-- Emulate built in modal footer ok and cancel button actions -->
+            <b-button size="sm" class="btn btn-outline-metal">
+                Fortryd
+            </b-button>
+            <b-button tabindex="-1" size="sm" variant="brand">
+                Opret
+            </b-button>
+        </template>
+    </b-modal>
+</div>
 </template>

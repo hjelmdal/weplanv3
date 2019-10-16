@@ -11,7 +11,7 @@ const getters = {
         return state.playersUsers;
     },
 
-    getObjById: (state) => (id) => {
+    getPlayerById: (state) => (id) => {
         return state.players.find(obj => obj.id === id)
     }
 }

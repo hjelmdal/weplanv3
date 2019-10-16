@@ -19,7 +19,7 @@ class BpPlayerAPI extends Controller
     public function index()
     {
         $players = BpPlayer::where("club_id","1622")->orderBy("name","asc")->get();
-        $players->load("WePlayer");
+        $players->load("WePlayer","BpClub");
 
         return response()->json(array("data" => $players));
 
@@ -135,7 +135,7 @@ class BpPlayerAPI extends Controller
     {
         //
     }
-    
+
     public function checkPlayer(Request $request) {
         if($request->playerId) {
             try {
@@ -144,9 +144,9 @@ class BpPlayerAPI extends Controller
             } catch (ModelNotFoundException $e) {
                 return response()->json(["errors" => ["form" => [0 => "Spilleren blev ikke fundet i vores system"]]],404);
             }
-            
+
             return response()->json(["player" => $player],200);
-            
+
         }
         return response()->json(["errors" => "Bad request"],400);
     }

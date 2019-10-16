@@ -1,78 +1,78 @@
 <script>
-    export default {
-        name: "AddPlayers",
-        props:["team"],
-        data() {
-            return {
-                totalRows: 1,
-                currentPage: 1,
-                perPage: 10,
-                filter:"",
-                minInput:2,
-                readOnly: false,
-                playerFields: [
-                    { key: "index", label: "#", sortable: false },
-                    { key: "name",label: "Navn", sortable: true, class: "text-ellipsis ellipsis-name"},
-                    { key: "gender", label:"Køn", sortable: true, class: "kt-align-center"},
-                    { key: "team.name",label:"Trup",sortable:true, class: "kt-pr0-mobile"},
-                    { key: "action", label:" ", sortable: false, class: "kt-align-right"}
-                ],
-            }
-        },
-        methods: {
-            submit() {
-
-            },
-            getPlayers() {
-                KTApp.blockPage();
-                this.$store.dispatch('players/getAllPlayers');
-
-                Vue.nextTick(function () {
-                    $('[data-toggle="tooltip"]').tooltip();
-                })
-                KTApp.unblockPage();
-            },
-            rowClass(item, type) {
-                if (!item || !item.team) return
-                if (item.team.id === this.team.id) return 'kt-bg-light-brand'
-                else if(item.team != this.team.id) return
-            },
-            addToTeam(player) {
-                let payload = {
-                    player: player,
-                    team_id: this.team.id
-                }
-                this.$store.dispatch('players/setPlayerTeam',{payload})
-                    .then(data1 => {
-                        this.$swal({
-                            title: data1,
-                            timer: 1500,
-                            type: 'success',
-                            position: 'top',
-                            showConfirmButton: false,
-                        });
-                    })
-            },
-            onFiltered(filteredItems) {
-                // Trigger pagination to update the number of buttons/pages due to filtering
-                this.totalRows = filteredItems.length;
-                this.currentPage = 1
-            },
-            setFocus() {
-                console.log("YES");
-                this.$nextTick(() => this.$refs.search.focus())
-            }
-        },
-
-        computed: {
-            players() {
-                return this.$store.getters['players/getAllPlayers'];
-            },
-        },
-        mounted() {
-            this.getPlayers();
+export default {
+    name: "AddPlayers",
+    props:["team"],
+    data() {
+        return {
+            totalRows: 1,
+            currentPage: 1,
+            perPage: 10,
+            filter:"",
+            minInput:2,
+            readOnly: false,
+            playerFields: [
+                { key: "index", label: "#", sortable: false },
+                { key: "name",label: "Navn", sortable: true, class: "text-ellipsis ellipsis-name"},
+                { key: "gender", label:"Køn", sortable: true, class: "kt-align-center"},
+                { key: "team.name",label:"Trup",sortable:true, class: "kt-pr0-mobile"},
+                { key: "action", label:" ", sortable: false, class: "kt-align-right"}
+            ],
         }
+    },
+    methods: {
+        submit() {
+
+        },
+        getPlayers() {
+            KTApp.blockPage();
+            this.$store.dispatch('players/getAllPlayers');
+
+            Vue.nextTick(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            })
+            KTApp.unblockPage();
+        },
+        rowClass(item, type) {
+            if (!item || !item.team) return
+            if (item.team.id === this.team.id) return 'kt-bg-light-brand'
+            else if(item.team != this.team.id) return
+        },
+        addToTeam(player) {
+            let payload = {
+                player: player,
+                team_id: this.team.id
+            }
+            this.$store.dispatch('players/setPlayerTeam',{payload})
+                .then(data1 => {
+                    this.$swal({
+                        title: data1,
+                        timer: 1500,
+                        type: 'success',
+                        position: 'top',
+                        showConfirmButton: false,
+                    });
+                })
+        },
+        onFiltered(filteredItems) {
+            // Trigger pagination to update the number of buttons/pages due to filtering
+            this.totalRows = filteredItems.length;
+            this.currentPage = 1
+        },
+        setFocus() {
+            console.log("YES");
+            this.$nextTick(() => this.$refs.search.focus())
+        }
+    },
+
+    computed: {
+        players() {
+            return this.$store.getters['players/getAllPlayers'];
+        },
+    },
+    mounted() {
+        this.getPlayers();
     }
+}
 </script>
 
 <style scoped>

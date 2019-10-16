@@ -29,7 +29,7 @@ class WePlayerAPI extends Controller
     public function byTeam()
     {
         $players = WePlayer::orderByRaw('ISNULL(team_id), team_id ASC')->orderBy("gender", "asc")->orderBy("name", "asc")->get();
-        $players->load("user","team");
+        $players->load("user","team","BpPlayer");
         return response()->json(array("data" => $players));
 
     }
