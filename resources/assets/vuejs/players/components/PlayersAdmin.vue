@@ -26,6 +26,8 @@ export default {
 
 <template>
 <div>
+    <div class="row">
+        <div class="col-lg-6">
     <div class="kt-portlet">
         <div class="kt-portlet__head">
             <div class="kt-portlet__head-label">
@@ -52,6 +54,8 @@ export default {
                     <span class="kt-margin-left-10">or <a href="#" class="kt-link kt-font-bold">Cancel</a></span>
                 </div>
             </div>
+        </div>
+    </div>
         </div>
     </div>
 

@@ -3286,7 +3286,11 @@ __webpack_require__.r(__webpack_exports__);
         sortable: false,
         "class": "width-full"
       }],
-      selected: ""
+      selected: "",
+      teamSelect: {
+        team: "",
+        player: ""
+      }
     };
   },
   methods: {
@@ -3310,36 +3314,35 @@ __webpack_require__.r(__webpack_exports__);
         return _final;
       }
     },
-    setTeam: function setTeam(item) {
+    setTeam: function setTeam(item, team) {
       var _this = this;
 
       console.log(item);
       var value = "";
-      var close = false;
 
-      if (this.selected && (this.selected.value || this.selected.value == 0)) {
-        value = this.selected.value;
-        close = true;
-      } else {
-        value = 0;
+      if (item.team) {
+        value = item.team.id;
       }
 
+      var close = false;
       var payload = {
         player: item,
-        team_id: this.selected.value
+        team_id: team
       };
 
-      if (!payload.team || payload.team.id != value) {
+      if (!payload.team || payload.team_id != value) {
         this.$store.dispatch('players/setPlayerTeam', {
           payload: payload
         }).then(function (data1) {
           _this.$swal({
             title: data1,
-            timer: 1500,
+            timer: 1000,
             type: 'success',
             position: 'top',
             showConfirmButton: false
           });
+
+          _this.$bvModal.hide("setTeam");
 
           _this.selected = "";
         });
@@ -3357,6 +3360,17 @@ __webpack_require__.r(__webpack_exports__);
     },
     onClose: function onClose(id) {
       this.$refs['teamSet' + id].$emit('close');
+    },
+    openTeamModal: function openTeamModal(player) {
+      this.teamSelect.player = player;
+
+      if (player && player.team) {
+        this.teamSelect.team = player.team.id;
+      }
+    },
+    test: function test() {
+      console.log("clicked");
+      this.$bvModal.hide("setTeam");
     }
   },
   computed: {
@@ -32421,7 +32435,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.flex-row[data-v-7484d79b] {\n    align-self: center;\n    line-height: 0.9rem;\n}\n", ""]);
+exports.push([module.i, "\n.flex-row[data-v-7484d79b] {\n    align-self: center;\n    line-height: 0.9rem;\n}\n.kt-badge--sm[data-v-7484d79b] {\n    font-size: 0.7rem;\n    font-weight:bold;\n}\n", ""]);
 
 // exports
 
@@ -32459,7 +32473,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n[data-v-30bb1995] .flex-row {\n    align-self: center;\n    line-height: 0.9rem;\n}\n[data-v-30bb1995] .width-full {\n    width:100%;\n}\n[data-v-30bb1995] .kt-badge--sm {\n    font-size: 0.6rem;\n    font-weight:bold;\n}\n", ""]);
+exports.push([module.i, "\n[data-v-30bb1995] .flex-row {\n    align-self: center;\n    line-height: 0.9rem;\n}\n[data-v-30bb1995] .width-full {\n    width:100%;\n}\n.kt-option[data-v-30bb1995]:hover {\n    border: 1px solid #ddd;\n}\n", ""]);
 
 // exports
 
@@ -61127,231 +61141,267 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("b-table", {
-    attrs: {
-      striped: "",
-      "show-empty": "",
-      "empty-text": "Ingen spillere fundet",
-      "sort-icon-left": "",
-      small: "",
-      fields: _vm.playerFields,
-      items: _vm.players
-    },
-    scopedSlots: _vm._u([
-      {
-        key: "cell(index)",
-        fn: function(data) {
-          return [_vm._v("\n        " + _vm._s(data.index + 1) + "\n    ")]
-        }
-      },
-      {
-        key: "cell(name)",
-        fn: function(data) {
-          return [_c("table-player-name", { attrs: { data: data } })]
-        }
-      },
-      {
-        key: "cell(gender)",
-        fn: function(data) {
-          return [
-            data.value == "M"
-              ? _c("i", { staticClass: "fa fa-2x fa-male kt-font-brand" })
-              : _vm._e(),
-            _vm._v(" "),
-            data.value == "K"
-              ? _c("i", { staticClass: "fa fa-2x fa-female kt-font-danger" })
-              : _vm._e()
+  return _c(
+    "div",
+    [
+      _c(
+        "b-button",
+        {
+          directives: [
+            {
+              name: "b-modal",
+              rawName: "v-b-modal.setTeam",
+              modifiers: { setTeam: true }
+            }
           ]
-        }
-      },
-      {
-        key: "cell(team.name)",
-        fn: function(data) {
-          return [
-            data.value
-              ? _c(
-                  "span",
-                  {
-                    directives: [
+        },
+        [_vm._v("test")]
+      ),
+      _vm._v(" "),
+      _c("b-table", {
+        attrs: {
+          striped: "",
+          "show-empty": "",
+          "empty-text": "Ingen spillere fundet",
+          "sort-icon-left": "",
+          small: "",
+          fields: _vm.playerFields,
+          items: _vm.players
+        },
+        scopedSlots: _vm._u([
+          {
+            key: "cell(index)",
+            fn: function(data) {
+              return [
+                _vm._v("\n            " + _vm._s(data.index + 1) + "\n        ")
+              ]
+            }
+          },
+          {
+            key: "cell(name)",
+            fn: function(data) {
+              return [_c("table-player-name", { attrs: { data: data } })]
+            }
+          },
+          {
+            key: "cell(gender)",
+            fn: function(data) {
+              return [
+                data.value == "M"
+                  ? _c("i", { staticClass: "fa fa-2x fa-male kt-font-brand" })
+                  : _vm._e(),
+                _vm._v(" "),
+                data.value == "K"
+                  ? _c("i", {
+                      staticClass: "fa fa-2x fa-female kt-font-danger"
+                    })
+                  : _vm._e()
+              ]
+            }
+          },
+          {
+            key: "cell(team.name)",
+            fn: function(data) {
+              return [
+                data.value
+                  ? _c(
+                      "span",
                       {
-                        name: "b-tooltip",
-                        rawName: "v-b-tooltip.hover",
-                        modifiers: { hover: true }
-                      }
-                    ],
-                    staticClass:
-                      "badge badge-secondary badge-sm text-ellipsis ellipsis-team",
-                    attrs: { title: data.value }
-                  },
-                  [_vm._v(_vm._s(data.value))]
-                )
-              : _c(
-                  "span",
-                  {
-                    directives: [
-                      {
-                        name: "b-tooltip",
-                        rawName: "v-b-tooltip.hover",
-                        modifiers: { hover: true }
-                      }
-                    ],
-                    staticClass:
-                      "badge badge-secondary badge-sm text-ellipsis ellipsis-team",
-                    attrs: { title: "Sæt på trup" }
-                  },
-                  [_vm._v("- Ikke tilkyttet trup -")]
-                )
-          ]
-        }
-      },
-      {
-        key: "cell(action)",
-        fn: function(data) {
-          return [
-            _c(
-              "div",
-              {
-                staticClass: "btn-group",
-                attrs: { role: "group", "aria-label": "..." }
-              },
-              [
-                _c(
-                  "span",
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "btn-group",
-                        attrs: {
-                          role: "group",
-                          "aria-label": "Administration af spillere"
-                        }
-                      },
-                      [
-                        _c(
-                          "button",
+                        directives: [
                           {
-                            ref: "button" + data.item.id,
-                            staticClass:
-                              "btn btn-sm btn-outline-brand btn-icon",
-                            attrs: {
-                              id: "popover-target-" + data.item.id,
-                              role: "button"
-                            }
-                          },
-                          [_c("i", { staticClass: "la la-users" })]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass:
-                              "btn btn-sm btn-outline-success btn-icon",
-                            attrs: { role: "button" }
-                          },
-                          [_c("i", { staticClass: "la la-pencil" })]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass:
-                              "btn btn-sm btn-outline-danger btn-icon",
-                            attrs: { role: "button" }
-                          },
-                          [_c("i", { staticClass: "la la-trash" })]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "b-popover",
-                      {
-                        ref: "teamSet" + data.item.id,
-                        attrs: {
-                          target: "popover-target-" + data.item.id,
-                          triggers: "click",
-                          placement: "left"
-                        },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "title",
-                              fn: function() {
-                                return [
-                                  _c(
-                                    "b-button",
-                                    {
-                                      staticClass: "close",
-                                      attrs: { "aria-label": "Close" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.onClose(data.item.id)
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "span",
-                                        {
-                                          staticClass: "d-inline-block",
-                                          attrs: { "aria-hidden": "true" }
-                                        },
-                                        [_vm._v("×")]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(
-                                    "\n                        Interactive Content\n                      "
-                                  )
-                                ]
-                              },
-                              proxy: true
-                            }
-                          ],
-                          null,
-                          true
-                        )
-                      },
-                      [
-                        _vm._v(" "),
-                        _c("v-select", {
-                          attrs: {
-                            labelTitle: "- Vælg en trup nedenfor -",
-                            options: _vm.teams
-                          },
-                          on: {
-                            input: function($event) {
-                              return _vm.setTeam(data.item)
-                            }
-                          },
-                          model: {
-                            value: _vm.selected,
-                            callback: function($$v) {
-                              _vm.selected = $$v
-                            },
-                            expression: "selected"
+                            name: "b-tooltip",
+                            rawName: "v-b-tooltip.hover",
+                            modifiers: { hover: true }
                           }
-                        })
-                      ],
-                      1
+                        ],
+                        staticClass:
+                          "badge badge-secondary badge-sm text-ellipsis ellipsis-team",
+                        attrs: { title: data.value }
+                      },
+                      [_vm._v(_vm._s(data.value))]
                     )
-                  ],
-                  1
+                  : _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "b-tooltip",
+                            rawName: "v-b-tooltip.hover",
+                            modifiers: { hover: true }
+                          }
+                        ],
+                        staticClass:
+                          "badge badge-secondary badge-sm text-ellipsis ellipsis-team",
+                        attrs: { title: "Sæt på trup" }
+                      },
+                      [_vm._v("- Ikke tilkyttet trup -")]
+                    )
+              ]
+            }
+          },
+          {
+            key: "cell(action)",
+            fn: function(data) {
+              return [
+                _c(
+                  "div",
+                  {
+                    staticClass: "btn-group",
+                    attrs: { role: "group", "aria-label": "..." }
+                  },
+                  [
+                    _c("span", [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "btn-group",
+                          attrs: {
+                            role: "group",
+                            "aria-label": "Administration af spillere"
+                          }
+                        },
+                        [
+                          _c(
+                            "button",
+                            {
+                              directives: [
+                                {
+                                  name: "b-modal",
+                                  rawName: "v-b-modal.setTeam",
+                                  modifiers: { setTeam: true }
+                                }
+                              ],
+                              staticClass:
+                                "btn btn-sm btn-outline-brand btn-icon",
+                              attrs: { role: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.openTeamModal(data.item)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "la la-users" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-sm btn-outline-success btn-icon",
+                              attrs: { role: "button" }
+                            },
+                            [_c("i", { staticClass: "la la-pencil" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-sm btn-outline-danger btn-icon",
+                              attrs: { role: "button" }
+                            },
+                            [_c("i", { staticClass: "la la-trash" })]
+                          )
+                        ]
+                      )
+                    ])
+                  ]
                 )
               ]
-            )
-          ]
-        }
-      },
-      {
-        key: "cell(dbf_id)",
-        fn: function(data) {
-          return undefined
-        }
-      }
-    ])
-  })
+            }
+          },
+          {
+            key: "cell(dbf_id)",
+            fn: function(data) {
+              return undefined
+            }
+          }
+        ])
+      }),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            size: "sm",
+            id: "setTeam",
+            title: "Sæt trup",
+            title: _vm.teamSelect.player.name
+          }
+        },
+        _vm._l(_vm.teams, function(team) {
+          return _c("label", { staticClass: "kt-option cursor-pointer" }, [
+            _c("span", { staticClass: "kt-option__label" }, [
+              _c("span", { staticClass: "kt-option__head" }, [
+                _c(
+                  "span",
+                  {
+                    staticClass: "kt-option__title",
+                    class:
+                      team.value == _vm.teamSelect.team ? "kt-font-boldest" : ""
+                  },
+                  [
+                    _vm._v(
+                      "\n\t\t\t\t\t\t\t\t\t" +
+                        _vm._s(team.text) +
+                        "\n\t\t\t\t\t\t\t\t\t"
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("span", { staticClass: "kt-option__focus" })
+              ]),
+              _vm._v(" "),
+              team.id
+                ? _c("span", { staticClass: "kt-option__body" })
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "kt-option__control" }, [
+              _c(
+                "span",
+                {
+                  staticClass: "kt-radio kt-radio--bold kt-radio--brand",
+                  class: team.value == 0 ? "kt-radio--danger" : "",
+                  attrs: { checked: team.value == _vm.teamSelect.team }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.teamSelect.team,
+                        expression: "teamSelect.team"
+                      }
+                    ],
+                    attrs: { type: "radio", name: "m_option_1" },
+                    domProps: {
+                      value: team.value,
+                      checked: team.value == _vm.teamSelect.team,
+                      checked: _vm._q(_vm.teamSelect.team, team.value)
+                    },
+                    on: {
+                      input: function($event) {
+                        return _vm.setTeam(_vm.teamSelect.player, team.value)
+                      },
+                      change: function($event) {
+                        return _vm.$set(_vm.teamSelect, "team", team.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("span")
+                ]
+              )
+            ])
+          ])
+        }),
+        0
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -61378,40 +61428,44 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("div", { staticClass: "kt-portlet" }, [
-        _c("div", { staticClass: "kt-portlet__head" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "kt-portlet__head-toolbar" }, [
-            _c(
-              "button",
-              {
-                directives: [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-lg-6" }, [
+          _c("div", { staticClass: "kt-portlet" }, [
+            _c("div", { staticClass: "kt-portlet__head" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "kt-portlet__head-toolbar" }, [
+                _c(
+                  "button",
                   {
-                    name: "b-modal",
-                    rawName: "v-b-modal.importPlayers",
-                    modifiers: { importPlayers: true }
-                  }
-                ],
-                staticClass: "btn btn-success"
-              },
-              [
-                _c("i", { staticClass: "flaticon2-plus-1" }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Importér spillere")])
-              ]
-            )
+                    directives: [
+                      {
+                        name: "b-modal",
+                        rawName: "v-b-modal.importPlayers",
+                        modifiers: { importPlayers: true }
+                      }
+                    ],
+                    staticClass: "btn btn-success"
+                  },
+                  [
+                    _c("i", { staticClass: "flaticon2-plus-1" }),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("Importér spillere")])
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "kt-portlet__body kt-p5-mobile" },
+              [_c("player-table", { attrs: { players: _vm.players } })],
+              1
+            ),
+            _vm._v(" "),
+            _vm._m(1)
           ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "kt-portlet__body kt-p5-mobile" },
-          [_c("player-table", { attrs: { players: _vm.players } })],
-          1
-        ),
-        _vm._v(" "),
-        _vm._m(1)
+        ])
       ]),
       _vm._v(" "),
       _c(
@@ -62311,7 +62365,7 @@ var render = function() {
             attrs: {
               name: "max_players",
               id: "max_players",
-              type: "number",
+              type: "tel",
               placeholder: "20"
             },
             domProps: { value: _vm.form.max_players },

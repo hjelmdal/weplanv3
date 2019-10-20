@@ -41,6 +41,10 @@
         align-self: center;
         line-height: 0.9rem;
     }
+    .kt-badge--sm {
+        font-size: 0.7rem;
+        font-weight:bold;
+    }
 </style>
 
 <template>
