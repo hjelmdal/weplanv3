@@ -10,6 +10,9 @@ export default {
         players() {
             return this.$store.getters["players/getAllPlayersWithUsers"];
         },
+        rows() {
+            return this.players.length;
+        }
 
     },
     created() {
@@ -42,7 +45,7 @@ export default {
                 <button v-b-modal.importPlayers class="btn btn-success"><i class="flaticon2-plus-1"></i> <span>Importér spillere</span></button></div>
         </div>
         <div class="kt-portlet__body kt-p5-mobile">
-            <player-table :players="players"></player-table>
+            <player-table :rows="rows" :players="players"></player-table>
         </div>
         <div class="kt-portlet__foot kt-hidden">
             <div class="row">

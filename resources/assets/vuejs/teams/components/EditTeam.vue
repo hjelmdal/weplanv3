@@ -1,9 +1,10 @@
 <script>
     import TeamForm from "./TeamForm";
     import AddPlayers from "./AddPlayers";
+    import PlayerSetTeam from "../../players/components/PlayerSetTeam";
     export default {
         name: "EditTeam",
-        components: {AddPlayers, TeamForm},
+        components: {PlayerSetTeam, AddPlayers, TeamForm},
         props:["id"],
         data() {
             return {
@@ -134,28 +135,7 @@
         </template>
     </b-modal>
 
+    <player-set-team :player="modalPlayer"></player-set-team>
 
-    <b-modal @show="resetForm" v-if="team && team.id" id="setTeam">
-        <template v-slot:modal-title>{{ modalPlayer.name }}</template>
-        <div class="kt-section kt-form__section--first">
-
-            <!-- begin::form rows -->
-            <div class="form-group kt-form__group">
-                <h5>Sæt {{ modalPlayer.name }} på en trup nedenfor.</h5>
-                <b-form-select v-model="selected" :options="teamsSelect"></b-form-select>
-
-            </div>
-        </div>
-        <template v-slot:modal-footer="{ ok, cancel }">
-            <!-- Emulate built in modal footer ok and cancel button actions -->
-            <b-button size="sm" class="btn btn-outline-metal" @click="cancel()">
-                Fortryd
-            </b-button>
-            <b-button size="sm" variant="brand" @click="modalSavePlayerTeam">
-                Gem
-            </b-button>
-
-        </template>
-    </b-modal>
 </div>
 </template>

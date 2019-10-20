@@ -3236,6 +3236,95 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/players/components/PlayerSetTeam.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/players/components/PlayerSetTeam.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "PlayerSetTeam",
+  props: ["player", "modal"],
+  data: function data() {
+    return {
+      selected: ""
+    };
+  },
+  computed: {
+    teams: function teams() {
+      var teams = this.$store.getters['teams/getAllTeams'];
+      var options = [];
+      options.push({
+        value: 0,
+        text: "Ingen trup"
+      });
+      teams.forEach(function (team) {
+        options.push({
+          value: team.id,
+          text: team.name
+        });
+      });
+      return options;
+    }
+  },
+  methods: {
+    initSelect: function initSelect() {
+      if (this.player.team) {
+        this.selected = this.player.team.id;
+      } else if (this.player.team_id) {
+        this.selected = this.player.team_id;
+      } else {
+        this.selected = 0;
+      }
+    },
+    setTeam: function setTeam(team) {
+      var _this = this;
+
+      var payload = {
+        player: this.player,
+        team_id: team
+      };
+
+      if (!this.player.team || this.player.team.id != payload.team_id) {
+        this.$store.dispatch('players/setPlayerTeam', {
+          payload: payload
+        }).then(function (data1) {
+          _this.$swal({
+            title: data1,
+            timer: 1000,
+            type: 'success',
+            position: 'top',
+            showConfirmButton: false
+          });
+
+          _this.$bvModal.hide("setTeam");
+
+          _this.selected = "";
+        });
+      } else {
+        console.log("Are you kiddin' me?");
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.initSelect();
+  },
+  watch: {
+    player: {
+      // the callback will be called immediately after the start of the observation
+      immediate: true,
+      handler: function handler(val, oldVal) {
+        this.initSelect();
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/players/components/PlayerTable.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/players/components/PlayerTable.vue?vue&type=script&lang=js& ***!
@@ -3246,13 +3335,16 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_helpers_TablePlayerName__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/helpers/TablePlayerName */ "./resources/assets/vuejs/components/helpers/TablePlayerName.vue");
+/* harmony import */ var _PlayerSetTeam__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PlayerSetTeam */ "./resources/assets/vuejs/players/components/PlayerSetTeam.vue");
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PlayerTable",
   components: {
+    PlayerSetTeam: _PlayerSetTeam__WEBPACK_IMPORTED_MODULE_1__["default"],
     TablePlayerName: _components_helpers_TablePlayerName__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ["players"],
+  props: ["players", "rows"],
   data: function data() {
     return {
       playerFields: [{
@@ -3286,6 +3378,9 @@ __webpack_require__.r(__webpack_exports__);
         sortable: false,
         "class": "width-full"
       }],
+      currentPage: 1,
+      perPage: 20,
+      filter: "",
       selected: "",
       teamSelect: {
         team: "",
@@ -3294,6 +3389,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    onFiltered: function onFiltered(filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
+    },
     getInitials: function getInitials(name) {
       if (name) {
         var nameSplit = name.split(" ");
@@ -3314,80 +3414,21 @@ __webpack_require__.r(__webpack_exports__);
         return _final;
       }
     },
-    setTeam: function setTeam(item, team) {
-      var _this = this;
-
-      console.log(item);
-      var value = "";
-
-      if (item.team) {
-        value = item.team.id;
-      }
-
-      var close = false;
-      var payload = {
-        player: item,
-        team_id: team
-      };
-
-      if (!payload.team || payload.team_id != value) {
-        this.$store.dispatch('players/setPlayerTeam', {
-          payload: payload
-        }).then(function (data1) {
-          _this.$swal({
-            title: data1,
-            timer: 1000,
-            type: 'success',
-            position: 'top',
-            showConfirmButton: false
-          });
-
-          _this.$bvModal.hide("setTeam");
-
-          _this.selected = "";
-        });
-      } else {
-        console.log("Are you kiddin' me?");
-      }
-
-      if (close) {
-        console.log("id: " + item.id);
-        this.$refs['teamSet' + item.id].$emit('close');
-        this.players.forEach(function (player) {
-          _this.$refs['teamSet' + player.id].$emit('close');
-        });
-      }
-    },
-    onClose: function onClose(id) {
-      this.$refs['teamSet' + id].$emit('close');
-    },
     openTeamModal: function openTeamModal(player) {
       this.teamSelect.player = player;
 
       if (player && player.team) {
         this.teamSelect.team = player.team.id;
       }
-    },
-    test: function test() {
-      console.log("clicked");
-      this.$bvModal.hide("setTeam");
     }
   },
-  computed: {
-    teams: function teams() {
-      var teams = this.$store.getters['teams/getAllTeams'];
-      var options = [];
-      options.push({
-        value: 0,
-        text: "Fjern fra trup"
-      });
-      teams.forEach(function (team) {
-        options.push({
-          value: team.id,
-          text: team.name
-        });
-      });
-      return options;
+  watch: {
+    rows: {
+      // the callback will be called immediately after the start of the observation
+      immediate: true,
+      handler: function handler(val, oldVal) {
+        this.totalRows = this.rows;
+      }
     }
   }
 });
@@ -3419,6 +3460,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     players: function players() {
       return this.$store.getters["players/getAllPlayersWithUsers"];
+    },
+    rows: function rows() {
+      return this.players.length;
     }
   },
   created: function created() {
@@ -3546,11 +3590,14 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TeamForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TeamForm */ "./resources/assets/vuejs/teams/components/TeamForm.vue");
 /* harmony import */ var _AddPlayers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddPlayers */ "./resources/assets/vuejs/teams/components/AddPlayers.vue");
+/* harmony import */ var _players_components_PlayerSetTeam__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../players/components/PlayerSetTeam */ "./resources/assets/vuejs/players/components/PlayerSetTeam.vue");
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "EditTeam",
   components: {
+    PlayerSetTeam: _players_components_PlayerSetTeam__WEBPACK_IMPORTED_MODULE_2__["default"],
     AddPlayers: _AddPlayers__WEBPACK_IMPORTED_MODULE_1__["default"],
     TeamForm: _TeamForm__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -61126,6 +61173,128 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/players/components/PlayerSetTeam.vue?vue&type=template&id=30b80f66&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/players/components/PlayerSetTeam.vue?vue&type=template&id=30b80f66&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "b-modal",
+    {
+      attrs: {
+        size: "sm",
+        id: "setTeam",
+        title: "Sæt trup",
+        title: _vm.player.name
+      },
+      scopedSlots: _vm._u([
+        {
+          key: "modal-footer",
+          fn: function(ref) {
+            var cancel = ref.cancel
+            return [
+              _c(
+                "b-button",
+                {
+                  attrs: { size: "sm", variant: "outline-secondary" },
+                  on: {
+                    click: function($event) {
+                      return cancel()
+                    }
+                  }
+                },
+                [_vm._v("\n                Fortryd\n            ")]
+              )
+            ]
+          }
+        }
+      ])
+    },
+    _vm._l(_vm.teams, function(team) {
+      return _c("label", { staticClass: "kt-option cursor-pointer" }, [
+        _c("span", { staticClass: "kt-option__label" }, [
+          _c("span", { staticClass: "kt-option__head" }, [
+            _c(
+              "span",
+              {
+                staticClass: "kt-option__title",
+                class: team.value == _vm.selected ? "kt-font-boldest" : ""
+              },
+              [
+                _vm._v(
+                  "\n\t\t\t\t\t\t\t\t\t" +
+                    _vm._s(team.text) +
+                    "\n\t\t\t\t\t\t\t\t\t"
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("span", { staticClass: "kt-option__focus" })
+          ]),
+          _vm._v(" "),
+          team.id ? _c("span", { staticClass: "kt-option__body" }) : _vm._e()
+        ]),
+        _vm._v(" "),
+        _c("span", { staticClass: "kt-option__control" }, [
+          _c(
+            "span",
+            {
+              staticClass: "kt-radio kt-radio--bold kt-radio--brand",
+              class: team.value == 0 ? "kt-radio--danger" : "",
+              attrs: { checked: team.value == _vm.selected }
+            },
+            [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.selected,
+                    expression: "selected"
+                  }
+                ],
+                attrs: { type: "radio" },
+                domProps: {
+                  value: team.value,
+                  checked: team.value == _vm.selected,
+                  checked: _vm._q(_vm.selected, team.value)
+                },
+                on: {
+                  input: function($event) {
+                    return _vm.setTeam(team.value)
+                  },
+                  change: function($event) {
+                    _vm.selected = team.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("span")
+            ]
+          )
+        ])
+      ])
+    }),
+    0
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/players/components/PlayerTable.vue?vue&type=template&id=30bb1995&scoped=true&":
 /*!********************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/players/components/PlayerTable.vue?vue&type=template&id=30bb1995&scoped=true& ***!
@@ -61144,19 +61313,112 @@ var render = function() {
   return _c(
     "div",
     [
-      _c(
-        "b-button",
-        {
-          directives: [
-            {
-              name: "b-modal",
-              rawName: "v-b-modal.setTeam",
-              modifiers: { setTeam: true }
-            }
+      _c("div", { staticClass: "kt-searchbar kt-p5-mobile" }, [
+        _c(
+          "div",
+          { staticClass: "input-group input-group-lg kt-margin-b-10" },
+          [
+            _c("div", { staticClass: "input-group-prepend" }, [
+              _c(
+                "span",
+                {
+                  staticClass: "input-group-text",
+                  attrs: { id: "basic-addon1" }
+                },
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "kt-svg-icon",
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                        width: "24px",
+                        height: "24px",
+                        viewBox: "0 0 24 24",
+                        version: "1.1"
+                      }
+                    },
+                    [
+                      _c(
+                        "g",
+                        {
+                          attrs: {
+                            stroke: "none",
+                            "stroke-width": "1",
+                            fill: "none",
+                            "fill-rule": "evenodd"
+                          }
+                        },
+                        [
+                          _c("rect", {
+                            attrs: {
+                              id: "bound",
+                              x: "0",
+                              y: "0",
+                              width: "24",
+                              height: "24"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("path", {
+                            attrs: {
+                              d:
+                                "M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z",
+                              id: "Path-2",
+                              fill: "#000000",
+                              "fill-rule": "nonzero",
+                              opacity: "0.3"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("path", {
+                            attrs: {
+                              d:
+                                "M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z",
+                              id: "Path",
+                              fill: "#000000",
+                              "fill-rule": "nonzero"
+                            }
+                          })
+                        ]
+                      )
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.filter,
+                  expression: "filter"
+                }
+              ],
+              ref: "search",
+              staticClass: "form-control",
+              attrs: {
+                autofocus: "",
+                type: "search",
+                placeholder: "Søg spiller",
+                "aria-describedby": "basic-addon1"
+              },
+              domProps: { value: _vm.filter },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.filter = $event.target.value
+                }
+              }
+            })
           ]
-        },
-        [_vm._v("test")]
-      ),
+        )
+      ]),
       _vm._v(" "),
       _c("b-table", {
         attrs: {
@@ -61166,8 +61428,12 @@ var render = function() {
           "sort-icon-left": "",
           small: "",
           fields: _vm.playerFields,
-          items: _vm.players
+          items: _vm.players,
+          "current-page": _vm.currentPage,
+          "per-page": _vm.perPage,
+          filter: _vm.filter
         },
+        on: { filtered: _vm.onFiltered },
         scopedSlots: _vm._u([
           {
             key: "cell(index)",
@@ -61280,7 +61546,7 @@ var render = function() {
                                 }
                               }
                             },
-                            [_c("i", { staticClass: "la la-users" })]
+                            [_c("i", { staticClass: "la la-list-ol" })]
                           ),
                           _vm._v(" "),
                           _c(
@@ -61320,85 +61586,80 @@ var render = function() {
       }),
       _vm._v(" "),
       _c(
-        "b-modal",
-        {
-          attrs: {
-            size: "sm",
-            id: "setTeam",
-            title: "Sæt trup",
-            title: _vm.teamSelect.player.name
-          }
-        },
-        _vm._l(_vm.teams, function(team) {
-          return _c("label", { staticClass: "kt-option cursor-pointer" }, [
-            _c("span", { staticClass: "kt-option__label" }, [
-              _c("span", { staticClass: "kt-option__head" }, [
-                _c(
-                  "span",
-                  {
-                    staticClass: "kt-option__title",
-                    class:
-                      team.value == _vm.teamSelect.team ? "kt-font-boldest" : ""
-                  },
-                  [
-                    _vm._v(
-                      "\n\t\t\t\t\t\t\t\t\t" +
-                        _vm._s(team.text) +
-                        "\n\t\t\t\t\t\t\t\t\t"
-                    )
+        "div",
+        { staticClass: "kt-pagination kt-pagination--brand kt-pull-right" },
+        [
+          _c("b-pagination", {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.totalRows > _vm.perPage,
+                expression: "totalRows > perPage"
+              }
+            ],
+            staticClass: "kt-pagination__links",
+            attrs: {
+              "total-rows": _vm.totalRows,
+              "per-page": _vm.perPage,
+              align: "fill",
+              size: "sm"
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "first-text",
+                fn: function() {
+                  return [
+                    _c("i", {
+                      staticClass: "fa fa-angle-double-left kt-font-brand"
+                    })
                   ]
-                ),
-                _vm._v(" "),
-                _c("span", { staticClass: "kt-option__focus" })
-              ]),
-              _vm._v(" "),
-              team.id
-                ? _c("span", { staticClass: "kt-option__body" })
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("span", { staticClass: "kt-option__control" }, [
-              _c(
-                "span",
-                {
-                  staticClass: "kt-radio kt-radio--bold kt-radio--brand",
-                  class: team.value == 0 ? "kt-radio--danger" : "",
-                  attrs: { checked: team.value == _vm.teamSelect.team }
                 },
-                [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.teamSelect.team,
-                        expression: "teamSelect.team"
-                      }
-                    ],
-                    attrs: { type: "radio", name: "m_option_1" },
-                    domProps: {
-                      value: team.value,
-                      checked: team.value == _vm.teamSelect.team,
-                      checked: _vm._q(_vm.teamSelect.team, team.value)
-                    },
-                    on: {
-                      input: function($event) {
-                        return _vm.setTeam(_vm.teamSelect.player, team.value)
-                      },
-                      change: function($event) {
-                        return _vm.$set(_vm.teamSelect, "team", team.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("span")
-                ]
-              )
-            ])
-          ])
-        }),
-        0
-      )
+                proxy: true
+              },
+              {
+                key: "prev-text",
+                fn: function() {
+                  return [
+                    _c("i", { staticClass: "fa fa-angle-left kt-font-brand" })
+                  ]
+                },
+                proxy: true
+              },
+              {
+                key: "next-text",
+                fn: function() {
+                  return [
+                    _c("i", { staticClass: "fa fa-angle-right kt-font-brand" })
+                  ]
+                },
+                proxy: true
+              },
+              {
+                key: "last-text",
+                fn: function() {
+                  return [
+                    _c("i", {
+                      staticClass: "fa fa-angle-double-right kt-font-brand"
+                    })
+                  ]
+                },
+                proxy: true
+              }
+            ]),
+            model: {
+              value: _vm.currentPage,
+              callback: function($$v) {
+                _vm.currentPage = $$v
+              },
+              expression: "currentPage"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("player-set-team", { attrs: { player: _vm.teamSelect.player } })
     ],
     1
   )
@@ -61459,7 +61720,11 @@ var render = function() {
             _c(
               "div",
               { staticClass: "kt-portlet__body kt-p5-mobile" },
-              [_c("player-table", { attrs: { players: _vm.players } })],
+              [
+                _c("player-table", {
+                  attrs: { rows: _vm.rows, players: _vm.players }
+                })
+              ],
               1
             ),
             _vm._v(" "),
@@ -62158,90 +62423,7 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _vm.team && _vm.team.id
-        ? _c(
-            "b-modal",
-            {
-              attrs: { id: "setTeam" },
-              on: { show: _vm.resetForm },
-              scopedSlots: _vm._u(
-                [
-                  {
-                    key: "modal-title",
-                    fn: function() {
-                      return [_vm._v(_vm._s(_vm.modalPlayer.name))]
-                    },
-                    proxy: true
-                  },
-                  {
-                    key: "modal-footer",
-                    fn: function(ref) {
-                      var ok = ref.ok
-                      var cancel = ref.cancel
-                      return [
-                        _c(
-                          "b-button",
-                          {
-                            staticClass: "btn btn-outline-metal",
-                            attrs: { size: "sm" },
-                            on: {
-                              click: function($event) {
-                                return cancel()
-                              }
-                            }
-                          },
-                          [_vm._v("\n                Fortryd\n            ")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "b-button",
-                          {
-                            attrs: { size: "sm", variant: "brand" },
-                            on: { click: _vm.modalSavePlayerTeam }
-                          },
-                          [_vm._v("\n                Gem\n            ")]
-                        )
-                      ]
-                    }
-                  }
-                ],
-                null,
-                false,
-                732854164
-              )
-            },
-            [
-              _vm._v(" "),
-              _c("div", { staticClass: "kt-section kt-form__section--first" }, [
-                _c(
-                  "div",
-                  { staticClass: "form-group kt-form__group" },
-                  [
-                    _c("h5", [
-                      _vm._v(
-                        "Sæt " +
-                          _vm._s(_vm.modalPlayer.name) +
-                          " på en trup nedenfor."
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("b-form-select", {
-                      attrs: { options: _vm.teamsSelect },
-                      model: {
-                        value: _vm.selected,
-                        callback: function($$v) {
-                          _vm.selected = $$v
-                        },
-                        expression: "selected"
-                      }
-                    })
-                  ],
-                  1
-                )
-              ])
-            ]
-          )
-        : _vm._e()
+      _c("player-set-team", { attrs: { player: _vm.modalPlayer } })
     ],
     1
   )
@@ -82341,6 +82523,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayerImportTable_vue_vue_type_template_id_46be7030_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayerImportTable_vue_vue_type_template_id_46be7030_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/vuejs/players/components/PlayerSetTeam.vue":
+/*!*********************************************************************!*\
+  !*** ./resources/assets/vuejs/players/components/PlayerSetTeam.vue ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PlayerSetTeam_vue_vue_type_template_id_30b80f66_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PlayerSetTeam.vue?vue&type=template&id=30b80f66&scoped=true& */ "./resources/assets/vuejs/players/components/PlayerSetTeam.vue?vue&type=template&id=30b80f66&scoped=true&");
+/* harmony import */ var _PlayerSetTeam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PlayerSetTeam.vue?vue&type=script&lang=js& */ "./resources/assets/vuejs/players/components/PlayerSetTeam.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PlayerSetTeam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PlayerSetTeam_vue_vue_type_template_id_30b80f66_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PlayerSetTeam_vue_vue_type_template_id_30b80f66_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "30b80f66",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/assets/vuejs/players/components/PlayerSetTeam.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/assets/vuejs/players/components/PlayerSetTeam.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/assets/vuejs/players/components/PlayerSetTeam.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayerSetTeam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./PlayerSetTeam.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/players/components/PlayerSetTeam.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayerSetTeam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/assets/vuejs/players/components/PlayerSetTeam.vue?vue&type=template&id=30b80f66&scoped=true&":
+/*!****************************************************************************************************************!*\
+  !*** ./resources/assets/vuejs/players/components/PlayerSetTeam.vue?vue&type=template&id=30b80f66&scoped=true& ***!
+  \****************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayerSetTeam_vue_vue_type_template_id_30b80f66_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./PlayerSetTeam.vue?vue&type=template&id=30b80f66&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/players/components/PlayerSetTeam.vue?vue&type=template&id=30b80f66&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayerSetTeam_vue_vue_type_template_id_30b80f66_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayerSetTeam_vue_vue_type_template_id_30b80f66_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
