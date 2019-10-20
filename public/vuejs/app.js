@@ -61446,7 +61446,11 @@ var render = function() {
           {
             key: "cell(name)",
             fn: function(data) {
-              return [_c("table-player-name", { attrs: { data: data } })]
+              return [
+                _c("table-player-name", {
+                  attrs: { filter: _vm.filter, data: data }
+                })
+              ]
             }
           },
           {
@@ -61556,7 +61560,7 @@ var render = function() {
                                 "btn btn-sm btn-outline-success btn-icon",
                               attrs: { role: "button" }
                             },
-                            [_c("i", { staticClass: "la la-pencil" })]
+                            [_c("i", { staticClass: "la la-search" })]
                           ),
                           _vm._v(" "),
                           _c(

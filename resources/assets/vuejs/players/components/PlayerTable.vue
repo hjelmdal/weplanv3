@@ -115,7 +115,7 @@ export default {
             {{ data.index + 1 }}
         </template>
         <template v-slot:cell(name)="data">
-            <table-player-name :data="data"></table-player-name>
+            <table-player-name :filter="filter" :data="data"></table-player-name>
         </template>
         <template v-slot:cell(gender)="data">
             <i v-if="data.value == 'M'" class="fa fa-2x fa-male kt-font-brand"></i>
@@ -131,7 +131,7 @@ export default {
                     <span>
                         <div class="btn-group" role="group" aria-label="Administration af spillere">
                             <button v-b-modal.setTeam @click="openTeamModal(data.item)" class="btn btn-sm btn-outline-brand btn-icon" role="button"><i class="la la-list-ol"></i></button>
-                            <button class="btn btn-sm btn-outline-success btn-icon"  role="button"><i class="la la-pencil"></i></button>
+                            <button class="btn btn-sm btn-outline-success btn-icon"  role="button"><i class="la la-search"></i></button>
                             <button class="btn btn-sm btn-outline-danger btn-icon"  role="button"><i class="la la-trash"></i></button>
                         </div>
                     </span>
