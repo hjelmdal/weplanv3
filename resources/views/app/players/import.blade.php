@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
             url: "{{ route("api.v1.badmintonpeople.players.store") }}",
             type: "POST",
             dataType: "json",
-            data: {data:ids},
+            data: {players:ids},
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 "Authorization": $('meta[name="api-token"]').attr('content')

@@ -67,8 +67,25 @@ const actions = {
         });
 
     },
+    importPlayers : async (context, { players }) => {
+        return new Promise((resolve, reject) => {
+            let form = new Form({
+                players: players
+            });
+            form.post("/api/v1/BP/players/store")
+                .then(response => {
+                    context.dispatch('getAllPlayers');
+                    context.dispatch('getAllPlayersWithUsers');
+                    context.dispatch('getBpPlayers');
+                    resolve(response);
+                })
+        });
+    },
     getTeams ({dispatch}) {
         dispatch('teams/getAllTeams',null,{root:true});
+    },
+    getBpPlayers({dispatch}) {
+        dispatch('bpPlayers/getAllPlayers',null,{root:true});
     }
 }
 

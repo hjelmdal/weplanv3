@@ -69,9 +69,6 @@ export default {
             <b-button size="sm" class="btn btn-outline-metal">
                 Fortryd
             </b-button>
-            <b-button tabindex="-1" size="sm" variant="brand">
-                Opret
-            </b-button>
         </template>
     </b-modal>
 </div>

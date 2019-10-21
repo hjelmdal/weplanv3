@@ -3220,6 +3220,48 @@ __webpack_require__.r(__webpack_exports__);
     rowClass: function rowClass(item, type) {
       if (!item || !item.we_player) return;
       if (item.we_player && item.we_player.id) return 'kt-bg-light-brand';else return;
+    },
+    importPlayers: function importPlayers(id) {
+      var _this = this;
+
+      var array = [];
+      var remove = "";
+      var empty = "";
+
+      if (id === parseInt(id, 10)) {
+        // check if id is integer
+        array.push(id);
+        remove = true;
+      } else if (this.checked.length > 0) {
+        this.checked.forEach(function (id) {
+          array.push(id);
+          empty = true;
+        });
+      } else {
+        console.log("Ehh...? how?");
+      }
+
+      this.$store.dispatch('players/importPlayers', {
+        players: array
+      }).then(function (response) {
+        _this.$swal({
+          title: response.message,
+          timer: 1000,
+          type: 'success',
+          position: 'top',
+          showConfirmButton: false
+        });
+
+        if (remove) {
+          for (var i = 0; i < _this.checked.length; i++) {
+            if (_this.checked[i] === id) {
+              _this.checked.splice(i, 1);
+            }
+          }
+        } else if (empty) {
+          _this.checked.length = 0;
+        }
+      });
     }
   },
   computed: {
@@ -61064,7 +61106,12 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-sm btn-brand kt-p5-mobile",
-                    attrs: { disabled: data.item.we_player, role: "button" }
+                    attrs: { disabled: data.item.we_player, role: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.importPlayers(data.item.id)
+                      }
+                    }
                   },
                   [_c("i", { staticClass: "la la-plus" })]
                 )
@@ -61073,6 +61120,28 @@ var render = function() {
           }
         ])
       }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.checked.length > 0,
+              expression: "checked.length > 0"
+            }
+          ],
+          staticClass: "kt-pull-left",
+          on: { click: _vm.importPlayers }
+        },
+        [
+          _c("b-button", { staticClass: "btn btn-outline-brand" }, [
+            _vm._v("Opret (" + _vm._s(_vm.checked.length) + ")")
+          ])
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -61760,12 +61829,6 @@ var render = function() {
                       attrs: { size: "sm" }
                     },
                     [_vm._v("\n                Fortryd\n            ")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "b-button",
-                    { attrs: { tabindex: "-1", size: "sm", variant: "brand" } },
-                    [_vm._v("\n                Opret\n            ")]
                   )
                 ]
               }
@@ -83183,9 +83246,51 @@ var actions = {
 
     return setPlayerTeam;
   }(),
-  getTeams: function getTeams(_ref2) {
-    var dispatch = _ref2.dispatch;
+  importPlayers: function () {
+    var _importPlayers = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(context, _ref2) {
+      var players;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              players = _ref2.players;
+              return _context4.abrupt("return", new Promise(function (resolve, reject) {
+                var form = new Form({
+                  players: players
+                });
+                form.post("/api/v1/BP/players/store").then(function (response) {
+                  context.dispatch('getAllPlayers');
+                  context.dispatch('getAllPlayersWithUsers');
+                  context.dispatch('getBpPlayers');
+                  resolve(response);
+                });
+              }));
+
+            case 2:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }));
+
+    function importPlayers(_x5, _x6) {
+      return _importPlayers.apply(this, arguments);
+    }
+
+    return importPlayers;
+  }(),
+  getTeams: function getTeams(_ref3) {
+    var dispatch = _ref3.dispatch;
     dispatch('teams/getAllTeams', null, {
+      root: true
+    });
+  },
+  getBpPlayers: function getBpPlayers(_ref4) {
+    var dispatch = _ref4.dispatch;
+    dispatch('bpPlayers/getAllPlayers', null, {
       root: true
     });
   }

@@ -32,6 +32,43 @@
                 if (item.we_player && item.we_player.id) return 'kt-bg-light-brand'
                 else return
             },
+            importPlayers(id) {
+                let array = [];
+                let remove = "";
+                let empty = "";
+                if(id === parseInt(id, 10)) { // check if id is integer
+                    array.push(id);
+                    remove = true;
+                }
+                else if(this.checked.length > 0) {
+                   this.checked.forEach(id => {
+                       array.push(id);
+                       empty = true;
+                   });
+                }  else  {
+                    console.log("Ehh...? how?");
+                }
+
+                this.$store.dispatch('players/importPlayers',{ players : array })
+                    .then(response => {
+                        this.$swal({
+                            title: response.message,
+                            timer: 1000,
+                            type: 'success',
+                            position: 'top',
+                            showConfirmButton: false,
+                        });
+                        if(remove) {
+                            for( var i = 0; i < this.checked.length; i++){
+                                if ( this.checked[i] === id) {
+                                    this.checked.splice(i, 1);
+                                }
+                            }
+                        } else if (empty) {
+                            this.checked.length = 0;
+                        }
+                    })
+            }
         },
         computed: {
             bpPlayers() {
@@ -150,9 +187,10 @@
             <table-player-name :filter="filter" :data="data"></table-player-name>
         </template>
         <template v-slot:cell(action)="data">
-            <button :disabled="data.item.we_player"  class="btn btn-sm btn-brand kt-p5-mobile"  role="button"><i class="la la-plus"></i></button>
+            <button @click="importPlayers(data.item.id)" :disabled="data.item.we_player"  class="btn btn-sm btn-brand kt-p5-mobile" role="button"><i class="la la-plus"></i></button>
         </template>
     </b-table>
+    <div @click="importPlayers" v-show="checked.length > 0" class="kt-pull-left"><b-button class="btn btn-outline-brand">Opret ({{ checked.length }})</b-button></div>
     <div class="kt-pagination kt-pagination--brand kt-pull-right">
         <b-pagination v-show="totalRows > perPage"
                       v-model="currentPage"

@@ -44,14 +44,14 @@ class BpPlayerAPI extends Controller
     public function store(Request $request) {
 
         if($request->playerId) {
-            $request->data = $request->playerId;
-            $request["data"] = $request->playerId;
+            $request->players = $request->playerId;
+            $request["players"] = $request->playerId;
         }
         $request->validate([
-            "data.*" => "required|integer|min:1|distinct",
+            "players.*" => "required|integer|min:1|distinct",
         ]);
 
-            $data = $request["data"];
+            $data = $request["players"];
         if(!$data) {
             return response()->json(["message" => "Ingen spillere valgt!"], 404);
         }
