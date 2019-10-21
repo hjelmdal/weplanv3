@@ -3,9 +3,9 @@
 <div class="kt-subheader   kt-grid__item" id="kt_subheader">
 	<div class="kt-container  kt-container--fluid ">
 		<div class="kt-subheader__main">
-			<h3 class="kt-subheader__title">
 
-				Layout Builder                            </h3>
+               <page-title></page-title>
+
 
 			<span class="kt-subheader__separator kt-hidden"></span>
 			<div class="kt-subheader__breadcrumbs">
@@ -82,3 +82,4 @@
 	</div>
 </div>
 <!-- end:: Content Head -->
+

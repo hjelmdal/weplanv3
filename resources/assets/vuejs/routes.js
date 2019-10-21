@@ -1,4 +1,5 @@
 import VueRouter from 'vue-router';
+import UserActivities from "./activities/components/UserActivities";
 
 let routes = [
     {
@@ -23,7 +24,10 @@ let routes = [
             {
                 name: "Aktiviteter",
                 path: '/',
-                component: require('./activities/components/UserActivities').default,
+                components: {
+                    default: UserActivities,
+                    topbar: ""
+                },
                 meta: {
                     access: "protected",
                     icon: "flaticon2-calendar-8",
