@@ -136,11 +136,7 @@ class WeActivitiesAPI extends Controller
         $start_date = $dateObj->format("Y-m-d");
         $end_date = $dateObj->modify("+6 days")->format("Y-m-d");
         return response()->json(array("user" => $user,"types" => $types, "data" => $data, "total" => 100, "to" => 4, "from" => 0,"this_week_url" => $this_week_url, "next_week_url" => $next_week_url, "prev_week_url" => $prev_week_url, "start_date" => $start_date, "end_date" => $end_date, "next_week" => $next_week, "prev_week" => $prev_week));
-        //$activities = WeActivity::paginate(4);
-        //$activities->load("");
 
-
-        return $activities;
     }
     /**
      * Update the specified resource in storage.
