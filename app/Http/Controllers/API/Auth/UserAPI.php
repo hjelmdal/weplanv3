@@ -33,7 +33,7 @@ class UserAPI extends Controller
     private function userFromApiToken(Request $request)
     {
         if ($request->header('Authorization')) {
-            $this->user = User::where('api_token', $request->header("Authorization"))->with("userStatus","roles","UserInfo")->first();
+            $this->user = User::where('api_token', $request->header("Authorization"))->with("userStatus","roles","UserInfo","WePlayer")->first();
             //$this->userStatus = $this->user->load("UserStatus");
             if (!$this->user) {
                 return response()->json(["message" => 'Unauthorized'], 401);
@@ -55,7 +55,7 @@ class UserAPI extends Controller
     public function authUser(Request $request) {
         $user = $this->userFromApiToken($request);
 
-        return response()->json(["message" => "OK"]);
+        return response()->json(["message" => "OK","user" => $user]);
     }
 
     public function authRoles(Request $request) {
@@ -64,7 +64,7 @@ class UserAPI extends Controller
             return response()->json("Bad input",400);
         }
         if($user->hasAnyRole($request->roles)) {
-            return response()->json("OK",200);
+            return response()->json(["message" => "OK", "user" => $user],200);
         }
         return response()->json("Forbidden!",403);
 

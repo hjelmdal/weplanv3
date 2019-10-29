@@ -28,7 +28,7 @@ class APIRole
                 return $this->_401();
 
             }
-
+            $request->attributes->add(['user' => $user]);
             $roles = is_array($role)
                 ? $role
                 : explode('|', $role);

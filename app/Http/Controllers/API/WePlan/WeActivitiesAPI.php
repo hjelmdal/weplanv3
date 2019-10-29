@@ -36,6 +36,7 @@ class WeActivitiesAPI extends Controller
      * Display a listing of the resource.
      * @param string
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function get($date = null, $filter = null, Request $request)
     {

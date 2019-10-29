@@ -9,5 +9,8 @@ components: { AdminNav, PageTitle, BreadCrumb},
 
     el: '#vuejs',
     store,
-    router
+    router,
+    created() {
+        this.$store
+    }
 });

@@ -1,5 +1,6 @@
 import VueRouter from 'vue-router';
 import UserActivities from "./activities/components/UserActivities";
+import ActivitiesBeta from "./activities/components/ActivitiesBeta";
 
 let routes = [
     {
@@ -11,6 +12,28 @@ let routes = [
             icon: "flaticon-home",
             title: "Home",
         }
+    },
+    {
+        path: '/activities1',
+        component: require('./components/EmptyRouterView').default,
+        meta: {
+            access: "protected",
+            icon: "flaticon2-calendar-8",
+        },
+        children: [
+            {
+                name: "activities beta",
+                path: ':type?/:date?/:filter?',
+                components: {
+                    default: ActivitiesBeta,
+                },
+                meta: {
+                    access: "protected",
+                    icon: "flaticon2-calendar-8",
+                    title: "Aktiviteter BETA"
+                }
+            }
+        ]
     },
     {
         path: '/activities',

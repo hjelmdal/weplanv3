@@ -64,7 +64,7 @@ Route::name('api.')->group(function () {
             Route::get("/players/find/{id}","WePlayerAPI@find")->name("players.find");
             Route::get('/players/byteam',"WePlayerAPI@byTeam")->name("players.byteam");
             Route::apiResource('players','WePlayerAPI')->middleware(["auth.complete"]);
-
+            Route::get('/calendar/{type?}/{date?}/{filter?}','CalendarAPI@get')->name("calendar.get")->where(['date' => '[0-9]{4}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}']);
             Route::get('/calendar/{date?}','CalendarAPI@plan')->name("calendar.plan")->where(['date' => '[0-9]{4}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}']);
 
 
