@@ -125,7 +125,6 @@ export default {
         </div>
         <div class="we-flex-row we-flex-grow kt-mt-10">
         <div class="we-flex1" v-for="activity in day.activities">
-
             <div class="kt-portlet we-100" style="border-right: 5px solid green">
                 <div class="we-flex">
                 <div class="we-flex-row kt-m10 we-flex-grow">
