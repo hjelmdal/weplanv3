@@ -14,10 +14,10 @@
 		</div>
 		<div class="kt-subheader__toolbar">
 			<div class="kt-subheader__wrapper">
-				<a href="#" class="btn kt-subheader__btn-primary">
+				<!--a href="#" class="btn kt-subheader__btn-primary">
 					Actions &nbsp;
-					<!--<i class="flaticon2-calendar-1"></i>-->
-				</a>
+					<i class="flaticon2-calendar-1"></i>
+				</a-->
 
 				<div class="dropdown dropdown-inline" data-toggle="kt-tooltip" title="" data-placement="left" data-original-title="Quick actions">
 					<a href="#" class="btn btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

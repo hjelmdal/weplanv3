@@ -32542,7 +32542,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.we-flex[data-v-11ad6350] {\n    display:flex;\n    flex-direction:row;\n}\n.we-flex-grow[data-v-11ad6350] {\n    flex-grow: 1;\n}\n.we-100[data-v-11ad6350] {\n    width:100%;\n}\n.we-flex-row[data-v-11ad6350] {\n    display:flex;\n    flex-direction:column;\n    padding:10px;\n}\n.we-flex1[data-v-11ad6350] {\n    display:flex;\n}\n.we-flex2[data-v-11ad6350] {\n    display:flex;\n    background-color:green;\n}\n.we-flex5[data-v-11ad6350] {\n    display:flex;\n    align-self:center;\n}\n.we-body[data-v-11ad6350] {\n    margin:10px;\n}\n.we-pill[data-v-11ad6350] {\n    border-radius: 1rem 0rem 0rem 1rem;\n}\n.btn-sm[data-v-11ad6350] {\n}\n\n", ""]);
+exports.push([module.i, "\n.we-flex[data-v-11ad6350] {\n    display:flex;\n    flex-direction:row;\n}\n.we-flex-grow[data-v-11ad6350] {\n    flex-grow: 1;\n    min-width:0;\n}\n.we-100[data-v-11ad6350] {\n    width:100%;\n}\n.we-flex-row[data-v-11ad6350] {\n    display:flex;\n    flex-direction:column;\n}\n.we-flex1[data-v-11ad6350] {\n    display:flex;\n}\n.we-flex2[data-v-11ad6350] {\n    display:flex;\n    background-color:green;\n}\n.we-flex5[data-v-11ad6350] {\n    display:flex;\n    align-self:center;\n}\n.we-body[data-v-11ad6350] {\n    margin:10px;\n}\n.we-pill[data-v-11ad6350] {\n    border-radius: 1rem 0rem 0rem 1rem;\n}\n.btn-sm[data-v-11ad6350] {\n}\n.title[data-v-11ad6350] {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.we-ellipsis[data-v-11ad6350] {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.we-response[data-v-11ad6350] {\n    min-width:60px;\n    align-self:center;\n}\n.kt-portlet[data-v-11ad6350] {\n    margin-bottom: 10px;\n}\n.p8-date[data-v-11ad6350] {\n    margin: 10px 10px 10px 0px;\n}\n@media(max-width:575px) {\n.p8-date[data-v-11ad6350] {\n        width:50px;\n        margin: 10px 10px 10px 0px;\n}\n.we-flex-row[data-v-11ad6350] {\n        padding:10px 0px;\n}\n}\n@media (max-width: 1024px) {\n}\n.btn-xs [class*=\" la-\"][data-v-11ad6350], .btn [class^=la-][data-v-11ad6350] {\n    font-size: 1.0rem;\n}\n\n", ""]);
 
 // exports
 
@@ -58932,7 +58932,7 @@ var render = function() {
     "div",
     _vm._l(_vm.calendar.days, function(day) {
       return _c("div", { staticClass: "we-flex" }, [
-        _c("div", { staticClass: "we-flex-row" }, [
+        _c("div", { staticClass: "we-flex-row kt-pl0" }, [
           _c("div", { staticClass: "p8-date" }, [
             _c("div", { staticClass: "p8-date-mon" }, [
               _vm._v(_vm._s(_vm._f("formatDate")(day.date, "MMM")))
@@ -58967,7 +58967,10 @@ var render = function() {
                       [
                         _c(
                           "div",
-                          { staticClass: "title kt-font-lg kt-font-bold" },
+                          {
+                            staticClass:
+                              "title kt-font-lg kt-font-bold we-ellipsis"
+                          },
                           [_vm._v(_vm._s(activity.title) + " ")]
                         ),
                         _vm._v(" "),
@@ -59008,12 +59011,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "we-flex-row kt-pr0" }, [
+    return _c("div", { staticClass: "we-flex-row kt-pr0 we-response" }, [
       _c(
         "button",
         {
           staticClass:
-            "btn btn-sm btn-success btn-elevate btn-pill we-pill kt-mb-5",
+            "btn btn-xs btn-success btn-elevate btn-pill we-pill kt-mb-5",
           attrs: { type: "button" }
         },
         [_c("i", { staticClass: "la la-check" }), _vm._v(" Ja")]
@@ -59022,7 +59025,7 @@ var staticRenderFns = [
       _c(
         "button",
         {
-          staticClass: "btn btn-sm btn-danger btn-elevate btn-pill we-pill",
+          staticClass: "btn btn-xs btn-danger btn-elevate btn-pill we-pill",
           attrs: { type: "button" }
         },
         [_c("i", { staticClass: "la la-close" }), _vm._v(" Nej")]
