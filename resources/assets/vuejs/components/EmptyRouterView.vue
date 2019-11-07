@@ -8,5 +8,9 @@
 
 </style>
 <template>
+    <div>
     <router-view isSpa="true"></router-view>
+        <router-view name="back"></router-view>
+    </div>
+
 </template>

@@ -17,7 +17,8 @@
                         <!--Begin::Dashboard 1-->
                         <!--Begin::Row-->
                                 @yield("content")
-                                <router-view :isSpa="true"></router-view>
+                                <router-view :key="$route.fullPath" :isSpa="true"></router-view>
+
 
                     </div>
             </div>

@@ -57,7 +57,7 @@ class CalendarAPI extends Controller
      */
     public function get($type = null, $date = null, $filter = null, Request $request)
     {
-        if($type &&  ($type == "day" || $type == "week" || $type == "month")) {
+        if($type &&  ($type == "day" || $type == "week" || $type == "month") || $type == "year") {
 
             $filter = false;
             $my_filter = false;
@@ -91,41 +91,17 @@ class CalendarAPI extends Controller
             }
             try {
                 $filterArray = null;
+                $relations = ["players","type","players.user","responsible.UserInfo"];
                 if ($filter) {
-                    $activities = WeActivity::whereIn("type_id", $filter)->where("start_date", ">=", $cal->start)->where("start_date", "<=", $cal->end)->orderBy("start_date", "ASC")->orderBy("start", "ASC")->get();
+                    $activities = WeActivity::with($relations)->whereIn("type_id", $filter)->where("start_date", ">=", $cal->start)->where("start_date", "<=", $cal->end)->orderBy("start_date", "ASC")->orderBy("start", "ASC")->get();
                 } else {
-                    $activities = WeActivity::where("start_date", ">=", $cal->start)->where("start_date", "<=", $cal->end)->orderBy("start_date", "ASC")->orderBy("start", "ASC")->get();
+                    $activities = WeActivity::with($relations)->where("start_date", ">=", $cal->start)->where("start_date", "<=", $cal->end)->orderBy("start_date", "ASC")->orderBy("start", "ASC")->get();
                 }
-                $activities->load(["type", "players", "players.user", "responsible", "responsible.UserInfo"]);
+                //$activities->load(["type", "players", "players.user", "responsible", "responsible.UserInfo"]);
                 foreach ($activities as $activity) {
-                    $activity->my_activity = false;
-                    $activity->response_timestamp = strtotime($activity->response_date . " " . $activity->response_time);
-                    $activity->confirmed = 0;
-                    $activity->declined = 0;
-                    $activity->enrolled = count($activity->players);
-                    if ($activity->enrolled > 0) {
-                        foreach ($activity->players as $player) {
-                            if ($player->id === $player_id) {
-                                $activity->my_activity = true;
-                                if ($player->pivot->confirmed_at) {
-                                    $activity->my_status = 2;
-                                } elseif ($player->pivot->declined_at) {
-                                    $activity->my_status = 0;
-                                } else {
-                                    $activity->my_status = 1;
-                                }
-
-                            }
-                            if ($player->pivot->confirmed_at) {
-                                $activity->confirmed++;
-                            }
-                            if ($player->pivot->declined_at) {
-                                $activity->declined++;
-                            }
-                        }
-                    }
+                    $activity = $cal->setProps($activity,$user);
                     if ($my_filter && $activity->my_activity) {
-                        $filterArray[] = $activity;
+                    $filterArray[] = $activity;
                     }
                 }
             } catch (ModelNotFoundException $e) {
@@ -164,7 +140,7 @@ class CalendarAPI extends Controller
             $prev_week_url = route("api.v1.activities.get", ["date" => $cal->prev_week]);
 
 
-            return response()->json(array("calendar" => $cal, "user" => $user, "types" => $types, "data" => $data, "total" => 100, "to" => 4, "from" => 0, "this_week_url" => $this_week_url, "next_week_url" => $next_week_url, "prev_week_url" => $prev_week_url, "start_date" => $cal->start, "end_date" => $cal->end, "next_week" => $cal->next_week, "prev_week" => $cal->prev_week));
+            return response()->json(array("calendar" => $cal, "user" => $user, "types" => $types, "data" => $data, "this_week_url" => $this_week_url, "next_week_url" => $next_week_url, "prev_week_url" => $prev_week_url, "start_date" => $cal->start, "end_date" => $cal->end, "next_week" => $cal->next_week, "prev_week" => $cal->prev_week));
             //$activities = WeActivity::paginate(4);
             //$activities->load("");
 

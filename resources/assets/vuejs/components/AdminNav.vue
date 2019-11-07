@@ -19,7 +19,7 @@
         <template v-for="route in routes">
             <router-link :to="route.path" v-slot="{ href, route, navigate, isActive, isExactActive }">
 
-                <li class="kt-menu__item"
+                <li v-if="route.meta && route.meta.title" class="kt-menu__item"
                     :class="[isActive && !isExactActive && route.path!= '/' && 'kt-menu__item--active', isExactActive && 'kt-menu__item--active']"
                     aria-haspopup="true">
                     <a class="kt-menu__link" :href="href" @click="navigate">

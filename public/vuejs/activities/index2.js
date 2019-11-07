@@ -2287,12 +2287,7 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ActivitiesFilters",
-  props: ["filters", "types"],
-  methods: {
-    activitiesLoad: function activitiesLoad(string) {
-      this.$root.$emit("activitiesLoad", string);
-    }
-  }
+  props: ["filters", "types"]
 });
 
 /***/ }),
@@ -2424,7 +2419,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ActivitiesNav",
-  props: ["calendar"],
+  props: ["calendar", "types", "filters", "showFilters"],
   methods: {
     activitiesLoad: function activitiesLoad(string) {
       this.$root.$emit("activitiesLoad", string);
@@ -31137,6 +31132,25 @@ exports.push([module.i, "\n.info-block[data-v-4e363bf4] {\n    height: 12px;\n  
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/activities/components/ActivitiesNav.vue?vue&type=style&index=0&id=736dcb2a&scoped=true&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/activities/components/ActivitiesNav.vue?vue&type=style&index=0&id=736dcb2a&scoped=true&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n@media(max-width:575px) {\n.kt-checkbox[data-v-736dcb2a] {\n        display: flex !important;\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/activities/components/ActivityInfoExtra.vue?vue&type=style&index=0&id=57859528&scoped=true&lang=css&":
 /*!********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/activities/components/ActivityInfoExtra.vue?vue&type=style&index=0&id=57859528&scoped=true&lang=css& ***!
@@ -52577,6 +52591,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/activities/components/ActivitiesNav.vue?vue&type=style&index=0&id=736dcb2a&scoped=true&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/activities/components/ActivitiesNav.vue?vue&type=style&index=0&id=736dcb2a&scoped=true&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--6-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--6-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ActivitiesNav.vue?vue&type=style&index=0&id=736dcb2a&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/activities/components/ActivitiesNav.vue?vue&type=style&index=0&id=736dcb2a&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/activities/components/ActivityInfoExtra.vue?vue&type=style&index=0&id=57859528&scoped=true&lang=css&":
 /*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vuejs/activities/components/ActivityInfoExtra.vue?vue&type=style&index=0&id=57859528&scoped=true&lang=css& ***!
@@ -53384,93 +53428,206 @@ var render = function() {
             "div",
             { staticClass: "kt-section__content kt-section__content--border" },
             [
-              _c("div", { staticClass: "row" }, [
-                _c(
-                  "div",
-                  { staticClass: "col-12 kt-padding-0 text-center" },
-                  [
-                    _vm._l(_vm.types, function(type) {
-                      return [
-                        _c(
-                          "label",
-                          {
-                            staticClass:
-                              "kt-checkbox kt-checkbox--solid kt-padding-r-5",
-                            class: {
-                              "kt-checkbox--success": type.id == 1,
-                              "kt-checkbox--warning": type.id == 5,
-                              "kt-checkbox--danger": type.id == 2,
-                              "kt-checkbox--primary": type.id == 3,
-                              "kt-checkbox--warning": type.id == 4
-                            },
-                            staticStyle: { "padding-left": "19px" }
-                          },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.filters[type.id],
-                                  expression: "filters[type.id]"
-                                }
-                              ],
-                              attrs: { type: "checkbox" },
-                              domProps: {
-                                checked: Array.isArray(_vm.filters[type.id])
-                                  ? _vm._i(_vm.filters[type.id], null) > -1
-                                  : _vm.filters[type.id]
-                              },
-                              on: {
-                                change: [
-                                  function($event) {
-                                    var $$a = _vm.filters[type.id],
-                                      $$el = $event.target,
-                                      $$c = $$el.checked ? true : false
-                                    if (Array.isArray($$a)) {
-                                      var $$v = null,
-                                        $$i = _vm._i($$a, $$v)
-                                      if ($$el.checked) {
-                                        $$i < 0 &&
-                                          _vm.$set(
-                                            _vm.filters,
-                                            type.id,
-                                            $$a.concat([$$v])
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "accordion accordion-solid accordion-toggle-plus",
+                  attrs: { id: "accordionExample6" }
+                },
+                [
+                  _c("div", { staticClass: "card" }, [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "collapse",
+                        attrs: {
+                          id: "collapseThree6",
+                          "aria-labelledby": "headingThree6",
+                          "data-parent": "#accordionExample6"
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "card-body" }, [
+                          _c(
+                            "div",
+                            { staticClass: "col-12 kt-padding-0 text-center" },
+                            [
+                              _vm._l(_vm.types, function(type) {
+                                return [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass:
+                                        "kt-checkbox kt-checkbox--solid kt-padding-r-5",
+                                      class: {
+                                        "kt-checkbox--success": type.id == 1,
+                                        "kt-checkbox--warning": type.id == 5,
+                                        "kt-checkbox--danger": type.id == 2,
+                                        "kt-checkbox--primary": type.id == 3,
+                                        "kt-checkbox--warning": type.id == 4
+                                      },
+                                      staticStyle: { "padding-left": "19px" }
+                                    },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.filters[type.id],
+                                            expression: "filters[type.id]"
+                                          }
+                                        ],
+                                        attrs: {
+                                          type: "checkbox",
+                                          checked: ""
+                                        },
+                                        domProps: {
+                                          checked: Array.isArray(
+                                            _vm.filters[type.id]
                                           )
-                                      } else {
-                                        $$i > -1 &&
-                                          _vm.$set(
-                                            _vm.filters,
-                                            type.id,
-                                            $$a
-                                              .slice(0, $$i)
-                                              .concat($$a.slice($$i + 1))
-                                          )
-                                      }
-                                    } else {
-                                      _vm.$set(_vm.filters, type.id, $$c)
-                                    }
-                                  },
-                                  function($event) {
-                                    return _vm.activitiesLoad("reload")
-                                  }
+                                            ? _vm._i(
+                                                _vm.filters[type.id],
+                                                null
+                                              ) > -1
+                                            : _vm.filters[type.id]
+                                        },
+                                        on: {
+                                          change: function($event) {
+                                            var $$a = _vm.filters[type.id],
+                                              $$el = $event.target,
+                                              $$c = $$el.checked ? true : false
+                                            if (Array.isArray($$a)) {
+                                              var $$v = null,
+                                                $$i = _vm._i($$a, $$v)
+                                              if ($$el.checked) {
+                                                $$i < 0 &&
+                                                  _vm.$set(
+                                                    _vm.filters,
+                                                    type.id,
+                                                    $$a.concat([$$v])
+                                                  )
+                                              } else {
+                                                $$i > -1 &&
+                                                  _vm.$set(
+                                                    _vm.filters,
+                                                    type.id,
+                                                    $$a
+                                                      .slice(0, $$i)
+                                                      .concat(
+                                                        $$a.slice($$i + 1)
+                                                      )
+                                                  )
+                                              }
+                                            } else {
+                                              _vm.$set(
+                                                _vm.filters,
+                                                type.id,
+                                                $$c
+                                              )
+                                            }
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(type.name) +
+                                          "\n                                                    "
+                                      ),
+                                      _c("span")
+                                    ]
+                                  )
                                 ]
-                              }
-                            }),
-                            _vm._v(
-                              " " +
-                                _vm._s(type.name) +
-                                "\n                                    "
-                            ),
-                            _c("span")
-                          ]
-                        )
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "pull-right" }, [
+                                _c("label", { staticClass: "col-form-label" }, [
+                                  _vm._v("Kun mine")
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass: "kt-switch kt-switch--icon",
+                                    staticStyle: { "vertical-align": "bottom" }
+                                  },
+                                  [
+                                    _c(
+                                      "label",
+                                      { staticStyle: { "margin-bottom": "0" } },
+                                      [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.filters[0],
+                                              expression: "filters[0]"
+                                            }
+                                          ],
+                                          attrs: { type: "checkbox" },
+                                          domProps: {
+                                            checked: Array.isArray(
+                                              _vm.filters[0]
+                                            )
+                                              ? _vm._i(_vm.filters[0], null) >
+                                                -1
+                                              : _vm.filters[0]
+                                          },
+                                          on: {
+                                            change: function($event) {
+                                              var $$a = _vm.filters[0],
+                                                $$el = $event.target,
+                                                $$c = $$el.checked
+                                                  ? true
+                                                  : false
+                                              if (Array.isArray($$a)) {
+                                                var $$v = null,
+                                                  $$i = _vm._i($$a, $$v)
+                                                if ($$el.checked) {
+                                                  $$i < 0 &&
+                                                    _vm.$set(
+                                                      _vm.filters,
+                                                      0,
+                                                      $$a.concat([$$v])
+                                                    )
+                                                } else {
+                                                  $$i > -1 &&
+                                                    _vm.$set(
+                                                      _vm.filters,
+                                                      0,
+                                                      $$a
+                                                        .slice(0, $$i)
+                                                        .concat(
+                                                          $$a.slice($$i + 1)
+                                                        )
+                                                    )
+                                                }
+                                              } else {
+                                                _vm.$set(_vm.filters, 0, $$c)
+                                              }
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("span")
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ])
+                            ],
+                            2
+                          )
+                        ])
                       ]
-                    })
-                  ],
-                  2
-                )
-              ])
+                    )
+                  ])
+                ]
+              )
             ]
           )
         ])
@@ -53478,7 +53635,35 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "card-header", attrs: { id: "headingThree6" } },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "card-title collapsed",
+            attrs: {
+              "data-toggle": "collapse",
+              "data-target": "#collapseThree6",
+              "aria-expanded": "false",
+              "aria-controls": "collapseThree6"
+            }
+          },
+          [
+            _c("i", { staticClass: "la la-filter" }),
+            _vm._v(" Filters\n                                    ")
+          ]
+        )
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -54045,7 +54230,235 @@ var render = function() {
                     )
                   ])
                 ])
-              ])
+              ]),
+              _vm._v(" "),
+              _vm.showFilters
+                ? _c(
+                    "div",
+                    {
+                      staticClass:
+                        "accordion accordion-solid accordion-toggle-plus",
+                      staticStyle: { "margin-top": "10px" },
+                      attrs: { id: "accordionExample6" }
+                    },
+                    [
+                      _c("div", { staticClass: "card" }, [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "collapse",
+                            attrs: {
+                              id: "collapseThree6",
+                              "aria-labelledby": "headingThree6",
+                              "data-parent": "#accordionExample6"
+                            }
+                          },
+                          [
+                            _c("div", { staticClass: "card-body" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "col-12 kt-padding-0 text-center"
+                                },
+                                [
+                                  _c("span", { staticClass: "pull-right" }, [
+                                    _c(
+                                      "label",
+                                      { staticClass: "col-form-label" },
+                                      [_vm._v("Kun mine")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "kt-switch kt-switch--icon",
+                                        staticStyle: {
+                                          "vertical-align": "bottom"
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "label",
+                                          {
+                                            staticStyle: {
+                                              "margin-bottom": "0"
+                                            }
+                                          },
+                                          [
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.filters[0],
+                                                  expression: "filters[0]"
+                                                }
+                                              ],
+                                              attrs: { type: "checkbox" },
+                                              domProps: {
+                                                checked: Array.isArray(
+                                                  _vm.filters[0]
+                                                )
+                                                  ? _vm._i(
+                                                      _vm.filters[0],
+                                                      null
+                                                    ) > -1
+                                                  : _vm.filters[0]
+                                              },
+                                              on: {
+                                                change: function($event) {
+                                                  var $$a = _vm.filters[0],
+                                                    $$el = $event.target,
+                                                    $$c = $$el.checked
+                                                      ? true
+                                                      : false
+                                                  if (Array.isArray($$a)) {
+                                                    var $$v = null,
+                                                      $$i = _vm._i($$a, $$v)
+                                                    if ($$el.checked) {
+                                                      $$i < 0 &&
+                                                        _vm.$set(
+                                                          _vm.filters,
+                                                          0,
+                                                          $$a.concat([$$v])
+                                                        )
+                                                    } else {
+                                                      $$i > -1 &&
+                                                        _vm.$set(
+                                                          _vm.filters,
+                                                          0,
+                                                          $$a
+                                                            .slice(0, $$i)
+                                                            .concat(
+                                                              $$a.slice($$i + 1)
+                                                            )
+                                                        )
+                                                    }
+                                                  } else {
+                                                    _vm.$set(
+                                                      _vm.filters,
+                                                      0,
+                                                      $$c
+                                                    )
+                                                  }
+                                                }
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c("span")
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.types, function(type) {
+                                    return [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass:
+                                            "kt-checkbox kt-checkbox--solid kt-padding-r-5",
+                                          class: {
+                                            "kt-checkbox--success":
+                                              type.id == 1,
+                                            "kt-checkbox--warning":
+                                              type.id == 5,
+                                            "kt-checkbox--danger": type.id == 2,
+                                            "kt-checkbox--primary":
+                                              type.id == 3,
+                                            "kt-checkbox--warning": type.id == 4
+                                          },
+                                          staticStyle: {
+                                            "padding-left": "19px"
+                                          }
+                                        },
+                                        [
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.filters[type.id],
+                                                expression: "filters[type.id]"
+                                              }
+                                            ],
+                                            attrs: {
+                                              type: "checkbox",
+                                              checked: ""
+                                            },
+                                            domProps: {
+                                              checked: Array.isArray(
+                                                _vm.filters[type.id]
+                                              )
+                                                ? _vm._i(
+                                                    _vm.filters[type.id],
+                                                    null
+                                                  ) > -1
+                                                : _vm.filters[type.id]
+                                            },
+                                            on: {
+                                              change: function($event) {
+                                                var $$a = _vm.filters[type.id],
+                                                  $$el = $event.target,
+                                                  $$c = $$el.checked
+                                                    ? true
+                                                    : false
+                                                if (Array.isArray($$a)) {
+                                                  var $$v = null,
+                                                    $$i = _vm._i($$a, $$v)
+                                                  if ($$el.checked) {
+                                                    $$i < 0 &&
+                                                      _vm.$set(
+                                                        _vm.filters,
+                                                        type.id,
+                                                        $$a.concat([$$v])
+                                                      )
+                                                  } else {
+                                                    $$i > -1 &&
+                                                      _vm.$set(
+                                                        _vm.filters,
+                                                        type.id,
+                                                        $$a
+                                                          .slice(0, $$i)
+                                                          .concat(
+                                                            $$a.slice($$i + 1)
+                                                          )
+                                                      )
+                                                  }
+                                                } else {
+                                                  _vm.$set(
+                                                    _vm.filters,
+                                                    type.id,
+                                                    $$c
+                                                  )
+                                                }
+                                              }
+                                            }
+                                          }),
+                                          _vm._v(
+                                            " " +
+                                              _vm._s(type.name) +
+                                              "\n                                                    "
+                                          ),
+                                          _c("span")
+                                        ]
+                                      )
+                                    ]
+                                  })
+                                ],
+                                2
+                              )
+                            ])
+                          ]
+                        )
+                      ])
+                    ]
+                  )
+                : _vm._e()
             ]
           )
         ])
@@ -54062,6 +54475,33 @@ var staticRenderFns = [
       _c("i", { staticClass: "fa fa-calendar" }),
       _c("span", { staticClass: "d-none d-sm-inline" }, [_vm._v("Denne uge")])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "card-header", attrs: { id: "headingThree6" } },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "card-title collapsed",
+            attrs: {
+              "data-toggle": "collapse",
+              "data-target": "#collapseThree6",
+              "aria-expanded": "false",
+              "aria-controls": "collapseThree6"
+            }
+          },
+          [
+            _c("i", { staticClass: "la la-filter" }),
+            _vm._v(" Filters\n                                    ")
+          ]
+        )
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -68010,7 +68450,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ActivitiesNav_vue_vue_type_template_id_736dcb2a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActivitiesNav.vue?vue&type=template&id=736dcb2a&scoped=true& */ "./resources/assets/vuejs/activities/components/ActivitiesNav.vue?vue&type=template&id=736dcb2a&scoped=true&");
 /* harmony import */ var _ActivitiesNav_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ActivitiesNav.vue?vue&type=script&lang=js& */ "./resources/assets/vuejs/activities/components/ActivitiesNav.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _ActivitiesNav_vue_vue_type_style_index_0_id_736dcb2a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ActivitiesNav.vue?vue&type=style&index=0&id=736dcb2a&scoped=true&lang=css& */ "./resources/assets/vuejs/activities/components/ActivitiesNav.vue?vue&type=style&index=0&id=736dcb2a&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -68018,7 +68460,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _ActivitiesNav_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _ActivitiesNav_vue_vue_type_template_id_736dcb2a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
   _ActivitiesNav_vue_vue_type_template_id_736dcb2a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -68047,6 +68489,22 @@ component.options.__file = "resources/assets/vuejs/activities/components/Activit
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivitiesNav_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ActivitiesNav.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/activities/components/ActivitiesNav.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivitiesNav_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/assets/vuejs/activities/components/ActivitiesNav.vue?vue&type=style&index=0&id=736dcb2a&scoped=true&lang=css&":
+/*!*********************************************************************************************************************************!*\
+  !*** ./resources/assets/vuejs/activities/components/ActivitiesNav.vue?vue&type=style&index=0&id=736dcb2a&scoped=true&lang=css& ***!
+  \*********************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivitiesNav_vue_vue_type_style_index_0_id_736dcb2a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader??ref--6-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--6-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ActivitiesNav.vue?vue&type=style&index=0&id=736dcb2a&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vuejs/activities/components/ActivitiesNav.vue?vue&type=style&index=0&id=736dcb2a&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivitiesNav_vue_vue_type_style_index_0_id_736dcb2a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivitiesNav_vue_vue_type_style_index_0_id_736dcb2a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivitiesNav_vue_vue_type_style_index_0_id_736dcb2a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivitiesNav_vue_vue_type_style_index_0_id_736dcb2a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivitiesNav_vue_vue_type_style_index_0_id_736dcb2a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 

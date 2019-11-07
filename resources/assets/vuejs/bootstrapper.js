@@ -41,6 +41,22 @@ window.axios.defaults.headers.common = {
     'Authorization': apiToken
 };
 
+Vue.mixin({
+    methods: {
+        is_mobile() {
+            const isMobile = window.matchMedia("only screen and (max-width: 575px)")
+            return isMobile.matches ? true : false
+        },
+        is_tablet() {
+            const isTablet = window.matchMedia("only screen and (max-width: 1024px)")
+            return isTablet.matches ? true : false
+        },
+        is_desktop() {
+            const isDesktop = window.matchMedia("only screen and (min-width: 1025px)")
+            return isDesktop.matches ? true : false
+        }
+    }
+});
 
 Vue.filter('formatTime', function(value,format = "HH:mm") {
     if (value) {

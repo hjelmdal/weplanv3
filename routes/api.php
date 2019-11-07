@@ -48,13 +48,16 @@ Route::name('api.')->group(function () {
         });
 
 
-        Route::namespace('WePlan')->middleware("auth.complete")->group(function () {
+        Route::namespace('WePlan')->middleware("api.token")->group(function () {
+            Route::get('/activities/types','WeActivitiesAPI@types')->name("activities.types");
             Route::apiResource('activities','WeActivitiesAPI');
             Route::post('/activities/get/{date?}/{filter?}','WeActivitiesAPI@get')->name("activities.get");
+
             Route::post('/activities/enroll','WeActivitiesAPI@enroll')->name("activities.enroll");
             Route::post('/activities/confirm','WeActivitiesAPI@confirm')->name("activities.confirm");
             Route::post('/activities/decline','WeActivitiesAPI@decline')->name("activities.decline");
             Route::get('declines/categories',"WeDeclineAPI@categories")->name("declines.categories");
+
 
             Route::get('/teams/{id}/players',"WeTeamAPI@players")->name("teams.players");
             Route::apiResource('teams','WeTeamAPI');
@@ -64,8 +67,10 @@ Route::name('api.')->group(function () {
             Route::get("/players/find/{id}","WePlayerAPI@find")->name("players.find");
             Route::get('/players/byteam',"WePlayerAPI@byTeam")->name("players.byteam");
             Route::apiResource('players','WePlayerAPI')->middleware(["auth.complete"]);
-            Route::get('/calendar/{type?}/{date?}/{filter?}','CalendarAPI@get')->name("calendar.get")->where(['date' => '[0-9]{4}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}']);
-            Route::get('/calendar/{date?}','CalendarAPI@plan')->name("calendar.plan")->where(['date' => '[0-9]{4}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}']);
+            Route::get('/calendar/plan/{date?}','CalendarAPI@plan')->name("calendar.plan")->where(['date' => '[0-9]{4}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}']);
+            Route::post('/calendar/{type?}/{date?}/{filter?}','CalendarAPI@get')->name("calendar.get")->where(['date' => '[0-9]{4}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}']);
+
+
 
 
 

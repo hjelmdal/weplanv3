@@ -1,84 +1,82 @@
 const state = {
-    activities: []
+    activities: [],
+    types: [],
+    calendar: []
 }
 
 const getters = {
-    getAllActivities: (state) => {
+    getActivities: (state) => {
         return state.activities;
     },
 
     getActivityById: (state) => (id) => {
-        return state.activities.find(activity => activity.id === id)
+        return state.activities.find(item => item.id === parseInt(id))
+    },
+
+    getActivityTypes: (state) => {
+        return state.types;
+    },
+    getCalendar: (state) => {
+        return state.calendar;
     }
 }
 
 const mutations = {
     setActivities: (state, activities) => {
         state.activities = activities;
-    }
+    },
+    setTypes: (state, types) => {
+        state.types = types;
+    },
+    setCalendar: (state, calendar) => {
+        state.calendar = calendar;
+    },
+    setActivity: (state, activity) => {
+        const item = state.activities.find(item => item.id === activity.id);
+        if(item) {
+            Object.assign(item, activity);
+        } else {
+            //state.activities[0] = activity;
+            state.activities.push(activity);
+        }
+      }
 }
 
 const actions = {
-    getActivities: async (context,{date: date}) => {
+    getActivities: async (context,{date: date,filters:filters,type:type}) => {
         var activities = []; // Axios here
+        var types = [];
         if(!date) {
             date = moment().format("YYYY-MM-DD");
         }
+        if(!type) {
+            type = "week";
+        }
+        let form = new Form({
+            filters: filters,
+        });
         return new Promise((resolve, reject) => {
-           axios.get('/api/v1/activities/get/' + date)
+           axios.post('/api/v1/calendar/' + type + '/' + date,{filters})
                .then((response) => {
-                   this.types = response.data.types;
-                   this.to = response.data.to;
-                   this.from = response.data.from;
-                   this.total = response.data.total;
-                   this.activities = response.data.data;
-                   this.days = [];
-                   this.calendar.start_date = response.data.start_date;
-                   this.end_date = response.data.end_date;
-                   this.calendar.next_week = response.data.next_week;
-                   this.calendar.prev_week = response.data.prev_week;
-                   this.user = response.data.user;
-
-                   if(this.user.roles && this.user.roles.length) {
-                       this.user_role = this.user.roles[0].id;
-                   }
-                   let last_start_date;
-                   if(this.activities) {
-                       this.activities.forEach(event => {
-                           if (event.start_date === last_start_date) {
-                               this.days[this.days.length - 1].events.push(event);
-                           } else {
-                               this.days.push({
-                                   date: event.start_date,
-                                   events: [event]
-                               });
-                           }
-                           last_start_date = event.start_date;
-
-                       });
-                   }
-                   if(firstLoad || this.filters.indexOf(true) == -1) {
-                       this.filters[0] = (false);
-                       this.types.forEach(type => {
-                           this.filters[type.id] = (true);
-                       });
-                   }
-
-                   //console.log(this.days);
-
-                   this.calendar.next = response.data.next_week_url;
-                   this.calendar.prev = response.data.prev_week_url;
-                   if(this.reload === 0) {
-                       if(!this.isSpa) {
-                           history.pushState(null, "", "/activities/date/" + this.calendar.start_date);
-                       } else {
-                           history.pushState(null, "", "/#/activities/date/" + this.calendar.start_date);
-                       }
-                   }
-                   context.commit('setActivities', activities)
+                    activities = response.data.data;
+                    types = response.data.types;
+                    context.commit('setActivities', activities);
+                    context.commit('setCalendar', response.data.calendar);
+                    if(state.types.length == 0) {
+                        context.commit('setTypes', types);
+                    }
                })
         });
 
+    },
+    getActivityById: async (context, {id: id}) => {
+        return new Promise((resolve, reject) => {
+           axios.get('/api/v1/activities/' + id)
+               .then((response) => {
+                   context.commit('setActivity',response.data.data);
+                   resolve(response.data);
+               })
+        });
     }
 }
 

@@ -1,6 +1,9 @@
 import VueRouter from 'vue-router';
 import UserActivities from "./activities/components/UserActivities";
 import ActivitiesBeta from "./activities/components/ActivitiesBeta";
+import ActivityShow from "./activities/components/ActivityShow";
+import BackButton from "./components/BackButton";
+import ActivitiesIndex from "./views/activities/ActivitiesIndex";
 
 let routes = [
     {
@@ -14,27 +17,52 @@ let routes = [
         }
     },
     {
+        name: 'activities.index',
         path: '/activities1',
-        component: require('./components/EmptyRouterView').default,
-        meta: {
-            access: "protected",
-            icon: "flaticon2-calendar-8",
+        components: {
+            default: ActivitiesIndex,
         },
-        children: [
-            {
-                name: "activities beta",
-                path: ':type?/:date?/:filter?',
-                components: {
-                    default: ActivitiesBeta,
-                },
-                meta: {
-                    access: "protected",
-                    icon: "flaticon2-calendar-8",
-                    title: "Aktiviteter BETA"
-                }
-            }
-        ]
+        props:{
+            default:true
+        },
+
+        meta: {
+            access: "public",
+            icon: "flaticon2-calendar-8",
+            title: "Aktiviteter BETA"
+        },
     },
+    {
+        name: "activities.filter",
+        path: '/activities1/list/:type?/:date?',
+        components: {
+            default: ActivitiesBeta,
+        },
+        props:{
+            default:true
+        },
+
+        meta: {
+            access: "public",
+        },
+    },
+    {
+        name: "activity.show",
+        path: '/activities1/:id',
+        components: {
+            default: ActivityShow,
+            back: BackButton
+        },
+        props:{
+            default:true
+        },
+
+        meta: {
+            access: "public",
+        }
+    },
+
+
     {
         path: '/activities',
         component: require('./components/EmptyRouterView').default,
@@ -110,7 +138,7 @@ window.routes = routes;
 const router = new VueRouter({
     routes,
     linkActiveClass: 'is-active',
-    //mode: 'history',
+    mode: '', //could be mode: "history"
 
 });
 router.beforeEach((to, from, next) => {
@@ -158,7 +186,8 @@ router.beforeEach((to, from, next) => {
                 })
         }
     } else {
-        console.log("Route access is not set!");
+        console.log("Route access is not set!" + " Route: ");
+        console.log(to);
     }
 });
 export default router;

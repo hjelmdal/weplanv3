@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\WePlan;
 
+use App\Helpers\CalendarHelper;
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Models\WePlan\WeActivity;
 use App\Models\WePlan\WeActivityType;
@@ -313,12 +314,16 @@ class WeActivitiesAPI extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
+        $user = $request->get('user');
+        $user->load("roles");
         if($id) {
             try {
                 $activity = WeActivity::findOrFail($id);
-                return $activity;
+                $act = new CalendarHelper();
+                $activity = $act->setProps($activity,$user);
+                return response()->json(["data" => $activity],200);
             } catch (ModelNotFoundException $e) {
                 return response()->json("Not found",404);
             }
@@ -359,5 +364,9 @@ class WeActivitiesAPI extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function types(Request $request) {
+        return response()->json(["data" => WeActivityType::all()],200);
     }
 }
