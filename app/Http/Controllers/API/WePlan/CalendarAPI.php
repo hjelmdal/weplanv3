@@ -98,6 +98,9 @@ class CalendarAPI extends Controller
                     $activities = WeActivity::with($relations)->where("start_date", ">=", $cal->start)->where("start_date", "<=", $cal->end)->orderBy("start_date", "ASC")->orderBy("start", "ASC")->get();
                 }
                 //$activities->load(["type", "players", "players.user", "responsible", "responsible.UserInfo"]);
+                if(!$activities) {
+                    return response()->json("No activities", 404);
+                }
                 foreach ($activities as $activity) {
                     $activity = $cal->setProps($activity,$user);
                     if ($my_filter && $activity->my_activity) {
@@ -115,21 +118,23 @@ class CalendarAPI extends Controller
             $cal->days = array();
             $i = 0;
             $act = array();
-            foreach ($activities as $activity) {
-                if ($activity->start_date == $ld) {
-                    array_push($act, $activity);
-                    $cal->days[$i] = array("date" => $activity->start_date, "activities" => $act);
+            if($activities) {
+                foreach ($activities as $activity) {
+                    if ($activity->start_date == $ld) {
+                        array_push($act, $activity);
+                        $cal->days[$i] = array("date" => $activity->start_date, "activities" => $act);
 
-                } else {
-                    $i++;
-                    if (!$ld) {
-                        $i = 0;
+                    } else {
+                        $i++;
+                        if (!$ld) {
+                            $i = 0;
+                        }
+                        $ld = $activity->start_date;
+                        $act = array();
+                        array_push($act, $activity);
+                        $cal->days[$i] = array("date" => $activity->start_date, "activities" => $act);
+
                     }
-                    $ld = $activity->start_date;
-                    $act = array();
-                    array_push($act, $activity);
-                    $cal->days[$i] = array("date" => $activity->start_date, "activities" => $act);
-
                 }
             }
             $types = WeActivityType::all();
