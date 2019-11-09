@@ -152,7 +152,7 @@ export default {
                     this.total = response.data.total;
                     this.activities = response.data.data;
                     this.days = [];
-                    this.calendar.start_date = response.data.start_date;
+                    this.calendar.start = response.data.start_date;
                     this.end_date = response.data.end_date;
                     this.calendar.next_week = response.data.next_week;
                     this.calendar.prev_week = response.data.prev_week;

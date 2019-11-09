@@ -2423,6 +2423,43 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     activitiesLoad: function activitiesLoad(string) {
       this.$root.$emit("activitiesLoad", string);
+    },
+    navigate: function navigate(direction) {
+      var inputType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var date;
+      var type;
+      var ref;
+      inputType ? type = inputType : type = this.calendar.type;
+
+      if (direction == "prev") {
+        ref = "prev_" + type;
+      } else if (direction == "next") {
+        ref = "next_" + type;
+      } else if (direction == "this") {
+        ref = "this_" + type;
+      } else if (direction == "today") {
+        ref = "realdate";
+      }
+
+      date = this.calendar[ref];
+      this.$router.push({
+        name: 'activities.filter',
+        params: {
+          type: type,
+          date: date
+        }
+      });
+    }
+  },
+  computed: {
+    headLine: function headLine() {
+      if (this.calendar.type == "week") {
+        return "Uge " + Vue.filter('formatDate')(this.calendar.start, 'ww');
+      } else if (this.calendar.type == "month") {
+        return Vue.filter('formatDate')(this.calendar.start, 'MMM. Y');
+      } else if (this.calendar.type == "day") {
+        return Vue.filter('formatDate')(this.calendar.start, 'D. MMM Y');
+      }
     }
   }
 });
@@ -2837,7 +2874,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.total = response.data.total;
         _this.activities = response.data.data;
         _this.days = [];
-        _this.calendar.start_date = response.data.start_date;
+        _this.calendar.start = response.data.start_date;
         _this.end_date = response.data.end_date;
         _this.calendar.next_week = response.data.next_week;
         _this.calendar.prev_week = response.data.prev_week;
@@ -31144,7 +31181,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n@media(max-width:575px) {\n.kt-checkbox[data-v-736dcb2a] {\n        display: flex !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n@media(max-width:575px) {\n.kt-checkbox[data-v-736dcb2a] {\n        display: flex !important;\n}\n}\n.we-act-nav-head[data-v-736dcb2a] {\n    display: flex;\n    align-items: center;\n}\n.we-act-nav-head h3[data-v-736dcb2a] {\n    margin:0 auto;\n}\n", ""]);
 
 // exports
 
@@ -54129,44 +54166,105 @@ var render = function() {
             [
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-3" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
                   _c(
-                    "button",
+                    "div",
                     {
-                      staticClass: "btn btn-success kt-btn--icon",
-                      on: {
-                        click: function($event) {
-                          $event.stopPropagation()
-                          return _vm.activitiesLoad("today")
-                        }
+                      staticClass: "dropdown-menu",
+                      staticStyle: {
+                        position: "absolute",
+                        "will-change": "transform",
+                        top: "0px",
+                        left: "0px",
+                        transform: "translate3d(0px, 36px, 0px)"
+                      },
+                      attrs: {
+                        "aria-labelledby": "dropdownMenuButton",
+                        "x-placement": "bottom-start"
                       }
                     },
                     [
-                      _c("span", { staticClass: "d-inline d-sm-none" }, [
-                        _vm._v("  ")
-                      ]),
-                      _vm._m(0)
+                      _c(
+                        "a",
+                        {
+                          staticClass: "dropdown-item",
+                          on: {
+                            click: function($event) {
+                              $event.stopPropagation()
+                              return _vm.navigate("today")
+                            }
+                          }
+                        },
+                        [_vm._v("Dags dato")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "dropdown-item",
+                          on: {
+                            click: function($event) {
+                              $event.stopPropagation()
+                              return _vm.navigate("this", "day")
+                            }
+                          }
+                        },
+                        [_vm._v("1 Dag")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "dropdown-item",
+                          on: {
+                            click: function($event) {
+                              $event.stopPropagation()
+                              return _vm.navigate("this", "week")
+                            }
+                          }
+                        },
+                        [_vm._v("1 Uge")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "dropdown-item",
+                          on: {
+                            click: function($event) {
+                              $event.stopPropagation()
+                              return _vm.navigate("this", "month")
+                            }
+                          }
+                        },
+                        [_vm._v("1 Måned")]
+                      )
                     ]
                   )
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-5 kt-align-center" }, [
-                  _c("h3", [
-                    _c(
-                      "span",
-                      {
-                        staticClass: "d-none d-sm-inline",
-                        attrs: { id: "headline" }
-                      },
-                      [_vm._v("Aktiviteter i ")]
-                    ),
-                    _vm._v(
-                      "Uge " +
-                        _vm._s(
-                          _vm._f("formatDate")(_vm.calendar.start_date, "ww")
-                        )
-                    )
-                  ])
-                ]),
+                _c(
+                  "div",
+                  { staticClass: "col-5 kt-align-center we-act-nav-head" },
+                  [
+                    _c("h3", [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "d-none d-sm-inline",
+                          attrs: { id: "headline" }
+                        },
+                        [_vm._v("Aktiviteter ")]
+                      ),
+                      _c(
+                        "span",
+                        { staticStyle: { "text-transform": "capitalize" } },
+                        [_vm._v(_vm._s(_vm.headLine))]
+                      )
+                    ])
+                  ]
+                ),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-4" }, [
                   _c("div", { staticClass: "float-right" }, [
@@ -54178,7 +54276,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.stopPropagation()
-                            return _vm.activitiesLoad("prev")
+                            return _vm.navigate("prev")
                           }
                         }
                       },
@@ -54207,7 +54305,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.stopPropagation()
-                            return _vm.activitiesLoad("next")
+                            return _vm.navigate("next")
                           }
                         }
                       },
@@ -54471,10 +54569,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", [
-      _c("i", { staticClass: "fa fa-calendar" }),
-      _c("span", { staticClass: "d-none d-sm-inline" }, [_vm._v("Denne uge")])
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-success dropdown-toggle kt-btn--icon",
+        attrs: {
+          type: "button",
+          id: "dropdownMenuButton",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [
+        _c("i", { staticClass: "fa fa-calendar" }),
+        _vm._v(" "),
+        _c("span", { staticClass: "d-none d-sm-inline" }, [_vm._v("Visning")])
+      ]
+    )
   },
   function() {
     var _vm = this

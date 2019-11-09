@@ -32,7 +32,6 @@
 
                         this.filters[type.id] = (true);
                     });
-                    console.log(this.filters);
                 }
 
             },

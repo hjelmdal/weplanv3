@@ -21,6 +21,7 @@ class CalendarHelper
             $date = date("Y-m-d");
         }
         $this->obj = new \stdClass();
+        $this->type = $type;
         $this->real_date = date("Y-m-d");
         $this->timestamp = date("U");
         $this->prev_year = $this->setDate($date)->modify("first day of january last year")->format("Y-m-d");
@@ -39,9 +40,13 @@ class CalendarHelper
         $this->prev_week = $this->setDate($date)->modify($monday . "- 7 days")->format("Y-m-d");
         $this->this_week = $this->setDate($date)->modify($monday)->format("Y-m-d");
         $this->next_week = $this->setDate($date)->modify($monday  . "+ 7 days")->format("Y-m-d");
-        $this->yesterday = $this->setDate($date)->modify("- 1 day")->format("Y-m-d");
-        $this->today = $date;
-        $this->tomorrow = $this->setDate($date)->modify("+ 1 day")->format("Y-m-d");
+        $yst = $this->yesterday = $this->setDate($date)->modify("- 1 day")->format("Y-m-d");
+
+        $tod = $this->today = $date;
+        $tmr = $this->tomorrow = $this->setDate($date)->modify("+ 1 day")->format("Y-m-d");
+        $this->prev_day = $yst;
+        $this->this_day = $tod;
+        $this->next_day = $tmr;
         if($type == "week") {
 
             $this->start = $this->setDate($date)->modify($monday)->format("Y-m-d");

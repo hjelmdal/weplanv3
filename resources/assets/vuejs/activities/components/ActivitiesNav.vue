@@ -4,9 +4,41 @@
         props:["calendar","types","filters","showFilters"],
         methods: {
             activitiesLoad(string) {
-                this.$root.$emit("activitiesLoad",string);
+                this.$root.$emit("activitiesLoad", string);
+            },
+            navigate(direction, inputType = false) {
+                let date;
+                let type;
+                let ref;
+                inputType ? type = inputType : type = this.calendar.type;
+                if(direction == "prev") {
+                    ref = "prev_" + type;
+                } else if(direction == "next") {
+                    ref = "next_" + type;
+                } else if(direction == "this") {
+
+                    ref = "this_" + type;
+                } else if(direction == "today") {
+                    ref = "realdate";
+                }
+                date = this.calendar[ref];
+                this.$router.push({ name: 'activities.filter', params: { type: type, date:date } });
+
+            }
+        },
+        computed: {
+            headLine() {
+                if(this.calendar.type == "week") {
+                    return "Uge " + Vue.filter('formatDate')(this.calendar.start, 'ww');
+                } else if(this.calendar.type == "month") {
+                    return Vue.filter('formatDate')(this.calendar.start, 'MMM. Y');
+                } else if(this.calendar.type == "day") {
+                    return Vue.filter('formatDate')(this.calendar.start, 'D. MMM Y');
+                }
+
             }
         }
+
     }
 </script>
 
@@ -15,6 +47,13 @@
     .kt-checkbox {
         display: flex !important;
     }
+}
+.we-act-nav-head {
+    display: flex;
+    align-items: center;
+}
+.we-act-nav-head h3 {
+    margin:0 auto;
 }
 </style>
 
@@ -27,18 +66,24 @@
                     <div class="kt-section__content kt-section__content--border">
                         <div class="row">
                             <div class="col-3">
-                                <button @click.stop="activitiesLoad('today')" class="btn btn-success kt-btn--icon">
-                                    <span class="d-inline d-sm-none">&nbsp;&nbsp;</span><span><i class="fa fa-calendar"></i><span class="d-none d-sm-inline">Denne uge</span>
-                        </span>
+                                <button class="btn btn-success dropdown-toggle kt-btn--icon" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-calendar"></i> <span class="d-none d-sm-inline">Visning</span>
                                 </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 36px, 0px);">
+                                    <a class="dropdown-item" @click.stop="navigate('today')">Dags dato</a>
+                                    <a class="dropdown-item" @click.stop="navigate('this','day')">1 Dag</a>
+                                    <a class="dropdown-item" @click.stop="navigate('this','week')">1 Uge</a>
+                                    <a class="dropdown-item" @click.stop="navigate('this','month')">1 Måned</a>
+                                </div>
+
                             </div>
-                            <div class="col-5 kt-align-center">
-                                <h3><span id="headline" class="d-none d-sm-inline">Aktiviteter i </span>Uge {{calendar.start_date | formatDate("ww")}}</h3>
+                            <div class="col-5 kt-align-center we-act-nav-head">
+                                <h3><span id="headline" class="d-none d-sm-inline">Aktiviteter </span><span style="text-transform: capitalize">{{ headLine }}</span></h3>
                             </div>
                             <div class="col-4">
                                 <div class="float-right">
-                                    <button id="btnPrev" type="button" class="btn btn-primary" v-on:click.stop="activitiesLoad('prev')">&nbsp;<i class="fa fa-arrow-left"></i><span class="d-none d-sm-inline">Uge {{calendar.prev_week | formatDate("ww")}}</span></button>
-                                    <button id="btnNext" type="button" class="btn btn-primary" v-on:click.stop="activitiesLoad('next')">&nbsp;<span class="d-none d-sm-inline">Uge {{calendar.next_week | formatDate("ww")}} </span><i class="fa fa-arrow-right"></i></button>
+                                    <button id="btnPrev" type="button" class="btn btn-primary" v-on:click.stop="navigate('prev')">&nbsp;<i class="fa fa-arrow-left"></i><span class="d-none d-sm-inline">Uge {{calendar.prev_week | formatDate("ww")}}</span></button>
+                                    <button id="btnNext" type="button" class="btn btn-primary" v-on:click.stop="navigate('next')">&nbsp;<span class="d-none d-sm-inline">Uge {{calendar.next_week | formatDate("ww")}} </span><i class="fa fa-arrow-right"></i></button>
                                 </div>
                             </div>
                         </div>
