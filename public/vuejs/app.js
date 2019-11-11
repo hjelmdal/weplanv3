@@ -2453,6 +2453,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     navigate: function navigate(direction) {
       var inputType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      this.startLoading();
       var date;
       var type;
       var ref;
@@ -2476,6 +2477,7 @@ __webpack_require__.r(__webpack_exports__);
           date: date
         }
       });
+      this.stopLoading();
     }
   },
   computed: {
@@ -83840,12 +83842,18 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.mixin({
       return isMobile.matches ? true : false;
     },
     is_tablet: function is_tablet() {
-      var isTablet = window.matchMedia("only screen and (max-width: 1024px)");
+      var isTablet = window.matchMedia("only screen and (min-width: 576px) and (max-width: 1024px)");
       return isTablet.matches ? true : false;
     },
     is_desktop: function is_desktop() {
       var isDesktop = window.matchMedia("only screen and (min-width: 1025px)");
       return isDesktop.matches ? true : false;
+    },
+    startLoading: function startLoading() {
+      return KTApp.blockPage();
+    },
+    stopLoading: function stopLoading() {
+      return KTApp.unblockPage();
     }
   }
 });

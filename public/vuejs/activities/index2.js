@@ -2426,6 +2426,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     navigate: function navigate(direction) {
       var inputType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      this.startLoading();
       var date;
       var type;
       var ref;
@@ -2449,6 +2450,7 @@ __webpack_require__.r(__webpack_exports__);
           date: date
         }
       });
+      this.stopLoading();
     }
   },
   computed: {

@@ -728,3 +728,7 @@ td.td-ellipsis {
   cursor: pointer;
 }
 
+.blockOverlay {
+  opacity: 0.1 !important;
+}
+

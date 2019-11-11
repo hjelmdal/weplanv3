@@ -48,15 +48,23 @@ Vue.mixin({
             return isMobile.matches ? true : false
         },
         is_tablet() {
-            const isTablet = window.matchMedia("only screen and (max-width: 1024px)")
+            const isTablet = window.matchMedia("only screen and (min-width: 576px) and (max-width: 1024px)")
             return isTablet.matches ? true : false
         },
         is_desktop() {
             const isDesktop = window.matchMedia("only screen and (min-width: 1025px)")
             return isDesktop.matches ? true : false
+        },
+        startLoading() {
+
+            return KTApp.blockPage();
+        },
+        stopLoading() {
+            return KTApp.unblockPage();
         }
     }
 });
+
 
 Vue.filter('formatTime', function(value,format = "HH:mm") {
     if (value) {

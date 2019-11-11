@@ -7,6 +7,7 @@
                 this.$root.$emit("activitiesLoad", string);
             },
             navigate(direction, inputType = false) {
+                this.startLoading();
                 let date;
                 let type;
                 let ref;
@@ -23,6 +24,7 @@
                 }
                 date = this.calendar[ref];
                 this.$router.push({ name: 'activities.filter', params: { type: type, date:date } });
+                this.stopLoading();
 
             }
         },
