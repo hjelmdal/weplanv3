@@ -210,7 +210,7 @@
         flex-direction:column;
     }
     .btn-xs {
-        padding: 0.4rem 0.6rem;
+        padding: 0.6rem 0.6rem;
         font-size:0.7rem;
     }
 

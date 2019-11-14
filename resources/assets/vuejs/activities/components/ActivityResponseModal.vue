@@ -8,6 +8,8 @@
 <style scoped>
 .kt-widget17 {
     padding:5px;
+    background:#f2f3f8;
+
 }
 .kt-widget17__stats {
     margin: 0;
@@ -127,7 +129,7 @@
 </style>
 
 <template>
-    <b-modal :title="'Tilmeld ' + activity.title" id="responseModal" size="sm" body-class="kt-pl0-mobile kt-pr0-mobile">
+    <b-modal :title="'Tilmeld ' + activity.title" id="responseModal" size="md" body-class="kt-pl0-mobile kt-pr0-mobile">
         <div class="we-flex">
             <div class="we-flex-row kt-pl0">
                 <div class="p8-date">
