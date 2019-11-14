@@ -2,15 +2,21 @@
     import ActivitiesFilters from "./ActivitiesFilters";
     import ActivitiesNav from "./ActivitiesNav";
     import router from "../../routes";
+    import ActivityResponseModal from "./ActivityResponseModal";
     export default {
         name: "ActivitiesSimpleList",
-        components: {ActivitiesNav, ActivitiesFilters},
+        components: {ActivityResponseModal, ActivitiesNav, ActivitiesFilters},
         props:["type","date"],
         data() {
             return {
                 time: (new Date).getTime(),
                 filters:[],
                 types: [],
+                response:{
+                    activity: Object,
+                    type: "",
+                    id:""
+                }
             }
         },
         methods: {
@@ -45,6 +51,10 @@
                         this.setFilters();
                     })
 
+            },
+            responseModal(activity,type) {
+                this.response.activity = activity;
+                this.$bvModal.show("responseModal");
             }
         },
         computed: {
@@ -230,7 +240,7 @@
                                 <button @click="showActivity(activity.id)" v-if="activity.response_timestamp < time || !activity.my_activity && !activity.type.signup || (activity.response_confirmed || activity.response_declined)" type="button" class="btn btn-outline-hover-info btn-elevate btn-icon" style="align-self:flex-end">
                                     <span class="we-btn-flex"></span><i class="la la-chevron-right"></i>
                                 </button>
-                                <button v-if="!activity.my_activity && activity.type.signup && activity.response_timestamp > time" type="button" class="btn btn-xs btn-brand btn-elevate btn-pill we-pill"><span class="we-btn-flex"><i class="la la-plus"></i> Tilmeld</span></button>
+                                <button @click="responseModal(activity,'signup')" v-if="!activity.my_activity && activity.type.signup && activity.response_timestamp > time" type="button" class="btn btn-xs btn-brand btn-elevate btn-pill we-pill"><span class="we-btn-flex"><i class="la la-plus"></i> Tilmeld</span></button>
 
                                 <span class="we-response-wrapper" v-if="activity.response_timestamp > time && activity.response_missing">
                     <button v-if="activity.my_activity" type="button" class="btn btn-xs btn-success btn-elevate btn-pill we-pill kt-mb-5"><span class="we-btn-flex"><i class="la la-check"></i> Bekræft</span></button>
@@ -243,6 +253,6 @@
                 </div>
             </div>
         </div>
-
+        <activity-response-modal :activity="response.activity" :type="response.type" :id="responseModal"></activity-response-modal>
     </div>
 </template>
