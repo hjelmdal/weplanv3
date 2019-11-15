@@ -9,11 +9,11 @@
         props:["type","date"],
         data() {
             return {
-                time: (new Date).getTime(),
+                time: (new Date).getTime() / 1000,
                 filters:[],
                 types: [],
                 response:{
-                    activity: Object,
+                    activity: "",
                     type: "",
                     id:""
                 }
@@ -61,22 +61,22 @@
             calendar() {
                 return this.$store.getters['activities/getCalendar'];
             },
-            calendar1() {
+            days() {
                 let last_start_date;
                 let days = [];
                 let activities = this.$store.getters['activities/getActivities'];
                 if(activities) {
                     activities.forEach(event => {
                         if (event.start_date === last_start_date) {
-                            days[days.length - 1].events.push(event);
+                            days[days.length - 1].activities.push(event);
                         } else {
                             days.push({
                                 date: event.start_date,
-                                events: [event]
+                                activities: [event]
                             });
                         }
                         last_start_date = event.start_date;
-
+                        this.response.activity = event;
                     });
                 }
                 return days;
@@ -219,7 +219,7 @@
 <template>
     <div>
         <activities-nav :showFilters="true" :calendar="calendar" :filters="filters" :types="types"></activities-nav>
-        <div class="we-flex" v-for="day in calendar1">
+        <div class="we-flex" v-for="day in days">
             <div class="we-flex-row kt-pl0">
                 <div class="p8-date">
                     <div class="p8-date-mon">{{day.date | formatDate("ddd")}}</div>
@@ -229,7 +229,7 @@
                 </div>
             </div>
             <div class="we-flex-row we-flex-grow kt-mt-10">
-                <div class="we-flex1" v-for="activity in day.events">
+                <div class="we-flex1" v-for="activity in day.activities">
                     <div class="kt-portlet we-100 response-none" :class="{'response-missing':activity.response_missing, 'response-declined':activity.response_declined, 'response-confirmed':activity.response_confirmed, 'invitational': !activity.my_activity && activity.type && activity.type.signup && activity.response_timestamp > time}" style="border-left: 5px solid">
                         <div class="we-flex">
                             <div class="we-flex-row kt-m10 we-flex-grow">
