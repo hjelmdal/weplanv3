@@ -1,7 +1,10 @@
 const state = {
     activities: [],
     types: [],
-    calendar: []
+    calendar: [],
+    date:"",
+    type:"",
+    filters:""
 }
 
 const getters = {
@@ -55,6 +58,9 @@ const actions = {
         let form = new Form({
             filters: filters,
         });
+        state.date = date;
+        state.type = type;
+        state.filters = filters;
         return new Promise((resolve, reject) => {
            axios.post('/api/v1/calendar/' + type + '/' + date,{filters})
                .then((response) => {
@@ -77,7 +83,19 @@ const actions = {
                    resolve(response.data);
                })
         });
-    }
+    },
+    confirmActivityById: async (context, {activity_id }) => {
+        console.log("yay");
+        return new Promise((resolve, reject) => {
+            axios.post("/api/v1/activities/confirm",{activity_id: activity_id})
+                .then(response => {
+                   console.log(response.data);
+                   context.dispatch('getActivities',{date: state.date,filters: state.filters,type: state.type});
+                   resolve(response.data);
+                });
+        });
+
+    },
 }
 
 export default {

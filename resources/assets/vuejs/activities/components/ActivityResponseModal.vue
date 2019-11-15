@@ -1,13 +1,28 @@
 <script>
     export default {
         name: "ActivityResponseModal",
-        props:["activity","type","id"],
+        props:["activity","type","id","time"],
+        methods: {
+            confirmActivity(event,activity) {
+                let btn = event.target;
+                btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light", "disabled");
+                this.$store.dispatch('activities/confirmActivityById',{ activity_id: this.activity.id })
+                    .then(response => {
+                        btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light", "disabled");
+                    })
+
+
+
+
+
+
+            },
+        }
     }
 </script>
 
 <style scoped>
 .kt-widget17 {
-    padding:5px;
     background:#f2f3f8;
 
 }
@@ -15,12 +30,7 @@
     margin: 0;
     width: 100%;
 }
-@media (max-width: 575px) {
-    modal-body {
-        padding:5px;
-        background-color: #f2f3f8;
-    }
-}
+
 
 .we-flex {
     display:flex;
@@ -128,10 +138,22 @@
 }
 
 </style>
+<style>
+    @media (max-width: 575px) {
+        .modal-body {
+            padding:5px;
+            background-color: #f2f3f8;
+        }
+    }
+
+    .we-modal-body {
+        background-color: #f2f3f8;
+    }
+</style>
 
 <template>
-    <b-modal v-if="activity" :title="'Tilmeld ' + activity.title" id="responseModal" size="md" body-class="kt-pl0-mobile kt-pr0-mobile">
-        <div class="we-flex">
+    <b-modal v-if="activity" :title="'Tilmeld ' + activity.title" id="responseModal" size="md" body-class="we-modal-body kt-pl0-mobile kt-pr0-mobile">
+        <div class="we-flex kt-mr-5">
             <div class="we-flex-row kt-pl0">
                 <div class="p8-date">
                     <div class="p8-date-mon">{{activity.start_date | formatDate("ddd")}}</div>
@@ -148,17 +170,6 @@
                                 <div class="title kt-font-lg kt-font-bold we-ellipsis">{{ activity.title }}</div>
                                 <div class="time-span"> <i class="la la-clock-o" style="font-size: 14px;"></i> {{ activity.start | formatTime("HH:mm") }} - {{ activity.end | formatTime("HH:mm") }} <span v-if="activity.type">{{ activity.type.name }}</span> </div>
                             </div>
-                            <div v-if="activity.type" class="we-flex-row kt-pr0 we-response">
-                                <button @click="showActivity(activity.id)" v-if="activity.response_timestamp < time || !activity.my_activity && !activity.type.signup || (activity.response_confirmed || activity.response_declined)" type="button" class="btn btn-outline-hover-info btn-elevate btn-icon" style="align-self:flex-end">
-                                    <span class="we-btn-flex"></span><i class="la la-chevron-right"></i>
-                                </button>
-                                <button @click="responseModal(activity,'signup')" v-if="!activity.my_activity && activity.type.signup && activity.response_timestamp > time" type="button" class="btn btn-xs btn-brand btn-elevate btn-pill we-pill"><span class="we-btn-flex"><i class="la la-plus"></i> Tilmeld</span></button>
-
-                                <span class="we-response-wrapper" v-if="activity.response_timestamp > time && activity.response_missing">
-                    <button v-if="activity.my_activity" type="button" class="btn btn-xs btn-success btn-elevate btn-pill we-pill kt-mb-5"><span class="we-btn-flex"><i class="la la-check"></i> Bekræft</span></button>
-                    <button v-if="activity.my_activity" type="button" class="btn btn-xs btn-brand btn-elevate btn-pill we-pill"><span class="we-btn-flex"><i class="la la-close"></i> Afbud</span></button>
-</span>
-                            </div>
                         </div>
                     </div>
 
@@ -166,7 +177,8 @@
             </div>
         </div>
         <div class="kt-align-center kt-mb-20">
-            <button type="button" class="btn btn-primary  btn-lg"><i class="fa fa-plus"></i> Tilmeld</button>
+            <button v-if="!activity.my_activity" @click="confirmActivity($event)" type="button" class="btn btn-primary  btn-lg"><i class="fa fa-plus"></i> Tilmeld</button>
+            <button v-if="activity.my_activity" @click="confirmActivity($event)" type="button" class="btn btn-danger  btn-lg"><i class="fa fa-plus"></i> Afmeld</button>
         </div>
         <div class="kt-widget17">
             <div class="kt-widget17__stats">

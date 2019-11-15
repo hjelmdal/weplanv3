@@ -253,6 +253,6 @@
                 </div>
             </div>
         </div>
-        <activity-response-modal :activity="response.activity" :type="response.type" :id="responseModal"></activity-response-modal>
+        <activity-response-modal :time="time" :activity="response.activity" :type="response.type" :id="responseModal"></activity-response-modal>
     </div>
 </template>
