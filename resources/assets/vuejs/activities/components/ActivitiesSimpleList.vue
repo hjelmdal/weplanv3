@@ -211,7 +211,7 @@
     }
     .btn-xs {
         padding: 0.6rem 0.6rem;
-        font-size:0.7rem;
+        font-size:0.8rem;
     }
 
 </style>
