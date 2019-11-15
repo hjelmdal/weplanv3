@@ -13,7 +13,7 @@
                 filters:[],
                 types: [],
                 response:{
-                    activity: "",
+                    activity: null,
                     type: "",
                     id:""
                 }
@@ -76,7 +76,9 @@
                             });
                         }
                         last_start_date = event.start_date;
-                        this.response.activity = event;
+                        if(!this.response.activity) {
+                            this.response.activity = event;
+                        }
                     });
                 }
                 return days;

@@ -2526,7 +2526,7 @@ __webpack_require__.r(__webpack_exports__);
       filters: [],
       types: [],
       response: {
-        activity: "",
+        activity: null,
         type: "",
         id: ""
       }
@@ -2606,7 +2606,10 @@ __webpack_require__.r(__webpack_exports__);
           }
 
           last_start_date = event.start_date;
-          _this3.response.activity = event;
+
+          if (!_this3.response.activity) {
+            _this3.response.activity = event;
+          }
         });
       }
 
