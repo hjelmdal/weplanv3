@@ -2836,9 +2836,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ActivityInfoExtra__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActivityInfoExtra */ "./resources/assets/vuejs/activities/components/ActivityInfoExtra.vue");
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ActivityResponseModal",
-  props: ["activity", "type", "id", "time"],
+  components: {
+    ActivityInfoExtra: _ActivityInfoExtra__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: ["act", "type", "id", "time"],
   methods: {
     confirmActivity: function confirmActivity(event, activity) {
       var btn = event.target;
@@ -2848,6 +2853,13 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light", "disabled");
       });
+    }
+  },
+  computed: {
+    activity: function activity() {
+      if (this.act) {
+        return this.$store.getters['activities/getActivityById'](this.act.id);
+      }
     }
   }
 });
@@ -32926,7 +32938,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.circle[data-v-57859528] {\n    display: inline-block;\n    width: 7px;\n    height: 7px;\n    border-radius: 500px;\n    margin: 0 .5em;\n    background-color: #ddd;\n    vertical-align: baseline;\n    border: 2px solid transparent;\n}\n.circle-lg[data-v-57859528] {\n    width: 11px;\n    height: 11px;\n}\n", ""]);
+exports.push([module.i, "\n.circle[data-v-57859528] {\n    display: inline-block;\n    width: 7px;\n    height: 7px;\n    border-radius: 500px;\n    margin: 0 .5em;\n    background-color: #ddd;\n    vertical-align: baseline;\n    border: 2px solid transparent;\n}\n.circle-lg[data-v-57859528] {\n    width: 11px;\n    height: 11px;\n}\n.disabled[data-v-57859528] {\n    background: #ddd !important;\n    cursor: not-allowed;\n}\n.disabled span[data-v-57859528], .disabled span i[data-v-57859528] {\n    color: #fff !important;\n}\n", ""]);
 
 // exports
 
@@ -60641,7 +60653,8 @@ var render = function() {
                                         staticClass: "we-btn-flex"
                                       }),
                                       _c("i", {
-                                        staticClass: "la la-chevron-right"
+                                        staticClass:
+                                          "la la-chevron-right kt-danger"
                                       })
                                     ]
                                   )
@@ -60681,7 +60694,15 @@ var render = function() {
                                             {
                                               staticClass:
                                                 "btn btn-xs btn-success btn-elevate btn-pill we-pill kt-mb-5",
-                                              attrs: { type: "button" }
+                                              attrs: { type: "button" },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.responseModal(
+                                                    activity,
+                                                    "signup"
+                                                  )
+                                                }
+                                              }
                                             },
                                             [_vm._m(1, true)]
                                           )
@@ -60692,8 +60713,16 @@ var render = function() {
                                             "button",
                                             {
                                               staticClass:
-                                                "btn btn-xs btn-brand btn-elevate btn-pill we-pill",
-                                              attrs: { type: "button" }
+                                                "btn btn-xs btn-danger btn-elevate btn-pill we-pill",
+                                              attrs: { type: "button" },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.responseModal(
+                                                    activity,
+                                                    "signup"
+                                                  )
+                                                }
+                                              }
                                             },
                                             [_vm._m(2, true)]
                                           )
@@ -60717,7 +60746,7 @@ var render = function() {
       _c("activity-response-modal", {
         attrs: {
           time: _vm.time,
-          activity: _vm.response.activity,
+          act: _vm.response.activity,
           type: _vm.response.type,
           id: _vm.responseModal
         }
@@ -60778,16 +60807,359 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card card-default" }, [
     _c("div", { staticClass: "card-body text-center" }, [
-      _vm._m(0),
+      _c(
+        "ul",
+        {
+          staticClass: "nav nav-pills nav-tabs-btn",
+          attrs: { role: "tablist" }
+        },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _c("li", { staticClass: "nav-item" }, [
+            _c(
+              "a",
+              {
+                staticClass: "nav-link",
+                class: { disabled: !_vm.activity.my_activity },
+                attrs: { "data-toggle": "tab", href: "#tab1", role: "tab" }
+              },
+              [
+                _vm._m(2),
+                _vm._v(" "),
+                _c("span", { staticClass: "nav-link-title" }, [
+                  _vm._v("Program")
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _vm._m(3)
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "tab-content" }, [
-        _vm._m(1),
+        _c(
+          "div",
+          {
+            staticClass: "tab-pane fade active show",
+            attrs: { id: "tab0", role: "tabpanel" }
+          },
+          [
+            _c("div", { staticClass: "kt-widget17 kt-mt-60" }, [
+              _c("div", { staticClass: "kt-widget17__stats" }, [
+                _c("div", { staticClass: "kt-widget17__items" }, [
+                  _c("div", { staticClass: "kt-widget17__item" }, [
+                    _c("span", { staticClass: "kt-widget17__icon" }, [
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "kt-svg-icon kt-svg-icon--success",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                            width: "24px",
+                            height: "24px",
+                            viewBox: "0 0 24 24",
+                            version: "1.1"
+                          }
+                        },
+                        [
+                          _c(
+                            "g",
+                            {
+                              attrs: {
+                                stroke: "none",
+                                "stroke-width": "1",
+                                fill: "none",
+                                "fill-rule": "evenodd"
+                              }
+                            },
+                            [
+                              _c("rect", {
+                                attrs: {
+                                  x: "0",
+                                  y: "0",
+                                  width: "24",
+                                  height: "24"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("path", {
+                                attrs: {
+                                  d:
+                                    "M12,22 C7.02943725,22 3,17.9705627 3,13 C3,8.02943725 7.02943725,4 12,4 C16.9705627,4 21,8.02943725 21,13 C21,17.9705627 16.9705627,22 12,22 Z",
+                                  fill: "#000000",
+                                  opacity: "0.3"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("path", {
+                                attrs: {
+                                  d:
+                                    "M11.9630156,7.5 L12.0475062,7.5 C12.3043819,7.5 12.5194647,7.69464724 12.5450248,7.95024814 L13,12.5 L16.2480695,14.3560397 C16.403857,14.4450611 16.5,14.6107328 16.5,14.7901613 L16.5,15 C16.5,15.2109164 16.3290185,15.3818979 16.1181021,15.3818979 C16.0841582,15.3818979 16.0503659,15.3773725 16.0176181,15.3684413 L11.3986612,14.1087258 C11.1672824,14.0456225 11.0132986,13.8271186 11.0316926,13.5879956 L11.4644883,7.96165175 C11.4845267,7.70115317 11.7017474,7.5 11.9630156,7.5 Z",
+                                  fill: "#000000"
+                                }
+                              })
+                            ]
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "kt-widget17__subtitle" }, [
+                      _vm._v("\n\t\t\t\t\t\t\tTidspunkt\n\t\t\t\t\t\t")
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "kt-widget17__desc" }, [
+                      _c("i", {
+                        staticClass: "la la-clock-o",
+                        staticStyle: { "font-size": "14px" }
+                      }),
+                      _vm._v(
+                        " " +
+                          _vm._s(
+                            _vm._f("formatTime")(_vm.activity.start, "HH:mm")
+                          ) +
+                          " - " +
+                          _vm._s(
+                            _vm._f("formatTime")(_vm.activity.end, "HH:mm")
+                          ) +
+                          "\n\t\t\t\t\t\t"
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "kt-widget17__item" }, [
+                    _c("span", { staticClass: "kt-widget17__icon" }, [
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "kt-svg-icon kt-svg-icon--danger",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                            width: "24px",
+                            height: "24px",
+                            viewBox: "0 0 24 24",
+                            version: "1.1"
+                          }
+                        },
+                        [
+                          _c(
+                            "g",
+                            {
+                              attrs: {
+                                stroke: "none",
+                                "stroke-width": "1",
+                                fill: "none",
+                                "fill-rule": "evenodd"
+                              }
+                            },
+                            [
+                              _c("rect", {
+                                attrs: {
+                                  x: "0",
+                                  y: "0",
+                                  width: "24",
+                                  height: "24"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("path", {
+                                attrs: {
+                                  d:
+                                    "M7.14319965,19.3575259 C7.67122143,19.7615175 8.25104409,20.1012165 8.87097532,20.3649307 L7.89205065,22.0604779 C7.61590828,22.5387706 7.00431787,22.7026457 6.52602525,22.4265033 C6.04773263,22.150361 5.88385747,21.5387706 6.15999985,21.0604779 L7.14319965,19.3575259 Z M15.1367085,20.3616573 C15.756345,20.0972995 16.3358198,19.7569961 16.8634386,19.3524415 L17.8320512,21.0301278 C18.1081936,21.5084204 17.9443184,22.1200108 17.4660258,22.3961532 C16.9877332,22.6722956 16.3761428,22.5084204 16.1000004,22.0301278 L15.1367085,20.3616573 Z",
+                                  fill: "#000000"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("path", {
+                                attrs: {
+                                  d:
+                                    "M12,21 C7.581722,21 4,17.418278 4,13 C4,8.581722 7.581722,5 12,5 C16.418278,5 20,8.581722 20,13 C20,17.418278 16.418278,21 12,21 Z M19.068812,3.25407593 L20.8181344,5.00339833 C21.4039208,5.58918477 21.4039208,6.53893224 20.8181344,7.12471868 C20.2323479,7.71050512 19.2826005,7.71050512 18.696814,7.12471868 L16.9474916,5.37539627 C16.3617052,4.78960984 16.3617052,3.83986237 16.9474916,3.25407593 C17.5332781,2.66828949 18.4830255,2.66828949 19.068812,3.25407593 Z M5.29862906,2.88207799 C5.8844155,2.29629155 6.83416297,2.29629155 7.41994941,2.88207799 C8.00573585,3.46786443 8.00573585,4.4176119 7.41994941,5.00339833 L5.29862906,7.12471868 C4.71284263,7.71050512 3.76309516,7.71050512 3.17730872,7.12471868 C2.59152228,6.53893224 2.59152228,5.58918477 3.17730872,5.00339833 L5.29862906,2.88207799 Z",
+                                  fill: "#000000",
+                                  opacity: "0.3"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("path", {
+                                attrs: {
+                                  d:
+                                    "M11.9630156,7.5 L12.0475062,7.5 C12.3043819,7.5 12.5194647,7.69464724 12.5450248,7.95024814 L13,12.5 L16.2480695,14.3560397 C16.403857,14.4450611 16.5,14.6107328 16.5,14.7901613 L16.5,15 C16.5,15.2109164 16.3290185,15.3818979 16.1181021,15.3818979 C16.0841582,15.3818979 16.0503659,15.3773725 16.0176181,15.3684413 L11.3986612,14.1087258 C11.1672824,14.0456225 11.0132986,13.8271186 11.0316926,13.5879956 L11.4644883,7.96165175 C11.4845267,7.70115317 11.7017474,7.5 11.9630156,7.5 Z",
+                                  fill: "#000000"
+                                }
+                              })
+                            ]
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "kt-widget17__subtitle" }, [
+                      _vm._v("\n\t\t\t\t\t\t\tDeadline\n\t\t\t\t\t\t")
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "kt-widget17__desc" }, [
+                      _vm._v(
+                        "\n\t\t\t\t\t\t\t" +
+                          _vm._s(
+                            _vm._f("dateString")(
+                              _vm.activity.response_date +
+                                " " +
+                                _vm.activity.response_time,
+                              "to"
+                            )
+                          ) +
+                          "\n\t\t\t\t\t\t"
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "kt-widget17__items" }, [
+                  _c("div", { staticClass: "kt-widget17__item" }, [
+                    _c("span", { staticClass: "kt-widget17__icon" }, [
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "kt-svg-icon kt-svg-icon--brand",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                            width: "24px",
+                            height: "24px",
+                            viewBox: "0 0 24 24",
+                            version: "1.1"
+                          }
+                        },
+                        [
+                          _c(
+                            "g",
+                            {
+                              attrs: {
+                                stroke: "none",
+                                "stroke-width": "1",
+                                fill: "none",
+                                "fill-rule": "evenodd"
+                              }
+                            },
+                            [
+                              _c("rect", {
+                                attrs: {
+                                  x: "0",
+                                  y: "0",
+                                  width: "24",
+                                  height: "24"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("path", {
+                                attrs: {
+                                  d:
+                                    "M5,10.5 C5,6 8,3 12.5,3 C17,3 20,6.75 20,10.5 C20,12.8325623 17.8236613,16.03566 13.470984,20.1092932 C12.9154018,20.6292577 12.0585054,20.6508331 11.4774555,20.1594925 C7.15915182,16.5078313 5,13.2880005 5,10.5 Z M12.5,12 C13.8807119,12 15,10.8807119 15,9.5 C15,8.11928813 13.8807119,7 12.5,7 C11.1192881,7 10,8.11928813 10,9.5 C10,10.8807119 11.1192881,12 12.5,12 Z",
+                                  fill: "#000000",
+                                  "fill-rule": "nonzero"
+                                }
+                              })
+                            ]
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "kt-widget17__subtitle" }, [
+                      _vm._v("\n\t\t\t\t\t\t\tSted\n\t\t\t\t\t\t")
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "kt-widget17__desc" }, [
+                      _vm._v(
+                        "\n\t\t\t\t\t\t\tAnnexhallen, Aarhus N\n\t\t\t\t\t\t"
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "kt-widget17__item" }, [
+                    _c("span", { staticClass: "kt-widget17__icon" }, [
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "kt-svg-icon kt-svg-icon--success",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                            width: "24px",
+                            height: "24px",
+                            viewBox: "0 0 24 24",
+                            version: "1.1"
+                          }
+                        },
+                        [
+                          _c(
+                            "g",
+                            {
+                              attrs: {
+                                stroke: "none",
+                                "stroke-width": "1",
+                                fill: "none",
+                                "fill-rule": "evenodd"
+                              }
+                            },
+                            [
+                              _c("polygon", {
+                                attrs: { points: "0 0 24 0 24 24 0 24" }
+                              }),
+                              _vm._v(" "),
+                              _c("path", {
+                                attrs: {
+                                  d:
+                                    "M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z",
+                                  fill: "#000000",
+                                  "fill-rule": "nonzero"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("path", {
+                                attrs: {
+                                  d:
+                                    "M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z",
+                                  fill: "#000000",
+                                  opacity: "0.3"
+                                }
+                              })
+                            ]
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "kt-widget17__subtitle" }, [
+                      _vm._v("\n\t\t\t\t\t\t\tType\n\t\t\t\t\t\t")
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "kt-widget17__desc" }, [
+                      _vm._v(
+                        "\n\t\t\t\t\t\t\t" +
+                          _vm._s(_vm.activity.type.name) +
+                          "\n\t\t\t\t\t\t"
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _vm._m(4),
         _vm._v(" "),
         _c(
           "div",
           {
             staticClass: "tab-pane fade",
-            attrs: { id: "kt_tabs_8_2", role: "tabpanel" }
+            attrs: { id: "tab2", role: "tabpanel" }
           },
           [
             _c(
@@ -60797,7 +61169,7 @@ var render = function() {
                   "table table-ellipsis table-striped table-v-middle table-left"
               },
               [
-                _vm._m(2),
+                _vm._m(5),
                 _vm._v(" "),
                 _c(
                   "tbody",
@@ -60861,11 +61233,11 @@ var render = function() {
           "div",
           {
             staticClass: "tab-pane fade",
-            attrs: { id: "kt_tabs_8_3", role: "tabpanel" }
+            attrs: { id: "tab3", role: "tabpanel" }
           },
           [
             _vm._v(
-              "\n                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n            "
+              "\n                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n                "
             )
           ]
         )
@@ -60878,64 +61250,72 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      { staticClass: "nav nav-pills nav-tabs-btn", attrs: { role: "tablist" } },
-      [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link active",
-              attrs: { "data-toggle": "tab", href: "#kt_tabs_8_1", role: "tab" }
-            },
-            [
-              _c("span", { staticClass: "nav-link-icon" }, [
-                _c("i", { staticClass: "flaticon-information" })
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "nav-link-title" }, [_vm._v("Program")])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: { "data-toggle": "tab", href: "#kt_tabs_8_2", role: "tab" }
-            },
-            [
-              _c("span", { staticClass: "nav-link-icon" }, [
-                _c("i", { staticClass: "flaticon-users" })
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "nav-link-title" }, [
-                _vm._v("Deltagere")
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: { "data-toggle": "tab", href: "#kt_tabs_8_3", role: "tab" }
-            },
-            [
-              _c("span", { staticClass: "nav-link-icon" }, [
-                _c("i", { staticClass: "flaticon2-graph-2" })
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "nav-link-title" }, [_vm._v("Kampe")])
-            ]
-          )
-        ])
-      ]
-    )
+    return _c("li", { staticClass: "nav-item" }, [
+      _c(
+        "a",
+        {
+          staticClass: "nav-link active",
+          attrs: { "data-toggle": "tab", href: "#tab0", role: "tab" }
+        },
+        [
+          _c("span", { staticClass: "nav-link-icon" }, [
+            _c("i", { staticClass: "flaticon-information" })
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "nav-link-title" }, [_vm._v("info")])
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "nav-item" }, [
+      _c(
+        "a",
+        {
+          staticClass: "nav-link",
+          attrs: { "data-toggle": "tab", href: "#tab2", role: "tab" }
+        },
+        [
+          _c("span", { staticClass: "nav-link-icon" }, [
+            _c("i", { staticClass: "flaticon-users" })
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "nav-link-title" }, [_vm._v("Deltagere")])
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "nav-link-icon" }, [
+      _c("i", { staticClass: "flaticon-information" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "nav-item" }, [
+      _c(
+        "a",
+        {
+          staticClass: "nav-link",
+          attrs: { "data-toggle": "tab", href: "#tab3", role: "tab" }
+        },
+        [
+          _c("span", { staticClass: "nav-link-icon" }, [
+            _c("i", { staticClass: "flaticon2-graph-2" })
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "nav-link-title" }, [_vm._v("Kampe")])
+        ]
+      )
+    ])
   },
   function() {
     var _vm = this
@@ -60943,10 +61323,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "div",
-      {
-        staticClass: "tab-pane fade active show",
-        attrs: { id: "kt_tabs_8_1", role: "tabpanel" }
-      },
+      { staticClass: "tab-pane", attrs: { id: "tab1", role: "tabpanel" } },
       [
         _c("h4", [_vm._v("Opvarmning")]),
         _vm._v(" "),
@@ -61806,7 +62183,7 @@ var render = function() {
                         attrs: { size: "sm" },
                         on: { click: cancel }
                       },
-                      [_vm._v("\n                Fortryd\n            ")]
+                      [_vm._v("\n            Fortryd\n        ")]
                     )
                   ]
                 }
@@ -61814,7 +62191,7 @@ var render = function() {
             ],
             null,
             false,
-            3525586737
+            1921265713
           )
         },
         [
@@ -61945,309 +62322,9 @@ var render = function() {
               : _vm._e()
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "kt-widget17" }, [
-            _c("div", { staticClass: "kt-widget17__stats" }, [
-              _c("div", { staticClass: "kt-widget17__items" }, [
-                _c("div", { staticClass: "kt-widget17__item" }, [
-                  _c("span", { staticClass: "kt-widget17__icon" }, [
-                    _c(
-                      "svg",
-                      {
-                        staticClass: "kt-svg-icon kt-svg-icon--success",
-                        attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          "xmlns:xlink": "http://www.w3.org/1999/xlink",
-                          width: "24px",
-                          height: "24px",
-                          viewBox: "0 0 24 24",
-                          version: "1.1"
-                        }
-                      },
-                      [
-                        _c(
-                          "g",
-                          {
-                            attrs: {
-                              stroke: "none",
-                              "stroke-width": "1",
-                              fill: "none",
-                              "fill-rule": "evenodd"
-                            }
-                          },
-                          [
-                            _c("rect", {
-                              attrs: {
-                                x: "0",
-                                y: "0",
-                                width: "24",
-                                height: "24"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("path", {
-                              attrs: {
-                                d:
-                                  "M7.14319965,19.3575259 C7.67122143,19.7615175 8.25104409,20.1012165 8.87097532,20.3649307 L7.89205065,22.0604779 C7.61590828,22.5387706 7.00431787,22.7026457 6.52602525,22.4265033 C6.04773263,22.150361 5.88385747,21.5387706 6.15999985,21.0604779 L7.14319965,19.3575259 Z M15.1367085,20.3616573 C15.756345,20.0972995 16.3358198,19.7569961 16.8634386,19.3524415 L17.8320512,21.0301278 C18.1081936,21.5084204 17.9443184,22.1200108 17.4660258,22.3961532 C16.9877332,22.6722956 16.3761428,22.5084204 16.1000004,22.0301278 L15.1367085,20.3616573 Z",
-                                fill: "#000000"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("path", {
-                              attrs: {
-                                d:
-                                  "M12,21 C7.581722,21 4,17.418278 4,13 C4,8.581722 7.581722,5 12,5 C16.418278,5 20,8.581722 20,13 C20,17.418278 16.418278,21 12,21 Z M19.068812,3.25407593 L20.8181344,5.00339833 C21.4039208,5.58918477 21.4039208,6.53893224 20.8181344,7.12471868 C20.2323479,7.71050512 19.2826005,7.71050512 18.696814,7.12471868 L16.9474916,5.37539627 C16.3617052,4.78960984 16.3617052,3.83986237 16.9474916,3.25407593 C17.5332781,2.66828949 18.4830255,2.66828949 19.068812,3.25407593 Z M5.29862906,2.88207799 C5.8844155,2.29629155 6.83416297,2.29629155 7.41994941,2.88207799 C8.00573585,3.46786443 8.00573585,4.4176119 7.41994941,5.00339833 L5.29862906,7.12471868 C4.71284263,7.71050512 3.76309516,7.71050512 3.17730872,7.12471868 C2.59152228,6.53893224 2.59152228,5.58918477 3.17730872,5.00339833 L5.29862906,2.88207799 Z",
-                                fill: "#000000",
-                                opacity: "0.3"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("path", {
-                              attrs: {
-                                d:
-                                  "M11.9630156,7.5 L12.0475062,7.5 C12.3043819,7.5 12.5194647,7.69464724 12.5450248,7.95024814 L13,12.5 L16.2480695,14.3560397 C16.403857,14.4450611 16.5,14.6107328 16.5,14.7901613 L16.5,15 C16.5,15.2109164 16.3290185,15.3818979 16.1181021,15.3818979 C16.0841582,15.3818979 16.0503659,15.3773725 16.0176181,15.3684413 L11.3986612,14.1087258 C11.1672824,14.0456225 11.0132986,13.8271186 11.0316926,13.5879956 L11.4644883,7.96165175 C11.4845267,7.70115317 11.7017474,7.5 11.9630156,7.5 Z",
-                                fill: "#000000"
-                              }
-                            })
-                          ]
-                        )
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "kt-widget17__subtitle" }, [
-                    _vm._v("\n\t\t\t\t\t\t\tTidspunkt\n\t\t\t\t\t\t")
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "kt-widget17__desc" }, [
-                    _c("i", {
-                      staticClass: "la la-clock-o",
-                      staticStyle: { "font-size": "14px" }
-                    }),
-                    _vm._v(
-                      " " +
-                        _vm._s(
-                          _vm._f("formatTime")(_vm.activity.start, "HH:mm")
-                        ) +
-                        " - " +
-                        _vm._s(
-                          _vm._f("formatTime")(_vm.activity.end, "HH:mm")
-                        ) +
-                        "\n\t\t\t\t\t\t"
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "kt-widget17__item" }, [
-                  _c("span", { staticClass: "kt-widget17__icon" }, [
-                    _c(
-                      "svg",
-                      {
-                        staticClass: "kt-svg-icon kt-svg-icon--danger",
-                        attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          "xmlns:xlink": "http://www.w3.org/1999/xlink",
-                          width: "24px",
-                          height: "24px",
-                          viewBox: "0 0 24 24",
-                          version: "1.1"
-                        }
-                      },
-                      [
-                        _c(
-                          "g",
-                          {
-                            attrs: {
-                              stroke: "none",
-                              "stroke-width": "1",
-                              fill: "none",
-                              "fill-rule": "evenodd"
-                            }
-                          },
-                          [
-                            _c("rect", {
-                              attrs: {
-                                x: "0",
-                                y: "0",
-                                width: "24",
-                                height: "24"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("path", {
-                              attrs: {
-                                d:
-                                  "M12,22 C7.02943725,22 3,17.9705627 3,13 C3,8.02943725 7.02943725,4 12,4 C16.9705627,4 21,8.02943725 21,13 C21,17.9705627 16.9705627,22 12,22 Z",
-                                fill: "#000000",
-                                opacity: "0.3"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("path", {
-                              attrs: {
-                                d:
-                                  "M11.9630156,7.5 L12.0475062,7.5 C12.3043819,7.5 12.5194647,7.69464724 12.5450248,7.95024814 L13,12.5 L16.2480695,14.3560397 C16.403857,14.4450611 16.5,14.6107328 16.5,14.7901613 L16.5,15 C16.5,15.2109164 16.3290185,15.3818979 16.1181021,15.3818979 C16.0841582,15.3818979 16.0503659,15.3773725 16.0176181,15.3684413 L11.3986612,14.1087258 C11.1672824,14.0456225 11.0132986,13.8271186 11.0316926,13.5879956 L11.4644883,7.96165175 C11.4845267,7.70115317 11.7017474,7.5 11.9630156,7.5 Z",
-                                fill: "#000000"
-                              }
-                            })
-                          ]
-                        )
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "kt-widget17__subtitle" }, [
-                    _vm._v("\n\t\t\t\t\t\t\tLukker\n\t\t\t\t\t\t")
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "kt-widget17__desc" }, [
-                    _vm._v(
-                      "\n\t\t\t\t\t\t\t" +
-                        _vm._s(
-                          _vm._f("dateString")(
-                            _vm.activity.response_date +
-                              " " +
-                              _vm.activity.response_time,
-                            "to"
-                          )
-                        ) +
-                        "\n\t\t\t\t\t\t"
-                    )
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "kt-widget17__items" }, [
-                _c("div", { staticClass: "kt-widget17__item" }, [
-                  _c("span", { staticClass: "kt-widget17__icon" }, [
-                    _c(
-                      "svg",
-                      {
-                        staticClass: "kt-svg-icon kt-svg-icon--brand",
-                        attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          "xmlns:xlink": "http://www.w3.org/1999/xlink",
-                          width: "24px",
-                          height: "24px",
-                          viewBox: "0 0 24 24",
-                          version: "1.1"
-                        }
-                      },
-                      [
-                        _c(
-                          "g",
-                          {
-                            attrs: {
-                              stroke: "none",
-                              "stroke-width": "1",
-                              fill: "none",
-                              "fill-rule": "evenodd"
-                            }
-                          },
-                          [
-                            _c("rect", {
-                              attrs: {
-                                x: "0",
-                                y: "0",
-                                width: "24",
-                                height: "24"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("path", {
-                              attrs: {
-                                d:
-                                  "M5,10.5 C5,6 8,3 12.5,3 C17,3 20,6.75 20,10.5 C20,12.8325623 17.8236613,16.03566 13.470984,20.1092932 C12.9154018,20.6292577 12.0585054,20.6508331 11.4774555,20.1594925 C7.15915182,16.5078313 5,13.2880005 5,10.5 Z M12.5,12 C13.8807119,12 15,10.8807119 15,9.5 C15,8.11928813 13.8807119,7 12.5,7 C11.1192881,7 10,8.11928813 10,9.5 C10,10.8807119 11.1192881,12 12.5,12 Z",
-                                fill: "#000000",
-                                "fill-rule": "nonzero"
-                              }
-                            })
-                          ]
-                        )
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "kt-widget17__subtitle" }, [
-                    _vm._v("\n\t\t\t\t\t\t\tSted\n\t\t\t\t\t\t")
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "kt-widget17__desc" }, [
-                    _vm._v(
-                      "\n\t\t\t\t\t\t\tAnnexhallen, Aarhus N\n\t\t\t\t\t\t"
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "kt-widget17__item" }, [
-                  _c("span", { staticClass: "kt-widget17__icon" }, [
-                    _c(
-                      "svg",
-                      {
-                        staticClass: "kt-svg-icon kt-svg-icon--success",
-                        attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          "xmlns:xlink": "http://www.w3.org/1999/xlink",
-                          width: "24px",
-                          height: "24px",
-                          viewBox: "0 0 24 24",
-                          version: "1.1"
-                        }
-                      },
-                      [
-                        _c(
-                          "g",
-                          {
-                            attrs: {
-                              stroke: "none",
-                              "stroke-width": "1",
-                              fill: "none",
-                              "fill-rule": "evenodd"
-                            }
-                          },
-                          [
-                            _c("polygon", {
-                              attrs: { points: "0 0 24 0 24 24 0 24" }
-                            }),
-                            _vm._v(" "),
-                            _c("path", {
-                              attrs: {
-                                d:
-                                  "M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z",
-                                fill: "#000000",
-                                "fill-rule": "nonzero"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("path", {
-                              attrs: {
-                                d:
-                                  "M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z",
-                                fill: "#000000",
-                                opacity: "0.3"
-                              }
-                            })
-                          ]
-                        )
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "kt-widget17__subtitle" }, [
-                    _vm._v("\n\t\t\t\t\t\t\tType\n\t\t\t\t\t\t")
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "kt-widget17__desc" }, [
-                    _vm._v(
-                      "\n\t\t\t\t\t\t\t" +
-                        _vm._s(_vm.activity.type.name) +
-                        "\n\t\t\t\t\t\t"
-                    )
-                  ])
-                ])
-              ])
-            ])
-          ])
-        ]
+          _c("activity-info-extra", { attrs: { activity: _vm.activity } })
+        ],
+        1
       )
     : _vm._e()
 }
@@ -85595,6 +85672,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
 
 });
 router.beforeEach(function (to, from, next) {
+  KTApp.blockPage();
   var access = to.meta.access;
   var roles = to.meta.roles;
   var notify = new Notify();
@@ -85635,6 +85713,8 @@ router.beforeEach(function (to, from, next) {
     console.log("Route access is not set!" + " Route: ");
     console.log(to);
   }
+
+  KTApp.unblockPage();
 });
 /* harmony default export */ __webpack_exports__["default"] = (router);
 

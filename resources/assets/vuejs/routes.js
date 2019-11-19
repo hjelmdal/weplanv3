@@ -142,6 +142,7 @@ const router = new VueRouter({
 
 });
 router.beforeEach((to, from, next) => {
+    KTApp.blockPage();
     let access = to.meta.access;
     let roles = to.meta.roles;
     let notify = new Notify();
@@ -189,5 +190,6 @@ router.beforeEach((to, from, next) => {
         console.log("Route access is not set!" + " Route: ");
         console.log(to);
     }
+    KTApp.unblockPage();
 });
 export default router;

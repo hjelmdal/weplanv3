@@ -240,13 +240,13 @@
                             </div>
                             <div v-if="activity.type" class="we-flex-row kt-pr0 we-response">
                                 <button @click="showActivity(activity.id)" v-if="activity.response_timestamp < time || !activity.my_activity && !activity.type.signup || (activity.response_confirmed || activity.response_declined)" type="button" class="btn btn-outline-hover-info btn-elevate btn-icon" style="align-self:flex-end">
-                                    <span class="we-btn-flex"></span><i class="la la-chevron-right"></i>
+                                    <span class="we-btn-flex"></span><i class="la la-chevron-right kt-danger"></i>
                                 </button>
                                 <button @click="responseModal(activity,'signup')" v-if="!activity.my_activity && activity.type.signup && activity.response_timestamp > time" type="button" class="btn btn-xs btn-brand btn-elevate btn-pill we-pill"><span class="we-btn-flex"><i class="la la-plus"></i> Tilmeld</span></button>
 
                                 <span class="we-response-wrapper" v-if="activity.response_timestamp > time && activity.response_missing">
-                    <button v-if="activity.my_activity" type="button" class="btn btn-xs btn-success btn-elevate btn-pill we-pill kt-mb-5"><span class="we-btn-flex"><i class="la la-check"></i> Bekræft</span></button>
-                    <button v-if="activity.my_activity" type="button" class="btn btn-xs btn-brand btn-elevate btn-pill we-pill"><span class="we-btn-flex"><i class="la la-close"></i> Afbud</span></button>
+                    <button @click="responseModal(activity,'signup')" v-if="activity.my_activity" type="button" class="btn btn-xs btn-success btn-elevate btn-pill we-pill kt-mb-5"><span class="we-btn-flex"><i class="la la-check"></i> Bekræft</span></button>
+                    <button @click="responseModal(activity,'signup')" v-if="activity.my_activity" type="button" class="btn btn-xs btn-danger btn-elevate btn-pill we-pill"><span class="we-btn-flex"><i class="la la-close"></i> Afbud</span></button>
 </span>
                             </div>
                         </div>
@@ -255,6 +255,6 @@
                 </div>
             </div>
         </div>
-        <activity-response-modal :time="time" :activity="response.activity" :type="response.type" :id="responseModal"></activity-response-modal>
+        <activity-response-modal :time="time" :act="response.activity" :type="response.type" :id="responseModal"></activity-response-modal>
     </div>
 </template>
