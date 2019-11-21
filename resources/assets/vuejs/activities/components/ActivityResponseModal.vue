@@ -1,33 +1,62 @@
 <script>
-    import ActivityInfoExtra from "./ActivityInfoExtra";
-    export default {
-        name: "ActivityResponseModal",
-        components: {ActivityInfoExtra},
-        props:["act","type","id","time"],
-        methods: {
-            confirmActivity(event,activity) {
-                let btn = event.target;
-                btn.classList.add("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light", "disabled");
-                this.$store.dispatch('activities/confirmActivityById',{ activity_id: this.activity.id })
-                    .then(response => {
-                        btn.classList.remove("kt-spinner", "kt-spinner--center", "kt-spinner--md", "kt-spinner--light", "disabled");
-                    })
-
-
-
-
-
-
-            },
+import ActivityInfoExtra from "./ActivityInfoExtra";
+import ActivityDecline from "./ActivityDecline";
+export default {
+    name: "ActivityResponseModal",
+    components: {ActivityDecline, ActivityInfoExtra},
+    props: ["act", "type", "id", "time"],
+    methods: {
+        confirmActivity(event, activity) {
+            let btn = event.target;
+            btn.classList.add("kt-spinner", "kt-spinner--left", "kt-spinner--md", "kt-spinner--light", "disabled");
+            this.$store.dispatch('activities/confirmActivityById', {activity_id: this.activity.id})
+                .then(response => {
+                    btn.classList.remove("kt-spinner", "kt-spinner--left", "kt-spinner--md", "kt-spinner--light", "disabled");
+                })
         },
-        computed: {
-            activity() {
-                if(this.act) {
-                    return this.$store.getters['activities/getActivityById'](this.act.id);
+        declineActivity(event,activity) {
+            let btn = event.target;
+            this.$bvModal.show("declineModal");
+            btn.classList.remove("kt-spinner", "kt-spinner--left", "kt-spinner--md", "kt-spinner--light", "disabled");
+
+        }
+    },
+    computed: {
+        activity() {
+            if (this.act) {
+                return this.$store.getters['activities/getActivityById'](this.act.id);
+            }
+        },
+        confirmText() {
+            if (this.activity.type_signup) {
+                console.log("Signup");
+                if (this.activity.response_confirmed) {
+                    return "Tilmeldt";
+                }
+                return "Tilmeld";
+
+            } else if (this.activity.type_decline) {
+
+                if (this.activity.response_confirmed) {
+                    return "Bekræftet";
+                }
+                return "Bekræft";
+            }
+        },
+        declineText() {
+            if (this.activity.type_decline) {
+                if (this.activity.response_declined) {
+                    return "Meldt afbud";
+                }
+                return "Afbud";
+            } else if(this.activity.type_signup) {
+                if(this.activity.my_activity) {
+                    return "Afmeld";
                 }
             }
         }
     }
+}
 </script>
 
 <style scoped>
@@ -161,6 +190,7 @@
 </style>
 
 <template>
+    <div>
     <b-modal v-if="activity" :title="'Tilmeld ' + activity.title" id="responseModal" size="md" body-class="we-modal-body kt-pl0-mobile kt-pr0-mobile">
         <div class="we-flex kt-mr-5">
             <div class="we-flex-row kt-pl0">
@@ -186,8 +216,18 @@
             </div>
         </div>
         <div class="kt-align-center kt-mb-20">
-            <button v-if="!activity.my_activity" @click="confirmActivity($event)" type="button" class="btn btn-primary  btn-lg"><i class="fa fa-plus"></i> Tilmeld</button>
-            <button v-if="activity.my_activity" @click="confirmActivity($event)" type="button" class="btn btn-danger  btn-lg"><i class="fa fa-plus"></i> Afmeld</button>
+            <button v-if="activity.type_signup" @click="confirmActivity($event)" type="button" class="btn btn-primary btn-lg" :disabled="activity.response_confirmed" :class="{'disabled':activity.response_confirmed}"><i class="fa fa-plus"></i> {{ confirmText }}</button>
+            <button v-if="activity.my_activity && activity.type_decline" @click="confirmActivity($event)" type="button" class="btn btn-success  btn-lg" :disabled="activity.response_confirmed" :class="{'disabled':activity.response_confirmed}"><i class="fa fa-plus"></i> {{ confirmText }}</button>
+            <button v-if="activity.my_activity" @click="declineActivity($event)" type="button" class="btn btn-danger  btn-lg" :disabled="activity.response_declined" :class="{'disabled':activity.response_declined}"><i class="fa fa-plus"></i> {{ declineText }}</button>
+            <div v-if="!activity.my_activity && activity.type_decline" class="alert alert-secondary  fade show" role="alert">
+                <div class="alert-icon"><i class="flaticon-questions-circular-button"></i></div>
+                <div class="alert-text">Du er ikke inviteret til at deltage på denne træning eller aktivitet.</div>
+                <!--div class="alert-close">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true"><i class="la la-close"></i></span>
+                    </button>
+                </div-->
+            </div>
         </div>
         <activity-info-extra :activity="activity"></activity-info-extra>
 
@@ -200,4 +240,7 @@
             </b-button>
         </template>
     </b-modal>
+
+    <activity-decline :activity="activity"></activity-decline>
+    </div>
 </template>

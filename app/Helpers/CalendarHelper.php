@@ -87,6 +87,13 @@ class CalendarHelper
         $activity->confirmed = 0;
         $activity->declined = 0;
         $activity->enrolled = count($activity->players);
+        if($activity->type) {
+            if($activity->type->signup) {
+                $activity->type_signup = true;
+            } elseif($activity->type->decline) {
+                $activity->type_decline = true;
+            }
+        }
         if ($activity->enrolled > 0) {
             foreach ($activity->players as $player) { // Any players enrolled / invited?
                 if ($player->id === $player_id) { // My activity ?

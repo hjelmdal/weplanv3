@@ -4,7 +4,7 @@ const state = {
     calendar: [],
     date:"",
     type:"",
-    filters:""
+    filters:"",
 }
 
 const getters = {
@@ -85,13 +85,23 @@ const actions = {
         });
     },
     confirmActivityById: async (context, {activity_id }) => {
-        console.log("yay");
         return new Promise((resolve, reject) => {
             axios.post("/api/v1/activities/confirm",{activity_id: activity_id})
                 .then(response => {
                    console.log(response.data);
                    context.dispatch('getActivities',{date: state.date,filters: state.filters,type: state.type});
                    resolve(response.data);
+                });
+        });
+
+    },
+    declineActivityById: async (context, {activity_id, description, category }) => {
+        return new Promise((resolve, reject) => {
+            axios.post("/api/v1/activities/decline",{activity_id: activity_id, category: category, description: description,})
+                .then(response => {
+                    console.log(response.data);
+                    context.dispatch('getActivities',{date: state.date,filters: state.filters,type: state.type});
+                    resolve(response.data);
                 });
         });
 

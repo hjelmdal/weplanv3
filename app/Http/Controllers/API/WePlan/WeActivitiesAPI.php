@@ -236,12 +236,7 @@ class WeActivitiesAPI extends Controller
         } else {
             return response()->json("Ingen spiller associeret", 404);
         }
-        $my_activity = false;
-        foreach ($request["players"] as $p) {
-            if ($p["id"] === $player_id) {
-                $my_activity = true;
-            }
-        }
+
         $my_activity = false;
             try {
 
@@ -273,9 +268,17 @@ class WeActivitiesAPI extends Controller
                 $decline->save();
                 //$input["decline_id"] = $decline->id;
                 //Training update
-                $activity->players()->sync([
-                    $player_id => ['declined_at' => Carbon::now(), 'confirmed_at' => NULL, 'signed_up_at' => NULL]
-                ],false);
+                if($activity->type && $activity->type->signup) {
+                    if($activity->players->contains($player_id)) {
+                        $activity->players()->detach($player_id, ["activity_id" => $request->activity_id]);
+                    } else {
+                        return response()->json(array("error" => "Bad request!"), 400, array("header" => "Bad Request"));
+                    }
+                } else {
+                        $activity->players()->sync([
+                            $player_id => ['declined_at' => Carbon::now(), 'confirmed_at' => NULL, 'signed_up_at' => NULL]
+                        ], false);
+                    }
                 $activity->save();
                 //Logging::insert("declineTraining",$input);
                 return response()->json($request, $statusCode);

@@ -91,7 +91,10 @@
         created() {
             this.getCalendar();
             this.setTypes();
-            setInterval(() => this.time = Math.floor((new Date).getTime() / 1000), 1000 * 1)
+            setInterval(() => this.time = Math.floor((new Date).getTime() / 1000), 1000 * 1),
+            this.$root.$on('modalDecline', data => {
+                this.getCalendar();
+            });
         },
         watch: {
             filters: {
@@ -239,8 +242,8 @@
                                 <div class="time-span"> <i class="la la-clock-o" style="font-size: 14px;"></i> {{ activity.start | formatTime("HH:mm") }} - {{ activity.end | formatTime("HH:mm") }} <span v-if="activity.type">{{ activity.type.name }}</span> </div>
                             </div>
                             <div v-if="activity.type" class="we-flex-row kt-pr0 we-response">
-                                <button @click="showActivity(activity.id)" v-if="activity.response_timestamp < time || !activity.my_activity && !activity.type.signup || (activity.response_confirmed || activity.response_declined)" type="button" class="btn btn-outline-hover-info btn-elevate btn-icon" style="align-self:flex-end">
-                                    <span class="we-btn-flex"></span><i class="la la-chevron-right kt-danger"></i>
+                                <button @click="responseModal(activity,'signup')" v-if="activity.response_timestamp < time || !activity.my_activity && !activity.type.signup || (activity.response_confirmed || activity.response_declined)" type="button" class="btn btn-outline-hover-info btn-elevate btn-icon" style="align-self:flex-end">
+                                    <span class="we-btn-flex"></span><i class="la la-chevron-right"></i>
                                 </button>
                                 <button @click="responseModal(activity,'signup')" v-if="!activity.my_activity && activity.type.signup && activity.response_timestamp > time" type="button" class="btn btn-xs btn-brand btn-elevate btn-pill we-pill"><span class="we-btn-flex"><i class="la la-plus"></i> Tilmeld</span></button>
 

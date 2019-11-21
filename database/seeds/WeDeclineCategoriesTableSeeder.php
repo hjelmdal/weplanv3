@@ -13,7 +13,7 @@ class WeDeclineCategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        $array = ["Sygdom","Arbejde","Familie", "Andet"];
+        $array = ["Sygdom","Arbejde","Skole","Familie", "Småskade","Pause","Manglende lyst"];
 
         foreach ($array as $c) {
             $cat = WeDeclineCategory::firstOrNew(["reason" => $c]);
