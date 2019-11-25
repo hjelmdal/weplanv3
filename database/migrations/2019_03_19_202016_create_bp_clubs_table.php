@@ -13,7 +13,7 @@ class CreateBpClubsTable extends Migration
      */
     public function up()
     {
-        Schema::connection('shared')->create('bp_clubs', function (Blueprint $table) {
+        Schema::connection('mysql')->create('bp_clubs', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('club_id')->nullable();
             $table->string('name')->nullable();
