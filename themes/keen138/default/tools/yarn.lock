@@ -2525,8 +2525,8 @@ jstree@^3.3.4:
     jquery ">=1.9.1"
 
 jszip@^3.1.5:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/jszip/-/jszip-3.2.0.tgz#1c179e8692777490ca4e9b8f3ced08f9b820da2c"
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/jszip/-/jszip-3.7.0.tgz#9b8b995a4e7c9024653ce743e902076a82fdf4e6"
   dependencies:
     lie "~3.3.0"
     pako "~1.0.2"
